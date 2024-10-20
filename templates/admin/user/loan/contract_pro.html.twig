@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ 'contract_pro.title'|trans|raw }}</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Bungee+Tint &family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+			body {
+				font-family: 'Roboto', sans-serif;
+				font-size: 11pt;
+				line-height: 1.5;
+				color: #333;
+				margin: 0;
+				padding: 20mm;
+			}
+			.contract-container {
+				position: relative;
+				z-index: 1;
+			}
+			.contract-container::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-image: url("{{ absolute_url(asset('img/filigram.png')) }}");
+				background-size: cover;
+				background-position: center;
+				opacity: 0.1;
+				/**transform: rotate(-30deg);**/
+				z-index: -1;
+			}
+			.header {
+				text-align:center;
+			}
+			.header img {
+				width: 150px;
+				height: auto;
+			}
+			.header-middle {
+				text-align: center;
+			}
+			.subheading {
+				font-size: 9pt;
+				font-weight: 600;
+				text-transform: uppercase;
+				margin: 5px 0;
+			}
+			.subheading.blue {
+				color: #003189;
+			}
+			.title {
+				font-family: "Bungee Tint", sans-serif;
+				font-size: 24pt;
+				font-weight: bold;
+				color: #000;
+				text-transform: uppercase;
+				text-align: center;
+				margin: 20px 0;
+			}
+			.date {
+				text-align: center;
+				font-size: 10pt;
+				color: #C90900;
+				margin-bottom: 20px;
+			}
+			.section {
+				margin-bottom: 15px;
+			}
+			.section-title {
+				color: #003189;
+				font-weight: bold;
+				text-transform: uppercase;
+				text-decoration: underline;
+				margin-bottom: 5px;
+			}
+			.signature-section {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 40px;
+			}
+			.signature-block {
+				text-align: center;
+			}
+			.signature-block strong {
+				text-decoration: underline;
+			}
+			.signature-line {
+				width: 150px;
+				margin-top: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="contract-container">
+			<div class="header">
+				<img src="{{ absolute_url(asset('img/logo-fr.png')) }}" alt="Logo">
+				<div class="header-middle">
+					<h3 class="subheading">{{ 'contract_pro.header.department'|trans|raw }}</h3>
+					<h3 class="subheading">{{ 'contract_pro.header.court'|trans|raw }}</h3>
+					<h3 class="subheading blue">
+						{{ 'contract_pro.header.notarized_act'|trans|raw }}
+					</h3>
+					<h3 class="subheading blue">
+						N ° {{ loan.loanNumber }}
+					</h3>
+					<h3 class="subheading blue">
+						{{ bank.address }}
+					</h3>
+				</div>
+			</div>
+
+			<h1 class="title">{{ 'contract_pro.title'|trans|raw }}</h1>
+
+			<div class="date">
+				{{ 'contract_pro.date'|trans({'%date%': loan.startDate|date('d.m.Y')|format_datetime()|raw}) }}
+			</div>
+
+			<div class="section">
+				<div class="section-title">1. {{ 'contract_pro.section.loan'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.loan.description'|trans({'%companyName%': user.companyName,'%amount%': loan.amount, '%interest%': loan.interestRate, '%date%': loan.startDate|date('d.m.Y')|format_datetime()})|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">2. {{ 'contract_pro.section.interest'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.interest.description'|trans({'%interest%': loan.interestRate, '%total%': loan.amount * (1 + loan.interestRate / 100)})|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">3. {{ 'contract_pro.section.duration'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d F Y')|format_datetime()})|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">4. {{ 'contract_pro.section.repayment'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.repayment.description'|trans({'%amount%': loan.calculateMonthlyPayment(), '%date%': loan.startDate|date('d F Y')|date_modify('+3 months')|format_datetime()})|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">5. {{ 'contract_pro.section.insurance'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.insurance.description'|trans|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">6. {{ 'contract_pro.section.address'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.address.description'|trans|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">7. {{ 'contract_pro.section.money_laundering'|trans|raw }}</div>
+				<p>{{ 'contract_pro.section.money_laundering.description'|trans|raw }}</p>
+			</div>
+
+			<div class="section">
+				<div class="section-title">8. {{ 'contract_pro.section.general_provisions'|trans|raw }}</div>
+				<p>
+					<strong class='section-title'>8.1 {{ 'contract_pro.section.general_provisions.impact'|trans|raw }}</strong>
+					{{ 'contract_pro.section.general_provisions.impact.description'|trans|raw }}
+				</p>
+
+				<p>
+					<strong class='section-title'>8.2 {{ 'contract_pro.section.general_provisions.confidentiality'|trans|raw }}</strong>
+					{{ 'contract_pro.section.general_provisions.confidentiality.description'|trans|raw }}
+				</p>
+
+				<p>
+					<strong class='section-title'>8.3 {{ 'contract_pro.section.general_provisions.signatures'|trans|raw }}</strong>
+					{{ 'contract_pro.section.general_provisions.signatures.description'|trans|raw }}
+				</p>
+			</div>
+
+			<div class="signature-section">
+				<div class="signature-block">
+					<strong>{{ 'contract_pro.signature.borrower'|trans|raw }} ({{user.companyName}})</strong>
+					<div class="signature-line"><img style="width: 100px;" src="{{ absolute_url(asset(loan.contractSignFile.getWebPath()|default(""))) }}" alt=""></div>
+					<div>{{ user.firstname }} {{ user.lastname }}</div>
+				</div>
+				<div class="signature-block">
+					<strong>{{ 'contract_pro.signature.notary'|trans|raw }}</strong>
+					<div class="signature-line"><img style="width: 100px;" src="{{ absolute_url(asset(bank.signNotary)) }}" alt=""></div>
+					<div>{{ bank.notary }}</div>
+				</div>
+				<div class="signature-block">
+					<strong>{{ 'contract_pro.signature.lender'|trans({'%bank_name%': bank.name})|raw }}</strong>
+					<div class="signature-line"><img style="width: 70px;" src="{{ absolute_url(asset(bank.signBank)) }}" alt=""></div>
+					<div>{{ bank.managerName }}</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

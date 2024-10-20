@@ -1,0 +1,92 @@
+<section class="main-slider-one" id="home">
+	<div class="main-slider-one__carousel easilon-owl__carousel owl-carousel" data-owl-options='{
+						                    "margin": 0,
+						                    "loop": true,
+						                    "animateIn": "fadeIn",
+						                    "animateOut": "fadeOut",
+						                    "items": 1,
+						                    "autoplay": true,
+						                    "smartSpeed": 1000,
+						                    "nav": true,
+						                    "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+						                    "dots": true
+						                    }'>
+		{% for key, slider in sliders() %}
+			<div class="item">
+				<div class="main-slider-one__item">
+					<div class="main-slider-one__bg" style="background-image: url({{asset(slider.image)}});"></div>
+					<!-- /.main-slider-one__bg -->
+					<div class="main-slider-one__container container">
+						<div class="row gutter-y-60 align-items-center">
+							<div class="col-lg-7">
+								<div class="main-slider-one__content">
+									<div class="main-slider-one__top">
+										<div class="main-slider-one__top__inner">
+											<div class="main-slider-one__sub-title-shape">
+												<div class="main-slider-one__sub-title-shape__one"></div>
+												<div class="main-slider-one__sub-title-shape__two"></div>
+											</div>
+											<!-- /.main-slider-one__sub-title-shape -->
+											<h5 class="main-slider-one__sub-title">{{slider.subtitle|raw}}</span>
+										</h5>
+										<!-- /.slider-sub-title -->
+									</div>
+									<!-- /.main-slider-one__top__inner -->
+								</div>
+								<!-- /.main-slider-one__top -->
+								<h2 class="main-slider-one__title">
+									<span class="main-slider-one__title__inner">
+										<span class="main-slider-one__title__text main-slider-one__title__text--1">{{slider.title|raw}}</span>
+									</span>
+
+								</h2>
+								<!-- /.slider-title -->
+								<div class="main-slider-one__button-group">
+									<div class="main-slider-one__button-group__inner">
+										<div class="main-slider-one__button main-slider-one__button--1">
+											<a href="{{slider.btnUrl|raw}}" class="main-slider-one__btn-1 easilon-btn">
+												<span>{{slider.btnText|raw}}</span>
+												<span class="easilon-btn__icon">
+													<i class="icon-double-right-arrow"></i>
+												</span>
+											</a>
+											<!-- /.easilon-btn -->
+										</div>
+										<!-- /.main-slider-one__button -->
+									</div>
+									<!-- /.main-slider-one__button__inner -->
+								</div>
+								<!-- /.main-slider-one__button-group -->
+							</div>
+							<!-- /.main-slider-one__content -->
+						</div>
+						<!-- /.col-lg-7 -->
+					</div>
+					<!-- /.row gutter-y-60 -->
+				</div>
+				<!-- /.container -->
+				<img src="{{ asset('theme/loan/assets/images/shapes/main-slider-shape-1-1.png') }}" alt="shape" class="main-slider-one__shape-one">
+				<img src="{{ asset('theme/loan/assets/images/shapes/main-slider-shape-1-2.png') }}" alt="shape" class="main-slider-one__shape-two">
+			</div>
+			<!-- /.main-slider-one__item -->
+		</div>
+		<!-- /.item -->
+	{% endfor %}
+
+</div>
+<!-- /.main-slider-one__carousel -->
+<div class="main-slider-one__form-wrapper">
+	<div class="main-slider-one__form-wrapper__inner">
+		<div class="container">
+			<div class="main-slider-one__form">
+				{{ include('@theme/'~setting('theme')~'/inc/calculator.html.twig') }}
+
+				<!-- /.loan-calculator-form -->
+			</div>
+			<!-- /.main-slider-one__form -->
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /.main-slider-one__form-wrapper__inner -->
+</div>
+<!-- /.main-slider-one__form-wrapper --></section><!-- /.main-slider-one -->

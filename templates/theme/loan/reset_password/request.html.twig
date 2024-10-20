@@ -1,0 +1,11 @@
+{% extends '@theme/'~setting('theme')~'/'~setting('theme')~'/auth_base.html.twig' %}
+
+{% block title %}Réinitialisation de mot de passe{% endblock %}
+
+{% block body %}
+    <h1>Réinitialisation de mot de passe</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ 'reset_password.submit'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}

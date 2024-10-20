@@ -1,0 +1,11 @@
+{% extends '@emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'email.subject.payVerifNotreceived'|trans({}, 'messages', user.locale) }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.body.payVerifNotreceived.greeting'|trans({'%user%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.payVerifNotreceived.message'|trans({'%loanNumber%': loanNumber}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.payVerifNotreceived.contact'|trans({'%email%': setting('email')}, 'messages', user.locale) }}</p>
+{% endblock %}

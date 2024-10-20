@@ -1,0 +1,12 @@
+twig:
+    file_name_pattern: '*.twig'
+    form_themes: ['bootstrap_5_layout.html.twig']
+    paths:
+        '%kernel.project_dir%/templates/theme': theme
+        '%kernel.project_dir%/templates/admin': admin
+        '%kernel.project_dir%/templates/emails': emails
+        '%kernel.project_dir%/templates/notifs': notifs
+        '%kernel.project_dir%/public/': images
+when@test:
+    twig:
+        strict_variables: true

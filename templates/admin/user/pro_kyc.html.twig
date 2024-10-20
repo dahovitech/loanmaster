@@ -1,0 +1,115 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}Détails de KYC Professionnelle{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Détails de KYC pour {{ user.companyName }}</h1>
+
+        <div class="kyc-details">
+            <p>
+                <strong>Nom de l'entreprise:</strong>
+                {{ user.companyName }}
+            </p>
+            <p>
+                <strong>Numéro d'enregistrement:</strong>
+                {{ user.registrationNumber }}
+            </p>
+            <p>
+                <strong>Adresse de l'entreprise:</strong>
+                {{ user.companyAddress }}
+            </p>
+            <p>
+                <strong>Pays de l'entreprise:</strong>
+                {{ user.companyCountry }}
+            </p>
+            <p>
+                <strong>Ville de l'entreprise:</strong>
+                {{ user.companyCity }}
+            </p>
+            <p>
+                <strong>Code postal de l'entreprise:</strong>
+                {{ user.companyZipcode }}
+            </p>
+            <p>
+                <strong>Email de l'entreprise:</strong>
+                {{ user.companyEmail }}
+            </p>
+            <p>
+                <strong>Téléphone de l'entreprise:</strong>
+                {{ user.companyTelephone }}
+            </p>
+            <p>
+                <strong>Statut légal de l'entreprise:</strong>
+                {% set companyLegalStatus = 'form.companyLegalStatus.' ~ user.getCompanyLegalStatus() %}
+                {{ companyLegalStatus | trans }}
+            </p>
+            <p>
+                <strong>Expérience professionnelle de l'entreprise:</strong>
+                {{ user.companyProfessionalExperience | raw }}
+            </p>
+            <p>
+                <strong>Licence d'entreprise:</strong>
+                <a href="{{ asset(user.getBusinessLicense().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Enregistrement de l'entreprise:</strong>
+                <a href="{{ asset(user.getBusinessRegistration().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Certificat fiscal:</strong>
+                <a href="{{ asset(user.getTaxCertificate().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Type de document d'identité:</strong>
+                {% set idDoc = 'form.idDocumentType.' ~ user.getIdDocumentType() %}
+                {{ idDoc | trans }}
+            </p>
+            <p>
+                <strong>Document d'identité:</strong>
+                <a href="{{ asset(user.getIdDocument().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Type de preuve d'adresse:</strong>
+                {% set proofOfAddressType = 'form.proofOfAddressType.' ~ user.getProofOfAddressType() %}
+                {{ proofOfAddressType | trans }}
+            </p>
+            <p>
+                <strong>Preuve d'adresse:</strong>
+                <a href="{{ asset(user.getProofOfAddress().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Type de document d'intégrité:</strong>
+                {% set integrityDocumentType = 'form.integrityDocumentType.' ~ user.getIntegrityDocumentType() %}
+                {{ integrityDocumentType | trans }}
+            </p>
+            <p>
+                <strong>Document d'intégrité:</strong>
+                <a href="{{ asset(user.getIntegrityDocument().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form method="POST" action="{{ path('app_admin_kyc_pro_kyc', { id: user.id }) }}">
+                    <div class="form-group">
+                        <label for="status">Statut</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="approved">Approuvé</option>
+                            <option value="rejected">Rejeté</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message (en cas de rejet)</label>
+                        <textarea id="message" name="message" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mt-3">Soumettre</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <a href="{{ path('app_admin_clientLists') }}" class="btn btn-secondary mt-4">Retour à la liste des clients</a>
+    </div>
+{% endblock %}

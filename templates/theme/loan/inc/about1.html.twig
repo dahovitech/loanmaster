@@ -1,0 +1,104 @@
+<section class="about-one section-space" id="about">
+	<div class="about-one__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/about-bg-1-1.png') }});"></div>
+	<!-- /.about-one__bg -->
+	<div class="container">
+		<div class="row gutter-y-50">
+			<div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms">
+				<div class="about-one__image">
+					<div class="about-one__image__inner">
+						<img src="{{ asset('theme/loan/assets/images/about/about-1-1.jpg') }}" alt="about image">
+						<img src="{{ asset('theme/loan/assets/images/about/about-1-2.jpg') }}" alt="about image" class="about-one__image__with-border">
+						<img src="{{ asset('theme/loan/assets/images/shapes/about-shape-1-1.png') }}" alt="shapes" class="about-one__image__shape">
+						<div class="about-one__experience">
+							<div class="about-one__experience__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/about-experience-bg-1-1.png') }});"></div>
+							<!-- /.about-one__experience__bg -->
+							<div class="about-one__experience__content">
+
+								<h3 class="about-one__experience__year">15+</h3>
+								<!-- /.about-one__experience__year -->
+								<h3 class="about-one__experience__title">{{ 'about.year_of_experience'|trans }}</h3>
+								<!-- /.about-one__experience__title -->
+							</div>
+							<!-- /.about-one__experience__content -->
+						</div>
+						<!-- /.about-one__experience -->
+					</div>
+					<!-- /.about-one__image__inner -->
+				</div>
+				<!-- /.about-one__image -->
+			</div>
+			<!-- /.col-lg-6 -->
+			<div class="col-lg-6">
+				<div class="about-one__content">
+					<div class="sec-title @@extraClassName">
+						<div class="sec-title__top">
+							<div class="sec-title__shape">
+								<div class="sec-title__shape__one"></div>
+								<!-- /.sec-title__shape__one -->
+								<div class="sec-title__shape__two"></div>
+								<!-- /.sec-title__shape__one -->
+							</div>
+							<!-- /.sec-title__shape -->
+							<h6 class="sec-title__tagline">{{ 'about.welcome'|trans({'%site_name%': setting('title')}) }}</h6>
+							<!-- /.sec-title__tagline -->
+						</div>
+						<!-- /.sec-title__top -->
+						<h3 class="sec-title__title">{{ 'about.description'|trans }}</h3>
+						<!-- /.sec-title__title -->
+					</div>
+					<!-- /.sec-title -->
+					<div class="about-one__text-box wow fadeInUp" data-wow-duration="1500ms">
+						<p class="about-one__text">{{ 'about.text'|trans({'%site_name%': setting('title')}) }}</p>
+						<!-- /.about-one__text -->
+					</div>
+					<!-- /.about-one__text-box -->
+					<div class="about-one__list">
+						<div class="about-one__list__left wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+							<div class="about-one__list__item">
+								<span class="about-one__list__icon">
+									<i class="icon-check-mark"></i>
+								</span>
+								<!-- /.about-one__list__icon -->
+								{{ 'about.quick_loan_process'|trans }}
+							</div>
+							<div class="about-one__list__item">
+								<span class="about-one__list__icon">
+									<i class="icon-check-mark"></i>
+								</span>
+								<!-- /.about-one__list__icon -->
+								{{ 'about.very_low_rates'|trans }}
+							</div>
+						</div>
+						<!-- /.about-one__list__left -->
+						<div class="about-one__list__right wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+							<div class="about-one__list__item">
+								<span class="about-one__list__icon">
+									<i class="icon-check-mark"></i>
+								</span>
+								<!-- /.about-one__list__icon -->
+								{{ 'about.small_business_loan'|trans }}
+							</div>
+							<div class="about-one__list__item">
+								<span class="about-one__list__icon">
+									<i class="icon-check-mark"></i>
+								</span>
+								<!-- /.about-one__list__icon -->
+								{{ 'about.studying_abroad_loan'|trans }}
+							</div>
+						</div>
+						<!-- /.about-one__list__right -->
+					</div>
+					<!-- /.about-one__list -->
+
+				</div>
+				<!-- /.about-one__content -->
+			</div>
+			<!-- /.col-lg-6 -->
+		</div>
+		<!-- /.row gutter-y-50 -->
+	</div>
+	<!-- /.container -->
+	<img src="{{ asset('theme/loan/assets/images/shapes/about-shape-1-2.png') }}" alt="shape" class="about-one__shape">
+	<img src="{{ asset('theme/loan/assets/images/shapes/about-money-1-1.png') }}" alt="shape" class="about-one__money">
+</section>
+<!-- /.about-one section-space -->

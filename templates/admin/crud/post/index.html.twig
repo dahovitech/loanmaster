@@ -1,0 +1,57 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}{{ 'post.list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'post.list'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_admin_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'post.list'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn btn-block btn-outline-primary mb-3" href="{{ path('app_crud_new',{entityName: entityName}) }}">{{ 'post.add'|trans }}</a>
+                    <div class="table-responsive">
+                        <table id="tab2" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'post.title'|trans }}</th>
+                                    <th>{{ 'tab.status'|trans }}</th>
+                                    <th>{{ 'tab.actions'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entity in entities %}
+                                    <tr>
+                                        <td>{{ entity.title }}</td>
+                                        <td>{{ entity.isEnabled ? 'status.enabled'|trans : 'status.disabled'|trans }}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-dark" href="{{ path('app_translation_crud_index', {entityName: entityName,entityId: entity.id}) }}">{{ 'translations'|trans }}</a>
+                                            <a class="btn btn-sm btn-primary" href="{{ path('app_crud_update', {id: entity.id, entityName: entityName}) }}">{{ 'post.edit'|trans }}</a>
+                                            {{ include('@admin/crud/post/_delete_form.html.twig') }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <!--<< Header Area >>-->
+    <head>
+        <!-- ========== Meta Tags ========== -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="{{setting('title')}}">
+        <meta name="robots" content="noindex, nofollow">
+        <title>
+            {% block title %}
+                {{setting('title')}}
+            {% endblock %}
+        </title>
+        <!--<< Favcion >>-->
+        <link rel="shortcut icon" href="{{ asset(setting('favicon')?setting("favicon"):'theme/land/assets/img/favicon.svg') }}">
+        <!--<< Bootstrap min.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/bootstrap.min.css') }}">
+        <!--<< Font Awesome.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/font-awesome.css') }}">
+        <!--<< Animate.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/animate.css') }}">
+        <!--<< Magnific Popup.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/magnific-popup.css') }}">
+        <!--<< MeanMenu.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/meanmenu.css') }}">
+        <!--<< Slick.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/slick.css') }}">
+        <!--<< Swiper Slider.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/swiper-bundle.min.css') }}">
+        <!--<< Nice Select.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/nice-select.css') }}">
+        <!--<< Main.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/assets/css/main.css') }}">
+        <!--<< Style.css >>-->
+        <link rel="stylesheet" href="{{ asset('theme/land/style.css') }}">
+    </head>
+    <body>
+        <div class="scroll-up">
+	<svg class="scroll-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+		<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+	</svg>
+</div>
+
+<!-- Preloader Start -->
+<div id="preloader" class="preloader">
+	<div class="animation-preloader">
+		<div class="spinner"></div>
+		{% set title = setting("title")|split('') %}
+		<div class="txt-loading">
+			{% for t in title %}
+				<span data-text-preloader="{{ t }}" class="letters-loading">
+					{{ t }}
+				</span>
+			{% endfor %}
+		</div>
+
+		<p class="text-center">{{"loading"|trans}}</p>
+	</div>
+	<div class="loader">
+		<div class="row">
+			<div class="col-3 loader-section section-left">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-left">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-right">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-right">
+				<div class="bg"></div>
+			</div>
+		</div>
+	</div>
+</div> 
+
+<!--<< Mouse Cursor Start >>-->
+<div class="mouse-cursor cursor-outer"></div>
+<div class="mouse-cursor cursor-inner"></div>
+
+        {% block body %}{% endblock %}
+
+        <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js') }}"></script>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <script>
+                    swal("{{ message }}", " ", "{{ label }}");
+                </script>
+            {% endfor %}
+        {% endfor %}
+        <!--<< All JS Plugins >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery-3.7.1.min.js') }}"></script>
+        <!--<< Viewport Js >>-->
+        <script src="{{ asset('theme/land/assets/js/viewport.jquery.js') }}"></script>
+        <!--<< Bootstrap Js >>-->
+        <script src="{{ asset('theme/land/assets/js/bootstrap.bundle.min.js') }}"></script>
+        <!--<< Gsap Js >>-->
+        <script src="{{ asset('theme/land/assets/js/gsap/gsap.js') }}"></script>
+        <!--<< Gsap Scroll Trigger Js >>-->
+        <script src="{{ asset('theme/land/assets/js/gsap/gsap-scroll-trigger.js') }}"></script>
+        <!--<< Gsap Split Text Js >>-->
+        <script src="{{ asset('theme/land/assets/js/gsap/gsap-split-text.js') }}"></script>
+        <!--<< Nice Select Js >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery.nice-select.min.js') }}"></script>
+        <!--<< Waypoints Js >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery.waypoints.js') }}"></script>
+        <!--<< Counterup Js >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery.counterup.min.js') }}"></script>
+        <!--<< Slick Js >>-->
+        <script src="{{ asset('theme/land/assets/js/slick.min.js') }}"></script>
+        <!--<< Swiper Slider Js >>-->
+        <script src="{{ asset('theme/land/assets/js/swiper-bundle.min.js') }}"></script>
+        <!--<< Slick Animation Js >>-->
+        <script src="{{ asset('theme/land/assets/js/slick-animation.min.js') }}"></script>
+        <!--<< MeanMenu Js >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery.meanmenu.min.js') }}"></script>
+        <!--<< Magnific Popup Js >>-->
+        <script src="{{ asset('theme/land/assets/js/jquery.magnific-popup.min.js') }}"></script>
+        <!--<< Wow Animation Js >>-->
+        <script src="{{ asset('theme/land/assets/js/wow.min.js') }}"></script>
+        <!--<< Circle Progress Js >>-->
+        <script src="{{ asset('theme/land/assets/js/circle-progress.js') }}"></script>
+        <!--<< Main.js >>-->
+        <script src="{{ asset('theme/land/assets/js/main.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}Détails de KYC{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Détails de KYC pour {{ user.firstname }} {{ user.lastname }}</h1>
+
+        <div class="kyc-details">
+            <p>
+                <strong>Type de document d'identité:</strong>
+                {% set idDoc = 'form.idDocumentType.' ~ user.getIdDocumentType() %}
+                {{ idDoc | trans }}
+            </p>
+            <p>
+                <strong>Document d'identité:</strong>
+                <a href="{{ asset(user.getIdDocument().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Type de preuve d'adresse:</strong>
+                {% set proofOfAddressType = 'form.proofOfAddressType.' ~ user.getProofOfAddressType() %}
+                {{ proofOfAddressType | trans }}
+            </p>
+            <p>
+                <strong>Preuve d'adresse:</strong>
+                <a href="{{ asset(user.getProofOfAddress().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Type de document d'intégrité:</strong>
+                {% set integrityDocumentType = 'form.integrityDocumentType.' ~ user.getIntegrityDocumentType() %}
+                {{ integrityDocumentType | trans }}
+            </p>
+            <p>
+                <strong>Document d'intégrité:</strong>
+                <a href="{{ asset(user.getIntegrityDocument().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form method="POST" action="{{ path('app_admin_kyc_client', { id: user.id }) }}">
+                    <div class="form-group">
+                        <label for="status">Statut</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="approved">Approuvé</option>
+                            <option value="rejected">Rejeté</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message (en cas de rejet)</label>
+                        <textarea id="message" name="message" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mt-3">Soumettre</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <a href="{{ path('app_admin_clientLists') }}" class="btn btn-secondary mt-4">Retour à la liste des clients</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}{{ contact.subject }}{% endblock %}
+
+{% block body %}
+     <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom complet</th>
+                <td>{{ contact.fullname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ contact.email }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ contact.message|raw }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+{% endblock %}

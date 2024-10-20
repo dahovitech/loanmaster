@@ -1,0 +1,96 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block title %}
+	{{ 'loan.list.title'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{ 'loan.list.title'|trans }}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_user_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ 'loan.list.title'|trans }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+		<div class="col-md-12">
+			<h6 class="mb-0 text-uppercase">{{ 'loan.list.title'|trans }}</h6>
+			<hr/>
+			<div class="card">
+				<div class="card-header">
+					<a href="{{ path('app_user_loan_submit') }}" class="btn btn-outline-success">{{"nav.submitLoan"|trans}}</a>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="tab1" class="table table-striped">
+							<thead>
+								<tr>
+									<th>{{ 'loan.list.loanNumber'|trans }}</th>
+									<th>{{ 'loan.list.details'|trans }}</th>
+									<th>{{ 'loan.list.status'|trans }}</th>
+									<th>{{ 'loan.list.actions'|trans }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for loan in loans %}
+									<tr>
+										<td>{{ loan.loanNumber }}</td>
+										<td>
+											<div>
+												<strong>{{ 'loan.list.loanNumber'|trans }}</strong>
+												:
+												{{ loan.loanNumber }}</div>
+											<div>
+												<strong>{{ 'loan.list.amount'|trans }}</strong>
+												:
+												{{ loan.amount }}</div>
+											<div>
+												<strong>{{ 'loan.list.interestRate'|trans }}</strong>
+												:
+												{{ loan.interestRate }}</div>
+											<div>
+												<strong>{{ 'loan.list.durationMonths'|trans }}</strong>
+												:
+												{{ loan.durationMonths }}</div>
+										</td>
+										{% set status = "status." ~ loan.status  %}
+										<td>{{ status|trans }}</td>
+										<td>
+											{% if loan.payStatus == "notorder" or loan.payStatus == "notreceived" %}
+												<a class="btn btn-success btn-sm" href="{{ path('app_user_payment', {'loanNumber': loan.loanNumber,type: 'folder'}) }}">{{"btn.pay"|trans}}</a>
+											{% endif %}
+
+											{% if loan.payStatus == "success" %}
+												{% if  loan.contractStatus == "pending" or loan.contractStatus == "unsigned" %}
+													<a class="btn btn-success btn-sm" href="{{ path('app_user_contract_signature', {'loanNumber': loan.loanNumber,type: 'contract'}) }}">{{"btn.sign"|trans}}</a>
+													<a target="_blank" class="btn btn-outline-primary btn-sm" href="{{ path('app_user_contract_preview', {'loanNumber': loan.loanNumber,type:'contract','email': loan.user.email}) }}">{{ 'loan.contract.preview'|trans }}</a>
+												{% endif %}
+
+												{% if loan.contractStatus == "signed" %}
+													<a class="btn btn-outline-primary btn-sm" href="{{ path('app_user_contract_generate', {'loanNumber': loan.loanNumber,type:'contract','email': loan.user.email}) }}">{{ 'btn.downloadContract'|trans }}</a>
+													{% if loan.payContractStatus == "notorder" or loan.payContractStatus == "notreceived" %}
+														<a class="btn btn-success btn-sm" href="{{ path('app_user_payment', {'loanNumber': loan.loanNumber,type: 'contract'}) }}">{{"btn.pay"|trans}}</a>
+													{% endif %}
+												{% endif %}
+											{% endif %}
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

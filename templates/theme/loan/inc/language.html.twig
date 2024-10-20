@@ -1,0 +1,10 @@
+{% for key, item  in language_switcher() %}
+	{# Replace with your list of supported languages #}
+	{% if item.locale != currentLanguage %}
+		<li data-value="{{ key + 1}}" class="option">
+			<a class="sub-menu-item" href="{{ item.url }}"> <img style="margin-right: 5px;" class="rounded-circle " width="20" src="{{ asset('flags/1x1/' ~ item.locale ~ '.svg') }}" alt="">
+				{{language_name(item.locale)}} </a>
+		</li>
+
+	{% endif %}
+{% endfor %}

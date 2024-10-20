@@ -1,0 +1,34 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+fos_ck_editor:
+    configs:
+        default:
+            language: "%locale%"
+            #filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRouteAbsolute:   true
+            toolbar: full  #standard
+            #uiColor:                "#3c8dbc"
+            autoload: true
+            async: true
+        simple:
+            language: "%locale%"
+            #filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRouteAbsolute:   true
+            toolbar: standard
+            #uiColor:                "#3c8dbc"
+            autoload: true
+            async: true
+        basic:
+            language: "%locale%"
+            #filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []
+            filebrowserBrowseRouteAbsolute:   true
+            toolbar: basic
+            #uiColor:                "#3c8dbc"
+            autoload: true
+            async: true

@@ -1,0 +1,11 @@
+{# templates/emails/loan_pay.html.twig #}
+{% extends '@emails/layout.html.twig' %}
+
+{% block subject %}{{ subject }}{% endblock %}
+
+{% block body %}
+    {# <h1>{{ 'email.subject.loan.pay'|trans({}, 'messages', user.locale) }}</h1> #}
+    <p>{{ 'email.body.loan.pay.greeting'|trans({ '%user%': user.firstname }, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.loan.pay.confirmation'|trans({ '%loanNumber%': loanNumber }, 'messages', user.locale) |raw }}</p>
+    <p>{{ 'email.body.loan.pay.support'|trans({ '%email%': setting('email') }, 'messages', user.locale)  |raw }}</p>
+{% endblock %}

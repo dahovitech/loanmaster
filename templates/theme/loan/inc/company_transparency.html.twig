@@ -1,0 +1,55 @@
+{# templates/company_transparency.html.twig #}
+<section class="company-transparency-one section-space">
+    <div class="company-transparency-one__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/company-transparency-bg-1-1.jpg') }});"></div>
+    <!-- /.company-transparency-one__bg -->
+    <div class="container">
+        <div class="row gutter-y-40">
+            <div class="col-lg-12">
+                <div class="company-transparency-one__content">
+                    <div class="sec-title @@extraClassName">
+                        <div class="sec-title__top">
+                            <div class="sec-title__shape">
+                                <div class="sec-title__shape__one"></div><!-- /.sec-title__shape__one -->
+                                <div class="sec-title__shape__two"></div><!-- /.sec-title__shape__one -->
+                            </div><!-- /.sec-title__shape -->
+                            <h6 class="sec-title__tagline">{{ 'companyTransparency.tagline'|trans }}</h6><!-- /.sec-title__tagline -->
+                        </div><!-- /.sec-title__top -->
+                        <h3 class="sec-title__title">{{ 'companyTransparency.subtitle'|trans }}</h3><!-- /.sec-title__title -->
+                    </div><!-- /.sec-title -->
+                    <div class="company-transparency-one__main-tab-box tabs-box wow fadeInUp animated" data-wow-duration="1500ms">
+                        <ul class="tab-buttons">
+                            <li data-tab="#innovative" class="tab-btn active-btn">{{ 'companyTransparency.innovativeTitle'|trans }}</li>
+                            <li data-tab="#talent" class="tab-btn">{{ 'companyTransparency.talentTitle'|trans }}</li>
+                            <li data-tab="#enabling" class="tab-btn">{{ 'companyTransparency.enablingTitle'|trans }}</li>
+                            <li data-tab="#commercially-responsible" class="tab-btn">{{ 'companyTransparency.commerciallyResponsibleTitle'|trans }}</li>
+                        </ul><!-- /.tab-buttons -->
+                        <div class="tabs-content">
+                            <div class="tab active-tab fadeInUp animated" data-wow-delay="200ms" id="innovative" style="display: block;">
+                                <p class="tabs-content__text">{{ 'companyTransparency.innovativeText'|trans|raw }}</p>
+                            </div><!-- /.innovative-tab -->
+                            <div class="tab fadeInUp animated" data-wow-delay="200ms" id="talent">
+                                <p class="tabs-content__text">{{ 'companyTransparency.talentText'|trans|raw }}</p>
+                            </div><!-- /.talent-tab -->
+                            <div class="tab fadeInUp animated" data-wow-delay="200ms" id="enabling">
+                                <p class="tabs-content__text">{{ 'companyTransparency.enablingText'|trans|raw }}</p>
+                            </div><!-- /.enabling-tab -->
+                            <div class="tab fadeInUp animated" data-wow-delay="200ms" id="commercially-responsible">
+                                <p class="tabs-content__text">{{ 'companyTransparency.commerciallyResponsibleText'|trans|raw }}</p>
+                            </div><!-- /.commercially-responsible-tab -->
+                        </div><!-- /.tab-content -->
+                    </div><!-- /.company-transparency-one__main-tab-box -->
+                    {# <div class="company-transparency-one__call wow fadeInUp" data-wow-duration="1500ms">
+                        <span class="company-transparency-one__call__icon">
+                            <i class="icon-telephone"></i>
+                        </span><!-- /.company-transparency-one__call__icon -->
+                        <div class="company-transparency-one__call__content">
+                            <p class="company-transparency-one__call__title">{{ 'companyTransparency.callUs'|trans }}</p>
+                            <a href="tel:{{ 'companyTransparency.phoneNumber'|trans }}" class="company-transparency-one__call__number">{{ 'companyTransparency.phoneNumber'|trans }}</a>
+                        </div><!-- /.company-transparency-one__call__content -->
+                    </div><!-- /.company-transparency-one__call --> #}
+                </div><!-- /.company-transparency-one__content -->
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row gutter-y-40 -->
+    </div><!-- /.container -->
+    <img src="{{ asset('theme/loan/assets/images/shapes/company-transparency-shape-1-1.png') }}" alt="shape" class="company-transparency-one__shape">
+</section><!-- /.company-transparency-one section-space -->

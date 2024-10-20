@@ -1,0 +1,9 @@
+<div class="topbar__social">
+{% for social in socials() %}
+    <a href="{{social.url}}">
+		<i class="{{social.icon}}" aria-hidden="true"></i>
+		<span class="sr-only">{{social.name}}</span>
+	</a>
+{% endfor %}
+
+</div>

@@ -1,0 +1,324 @@
+<!-- Back To Top Start -->
+<div class="scroll-up">
+	<svg class="scroll-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+		<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+	</svg>
+</div>
+
+{# <!-- Preloader Start -->
+<div id="preloader" class="preloader">
+	<div class="animation-preloader">
+		<div class="spinner"></div>
+		{% set title = setting("title")|split('') %}
+		<div class="txt-loading">
+			{% for t in title %}
+				<span data-text-preloader="{{ t }}" class="letters-loading">
+					{{ t }}
+				</span>
+			{% endfor %}
+		</div>
+
+		<p class="text-center">{{"loading"|trans}}</p>
+	</div>
+	<div class="loader">
+		<div class="row">
+			<div class="col-3 loader-section section-left">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-left">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-right">
+				<div class="bg"></div>
+			</div>
+			<div class="col-3 loader-section section-right">
+				<div class="bg"></div>
+			</div>
+		</div>
+	</div>
+</div>  #}
+
+<!--<< Mouse Cursor Start >>-->
+<div class="mouse-cursor cursor-outer"></div>
+<div class="mouse-cursor cursor-inner"></div>
+
+<!-- Offcanvas Area Start -->
+<div class="fix-area">
+	<div class="offcanvas__info">
+		<div class="offcanvas__wrapper">
+			<div class="offcanvas__content">
+				<div class="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
+					<div class="offcanvas__logo">
+						<a href="{{path('home')}}" class="header-logo">
+							<img src="{{ asset(setting("logoDark")|default('#')) }}" alt="{{setting("title")}}" width="200">
+						</a>
+					</div>
+					<div class="offcanvas__close">
+						<button>
+							<i class="fas fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<p class="d-none d-lg-block">
+					{{"front.page.about.footer"|trans({'%siteName%': setting('title')})}}
+				</p>
+				<div class="mobile-menu fix mb-3"></div>
+				<div class="offcanvas__contact">
+					<h4>{{"form.user.email"|trans|upper}}</h4>
+					<ul>
+						<li class="d-flex align-items-center">
+							<div class="offcanvas__contact-icon mr-15">
+								<i class="fal fa-envelope"></i>
+							</div>
+							<div class="offcanvas__contact-text">
+								<a href="mailto:{{setting('email')}}">
+									<span class="mailto:{{setting('email')}}">{{setting('email')}}</span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<div class="header-button mt-4">
+						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+								<a href="{{ path("app_user_dashboard") }}" class="theme-btn text-center">
+									<span>
+										{{"admin.menu.dashboad"|trans}}
+										<i class="fas fa-home"></i>
+									</span>
+								</a>
+							{% endif %}
+							{% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_SUPER_ADMIN') == true %}
+								<a href="{{ path("app_admin_dashboard") }}" class="theme-btn text-center">
+									<span>
+										{{"admin.menu.dashboad"|trans}}
+										<i class="fas fa-home"></i>
+									</span>
+								</a>
+							{% endif %}
+						{% else %}
+							<a href="{{ path("login") }}" class="theme-btn text-center">
+								<span>
+									{{"btn.login"|trans}}
+									<i class="fas fa-user"></i>
+								</span>
+							</a>
+							<a href="{{ path("register") }}" class="theme-btn text-center">
+								<span>
+									{{"btn.register"|trans}}
+									<i class="fas fa-edit"></i>
+								</span>
+							</a>
+						{% endif %}
+					</div>
+					<div class="social-icon d-flex align-items-center">
+						<a href="#">
+							<i class="fab fa-facebook-f"></i>
+						</a>
+						<a href="#">
+							<i class="fab fa-twitter"></i>
+						</a>
+						<a href="#">
+							<i class="fab fa-youtube"></i>
+						</a>
+						<a href="#">
+							<i class="fab fa-linkedin-in"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="offcanvas__overlay"></div>
+{% set currentLanguage = app.session.get('language')|default(app.request.locale) %}
+
+<!-- Header Top Start -->
+<div class="header-top-section-3">
+	<div class="container-fluid">
+		<div class="header-top-wrapper style-2 style-3">
+			<div class="top-left">
+				<ul class="contact-list">
+
+					<li style="margin-left: 10px;">
+						<i class="fas fa-envelope"></i>
+						<a href="mailto:{{ setting('email') }}" class="line-none">{{ setting('email') }}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="top-right">
+
+				<div class="flag-wrap ">
+					<div class="flag">
+						<img style="width: 30px!important" src="{{ asset('flags/1x1/' ~ currentLanguage ~ '.svg') }}" alt="">
+					</div>
+					<div class="nice-select" tabindex="0">
+						<span class="current">
+							{{language_name(currentLanguage)}}
+						</span>
+						<ul class="list">
+							{% for key, language in all_languages() %}
+								{# Replace with your list of supported languages #}
+								{% if language.code != currentLanguage %}
+									<li data-value="{{ key + 1}}" class="option">
+										<a class="sub-menu-item" href="{{ path('switch_language', {'language': language.code}) }}"><img class="rounded-circle" width="20" src="{{ asset('flags/1x1/' ~ language.code ~ '.svg') }}" alt="">
+											{{language_name(language.code)}}</a>
+									</li>
+
+								{% endif %}
+							{% endfor %}
+
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Header Area Start -->
+<header class="header-section-3">
+	<div id="header-sticky" class="header-3">
+		<div class="container-fluid">
+			<div class="mega-menu-wrapper">
+				<div class="header-main">
+					<div class="logo">
+						<a href="{{path('home')}}" class="header-logo">
+							<img src="{{ asset(setting("logoDark")|default('#')) }}" alt="{{setting("title")}}" width="200">
+						</a>
+					</div>
+					<div class="header-left">
+						<div class="mean__menu-wrapper">
+							<div class="main-menu">
+								<nav id="mobile-menu">
+									<ul>
+										<li>
+											<a href="{{ path("home") }}">{{"front.menu.home"|trans}}</a>
+										</li>
+										<li>
+											<a href="{{ path("about") }}">{{"front.menu.about"|trans}}</a>
+										</li>
+										<li class="has-dropdown">
+											<a href="{{path('country_index')}}">
+												{{"front.menu.country"|trans}}
+												<i class="fas fa-angle-down"></i>
+											</a>
+											<ul class="submenu has-home-menu">
+												<li class="border-none">
+													<div class="row g-4">
+														{% for country in countries() %}
+															<div class="col-lg-2 home-menu">
+																<div class="home-menu-thumb">
+																	<img src="{{country.image}}" alt="img">
+																	<div class="demo-button">
+																		<a href="{{path('country_show',{code: country.code|lower})}}" class="theme-btn">
+																			<span>{{"btn.readMore"|trans}}</span>
+																		</a>
+																	</div>
+																</div>
+																<div class="home-menu-content text-center">
+																	<h4 class="home-menu-title">
+																		{{country_name(country.code)}}
+																	</h4>
+																</div>
+															</div>
+														{% endfor %}
+
+													</div>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<a href="{{path('service_index')}}">{{"front.menu.service"|trans}}
+												<i class="fas fa-angle-down"></i>
+											</a>
+											<ul class="submenu">
+												{% for category in serviceCategories() %}
+													<li>
+														<a href="#">{{category.name}}</a>
+														<ul class="submenu">
+															{% for service in category.services %}
+																<li>
+																	<a href="{{path('service_show',{slug: service.slug})}}">{{service.name}}</a>
+																</li>
+															{% endfor %}
+														</ul>
+													</li>
+												{% endfor %}
+											</ul>
+
+										</li>
+										<li class="has-dropdown d-lg-none">
+											<a href="javascript:void(0)">
+												<img width="20" src="{{ asset('flags/1x1/' ~ currentLanguage ~ '.svg') }}" alt="">
+												{{language_name(currentLanguage)}}
+											</a>
+											<span class="menu-arrow"></span>
+											<ul class="submenu">
+												{% for language in all_languages() %}
+													{# Replace with your list of supported languages #}
+													{% if language.code != currentLanguage %}
+														<li>
+															<a class="sub-menu-item" href="{{ path('switch_language', {'language': language.code}) }}"><img class="rounded-circle" width="20" src="{{ asset('flags/1x1/' ~ language.code ~ '.svg') }}" alt="">
+																{{language_name(language.code)}}</a>
+														</li>
+													{% endif %}
+												{% endfor %}
+											</ul>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<div class="header-right d-flex justify-content-end align-items-center">
+						<div class="header-button">
+							{% if app.user %}
+								{% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+								<a href="{{ path("app_user_dashboard") }}" class="theme-btn text-center">
+									<span>
+										{{"admin.menu.dashboad"|trans}}
+										<i class="fas fa-home"></i>
+									</span>
+								</a>
+							{% endif %}
+							{% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_SUPER_ADMIN') == true %}
+								<a href="{{ path("app_admin_dashboard") }}" class="theme-btn text-center">
+									<span>
+										{{"admin.menu.dashboad"|trans}}
+										<i class="fas fa-home"></i>
+									</span>
+								</a>
+							{% endif %}
+							{% else %}
+								<a href="{{ path("login") }}" class="theme-btn theme-btn-2">
+									<span>
+										{{"btn.login"|trans}}
+										<i class="fas fa-user"></i>
+									</span>
+								</a>
+								<a href="{{ path("register") }}" class="theme-btn theme-btn-2">
+									<span>
+										{{"btn.register"|trans}}
+										<i class="fas fa-edit"></i>
+									</span>
+								</a>
+							{% endif %}
+
+
+						</div>
+						<div class="header__hamburger d-xl-block my-auto">
+							<div class="sidebar__toggle">
+								<div class="header-bar">
+									<span></span>
+									<span></span>
+									<span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

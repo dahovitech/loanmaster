@@ -1,0 +1,194 @@
+<footer class="main-footer main-footer--home">
+	<div class="main-footer__bg" style="background-image: url({{asset('theme/loan/assets/images/shapes/footer-bg-1-1.png')}});"></div>
+	<!-- /.main-footer__bg -->
+	<div class="main-footer__top">
+		<div class="container">
+			<div class="row gutter-y-40">
+				<div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+					<div class="footer-widget footer-widget--about">
+						<a href="index.html" class="footer-widget__logo">
+							<img src="{{asset(setting('logoLight'))}}" width="150" alt="{{setting('title')}}">
+						</a>
+						<p class="footer-widget__about-text">{{"front.page.newsletter"|trans}}</p>
+						<!-- /.footer-widget__about-text -->
+						<form action="{{path("newletter")}}" class="footer-widget__newsletter mc-form">
+							<input type="text" name="email" placeholder="{{"form.email"|trans}}">
+							<button type="submit">
+								<span class="sr-only">{{'btn.subscribe'|trans}}</span>
+								<!-- /.sr-only -->
+								<i class="icon-right-arrow"></i>
+							</button>
+						</form>
+						<!-- /.footer-widget__newsletter mc-form -->
+						<div class="mc-form__response"></div>
+						<!-- /.mc-form__response -->
+					</div>
+					<!-- /.footer-widget -->
+				</div>
+				<!-- /.col-xl-4 col-lg-6 -->
+				<div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+					<div class="footer-widget footer-widget--links footer-widget--links-one">
+						<h2 class="footer-widget__title">{{"front.menu.link"|trans}}</h2>
+						<!-- /.footer-widget__title -->
+						<ul class="list-unstyled footer-widget__links">
+							{% for page in pages() %}
+								<li>
+									<a href="{{path('page_index',{slug: page.slug})}}">{{page.name}}</a>
+								</li>
+							{% endfor %}
+						</ul>
+						<!-- /.list-unstyled footer-widget__links -->
+					</div>
+					<!-- /.footer-widget -->
+				</div>
+				<!-- /.col-xl-2 col-lg-3 col-md-3 col-sm-6 -->
+				<div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+					<div class="footer-widget footer-widget--links footer-widget--links-two">
+						<h2 class="footer-widget__title">{{"front.menu.service"|trans}}</h2>
+						<!-- /.footer-widget__title -->
+						<ul class="list-unstyled footer-widget__links">
+							{% for serviceList in services() %}
+								<li>
+									<a href="{{path('service_show',{slug: serviceList.slug})}}">{{serviceList.name}}</a>
+								</li>
+							{% endfor %}
+
+						</ul>
+						<!-- /.list-unstyled footer-widget__links -->
+					</div>
+					<!-- /.footer-widget -->
+				</div>
+				<!-- /.col-xl-3 col-lg-3 col-md-4 col-sm-6 -->
+				<div class="col-xl-3 col-lg-6 col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+					<div class="footer-widget footer-widget--contact">
+						<h2 class="footer-widget__title">Get inTouch</h2>
+						<!-- /.footer-widget__title -->
+						<ul class="list-unstyled footer-widget__info">
+							{% if setting('email') is not empty %}
+
+								<li>
+									<span class="footer-widget__info__icon">
+										<i class="icon-paper-plane"></i>
+									</span>
+									<a href="mailto:{{setting('email')}}">{{setting('email')}}</a>
+								</li>
+							{% endif %}
+							{% if setting('telephone') is not empty %}
+
+								<li>
+									<span class="footer-widget__info__icon">
+										<i class="icon-telephone"></i>
+									</span>
+									<a href="tel:{{setting('telephone')|replace({'  ': ''})|trim}}">{{setting('telephone')}}</a>
+								</li>
+							{% endif %}
+
+						</ul>
+						<!-- /.list-unstyled -->
+					</div>
+					<!-- /.footer-widget -->
+				</div>
+				<!-- /.col-xl-3 col-lg-6 col-md-5 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /.main-footer__top -->
+	<div class="main-footer__bottom">
+		<div class="container">
+			<div class="main-footer__bottom__inner">
+				<div class="row gutter-y-40 align-items-center">
+					<div class="col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+						<div class="main-footer__social social-links-two">
+							{% for social in socials() %}
+								<a href="{{social.url}}">
+									<i class="{{social.icon}}" aria-hidden="true"></i>
+									<span class="sr-only">{{social.name}}</span>
+								</a>
+							{% endfor %}
+
+
+						</div>
+						<!-- /.main-footer__social -->
+					</div>
+					<!-- /.col-md-5 -->
+					<div class="col-md-7 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+						<div class="main-footer__bottom__copyright">
+							<p class="main-footer__copyright">
+
+
+								{{"Copyright"|trans}}
+								&copy;
+								<span class="dynamic-year"></span>
+								{{setting('title')}}.
+								{{"AllRightsReserved"|trans}}.
+							</p>
+						</div>
+						<!-- /.main-footer__bottom__copyright -->
+					</div>
+					<!-- /.col-md-7 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.main-footer__inner -->
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /.main-footer__bottom -->
+</footer>
+<!-- /.main-footer -->
+<div class="mobile-nav__wrapper">
+	<div class="mobile-nav__overlay mobile-nav__toggler"></div>
+	<!-- /.mobile-nav__overlay -->
+	<div class="mobile-nav__content">
+		<span class="mobile-nav__close mobile-nav__toggler">
+			<i class="icon-close"></i>
+		</span>
+		<div class="logo-box logo-retina">
+			<a href="{{path('home')}}" aria-label="{{setting('title')}}"><img src="{{setting('logoLight')}}" width="155" alt=""/></a>
+		</div>
+		<!-- /.logo-box -->
+		<div class="mobile-nav__container"></div>
+		<!-- /.mobile-nav__container -->
+		<ul class="mobile-nav__contact list-unstyled">
+			{% if setting('email') is not empty %}
+				<li>
+					<span class="mobile-nav__contact__icon">
+						<i class="fa fa-envelope"></i>
+					</span>
+					<a href="mailto:{{setting('email')}}">{{setting('email')}}</a>
+				</li>
+			{% endif %}
+			{% if setting('telephone') is not empty %}
+				<li>
+					<span class="mobile-nav__contact__icon">
+						<i class="fa fa-phone-alt"></i>
+					</span>
+					<a href="tel:{{setting('telephone')|replace({'  ': ''})|trim}}">{{setting('telephone')}}</a>
+				</li>
+			{% endif %}
+
+		</ul>
+		<!-- /.mobile-nav__contact -->
+		<div class="mobile-nav__social">
+			<div class="main-footer__social social-links-two">
+				{% for social in socials() %}
+					<a href="{{social.url}}">
+						<i class="{{social.icon}}" aria-hidden="true"></i>
+						<span class="sr-only">{{social.name}}</span>
+					</a>
+				{% endfor %}
+			</div>
+			<!-- /.mobile-nav__social -->
+		</div>
+		<!-- /.mobile-nav__content -->
+	</div>
+	<!-- /.mobile-nav__wrapper -->
+
+	<a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+		<span class="scroll-to-top__text">{{"backTop"|trans}}</span>
+		<span class="scroll-to-top__wrapper">
+			<span class="scroll-to-top__inner"></span>
+		</span>
+	</a>

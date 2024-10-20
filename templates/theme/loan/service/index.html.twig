@@ -1,0 +1,54 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+{% block title %}
+	{{ setting('seoServiceTitle')|raw|trim }}
+{% endblock %}
+{% block description %}
+	{{ setting('seoServiceDescription')|raw|trim }}
+{% endblock %}
+{% block keywords %}
+	{{ setting('seoServiceKeywords')|raw|trim }}
+{% endblock %}
+{% block canonical %}
+	{{ url('service_index')|raw|trim }}
+{% endblock %}
+
+{% block ogTitle %}
+	{{ setting('seoServiceTitle')|raw|trim }}
+{% endblock %}
+{% block ogDescription %}
+	{{ setting('seoServiceDescription')|raw|trim }}
+{% endblock %}
+{% block ogImage %}
+	{{ absolute_url(setting('seoImage')|default('#'))|raw|trim }}
+{% endblock %}
+{% block ogUrl %}
+	{{ url('service_index')|raw|trim }}
+{% endblock %}
+
+{% block twitterTitle %}
+	{{ setting('seoServiceTitle')|raw|trim }}
+{% endblock %}
+{% block twitterDescription %}
+	{{ setting('seoServiceDescription')|raw|trim }}
+{% endblock %}
+{% block twitterImage %}
+	{{ absolute_url(setting('seoImage')|default('#'))|raw|trim }}
+{% endblock %}
+{% block twitterUrl %}
+	{{ url('service_index')|raw|trim }}
+{% endblock %}
+
+{% block body %}
+	{{ include('@theme/'~setting('theme')~'/inc/service2.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/step.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/company_transparency.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/faq.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/testimonial.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/brand.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+<!--<< Hero Section Start >>-->
+<section class="hero-section hero-3">
+	<div class="slider-button">
+		<div class="hero-nav-prev">
+			<i class="fal fa-chevron-left"></i>
+		</div>
+		<div class="hero-nav-next">
+			<i class="fal fa-chevron-right"></i>
+		</div>
+	</div>
+	<div class="hero-slider-active-2">
+		{% for slider in sliders() %}
+			<div class="single-slide">
+				<div class="slide-bg bg-cover" style="background-image: url({{slider.image|raw}});">
+					<div class="container">
+						<div class="hero-content">
+							<h4 class="fs-lg animated" data-animation-in="fadeInUp" data-delay-in="0.3">{{slider.title|raw}}</h4>
+							<h1 class="fs-lg animated" data-animation-in="fadeInUp" data-delay-in="0.5">
+								{{slider.subtitle|raw}}
+							</h1>
+							<div class="hero-button fs-lg animated" data-animation-in="fadeInUp" data-delay-in="0.7">
+								<a href="{{slider.btnUrl|raw}}" class="theme-btn theme-btn-2 hover-white">
+									<span>
+										{{slider.btnText|raw}}
+										<i class="fas fa-chevron-right"></i>
+									</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>

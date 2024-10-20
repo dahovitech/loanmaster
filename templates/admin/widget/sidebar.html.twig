@@ -1,0 +1,130 @@
+<div class="sidebar-wrapper" data-simplebar="true">
+	<div class="sidebar-header">
+		<div>
+			<img src="{{ asset(setting("logoLight")|default('#')) }}" alt="{{setting("title")}}" width="200">
+		</div>
+		{# <div>
+																							<h4 class="logo-text">{{ setting('title')|default("DOCUFASTER") }}</h4>
+																						</div> #}
+		<div class="toggle-icon ms-auto">
+			<i class='bx bx-arrow-to-left'></i>
+		</div>
+	</div>
+	<!--navigation-->
+	<ul class="metismenu" id="menu">
+		{% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+			<li>
+				<a href="{{ path('app_user_dashboard') }}">
+					<div class="parent-icon">
+						<i class='bx bx-home'></i>
+					</div>
+					<div class="menu-title">{{"admin.menu.dashboad"|trans}}</div>
+				</a>
+			</li>
+			<li>
+				<a href="{{path('app_user_loan_list')}}">
+					<div class="parent-icon">
+						<i class='bx bx-money'></i>
+					</div>
+					{{"admin.menu.loan.my"|trans}}</a>
+			</li>
+
+
+		{% endif %}
+
+		{% if is_granted('ROLE_ADMIN') %}
+			<li>
+				<a href="{{ path('app_admin_dashboard') }}">
+					<div class="parent-icon">
+						<i class='bx bx-home'></i>
+					</div>
+					<div class="menu-title">{{"admin.menu.dashboad"|trans}}</div>
+				</a>
+			</li>
+			<li>
+				<a href="{{path('admin_loan_list')}}">
+					<div class="parent-icon">
+						<i class='bx bx-money'></i>
+					</div>
+					<div class="menu-title">{{"admin.menu.loan.my"|trans}}</div>
+				</a>
+				
+			</li>
+		{% endif %}
+
+
+		{% if is_granted('ROLE_ADMIN') %}
+
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon">
+						<i class='bx bx-category'></i>
+					</div>
+					<div class="menu-title">{{"admin.menu.param.my"|trans}}</div>
+				</a>
+				<ul>
+					<li><a href="{{path('app_crud_index',{entityName:'slider'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.slider"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'social'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.social"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'faq'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.faq"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'post'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.post"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'postCategory'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.postCategory"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'service'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.service"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'ServiceCategory'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.serviceCategory"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'testimonial'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">{{ "admin.menu.testimonial"|trans}}</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'bank'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Banque Prêteur</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'brand'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Partenaire</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'page'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Page</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'step'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Process</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'theme'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Theme</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'setting'})}}"><div class="parent-icon"><i class='bx bx-cog'></i></div><div class="menu-title">{{ "admin.menu.setting"|trans}}</div></a></li>
+				</ul>
+			</li>
+
+
+			<li>
+				<a href="{{ path('app_admin_media') }}">
+					<div class="parent-icon">
+						<i class='bx bx-photo-album'></i>
+					</div>
+					<div class="menu-title">{{ "admin.menu.media"|trans}}</div>
+				</a>
+			</li>
+
+			<li>
+				<a href="{{ path('app_admin_clientLists') }}">
+					<div class="parent-icon">
+						<i class='bx bx-user'></i>
+					</div>
+					<div class="menu-title">Clients</div>
+				</a>
+			</li>
+
+
+		{% endif %}
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<li>
+				<a href="javascript:;" class="has-arrow">
+					<div class="parent-icon">
+						<i class='bx bx-globe'></i>
+					</div>
+					<div class="menu-title">Traduction</div>
+				</a>
+				<ul>
+					<li><a href="{{path('app_crud_index',{entityName:'language'})}}"><i class="bx bx-right-arrow-alt"></i>Langues</a></li>
+					<li><a href="{{path('app_admin_lang_generator')}}"><i class="bx bx-right-arrow-alt"></i>Générateur</a></li>
+					<li><a href="{{path('app_admin_lang_editor')}}"><i class="bx bx-right-arrow-alt"></i>Editeur</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="{{ path('app_admin_test_email') }}">
+					<div class="parent-icon">
+						<i class='bx bx-cog'></i>
+					</div>
+					<div class="menu-title">Email de test</div>
+				</a>
+			</li>
+
+		{% endif %}
+	</ul>
+	<!--end navigation-->
+</div>

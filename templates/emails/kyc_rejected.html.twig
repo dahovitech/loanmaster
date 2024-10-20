@@ -1,0 +1,15 @@
+{# templates/emails/kyc_rejected.html.twig #}
+
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'email.kyc_rejected.title'|trans({}, 'messages', user.locale) }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.kyc_rejected.greeting'|trans({'%firstname%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.kyc_rejected.message'|trans }}</p>
+    <p>{{ 'email.kyc_rejected.reason'|trans({'%message%': message}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.kyc_rejected.instructions'|trans({}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.kyc_rejected.thanks'|trans({}, 'messages', user.locale) }}</p>
+{% endblock %}

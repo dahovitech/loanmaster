@@ -1,0 +1,41 @@
+{
+    "name": "gregwar/captcha-bundle",
+    "type": "symfony-bundle",
+    "description": "Captcha bundle",
+    "keywords": ["symfony2", "symfony", "captcha", "bot", "visual", "code", "security", "spam"],
+    "homepage": "https://github.com/Gregwar/CaptchaBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Grégoire Passault",
+            "email": "g.passault@gmail.com",
+            "homepage": "https://www.gregwar.com/"
+        },
+        {
+            "name": "Jeremy Livingston",
+            "email": "jeremy.j.livingston@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.2",
+        "ext-gd": "*",
+        "gregwar/captcha": "^1.2.1",
+        "symfony/form": "~6.0|~7.0",
+        "symfony/framework-bundle": "~6.0|~7.0",
+        "symfony/translation": "~6.0|^7.0",
+        "twig/twig": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gregwar\\CaptchaBundle\\": "/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.45",
+        "phpstan/phpstan": "^1.10",
+        "symplify/easy-coding-standard": "^12"
+    }
+}

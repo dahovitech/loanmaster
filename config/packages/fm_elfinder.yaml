@@ -1,0 +1,62 @@
+fm_elfinder:
+    instances:
+        default:
+            editor: ckeditor # Editeur utilisé
+            connector:
+                roots:
+                    uploads:
+                        driver: LocalFileSystem
+                        path: upload
+        form:
+            locale: "%locale%" # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            cors_support: true
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: upload
+                        upload_allow: ['all']
+                        upload_deny: ['all']
+                        upload_max_size: 2000M
+                        archivers:
+                            create:
+                                application/zip:
+                                    cmd: "phpfunction"
+                                    argc: "self::zipArchiveZip"
+                                    ext: "zip"
+                            extract:
+                                application/myzip:
+                                    cmd: "phpfunction"
+                                    argc: "self::zipArchiveUnzip"
+                                    ext: "zip"
+
+        user:
+            locale: "%locale%" # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            theme: smoothness
+            cors_support: true
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: upload
+                        upload_allow: ['all']
+                        upload_deny: ['all']
+                        upload_max_size: 2000M
+                        archive_mimes: "application/zip"
+                        archivers:
+                            create:
+                                application/zip:
+                                    cmd: "phpfunction"
+                                    argc: "self::zipArchiveZip"
+                                    ext: "zip"
+                            extract:
+                                application/myzip:
+                                    cmd: "phpfunction"
+                                    argc: "self::zipArchiveUnzip"
+                                    ext: "zip"

@@ -1,0 +1,11 @@
+{# templates/emails/kyc_admin.html.twig #}
+
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'email.admin.kyc_submitted.subject'|trans }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ body|raw }}</p>
+{% endblock %}

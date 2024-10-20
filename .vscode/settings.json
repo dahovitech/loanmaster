@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/yamllint.json": "file:///var/www/html/docsoffice.local/translations/messages.es.yaml"
+    }
+}

@@ -1,0 +1,51 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-md-4">
+			<div class="card">
+				<div class="card-body">
+					<ul class="list-group">
+						{% for key, value in locales %}
+							<li class="list-group-item {{(app.request.query.get('lang_load') == key)?'active':' '}}">
+								{{ key }}
+								<img width="30" src="{{ asset('flags/1x1/' ~ key ~ '.svg') }}" alt="">
+								<a class="btn btn-outline-dark btn-sm" href="{{ path("app_admin_lang_editor", {lang_load: key}) }}">Editer</a>
+								<a class="btn btn-outline-danger btn-sm {{(key == default_lang)? 'disabled' : ' '}}" href="{{ path("app_admin_lang_delete", {lang_load: key}) }}">Supprimer</a>
+
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<ul></ul>
+		</div>
+		<div class="col-md-8">
+			<h6 class="mb-0 text-uppercase">Editeur de langue</h6>
+			<hr/>
+			<div class="card">
+				<div class="card-body">
+					{% if form is not empty %}
+						<form action="{{ path("app_admin_lang_editor", {lang_load: app.request.query.get('lang_load')}) }}" method="post">
+							{{ form|raw }}
+							<div class="form-group"><br>
+								<button class="btn btn-primary btn-block btn-lg">Editer</button>
+							</div>
+						</form>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{# <script src='https://cdn.tiny.cloud/1/vdqx2klew412up5bcbpwivg1th6nrh3murc6maz8bukgos4v/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+		</script>
+		<script>
+			tinymce.init({
+			  selector: '.mytextarea'
+			});
+		</script> #}
+{% endblock %}

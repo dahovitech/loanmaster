@@ -1,0 +1,88 @@
+<section class="contact-one section-space">
+	<div class="container">
+		<div class="row gutter-y-50 align-items-center">
+			<div class="col-lg-6">
+				<div class="contact-one__image wow fadeInLeft" data-wow-duration="1500ms" style="background-image: url({{asset('theme/loan/assets/images/resources/contact-1-1.jpg')}});">
+					<div class="contact-one__info list-unstyled">
+						<div class="contact-one__info__shape"></div>
+						<!-- /.contact-one__info__shape -->
+                       
+
+						<div class="contact-one__info__inner">
+                            {% if setting('address') is not empty %}
+							<div class="contact-one__info__item">
+								<span class="contact-one__info__icon">
+									<i class="icon-location"></i>
+								</span>
+								<!-- /.contact-one__info__icon -->
+								<div class="contact-one__info__content">
+									<!-- /.contact-one__info__title -->
+									{{setting('address')}}
+									<!-- /.contact-one__info__text -->
+								</div>
+								<!-- /.contact-one__info__content -->
+							</div>
+                             {% endif %}
+							<!-- /.contact-one__info__item -->
+                            {% if setting('telephone') is not empty %}
+
+							<div class="contact-one__info__item">
+								<span class="contact-one__info__icon">
+									<i class="icon-telephone"></i>
+								</span>
+								<!-- /.contact-one__info__icon -->
+								<div class="contact-one__info__content">
+									<!-- /.contact-one__info__title -->
+									<a href="tel:{{setting('telephone')|replace({'  ': ''})|trim}}" class="contact-one__info__text">{{setting('telephone')}}</a>
+									<!-- /.contact-one__info__text -->
+								</div>
+								<!-- /.contact-one__info__content -->
+							</div>
+                            {% endif %}
+							<!-- /.contact-one__info__item -->
+                            {% if setting('email') is not empty %}
+                                <div class="contact-one__info__item">
+                                    <span class="contact-one__info__icon">
+                                        <i class="icon-mail"></i>
+                                    </span>
+                                    <!-- /.contact-one__info__icon -->
+                                    <div class="contact-one__info__content">
+                                        <!-- /.contact-one__info__title -->
+                                        <a href="mailto:{{setting('email')}}" class="contact-one__info__text">{{setting('email')}}</a>
+                                        <!-- /.contact-one__info__text -->
+                                    </div>
+                                    <!-- /.contact-one__info__content -->
+                                </div>
+                            {% endif %}
+							<!-- /.contact-one__info__item -->
+						</div>
+						<!-- /.contact-one__info__inner -->
+					</div>
+					<!-- /.contact-one__info -->
+				</div>
+				<!-- /.contact-one__image -->
+			</div>
+			<!-- /.col-lg-6 -->
+			<div class="col-lg-6">
+				<form method="post" class="contact-one__form form-one wow fadeInRight" data-wow-duration="1500ms">
+					<h2 class="contact-one__form__title">{{"contact.title"|trans}}</h2>
+					<!-- /.contact-one__form__title -->
+					{{ form_start(form) }}
+					{{ form_widget(form) }}
+					<div class="form-one__control form-one__control--full">
+						<button type="submit" class="contact-one__form__btn easilon-btn">
+							<span>{{"btn.send"|trans}}</span>
+						</button>
+					</div>
+					<!-- /.form-one__control -->
+					{{ form_end(form) }}
+
+				</form>
+			</div>
+			<!-- /.col-lg-6 -->
+		</div>
+		<!-- /.row gutter-y-50 -->
+	</div>
+	<!-- /.container -->
+</section>
+<!-- /.contact-one section-space -->

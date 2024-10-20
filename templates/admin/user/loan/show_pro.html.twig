@@ -1,0 +1,84 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block title %}
+    {{ 'loan.show.title'|trans }}
+{% endblock %}
+
+{% block body %}
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'loan.show.title'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:;">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'loan.show.title'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-12">
+            <h6 class="mb-0 text-uppercase">{{ 'loan.show.title'|trans }}</h6>
+            <hr/>
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        <strong>{{ 'loan.form.loanType'|trans }}:</strong>
+                        {% set loanType = "loan.form.type." ~ loan.loanType %}
+                        {{ loanType|trans }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.amount'|trans }}:</strong>
+                        {{ loan.amount }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.durationMonths'|trans }}:</strong>
+                        {{ loan.durationMonths }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectName'|trans }}:</strong>
+                        {{ loan.projectName }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectDescription'|trans }}:</strong>
+                        <br>{{ loan.projectDescription }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectStartDate'|trans }}:</strong>
+                        {{ loan.projectStartDate|date('Y-m-d H:i') }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectEndDate'|trans }}:</strong>
+                        {{ loan.projectEndDate|date('Y-m-d H:i') }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectBudget'|trans }}:</strong>
+                        {{ loan.projectBudget }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectLocation'|trans }}:</strong>
+                        {{ loan.projectLocation }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectManager'|trans }}:</strong>
+                        {{ loan.projectManager }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectTeam'|trans }}:</strong>
+                        {{ loan.projectTeam|raw }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectMilestones'|trans }}:</strong>
+                        {{ loan.projectMilestones|raw }}</p>
+                    <p>
+                        <strong>{{ 'loan.form.projectRisks'|trans }}:</strong>
+                        {{ loan.projectRisks|raw }}</p>
+                    <p>
+                        <strong>Justificatif de paiement:</strong>
+                        {{ loan.projectBenefits|raw }}</p>
+                    {% if loan.payFile is not null %}
+                        <h2>{{ 'loan.show.paymentProof'|trans }}</h2>
+                        <a href="{{ asset(loan.payFile.getWebPath()|default(" ")) }}" target="_blank">Voir le justificatif de paiement</a>
+                    {% endif %}
+                    <br>
+                    <a href="{{ path('admin_loan_list') }}" class="btn btn-primary btn-sm">{{ 'loan.show.backToList'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

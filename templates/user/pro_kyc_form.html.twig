@@ -1,0 +1,173 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}{{ kycTitle }}{% endblock %}
+
+{% block body %}
+    <!-- Breadcrumb -->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'kyc.breadcrumb.title'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_user_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'kyc.breadcrumb.current'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- KYC Form Section -->
+    <div class="card">
+        <div class="card-header text-center">
+            <h5 class="card-title text-danger"><i class="bx bx-badge-check"></i> {{ kycTitle }}</h5>
+            <p class="card-text">{{ kycDescription }}</p>
+        </div>
+        <div class="card-body">
+            {{ form_start(form, { 'attr': { 'class': 'kyc-form' } }) }}
+
+                <!-- Company Information Section -->
+                <div class="section-header">
+                    <h6 class="text-primary"><i class="bx bx-building"></i> {{ 'kyc.company_information'|trans }}</h6>
+                </div><hr>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="companyName" class="form-label">{{ form.companyName.vars.label|trans }}</label>
+                        {{ form_widget(form.companyName, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyName) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="registrationNumber" class="form-label">{{ form.registrationNumber.vars.label|trans }}</label>
+                        {{ form_widget(form.registrationNumber, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.registrationNumber) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="companyAddress" class="form-label">{{ form.companyAddress.vars.label|trans }}</label>
+                        {{ form_widget(form.companyAddress, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyAddress) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="businessLicense" class="form-label">{{ form.businessLicense.vars.label|trans }}</label>
+                        {{ form_widget(form.businessLicense) }}
+                        {{ form_errors(form.businessLicense) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="businessRegistration" class="form-label">{{ form.businessRegistration.vars.label|trans }}</label>
+                        {{ form_widget(form.businessRegistration) }}
+                        {{ form_errors(form.businessRegistration) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="taxCertificate" class="form-label">{{ form.taxCertificate.vars.label|trans }}</label>
+                        {{ form_widget(form.taxCertificate) }}
+                        {{ form_errors(form.taxCertificate) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="companyCountry" class="form-label">{{ form.companyCountry.vars.label|trans }}</label>
+                        {{ form_widget(form.companyCountry, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyCountry) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="companyCity" class="form-label">{{ form.companyCity.vars.label|trans }}</label>
+                        {{ form_widget(form.companyCity, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyCity) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="companyZipcode" class="form-label">{{ form.companyZipcode.vars.label|trans }}</label>
+                        {{ form_widget(form.companyZipcode, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyZipcode) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="companyEmail" class="form-label">{{ form.companyEmail.vars.label|trans }}</label>
+                        {{ form_widget(form.companyEmail, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyEmail) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="companyTelephone" class="form-label">{{ form.companyTelephone.vars.label|trans }}</label>
+                        {{ form_widget(form.companyTelephone, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyTelephone) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="companyLegalStatus" class="form-label">{{ form.companyLegalStatus.vars.label|trans }}</label>
+                        {{ form_widget(form.companyLegalStatus, { 'attr': { 'class': 'form-select' } }) }}
+                        {{ form_errors(form.companyLegalStatus) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="companyProfessionalExperience" class="form-label">{{ form.companyProfessionalExperience.vars.label|trans }}</label>
+                        {{ form_widget(form.companyProfessionalExperience, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(form.companyProfessionalExperience) }}
+                    </div>
+                </div>
+
+                <!-- Personal Information Section -->
+                <div class="section-header">
+                    <h6 class="text-primary"><i class="bx bx-user"></i> {{ 'kyc.personal_information'|trans }}</h6>
+                </div><hr>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="idDocumentType" class="form-label">{{ form.idDocumentType.vars.label|trans }}</label>
+                        {{ form_widget(form.idDocumentType, { 'attr': { 'class': 'form-select' } }) }}
+                        {{ form_errors(form.idDocumentType) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="idDocument" class="form-label">{{ form.idDocument.vars.label|trans }}</label>
+                        {{ form_widget(form.idDocument) }}
+                        {{ form_errors(form.idDocument) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="proofOfAddressType" class="form-label">{{ form.proofOfAddressType.vars.label|trans }}</label>
+                        {{ form_widget(form.proofOfAddressType, { 'attr': { 'class': 'form-select' } }) }}
+                        {{ form_errors(form.proofOfAddressType) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="proofOfAddress" class="form-label">{{ form.proofOfAddress.vars.label|trans }}</label>
+                        {{ form_widget(form.proofOfAddress) }}
+                        {{ form_errors(form.proofOfAddress) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="integrityDocumentType" class="form-label">{{ form.integrityDocumentType.vars.label|trans }}</label>
+                        {{ form_widget(form.integrityDocumentType, { 'attr': { 'class': 'form-select' } }) }}
+                        {{ form_errors(form.integrityDocumentType) }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="integrityDocument" class="form-label">{{ form.integrityDocument.vars.label|trans }}</label>
+                        {{ form_widget(form.integrityDocument) }}
+                        {{ form_errors(form.integrityDocument) }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-outline-dark w-100">{{ 'kyc.submit'|trans|upper }}</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

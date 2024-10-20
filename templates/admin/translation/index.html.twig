@@ -1,0 +1,115 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}
+    {{ entityName|capitalize }} Translations
+{% endblock %}
+
+{% block body %}
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">
+            <h1>{{ entityName|capitalize }} Translations</h1>
+        </div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_admin_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_crud_update', { entityName: entityName, id: entityId}) }}">
+                            <i class="bx bx-globe"></i>
+                            Edit {{ entityName }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Translations</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div id="translate-text" data-url="{{ url('app_crud_translate_text') }}"></div>
+                <div id="translate-save" data-url="{{ url('app_crud_translate_save') }}"></div>
+                <div id="translate-all-save" data-url="{{ url('app_crud_translate_all_save') }}"></div>
+                <div id="get-entity" data-url="{{ url('app_crud_get_entity',{id: entityId,entityName: entityName}) }}"></div>
+                <div id="entity-id" data-url="{{ entityId }}"></div>
+                <div id="entity-name" data-url="{{ entityName }}"></div>
+                <div id="default-language" data-url="{{ defaultLanguage }}"></div>
+
+                <div class="card-header">
+                    <a class="btn btn-success btn-sm" href="{{ path('app_translation_crud_new', {entityName: entityName, entityId: entityId}) }}">Create new translation</a>
+                    <a class="btn btn-outline btn-success btn-sm" href="{{ path('app_crud_create_translations', {entityName: entityName, entityId: entityId}) }}">Create all translations</a>
+                    {% if translations|length > 0 %}
+                        <button id="generate-all" class="btn btn-dark btn-sm">Regenerate all</button>
+                        <button id="delete-selected" class="btn btn-danger btn-sm">Delete selected</button>
+                        <button id="delete-all" class="btn btn-danger btn-sm">Delete all</button>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <form id="delete-form" method="post" action="{{ path('app_translation_crud_delete_selected', { entityName: entityName, entityId: entityId}) }}">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete_selected') }}">
+                        <div class="table-responsive">
+                            <table id="tab2" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="select-all"></th>
+                                        <th>Locale</th>
+                                        <th>Field</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for translation in translations %}
+                                        <tr>
+                                            <td><input type="checkbox" name="selected[]" value="{{ translation.id }}"></td>
+                                            <td>{{ translation.locale }}</td>
+                                            <td>{{ translation.field }}</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm" href="{{ path('app_translation_crud_update', { entityName: entityName,id: translation.id, entityId: entityId}) }}">edit</a>
+                                                <button class="generate btn btn-dark btn-sm" data-content="{{ entity_field(translation.field,entityName,entityId) }}" data-field="{{translation.field}}" data-locale="{{translation.locale}}">Generate</button>
+                                                {{ include('@admin/translation/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/generate_all.js') }}"></script>
+    <script>
+        document.getElementById('select-all').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('input[name="selected[]"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = this.checked;
+            }, this);
+        });
+
+        document.getElementById('delete-selected').addEventListener('click', function() {
+            if (document.querySelectorAll('input[name="selected[]"]:checked').length > 0) {
+                document.getElementById('delete-form').submit();
+            } else {
+                swal('Warning','No items selected','warning');
+            }
+        });
+
+        document.getElementById('delete-all').addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete all translations?')) {
+                window.location.href = "{{ path('app_translation_crud_delete_all', { entityName: entityName, entityId: entityId}) }}";
+            }
+        });
+    </script>
+{% endblock %}

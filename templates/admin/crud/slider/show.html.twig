@@ -1,0 +1,76 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}
+	{{ 'slider.title'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{ 'slider.title'|trans }}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_admin_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_crud_index',{entityName: entityName}) }}">
+							<i class="bx bx-list-alt"></i>
+							{{ 'slider.list'|trans }}
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ 'slider.title'|trans }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card">
+				<div class="card-body">
+					<h1>{{ 'slider.title'|trans }}</h1>
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<th>{{ 'slider.title_field'|trans }}</th>
+								<td>{{ entity.title }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.subtitle'|trans }}</th>
+								<td>{{ entity.subtitle }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.description'|trans }}</th>
+								<td>{{ entity.description }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.image'|trans }}</th>
+								<td><img src="{{ entity.image }}" alt="{{ entity.title }}" style="max-width: 400px;"></td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.btnText'|trans }}</th>
+								<td>{{ entity.btnText }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.btnUrl'|trans }}</th>
+								<td>{{ entity.btnUrl }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'slider.status'|trans }}</th>
+								<td>{{ entity.isEnabled ? 'status.enabled'|trans : 'status.disabled'|trans }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<a class="btn btn-block btn-outline-primary" href="{{ path('app_crud_index',{entityName: entityName}) }}">{{ 'back_to_list'|trans }}</a>
+
+				{{ include('@admin/crud/slider/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

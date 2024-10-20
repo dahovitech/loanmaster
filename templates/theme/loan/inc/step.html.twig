@@ -1,0 +1,40 @@
+  <section class="work-process-one section-space">
+            <div class="container">
+                <div class="sec-title sec-title--center">
+                    <div class="sec-title__top">
+                        <div class="sec-title__shape">
+                            <div class="sec-title__shape__one"></div><!-- /.sec-title__shape__one -->
+                            <div class="sec-title__shape__two"></div><!-- /.sec-title__shape__one -->
+                        </div><!-- /.sec-title__shape -->
+                        <h6 class="sec-title__tagline">{{ 'workProcess.tagline'|trans }}</h6><!-- /.sec-title__tagline -->
+                        <div class="sec-title__shape">
+                            <div class="sec-title__shape__one"></div><!-- /.sec-title__shape__one -->
+                            <div class="sec-title__shape__two"></div><!-- /.sec-title__shape__one -->
+                        </div><!-- /.sec-title__shape -->
+                    </div><!-- /.sec-title__top -->
+                    <h3 class="sec-title__title">{{ 'workProcess.title'|trans }}</h3><!-- /.sec-title__title -->
+                </div><!-- /.sec-title -->
+                <div class="row gutter-y-30">
+                {% for step in steps() %}
+                     <div class="col-md-4 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                        <div class="work-process-one__item  text-center">
+                            <div class="work-process-one__item__image">
+                                <img src="{{asset(step.image)}}" alt="work process">
+                                <div class="work-process-one__item__number"></div><!-- /.work-process-one__item__number -->
+                                <svg class="work-process-one__item__shape" viewBox="0 0 242 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M239.497 33.8939L207.961 65.4318H4L35.5698 33.8939L4 2.35596H207.961L239.497 33.8939Z" />
+                                </svg><!-- /.work-process-one__item__shape -->
+                                <svg class="work-process-one__item__circle" width="136" height="32" viewBox="0 0 136 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M67.9555 0.758301C105.486 0.758301 135.894 7.52133 135.894 15.8938C135.894 24.2491 105.469 31.0292 67.9555 31.0292C30.425 31.0292 7.21871e-06 24.2491 7.21871e-06 15.8938C-0.0171143 7.53845 30.425 0.758301 67.9555 0.758301Z" />
+                                </svg><!-- /.work-process-one__item__circle -->
+                            </div><!-- /.work-process-one__item__image -->
+                            <div class="work-process-one__item__content">
+                                <h3 class="work-process-one__item__title">{{step.title|raw}}</h3><!-- /.work-process-one__item__title -->
+                                <p class="work-process-one__item__text">{{step.description|raw}}</p><!-- /.work-process-one__item__text -->
+                            </div><!-- /.work-process-one__item__content -->
+                        </div><!-- /.work-process-one__item -->
+                    </div><!-- /.col-xl-3 col-lg-4 col-md-6 -->
+                {% endfor %}
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section><!-- /.work-process-one section-space -->

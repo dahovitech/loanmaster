@@ -1,0 +1,27 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block body %}
+<div class="row">
+   
+    <div class="col-md-8">
+        <h6 class="mb-0 text-uppercase">Générateur de langue</h6>
+        <hr/>
+        <div id="lang-generator" data-url="{{ url('app_admin_lang_generator_submit') }}"></div>
+        <div id="translate-text" data-url="{{ url('app_admin_translate_text') }}"></div>
+        <div id="url_create_yaml_file" data-url="{{ url('app_admin_create_yaml_file') }}"></div>
+
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script src="{{ asset('js/lang_generator.js') }}"></script>
+{% endblock %}

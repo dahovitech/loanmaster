@@ -1,0 +1,139 @@
+<section class="testimonials-one section-space" id="testimonials">
+	<div class="container">
+		<div class="row gutter-y-50 align-items-center">
+			<div class="col-xl-8 col-lg-7">
+				<div class="testimonials-one__slider">
+					<div class="testimonials-one__slider__bg" style="background-image: url(assets/images/shapes/testimonial-card-bg-1-1.png);"></div>
+					<!-- /.testimonials-one__slider__bg -->
+					<div class="testimonials-one__carousel easilon-slick__carousel" data-slick-options='{
+																						                        "slidesToShow": 1,
+																						                        "slidesToScroll": 1,
+																						                        "asNavFor": ".testimonials-one__carousel-thumbs",
+																						                        "autoplay": true,
+																						                        "autoplaySpeed": 4000,
+																						                        "speed": 2000,
+																						                        "infinite": true,
+																						                        "arrows": false,
+																						                        "dots": true
+																						                    }'>
+						{% for testimonial in testimonials() %}
+							<div class="testimonials-one__item">
+								<div class="testimonial-card">
+									<svg class="testimonial-card__icon" viewbox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M0 25.4448H11.1378L3.71254 40.2951H14.8503L22.2756 25.4448V3.16919H0V25.4448Z"/>
+										<path d="M29.7004 3.16919V25.4448H40.8382L33.413 40.2951H44.5508L51.976 25.4448V3.16919H29.7004Z"/>
+										<path d="M14.307 21.7756H3.66919V0.5H24.9448V22.1576L17.7105 36.6259H7.69075L14.7542 22.4992L15.116 21.7756H14.307Z"/>
+										<path d="M44.0082 21.7756H33.3704V0.5H54.646V22.1576L47.4117 36.6259H37.3919L44.4554 22.4992L44.8172 21.7756H44.0082Z"/>
+									</svg>
+									<!-- /.testimonial-card__icon -->
+									<div class="easilon-ratings">
+										{% for i in 0..testimonial.rating %}
+											<span class="easilon-ratings__icon">
+												<i class="fa fa-star"></i>
+											</span>
+										{% endfor %}
+										<!-- /.easilon-ratings__icon -->
+									</div>
+									<!-- /.product-ratings -->
+									<p class="testimonial-card__quote">{{testimonial.message|raw}}</p>
+									<!-- /.testimonial-card__quote -->
+									<div class="testimonial-card__identity">
+										<h4 class="testimonial-card__name">{{testimonial.author}}</h4>
+										<!-- /.testimonial-card__name -->
+										<p class="testimonial-card__designation">{{testimonial.country|raw}}</p>
+										<!-- /.testimonial-card__designation -->
+									</div>
+									<!-- /.testimonial-card__identity -->
+								</div>
+								<!-- /.testimonial-card -->
+							</div>
+						{% endfor %}
+
+					</div>
+					<!-- /.testimonials-one__carousel -->
+					<div class="testimonials-one__carousel-thumbs easilon-slick__carousel" data-slick-options='{
+							                                            "asNavFor": ".testimonials-one__carousel",
+							                                            "slidesToShow": 3,
+							                                            "slidesToScroll": 1,
+							                                            "autoplay": true,
+							                                            "autoplaySpeed": 3000,
+							                                            "infinite": true,
+							                                            "focusOnSelect": true,
+							                                            "dots": false,
+							                                            "arrows": false
+							                                        }'>
+						{% for testimonial in testimonials() %}
+							<div>
+								<img src="{{asset(testimonial.avatar|default('img/user.png'))}}" alt="slider-thumbs">
+							</div>
+						{% endfor %}
+					</div>
+					<!-- /.testimonials-one__carousel-thumbs -->
+				</div>
+				<!-- /.testimonials-one__slider -->
+			</div>
+			<!-- /.col-xl-8 col-lg-7 -->
+			<div class="col-xl-4 col-lg-5">
+				<div class="testimonials-one__funfact">
+					<div class="row gutter-y-30">
+						<div class="col-md-6">
+							<div class="testimonials-one__funfact__left">
+								<div class="testimonials-one__funfact__image testimonials-one__funfact__single wow fadeInUp" data-wow-duration="1500ms">
+									<img src="{{ asset('theme/loan/assets/images/resources/funfact-1-1.jpg') }}" alt="funfact">
+								</div>
+								<!-- /.testimonials-one__funfact__image -->
+								<div class="funfact-one__item testimonials-one__funfact__single wow fadeInUp" data-wow-duration="1500ms">
+									<h3 class="funfact-one__item__number count-box">
+										<span class="count-text" data-stop="99" data-speed="1500"></span>
+										<span>%</span>
+									</h3>
+									<h4 class="funfact-one__item__title">{{ 'funfact.approveLoans'|trans }}</h4>
+									<!-- /.funfact-one__item__title -->
+								</div>
+								<!-- /.funfact-one__item -->
+							</div>
+							<!-- /.testimonials-one__funfact__left -->
+						</div>
+						<!-- /.col-md-6 -->
+						<div class="col-md-6">
+							<div class="testimonials-one__funfact__right">
+								<div class="funfact-one__item testimonials-one__funfact__single wow fadeInUp" data-wow-duration="1500ms">
+									<h3 class="funfact-one__item__number count-box">
+										<span class="count-text" data-stop="8.5" data-speed="1500"></span>
+										<span>k</span>
+									</h3>
+									<h4 class="funfact-one__item__title">{{ 'funfact.happyCustomers'|trans }}</h4>
+									<!-- /.funfact-one__item__title -->
+								</div>
+								<!-- /.funfact-one__item -->
+								<div class="funfact-one__item testimonials-one__funfact__single wow fadeInUp" data-wow-duration="1500ms">
+									<h3 class="funfact-one__item__number count-box">
+										<span>$</span>
+										<span class="count-text" data-stop="95" data-speed="1500"></span>
+										<span>k</span>
+									</h3>
+									<h4 class="funfact-one__item__title">{{ 'funfact.dailyPayments'|trans }}</h4>
+									<!-- /.funfact-one__item__title -->
+								</div>
+								<!-- /.funfact-one__item -->
+								<div class="testimonials-one__funfact__image testimonials-one__funfact__single wow fadeInUp" data-wow-duration="1500ms">
+									<img src="{{ asset('theme/loan/assets/images/resources/funfact-1-2.jpg') }}" alt="funfact">
+								</div>
+								<!-- /.testimonials-one__funfact__image -->
+							</div>
+							<!-- /.testimonials-one__funfact__right -->
+						</div>
+						<!-- /.col-md-6 -->
+					</div>
+					<!-- /.row gutter-y-30 -->
+				</div>
+				<!-- /.testimonials-one__funfact -->
+			</div>
+
+			<!-- /.col-xl-4 col-lg-5 -->
+		</div>
+		<!-- /.row gutter-y-50 -->
+	</div>
+	<!-- /.container -->
+</section>
+<!-- /.testimonials-one section-space -->

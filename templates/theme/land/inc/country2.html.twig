@@ -1,0 +1,29 @@
+<section class="countries-section fix section-padding" >
+									<div class="container">
+										<div class="section-title text-center">
+											<span class="wow fadeInUp">{{"front.country.title"|trans|raw}}</span>
+											<h2 class="title-anim">
+												{{"front.country.text1"|trans|raw}}
+											</h2>
+										</div>
+										<div class="row">
+											{% for country in countries() %}
+												<div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+													<div class="countries-card-items text-center">
+														<div class="thumb">
+															<img class="rounded-circle" src="{{ asset('flags/4x3/' ~ country.code|lower ~ '.svg') }}" alt="img">
+														</div>
+														<div class="content">
+															<h3>
+																<a href="{{path('country_show',{code: country.code|lower})}}">{{country_name(country.code)}}
+																</a>
+															</h3>
+															<p>{{country.resume|raw}}</p>
+														</div>
+													</div>
+												</div>
+											{% endfor %}
+							
+										</div>
+									</div>
+								</section>

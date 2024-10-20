@@ -1,0 +1,7 @@
+{% extends '@notifs/layout.html.twig' %}
+
+{% block subject %}{{  subject|raw }}{% endblock %}
+
+{% block body %}
+    <p>{{ body|raw }}</p>
+{% endblock %}

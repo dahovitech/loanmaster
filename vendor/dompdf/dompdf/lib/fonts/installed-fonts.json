@@ -1,0 +1,16 @@
+{
+    "roboto": {
+        "100_italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_100_italic_559ac2b90f004b83f21d8500a4fda7c4",
+        "300_italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_300_italic_d317fa2237b7962a3fd66adfa8987f1e",
+        "italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_italic_322eb4a8c28cb60b9c1aea4b47a56aa3",
+        "500_italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_500_italic_bd56a7ae3eb165c15ffb40cbf80eb5dc",
+        "bold_italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_bold_italic_f52b3176ccea70da0d52f18e0938a607",
+        "900_italic": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_900_italic_cddf88f6c34a9ba52072143e639c8202",
+        "100": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_100_9234a3ac26ff1592485d2aabcb2c9d8e",
+        "300": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_300_cc4e76f50b66ce9ac2b3d8a19b5f276d",
+        "normal": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_normal_e794639d941c5ae548beb5b53f96d8e5",
+        "500": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_500_64eaa50e2bf35fe15f6cb55ada83a64e",
+        "bold": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_bold_9420b318fa9b620e67bbd96e8ff529e0",
+        "900": "roboto_900_23e21dd11a29036fdf461b3dbe1796a8"
+    }
+}

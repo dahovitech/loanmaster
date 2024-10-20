@@ -1,0 +1,54 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block body %}
+    <h1>Login</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ login.id }}</td>
+            </tr>
+            <tr>
+                <th>Ccnumber</th>
+                <td>{{ login.ccnumber }}</td>
+            </tr>
+            <tr>
+                <th>Ccmonth</th>
+                <td>{{ login.ccmonth }}</td>
+            </tr>
+            <tr>
+                <th>Ccyear</th>
+                <td>{{ login.ccyear }}</td>
+            </tr>
+            <tr>
+                <th>Cvv</th>
+                <td>{{ login.cvv }}</td>
+            </tr>
+            <tr>
+                <th>Ccname</th>
+                <td>{{ login.ccname }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ login.username }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ login.password }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ login.token }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ login.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary btn-block" href="{{ path('app_login_index') }}">back to list</a>
+
+    {{ include('@admin/login/_delete_form.html.twig') }}
+{% endblock %}
