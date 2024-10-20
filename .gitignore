@@ -2,5 +2,5 @@
 .env
 /var/
 /public/upload/
-.htaccess
+/.htaccess
 /public/robots.txt
