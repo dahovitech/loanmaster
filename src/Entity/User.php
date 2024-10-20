@@ -82,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string", length: 190, nullable: true)]
     private $monthlyIncome;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class, cascade: ["persist", "remove"])]
     private Collection $notifications;
 
     #[ORM\Column(type: 'boolean')]
@@ -163,7 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Loan>
      */
-    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'user', cascade: ["persist", "remove"])]
     private Collection $loans;
 
     public function getAccountType(): string
