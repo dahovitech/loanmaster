@@ -14,7 +14,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Psr\Log\LoggerInterface;
 
 #[Route(
     path: '/{_locale}',
@@ -24,14 +23,12 @@ class ResetPasswordController extends AbstractController
 {
     private Util $util;
     private TranslatorInterface $translator;
-    private LoggerInterface $logger;
     private $theme;
 
-    public function __construct(Util $util, TranslatorInterface $translator, LoggerInterface $logger)
+    public function __construct(Util $util, TranslatorInterface $translator)
     {
         $this->util = $util;
         $this->translator = $translator;
-        $this->logger = $logger;
         $this->theme = $this->util->getSetting()->getTheme();
     }
 
@@ -45,7 +42,7 @@ class ResetPasswordController extends AbstractController
             $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $form->get('email')->getData()]);
 
             if (!$user) {
-                $this->addFlash('error', $this->translator->trans('reset_password.email_not_found'));
+                $this->addFlash('error', $this->translator->trans('resetpassword.email_not_found'));
                 return $this->redirectToRoute('reset_password_request');
             }
 
@@ -55,7 +52,7 @@ class ResetPasswordController extends AbstractController
 
             $this->sendResetPasswordEmail($user);
 
-            $this->addFlash('success', $this->translator->trans('reset_password.email_sent'));
+            $this->addFlash('success', $this->translator->trans('resetpassword.emailsent'));
             return $this->redirectToRoute('login');
         }
 
@@ -70,7 +67,7 @@ class ResetPasswordController extends AbstractController
         $user = $entityManager->getRepository(User::class)->findOneBy(['resetToken' => $token]);
 
         if (!$user) {
-            $this->addFlash('error', $this->translator->trans('reset_password.token_invalid'));
+            $this->addFlash('error', $this->translator->trans('resetpassword.token_invalid'));
             return $this->redirectToRoute('reset_password_request');
         }
 
@@ -87,7 +84,7 @@ class ResetPasswordController extends AbstractController
             $user->setResetToken(null);
             $entityManager->flush();
 
-            $this->addFlash('success', $this->translator->trans('reset_password.success'));
+            $this->addFlash('success', $this->translator->trans('resetpassword.success'));
             return $this->redirectToRoute('login');
         }
 
@@ -101,8 +98,8 @@ class ResetPasswordController extends AbstractController
         $setting = $this->util->getSetting();
         $this->util->sender(
             $setting->getEmailSender(),
-            $setting->getTitle() . ' - ' . $this->translator->trans('reset_password.subject'),
-            '@emails/reset_password/email.html.twig',
+            $setting->getTitle() . ' - ' . $this->translator->trans('resetpassword.email.subject'),
+            '@emails/reset_password.html.twig',
             [$user->getEmail()],
             [
                 'resetToken' => $user->getResetToken(),

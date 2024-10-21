@@ -1,11 +1,70 @@
-{% extends '@theme/'~setting('theme')~'/'~setting('theme')~'/auth_base.html.twig' %}
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
 
-{% block title %}Réinitialisation de mot de passe{% endblock %}
+{% block title %}
+    {{ 'resetpassword.request.title'|trans }}
+{% endblock %}
 
 {% block body %}
-    <h1>Réinitialisation de mot de passe</h1>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn">{{ 'reset_password.submit'|trans }}</button>
-    {{ form_end(form) }}
+    <section class="page-header">
+        <div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+        <!-- /.page-header__bg -->
+        <div class="container">
+            <div class="page-header__content">
+                <h2 class="page-header__title">{{ 'resetpassword.request.title'|trans }}</h2>
+                <ul class="easilon-breadcrumb list-unstyled">
+                    <li>
+                        <a href="{{ path('home') }}">{{ 'front.menu.home'|trans }}</a>
+                    </li>
+                    <li>
+                        <span>{{ 'resetpassword.request.title'|trans }}</span>
+                    </li>
+                </ul>
+                <!-- /.thm-breadcrumb list-unstyled -->
+            </div>
+            <!-- /.page-header__content -->
+        </div>
+        <!-- /.container -->
+        <div class="page-header__border-box">
+            <div class="page-header__border page-header__border--1"></div>
+            <!-- /.page-header__border -->
+            <div class="page-header__border page-header__border--2"></div>
+            <!-- /.page-header__border -->
+            <div class="page-header__border page-header__border--3"></div>
+            <!-- /.page-header__border -->
+            <div class="page-header__border page-header__border--4"></div>
+            <!-- /.page-header__border -->
+            <div class="page-header__border page-header__border--5"></div>
+            <!-- /.page-header__border -->
+        </div>
+        <!-- /.page-header__border-box -->
+    </section>
+
+    <section class="apply-loan section-space">
+        <div class="container">
+            <div class="apply-loan__form row">
+                <!-- Loan Details -->
+                <div class="apply-loan__details offset-md-2 col-md-8">
+                    <h2 class="apply-loan__details__title">{{ 'resetpassword.request.subtitle'|trans }}</h2>
+                    {% for flash_error in app.flashes('error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+                    {{ form_start(form) }}
+                    <div class="apply-loan__form__row row">
+                        <div class="col-md-12">
+                            {{ form_row(form.email) }}
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="easilon-btn">{{ 'resetpassword.request.submit'|trans }}</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                    <!-- /.apply-loan__form -->
+                </div>
+                <!-- /.apply-loan__details -->
+            </div>
+            <!-- /.apply-loan__form -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- /.apply-loan section-space -->
 {% endblock %}

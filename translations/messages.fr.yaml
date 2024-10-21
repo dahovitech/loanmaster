@@ -27,6 +27,19 @@ resetpassword.newpassword.label: "Nouveau mot de passe"
 resetpassword.confirmpassword.label: "Confirmer le mot de passe"
 resetpassword.passwordmismatch: "Les mots de passe ne correspondent pas."
 resetpassword.submit: "Réinitialiser le mot de passe"
+resetpassword.request.title: Réinitialisation de mot de passe
+resetpassword.request.subtitle: Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe
+resetpassword.request.submit: Envoyer le lien de réinitialisation
+resetpassword.reset.title: Réinitialisation de mot de passe
+resetpassword.reset.subtitle: Entrez votre nouveau mot de passe
+resetpassword.reset.submit: Réinitialiser le mot de passe
+resetpassword.email_not_found: L'adresse e-mail n'a pas été trouvée
+resetpassword.email_sent: Un e-mail de réinitialisation de mot de passe a été envoyé
+resetpassword.token_invalid: Le jeton de réinitialisation est invalide
+resetpassword.email.label: Adresse e-mail
+resetpassword.new_password.label: Nouveau mot de passe
+resetpassword.confirm_password.label: Confirmer le mot de passe
+resetpassword.password_mismatch: Les mots de passe ne correspondent pas
 form.user.currentPassword: Mots de passe actuel
 form.user.name: Nom de famille
 form.user.firstname: Prénom(s)
