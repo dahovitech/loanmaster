@@ -96,7 +96,7 @@ class RegistrationController extends AbstractController
         $url = $this->urlGenerator->generate("register_confirm_token", ["token" => $user->getConfirmationToken()], 0);
         $util->sender(
             $setting->getEmailSender(),
-            $setting->getTitle() . ' - ' . $this->translator->trans('registration.subject'),
+            $setting->getTitle() . ' - ' . $this->translator->trans('registration.email.subject'),
             '@emails/confirmation_email.html.twig',
             [$user->getEmail()],
             [

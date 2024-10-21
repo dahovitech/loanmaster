@@ -12,7 +12,7 @@ registration.email.message: "Merci de vous être inscrit. Veuillez cliquer sur l
 registration.email.confirm_link: "Confirmer mon adresse e-mail"
 registration.email.thanks: "Merci,"
 registration.email.team: "L'équipe"
-registration.subject: Confirmez votre adresse e-mail
+registration.email.subject: Confirmez votre adresse e-mail
 resetpassword.emailnotfound: "L'adresse e-mail n'a pas été trouvée."
 resetpassword.emailsent: "Un e-mail de réinitialisation de mot de passe a été envoyé."
 resetpassword.tokeninvalid: "Le token de réinitialisation est invalide."
