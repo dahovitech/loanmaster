@@ -735,3 +735,4 @@ loan.form.projectRisks: Project Risks
 loan.form.projectRisksPlaceholder: Enter the project risks
 loan.form.projectBenefits: Project Benefits
 loan.form.projectBenefitsPlaceholder: Enter the project benefits
+flash.kyc.verified: Your account is not verified. Please proceed with the verification.

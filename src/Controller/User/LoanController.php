@@ -34,6 +34,12 @@ class LoanController extends AbstractController
     #[Route('/loan/list', name: 'list')]
     public function list(): Response
     {
+        $user=$this->getUser();
+        if(!$user->getVerificationStatus()=="approved"){
+            $this->addFlash('warning', $this->translator->trans('flash.kyc.verified'));
+
+            return $this->redirectToRoute("app_user_dashboard");
+        }
         $loans = $this->entityManager->getRepository(Loan::class)->findBy(['user' => $this->getUser()]);
 
         return $this->render('user/loan/list.html.twig', [
