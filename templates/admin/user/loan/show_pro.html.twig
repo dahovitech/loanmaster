@@ -69,10 +69,10 @@
                         <strong>{{ 'loan.form.projectRisks'|trans }}:</strong>
                         {{ loan.projectRisks|raw }}</p>
                     <p>
-                        <strong>Justificatif de paiement:</strong>
+                        <strong>{{ 'loan.form.projectBenefits'|trans }}:</strong>
                         {{ loan.projectBenefits|raw }}</p>
                     {% if loan.payFile is not null %}
-                        <h2>{{ 'loan.show.paymentProof'|trans }}</h2>
+                        <h2>Justificatif de paiement</h2>
                         <a href="{{ asset(loan.payFile.getWebPath()|default(" ")) }}" target="_blank">Voir le justificatif de paiement</a>
                     {% endif %}
                     <br>

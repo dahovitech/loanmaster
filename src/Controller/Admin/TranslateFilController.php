@@ -2,34 +2,24 @@
 
 namespace App\Controller\Admin;
 
-use OpenAI;
-use Exception;
 use App\Service\Util;
-use RuntimeException;
 use App\Entity\Language;
 use App\Service\ApiService;
 use InvalidArgumentException;
 use Symfony\Component\Yaml\Yaml;
 use App\Service\TranslationManager;
-use Symfony\Component\Intl\Languages;
 use App\Service\DefaultLanguageService;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\DemandeVisaRepository;
 use App\Repository\NotificationRepository;
 use Symfony\Component\Filesystem\Filesystem;
-
 use Symfony\Component\HttpFoundation\Request;
-
-use App\Repository\DemandePasseportRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Repository\DemandePermisConduireRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\LocaleType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,8 +44,7 @@ class TranslateFilController extends AbstractController
         private TranslationManager $translationManager,
         private DefaultLanguageService $defaultLanguage,
         private ApiService $apiService
-    ) {
-    }
+    ) {}
 
 
 
@@ -94,7 +83,7 @@ class TranslateFilController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
         $base_language = $data['base_language'];
-       
+
         $array = Yaml::parseFile($this->kernel->getProjectDir() . '/translations/messages.' . $base_language . '.yaml');
 
         return new JsonResponse($array);
@@ -107,16 +96,16 @@ class TranslateFilController extends AbstractController
         $local_language = $data['local_language'];
         $translations = $data['data'];
 
-       // dd($local_language ,$translations);
-    
+        // dd($local_language ,$translations);
+
         // Create the YAML file
         $yaml = Yaml::dump($translations, 2, 2);
         $yaml_file = $this->kernel->getProjectDir() . '/translations/messages.' . $local_language . '.yaml';
-    
+
         // Use the Filesystem Component to write the YAML file
         $filesystem = new Filesystem();
         $filesystem->dumpFile($yaml_file, $yaml);
-    
+
         return new JsonResponse(['success' => true]);
     }
 
@@ -167,11 +156,11 @@ class TranslateFilController extends AbstractController
         $text = $data['text'];
         $locale = $data['locale'];
         $source = $data['source'];
-    
+
         if (empty($text) || empty($locale) || empty($source)) {
             throw new InvalidArgumentException("Arguments 'text' and 'locale' are required.");
         }
-    
+
         $data = [
             'q' => $text,
             'source' => $source,
@@ -181,8 +170,8 @@ class TranslateFilController extends AbstractController
         return new JsonResponse($translatedText);
     }
 
-    
-    
+
+
 
     private function traverseArrayForm(array $array, string $currentKey = ''): string
     {
@@ -200,7 +189,7 @@ class TranslateFilController extends AbstractController
         return $form;
     }
 
-  
+
     #[Route('/lang_editor', name: 'lang_editor', methods: ['POST', 'GET'])]
     public function langEditor(Request $request): Response
     {
@@ -210,7 +199,7 @@ class TranslateFilController extends AbstractController
         $form = '';
 
         if (!empty($locale)) {
-            // dd('fff');
+
             $this->translationManager->createTranslationFileIfNotExists($locale, $defaultLanguage);
             $yamlFilePath = $this->translationManager->getTranslationFilePath($locale);
 

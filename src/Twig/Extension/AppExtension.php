@@ -29,6 +29,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('setting', [AppExtensionSetting::class, 'onSetting']),
+            new TwigFunction('seo', [AppExtensionSetting::class, 'onSeo']),
             new TwigFunction('ArrayLocales', [AppExtensionSetting::class, 'onLocales']),
             new TwigFunction('all_languages', [AppExtensionSetting::class, 'onAllLanguages']),
             new TwigFunction('language_name', [AppExtensionSetting::class, 'onLanguageName']),

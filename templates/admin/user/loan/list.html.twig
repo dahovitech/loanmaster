@@ -32,6 +32,7 @@
 						<table id="tab2" class="table table-striped table-bordered" style="width:100%">
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>{{ 'loan.list.loanNumber'|trans }}</th>
 									<th>Email</th>
 									<th>Nom complet</th>
@@ -41,8 +42,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for loan in loans %}
+								{% for key, loan in loans %}
 									<tr>
+										<td>{{ key + 1 }}</td>
 										<td>{{ loan.loanNumber }}</td>
 										<td>{{ loan.user.email }}</td>
 										<td>{{ loan.user.firstname }}

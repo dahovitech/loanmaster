@@ -3,18 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Language;
-use App\Entity\SettingTranslation;
+use App\Entity\SeoTranslation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 
-class SettingTranslationType extends AbstractType
+class SeoTranslationType extends AbstractType
 {
     private $entityManager;
 
@@ -39,7 +37,6 @@ class SettingTranslationType extends AbstractType
             ])
             ->add('field', ChoiceType::class, [
                 'choices' => [
-                    'admin.page.payment.infoBank' => 'bankInfo',
                     'admin.page.setting.seoHomeTitle' => 'seoHomeTitle',
                     'admin.page.setting.seoHomeKeywords' => 'seoHomeKeywords',
                     'admin.page.setting.seoHomeDescription' => 'seoHomeDescription',
@@ -68,7 +65,7 @@ class SettingTranslationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => SettingTranslation::class,
+            'data_class' => SeoTranslation::class,
         ]);
     }
 }

@@ -338,9 +338,15 @@ class Loan
 
     public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->endDate;
+        if ($this->startDate && $this->durationMonths) {
+            $endDate = clone $this->startDate;
+            $endDate->modify('+' . ($this->durationMonths + 3) . ' months');
+            return $endDate;
+        }
+    
+        return null;
     }
-
+    
     public function setEndDate(?\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
@@ -393,7 +399,12 @@ class Loan
 
     public function getAmountRepaid(): string
     {
-        return $this->amountRepaid;
+         // Calculer le montant mensuel
+         $monthlyPayment = $this->calculateMonthlyPayment();
+
+         // Calculer 25% du montant mensuel
+         $amountToRepay = $monthlyPayment * 0.25;
+        return  (float)$amountToRepay;
     }
 
     public function setAmountRepaid(string $amountRepaid): self
@@ -456,14 +467,25 @@ class Loan
         return max(0, (float)$this->amount - (float)$this->amountRepaid);
     }
 
+
+
     public function calculateMonthlyPayment(): float
     {
+        $principal = (float)$this->amount;
         $ratePerMonth = (float)$this->interestRate / 100 / 12;
         $numPayments = $this->durationMonths;
 
-        return ((float)$this->amount * $ratePerMonth) / (1 - pow(1 + $ratePerMonth, -$numPayments));
-    }
+        // If the interest rate is zero, return the principal divided by the number of payments
+        if ($ratePerMonth == 0) {
+            return $principal / $numPayments;
+        }
 
+        // Monthly payment formula for an amortizing loan
+        $monthlyPayment = $principal * $ratePerMonth / (1 - pow(1 + $ratePerMonth, -$numPayments));
+
+        return round($monthlyPayment, 2); // Rounded to 2 decimal places
+    }
+    
     public function getUser(): ?User
     {
         return $this->user;

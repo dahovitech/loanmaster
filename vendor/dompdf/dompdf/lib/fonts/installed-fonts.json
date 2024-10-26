@@ -12,5 +12,8 @@
         "500": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_500_64eaa50e2bf35fe15f6cb55ada83a64e",
         "bold": "\/var\/www\/html\/loanmaster.local\/vendor\/dompdf\/dompdf\/lib\/fonts\/roboto_bold_9420b318fa9b620e67bbd96e8ff529e0",
         "900": "roboto_900_23e21dd11a29036fdf461b3dbe1796a8"
+    },
+    "bungee tint": {
+        "normal": "bungee_tint_normal_ac6c12dd3361d7578c75d5d25b914f69"
     }
 }

@@ -111,7 +111,7 @@ class AdminKycController extends AbstractController
 
             if ($status === 'approved') {
                 $user->setVerificationStatus('approved');
-                $user->setIsEnabled(true);
+               // $user->setIsEnabled(true);
 
                 $subject = $this->translator->trans('email.kyc_approved.title', [], null, $user->getLocale());
 
@@ -138,7 +138,7 @@ class AdminKycController extends AbstractController
                 $this->addFlash('success', 'Compte validé avec succès');
             } elseif ($status === 'rejected') {
                 $user->setVerificationStatus('rejected');
-                $user->setIsEnabled(false);
+               // $user->setIsEnabled(false);
                 $subject = $this->translator->trans('email.kyc_rejected.title', [], null, $user->getLocale());
                 $context = ['user' => $user, 'message' => $message];
 

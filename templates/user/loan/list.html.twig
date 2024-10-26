@@ -35,6 +35,7 @@
 						<table id="tab1" class="table table-striped">
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>{{ 'loan.list.loanNumber'|trans }}</th>
 									<th>{{ 'loan.list.details'|trans }}</th>
 									<th>{{ 'loan.list.status'|trans }}</th>
@@ -42,8 +43,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for loan in loans %}
+								{% for key, loan in loans %}
 									<tr>
+										<td>{{ key + 1 }}</td>
 										<td>{{ loan.loanNumber }}</td>
 										<td>
 											<div>

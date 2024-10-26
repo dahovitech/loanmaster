@@ -3,17 +3,10 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Form\MediaType;
 
 class UserKycFormType extends AbstractType
@@ -26,7 +19,7 @@ class UserKycFormType extends AbstractType
                 'choices' => [
                     'form.idDocumentType.idCard' => 'idCard',
                     'form.idDocumentType.passport' => 'passport',
-                    'form.idDocumentType.driverLicense' => 'driverLicense',
+                  //  'form.idDocumentType.driverLicense' => 'driverLicense',
                 ],
                 'required' => true,
             ])

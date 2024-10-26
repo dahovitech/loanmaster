@@ -70,7 +70,7 @@ form.retirement: "Retraité"
 form.profession: "Profession libérale / Travailleur Indépendant"
 form.no_job: "Sans emploi"
 form.professionnalSituation: "Situation professionnelle"
-form.monthlyIncome: Revenus mensuels nets avant prélèvement d'impôt à la source (en euros) *
+form.monthlyIncome: Revenus mensuels nets avant prélèvement d'impôt à la source (en '%devise%') *
 btn.login: Connexion
 btn.sign: Signer le contrat
 btn.logout: Déconnexion
@@ -514,7 +514,7 @@ loan.form.startDate: 'Date de début'
 loan.form.endDate: 'Date de fin'
 loan.form.amount: 'Montant'
 loan.form.amountPlaceholder: 'Entrez le montant'
-loan.form.interestRate: Taux d'intérêt  en %
+loan.form.interestRate: Taux d'intérêt
 loan.form.interestRatePlaceholder: Entrez le taux d'intérêt
 loan.form.durationMonths: 'Durée en mois'
 loan.form.durationMonthsPlaceholder: 'Entrez la durée en mois'
@@ -599,18 +599,18 @@ email.body.loanOrderPay.greeting: Bonjour %user%,
 email.body.loanOrderPay.message: "Votre demande de prêt numéro %loanNumber% a été dûment enregistrée. Nous vous invitons à régler les frais de traitement afin que votre dossier soit pris en charge par l'un de nos agents dans les plus brefs délais. Vous pouvez consulter les détails de votre demande en suivant ce lien : <a href='%url%'> %url% </a>"
 email.body.loanOrderPay.contact: Si vous avez des questions, n'hésitez pas à nous contacter à %email%.
 contract.title: Contrat de Prêt Financier
-contract.header.department: Département de la justice et droit de l'homme
-contract.header.court: Tribunal de première instance
-contract.header.notarized_act: Acte notarié
+contract.header.department: Département de la Justice et des Droits de l'Homme
+contract.header.court: Tribunal de Première Instance
+contract.header.notarized_act: Acte Notarié
 contract.date: Cet accord de prêt ("Accord") a été conclu et est entré en vigueur le %date%.
 contract.section.loan: Prêt
-contract.section.loan.description: Le <strong>prêteur</strong> accorde un <strong>prêt</strong> de <strong>%amount% EUR</strong> à l'<strong>emprunteur</strong> (désigné ci-après comme "le prêt"). Le prêteur octroie ce prêt sans exigence de garanties. Pour sécuriser le remboursement du prêt, il est nécessaire de souscrire une <strong>assurance</strong>. En cas de force majeure ou d'incapacité de remboursement, la compagnie d'assurance prendra en charge le capital restant dû. Les frais d'enregistrement du crédit, d'un montant de <strong>420 euros</strong>, sont intégralement pris en charge par l'emprunteur après la signature du contrat. À cette fin, nous vous invitons à nous donner votre accord afin que nous puissions entamer les formalités d'assurance pour assurer le bon déroulement de la transaction. Une fois l'accord de prêt signé, le montant du prêt sera transféré sur le compte bancaire de l'emprunteur dans les <strong>48 heures</strong>.
-contract.section.interest: Intérêt
-contract.section.interest.description: L'emprunteur doit s'acquitter d'un taux d'intérêt annuel de <strong>%interest% %</strong> sur le montant du prêt. Le montant total à rembourser, incluant les intérêts, s'élève à <strong>%total% €</strong>.
+contract.section.loan.description: Le <strong>prêteur</strong> accorde un <strong>prêt</strong> de <strong>%amount% EUR</strong> à l'<strong>emprunteur</strong> (désigné ci-après comme "le prêt"). Le prêteur octroie ce prêt sans exigence de garanties. Pour sécuriser le remboursement du prêt, il est nécessaire de souscrire une <strong>assurance</strong>. En cas de force majeure ou d'incapacité de remboursement, la compagnie d'assurance prendra en charge le capital restant dû. Les frais d'enregistrement du crédit, d'un montant de <strong>%price%</strong>, sont intégralement pris en charge par l'emprunteur après la signature du contrat. À cette fin, nous vous invitons à nous donner votre accord afin que nous puissions entamer les formalités d'assurance pour assurer le bon déroulement de la transaction. Une fois l'accord de prêt signé, le montant du prêt sera transféré sur le compte bancaire de l'emprunteur dans les <strong>48 heures</strong>.
+contract.section.interest: Intérêts et paiement des intérêts
+contract.section.interest.description: Le taux d'intérêt annuel est de <strong>3%</strong>. Les intérêts sont calculés aux taux d'amortissement en vigueur. Le compte du prêteur est prévu à cet effet. L'intérêt total sur les <strong>36 mois</strong> s'élève donc à <strong>%total%</strong>.
 contract.section.duration: Durée du prêt
-contract.section.duration.description: La durée du prêt s'étend sur <strong>%duration% mois</strong> à compter du <strong>%date%</strong>.
+contract.section.duration.description: La durée du prêt s'étend sur <strong>%duration% mois</strong> à compter du <strong>%date%</strong> au <strong>%end_date%</strong>.
 contract.section.repayment: Remboursement
-contract.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount% EUR</strong> au prêteur le <strong>%date%</strong>.
+contract.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount%</strong> au prêteur chaque mois.
 contract.section.insurance: Assurance
 contract.section.insurance.description: Il est important de noter qu'un prêt contractuel ne garantit pas l'octroi automatique et inconditionnel par le prêteur. Cependant, l'emprunteur doit souscrire une assurance-crédit auprès de la banque du prêteur pour couvrir le remboursement en cas d'illégalité.
 contract.section.address: Adresse du domicile
@@ -624,9 +624,36 @@ contract.section.general_provisions.confidentiality: Confidentialité
 contract.section.general_provisions.confidentiality.description: Sauf disposition contraire de la loi ou de toute réglementation applicable (y compris les règles boursières), les parties s'engagent à traiter de manière confidentielle toutes les modalités et le contenu du présent accord.
 contract.section.general_provisions.signatures: Signatures
 contract.section.general_provisions.signatures.description: Chaque partie contractante peut signer le présent accord en tant que contrepartie. Chaque contrepartie constitue un original, mais l'ensemble ne forme qu'un seul document. Cet accord peut être signé par fax ou toute autre signature numérisée et envoyé électroniquement.
+contract.section.termination: Résiliation
+contract.section.termination.description: "Ce contrat ne peut être résilié par l'investisseur ou le gestionnaire que dans les cas suivants :"
+contract.section.termination.subsections1.title: Non-respect 
+contract.section.termination.subsections1.description: Non-respect démontrable des dispositions du présent Accord par l'une des parties contractantes. Dans ce cas, la partie qui prend l'initiative de résilier le contrat doit en informer l'autre partie par lettre recommandée avec accusé de réception et assume tous les frais conduisant à la résiliation du contrat de prêt. À défaut, un délai d'un mois est accordé à l'autre partie pour remplir ses obligations. La partie perdante est responsable des conséquences de la résiliation.
+contract.section.termination.subsections2.title: Défaut de paiement
+contract.section.termination.subsections2.description: Si l'emprunteur est en défaut de paiement pendant plus de trois mois, le prêteur met fin au prêt sans préavis et exige le paiement immédiat de la partie restante du prêt avec intérêts.
+contract.section.delay: Retard
+contract.section.delay.description: En cas de défaut de paiement du prêt, l'emprunteur doit payer au créancier des intérêts moratoires d'un montant de <strong>25%</strong> du montant dû pour chaque jour de non-paiement. Soit une amende de <strong> %penality% </strong> par jour jusqu'à la date de paiement.
+contract.section.representation: Représentation
+contract.section.representation.description: Les parties peuvent se retirer de cet accord à tout moment et dans toute action, représentées par un avocat, un huissier ou un notaire dûment commis d'office.
+contract.section.succession: Succession
+contract.section.succession.description: Il est important que le débiteur souscrive une assurance-crédit auprès de la banque responsable du transfert d'argent. En cas de décès ou de situation pouvant interrompre le remboursement du prêt, l'assurance-crédit prend en charge le remboursement de toutes les durées restantes du prêt contracté. Les formalités d'assurance-crédit sont prises en charge par le bénéficiaire après l'épuisement du transfert d'argent sur le compte réservé.
+contract.section.other_agreements: Autres accords
+contract.section.other_agreements.subsections1.title: Modifications apportées au présent Accord
+contract.section.other_agreements.subsections1.description: Les modifications apportées au présent Accord et toute révocation doivent être faites par écrit.
+contract.section.other_agreements.subsections2.title: Dispositions du Code Civil
+contract.section.other_agreements.subsections2.description: Pour toutes les matières non abordées dans ce document, les dispositions du Code Civil en vigueur s'appliquent.
+contract.section.other_agreements.subsections3.title: Frais d'établissement du contrat
+contract.section.other_agreements.subsections3.description: L'emprunteur s'engage à payer une somme de %priceContract% dans le cadre de l'établissement du contrat et de la légalisation du document.
+contract.section.other_agreements.subsections4.title: Règlement des litiges
+contract.section.other_agreements.subsections4.description: Les parties conviennent que tout litige découlant du présent accord sera résolu en première instance et sera réglé d’un commun accord.
+contract.section.other_agreements.subsections5.title: Entrée en vigueur du contrat
+contract.section.other_agreements.subsections5.description: Le présent Accord entrera en vigueur dès sa signature par les deux parties. Le contrat est établi en deux exemplaires, un exemplaire pour l'emprunteur et l'autre pour le prêteur.
+contract.section.other_agreements.subsections6.title: Transfert de prêt
+contract.section.other_agreements.subsections6.description: L'emprunteur doit accomplir les formalités de transfert de son prêt auprès de la banque partenaire pour que le prêteur puisse prendre possession du prêt en toute sécurité et en toute transparence. Cet accord devient délivré aux fins de conformité et d’application de la loi. Toute tentative de fraude sera strictement réprimée et punie par la loi.
 contract.signature.borrower: "L'emprunteur :"
 contract.signature.notary: "Le Notaire :"
 contract.signature.lender: "Le Prêteur (%bank_name%):"
+contract.closing_statement: Les Parties contractantes déclarent avoir lu, compris et signé. Le contrat est signé par l'emprunteur et la mention «lu et approuvé» figure devant lui.
+
 contract_pro.title: Contrat de Prêt Professionnel
 contract_pro.header.department: Département de la justice et droit des affaires
 contract_pro.header.court: Tribunal de commerce
@@ -642,11 +669,10 @@ contract_pro.section.interest: Conditions financières
 contract_pro.section.interest.description: L'Emprunteur s'engage à verser des intérêts calculés au taux annuel de <strong>%interest% %</strong> sur l'encours du crédit. Le coût total du crédit, incluant les intérêts et frais bancaires, est de <strong>%total% €</strong>.
 
 contract_pro.section.duration: Durée et modalités
-contract_pro.section.duration.description: Le crédit est consenti pour une durée de <strong>%duration% mois</strong> à compter du <strong>%date%</strong>. L'échéancier détaillé est annexé à la présente convention.
+contract_pro.section.duration.description: Le crédit est consenti pour une durée de <strong>%duration% mois</strong> à compter du <strong>%date%</strong> au <strong>%end_date%</strong> 
 
 contract_pro.section.repayment: Plan de remboursement
-contract_pro.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount% EUR</strong> au prêteur le <strong>%date%</strong>.
-
+contract_pro.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount%</strong> au prêteur chaque mois.
 contract_pro.section.insurance: Assurances et garanties
 contract_pro.section.insurance.description: |
   L'Emprunteur s'engage à maintenir pendant toute la durée du prêt une assurance couvrant les risques suivants : (1) assurance décès-invalidité du dirigeant, (2) assurance perte d'exploitation, (3) assurance des actifs donnés en garantie. Les polices d'assurance devront désigner le Prêteur comme bénéficiaire prioritaire.
@@ -703,7 +729,7 @@ email.bankinfo.message: Nous avons l'immense plaisir de vous annoncer que votre 
 email.bankinfo.thanks: Nous vous sommes profondément reconnaissants pour la confiance que vous nous témoignez.
 loan.email.subject: Votre demande de prêt a été approuvée
 loan.email.greeting: Bonjour
-loan.email.body: Votre demande de prêt numéro %loanNumber% d'un montant de %amount% %devise% a été enregistrée avec succès. Vous serez informé(e) dès que votre demande sera prise en compte.
+loan.email.body: Votre demande de prêt numéro %loanNumber% d'un montant de <strong>%amount%</strong> a été enregistrée avec succès. Vous serez informé(e) dès que votre demande sera prise en compte.
 loan.email.closing: Nous vous remercions de la confiance que vous nous accordez.
 loan.form.type.business_real_estate: Immobilier d'entreprise
 loan.form.type.equipment_vehicle: Matériel ou véhicule professionnel

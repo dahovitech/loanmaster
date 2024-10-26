@@ -16,6 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 
@@ -83,52 +84,8 @@ class SettingFormType extends AbstractType
             ])
             ->add('email')
             ->add('telephone')
-            ->add('devise')
-            ->add('seoImage', ElFinderType::class, [
-                'instance' => 'form',
-                'enable' => true,
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'label' => $this->translator->trans('admin.page.setting.seoImage'),
-            ])
-            ->add('seoHomeTitle', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoHomeTitle'),
-                'required' => false,
-            ])
-            ->add('seoHomeKeywords', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoHomeKeywords'),
-                'required' => false,
-            ])
-            ->add('seoHomeDescription', TextareaType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoHomeDescription'),
-                'required' => false,
-            ])
-            ->add('seoAboutTitle', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoAboutTitle'),
-                'required' => false,
-            ])
-            ->add('seoAboutKeywords', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoAboutKeywords'),
-                'required' => false,
-            ])
-            ->add('seoAboutDescription', TextareaType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoAboutDescription'),
-                'required' => false,
-            ])
-            ->add('seoServiceTitle', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoServiceTitle'),
-                'required' => false,
-            ])
-            ->add('seoServiceKeywords', TextType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoServiceKeywords'),
-                'required' => false,
-            ])
-            ->add('seoServiceDescription', TextareaType::class, [
-                'label' => $this->translator->trans('admin.page.setting.seoServiceDescription'),
-                'required' => false,
-            ]);
+            ->add('devise',CurrencyType::class)
+            ;
 
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             $builder->add('emailSender');

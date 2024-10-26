@@ -1,128 +1,127 @@
-{# templates/loan/submit_pro.html.twig #}
 {% extends "@admin/base.html.twig" %}
 
 {% block title %}
-    {{ 'loan.submit.title'|trans }}
+	{{ 'loan.submit.title'|trans }}
 {% endblock %}
 
 {% block body %}
-    <!--breadcrumb-->
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">{{ 'loan.submit.title'|trans }}</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item">
-                        <a href="{{ path('app_user_dashboard') }}">
-                            <i class="bx bx-home-alt"></i>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{path('app_user_loan_list')}}">
-                            <i class="bx bx-list"></i>
-                            {{ 'loan.list.title'|trans }}</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ 'loan.submit.title'|trans }}</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!--end breadcrumb-->
-    <div class="row">
-        <div class="col-md-4">
-            <h6 class="mb-0 text-uppercase">{{ 'loan.calculator.title'|trans }}</h6>
-            <hr/>
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="amountSlider">{{ 'loan.form.amount'|trans }}</label>
-                        <input type="range" class="form-control-range" id="amountSlider" min="5000" max="2000000" step="1000" value="5000">
-                        <span id="amountValue">5000</span> {{setting("devise")}}
-                    </div>
-                    <div class="form-group">
-                        <label for="durationSlider">{{ 'loan.form.durationMonths'|trans }}</label>
-                        <input type="range" class="form-control-range" id="durationSlider" min="24" max="480" step="1" value="24">
-                        <span id="durationValue">24</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="interestRate">{{ 'loan.form.interestRate'|trans }}</label>
-                        <input type="number" class="form-control" id="interestRate" value="3" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label>{{ 'loan.calculator.monthlyPayment'|trans }}</label>
-                        <span id="monthlyPayment">0</span> {{setting("devise")}}
-                    </div>
-                    <div class="form-group">
-                        <label>{{ 'loan.calculator.totalPayment'|trans }}</label>
-                        <span id="totalPayment">0</span> {{setting("devise")}}
-                    </div>
-                    <button id="applyButton" class="btn btn-primary">Appliquer</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <h6 class="mb-0 text-uppercase">{{ 'loan.submit.title'|trans }}</h6>
-            <hr/>
-            <div class="card">
-                <div class="card-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    {{ form_end(form) }}
-                </div>
-            </div>
-        </div>
-    </div>
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{ 'loan.submit.title'|trans }}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_user_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{path('app_user_loan_list')}}">
+							<i class="bx bx-list"></i>
+							{{ 'loan.list.title'|trans }}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ 'loan.submit.title'|trans }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+
+	<div class="row">
+		<div class="col-md-4">
+			<h6 class="mb-0 text-uppercase text-primary">{{ 'loan.calculator.title'|trans }}</h6>
+			<hr class="mb-3" />
+			<div class="card shadow-sm border-primary">
+				<div class="card-body">
+					<div class="loan-info mb-3">
+						<b>{{ 'loan.form.amount'|trans }}</b>
+						<span id="amount" class="text-primary fs-5">0</span>
+						{{setting("devise")}}
+					</div>
+					<div class="loan-info mb-3">
+						<b>{{ 'loan.form.interestRate'|trans }}</b>: <span class="text-secondary">3 %</span>
+					</div>
+					<div class="loan-info mb-3">
+						<b>{{ 'loan.calculator.monthlyPayment'|trans }}</b>
+						<span id="monthlyPayment" class="text-primary fs-5">0</span>
+						{{setting("devise")}}
+					</div>
+					<div class="loan-info">
+						<b>{{ 'loan.calculator.totalPayment'|trans }}</b>
+						<span id="totalPayment" class="text-primary fs-5">0</span>
+						{{setting("devise")}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-8">
+			<h6 class="mb-0 text-uppercase text-primary">{{ 'loan.submit.title'|trans }}</h6>
+			<hr class="mb-3" />
+			<div class="card shadow-sm">
+				<div class="card-body">
+					{{ form_start(form, {'attr': {'class': 'loan-form'}}) }}
+					{{ form_widget(form) }}
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.loan-info {
+			font-size: 1rem;
+			margin-bottom: 0.8rem;
+		}
+		.card {
+			border-radius: 0.5rem;
+		}
+		.card-body {
+			font-size: 0.95rem;
+		}
+		.btn-primary {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
+		.btn-primary:hover {
+			background-color: #004494;
+			border-color: #004494;
+		}
+	</style>
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            function calculateLoan() {
-                const amount = parseFloat($('#amountSlider').val());
-                const durationMonths = parseFloat($('#durationSlider').val());
-                const interestRate = parseFloat($('#interestRate').val()) / 100 / 12;
+	{{ parent() }}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+    $(document).ready(function () { 
+        var amountField = $('#loan_form_amount');
+        var amountSee = $('#amount');
+        var durationMonthsField = $('#loan_form_durationMonths');
+        var monthlyPaymentField = $('#monthlyPayment');
+        var totalPaymentField = $('#totalPayment');
 
-                const monthlyPayment = (amount * interestRate) / (1 - Math.pow(1 + interestRate, -durationMonths));
-                const totalPayment = monthlyPayment * durationMonths;
+        function calculatePayments() {
+            var amount = parseFloat(amountField.val());
+            var durationMonths = parseInt(durationMonthsField.val());
+            var annualInterestRate = 3;
+            var monthlyInterestRate = annualInterestRate / 100 / 12;
 
-                $('#monthlyPayment').text(monthlyPayment.toFixed(2));
-                $('#totalPayment').text(totalPayment.toFixed(2));
-            }
+            // Calcul du paiement mensuel
+            var monthlyPayment = amount * (monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -durationMonths)));
+            monthlyPaymentField.text(monthlyPayment.toFixed(2));
 
-            $('#amountSlider').on('input', function () {
-                $('#amountValue').text($(this).val());
-                calculateLoan();
-            });
+            // Calcul du paiement total
+            var totalPayment = monthlyPayment * durationMonths;
+            totalPaymentField.text(totalPayment.toFixed(2));
+            amountSee.text(amount);
+        }
 
-            $('#durationSlider').on('input', function () {
-                $('#durationValue').text($(this).val());
-                calculateLoan();
-            });
+        // Détecter les changements dans les champs amount et durationMonths
+        amountField.on('input', calculatePayments);
+        durationMonthsField.on('input', calculatePayments);
+    });
+</script>
 
-            $('#interestRate').on('input', function () {
-                calculateLoan();
-            });
-
-            $('#applyButton').on('click', function () {
-                const amount = $('#amountSlider').val();
-                const durationMonths = $('#durationSlider').val();
-                $('#loan_form_amount').val(amount);
-                $('#loan_form_durationMonths').val(durationMonths);
-                $('#loan_pro_form_amount').val(amount);
-                $('#loan_pro_form_durationMonths').val(durationMonths);
-            });
-
-            // Initialisation des valeurs des curseurs et des champs associés
-            $('#amountSlider').val(5000);
-            $('#amountValue').text(5000);
-            $('#durationSlider').val(24);
-            $('#durationValue').text(24);
-            $('#interestRate').val(3);
-
-            calculateLoan();
-        });
-    </script>
 {% endblock %}
-

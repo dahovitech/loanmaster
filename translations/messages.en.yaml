@@ -598,32 +598,32 @@ email.subject.loanOrderPay: Loan Request Payment
 email.body.loanOrderPay.greeting: Hello %user%,
 email.body.loanOrderPay.message: "Your loan request number %loanNumber% has been duly registered. We invite you to settle the processing fees so that your file can be handled by one of our agents as soon as possible. You can view the details of your request by following this link: <a href='%url%'> %url% </a>"
 email.body.loanOrderPay.contact: If you have any questions, please contact us at %email%.
-contract.title: Financial Loan Contract
+contract.title: Financial Loan Agreement
 contract.header.department: Department of Justice and Human Rights
 contract.header.court: Court of First Instance
 contract.header.notarized_act: Notarized Act
-contract.date: This loan agreement ("Agreement") was concluded and entered into force on %date%.
+contract.date: This loan agreement ("Agreement") has been concluded and is effective as of %date%.
 contract.section.loan: Loan
-contract.section.loan.description: The <strong>lender</strong> grants a <strong>loan</strong> of <strong>%amount% EUR</strong> to the <strong>borrower</strong> (hereinafter referred to as "the loan"). The lender grants this loan without requiring collateral. To secure the repayment of the loan, it is necessary to take out <strong>insurance</strong>. In the event of force majeure or inability to repay, the insurance company will cover the outstanding capital. The loan registration fees, amounting to <strong>420 euros</strong>, are entirely borne by the borrower after signing the contract. For this purpose, we invite you to give your consent so that we can initiate the insurance formalities to ensure the smooth running of the transaction. Once the loan agreement is signed, the loan amount will be transferred to the borrower's bank account within <strong>48 hours</strong>.
+contract.section.loan.description: The <strong>lender</strong> grants a <strong>loan</strong> of <strong>%amount% %currency%</strong> to the <strong>borrower</strong> (hereinafter referred to as "the loan"). The lender grants this loan without requiring any collateral. To secure the repayment of the loan, it is necessary to take out <strong>insurance</strong>. In case of force majeure or inability to repay, the insurance company will cover the outstanding capital. To this end, we invite you to give your consent so that we may initiate the insurance formalities to ensure the smooth transaction. Once the loan agreement is signed, the loan amount will be transferred to the borrower's bank account within <strong>48 hours</strong>.
 contract.section.interest: Interest
-contract.section.interest.description: The borrower must pay an annual interest rate of <strong>%interest% %</strong> on the loan amount. The total amount to be repaid, including interest, amounts to <strong>%total% €</strong>.
+contract.section.interest.description: The borrower must pay an annual interest rate of <strong>%interest% %</strong> on the loan amount. The total amount to be repaid, including interest, amounts to <strong>%total% %currency%</strong>.
 contract.section.duration: Loan Duration
 contract.section.duration.description: The loan duration extends over <strong>%duration% months</strong> from <strong>%date%</strong>.
 contract.section.repayment: Repayment
-contract.section.repayment.description: A three-month deferment period is granted to the borrower to allow them to invest the loan amount. Loan repayments are made monthly. The borrower must transfer an amount of <strong>%amount% EUR</strong> to the lender on <strong>%date%</strong>.
+contract.section.repayment.description: A grace period of three months is granted to the borrower to allow investment of the loan amount. Loan repayments are made monthly. The borrower is required to transfer an amount of <strong>%amount% %currency%</strong> to the lender on <strong>%date%</strong>.
 contract.section.insurance: Insurance
-contract.section.insurance.description: It is important to note that a contractual loan does not guarantee automatic and unconditional granting by the lender. However, the borrower must take out credit insurance with the lender's bank to cover the repayment in case of illegality.
-contract.section.address: Home Address
-contract.section.address.description: According to this agreement, the borrower declares that their registered office is located at the address specified in this contract and undertakes to inform the lender of any change.
+contract.section.insurance.description: It is important to note that a contractual loan does not guarantee automatic and unconditional granting by the lender. However, the borrower must take out credit insurance with the lender's bank to cover repayment in case of illegality.
+contract.section.address: Address of Residence
+contract.section.address.description: In accordance with this agreement, the borrower declares that their registered office is located at the address specified in this contract and undertakes to inform the lender of any change.
 contract.section.money_laundering: Money Laundering
-contract.section.money_laundering.description: The lender confirms that the loaned funds are legitimate and are not intended for money laundering in any way.
+contract.section.money_laundering.description: The lender confirms that the loaned funds are legitimate and are in no way intended for money laundering.
 contract.section.general_provisions: General Provisions
 contract.section.general_provisions.impact: Impact on Third Parties
-contract.section.general_provisions.impact.description: No provision of this agreement confers any rights or benefits on third parties, and neither party may invoke any rights, interests, or remedies under this agreement.
+contract.section.general_provisions.impact.description: No provision of this agreement confers rights or benefits to third parties, and none of the parties may invoke rights, interests, or remedies under this agreement.
 contract.section.general_provisions.confidentiality: Confidentiality
-contract.section.general_provisions.confidentiality.description: Except as otherwise provided by law or any applicable regulation (including stock exchange rules), the parties agree to treat the terms and contents of this agreement confidentially.
+contract.section.general_provisions.confidentiality.description: Except as otherwise required by law or any applicable regulation (including stock exchange rules), the parties agree to treat all terms and contents of this agreement as confidential.
 contract.section.general_provisions.signatures: Signatures
-contract.section.general_provisions.signatures.description: Each contracting party may sign this agreement as a counterpart. Each counterpart constitutes an original, but all together form only one document. This agreement may be signed by fax or any other digitized signature and sent electronically.
+contract.section.general_provisions.signatures.description: Each contracting party may sign this agreement as a counterpart. Each counterpart constitutes an original, but together they form a single document. This agreement may be signed by fax or any other digitized signature and sent electronically.
 contract.signature.borrower: "The Borrower:"
 contract.signature.notary: "The Notary:"
 contract.signature.lender: "The Lender (%bank_name%):"

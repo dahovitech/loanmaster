@@ -3,6 +3,7 @@
 namespace App\Twig\Runtime;
 
 use App\Entity\Faq;
+use App\Entity\Seo;
 use App\Entity\Loan;
 use App\Entity\Page;
 use App\Entity\Post;
@@ -59,28 +60,40 @@ class AppExtensionSetting implements RuntimeExtensionInterface
 
     public function onSetting($property, $isBoolean = false)
     {
-        $settingOne = null;
-        $settings = $this->entityManager->getRepository(Setting::class)->findAll();
-        foreach ($settings as $setting) {
-            $settingOne = $setting;
+        $settingRepository = $this->entityManager->getRepository(Setting::class);
+        $setting = $settingRepository->findOneBy([]); // Assuming you want to get the first setting
+    
+        if (!$setting) {
+            throw new \RuntimeException('No setting found.');
         }
-
-        if (!$settingOne) {
-            throw new \Exception('No setting found.');
+    
+        $method = $isBoolean ? 'is' . ucfirst($property) : 'get' . ucfirst($property);
+    
+        if (!method_exists($setting, $method)) {
+            throw new \BadMethodCallException(sprintf('Method "%s" does not exist in class "%s".', $method, get_class($setting)));
         }
-        if ($isBoolean) {
-            $method = 'is' . ucfirst($property);
-        } else {
-            $method = 'get' . ucfirst($property);
-        }
-
-
-        if (!method_exists($settingOne, $method)) {
-            throw new \Exception(sprintf('Method "%s" does not exist in class "%s".', $method, get_class($settingOne)));
-        }
-
-        return $settingOne->$method();
+    
+        return $setting->$method();
     }
+    
+    public function onSeo($property, $isBoolean = false)
+    {
+        $seoRepository = $this->entityManager->getRepository(Seo::class);
+        $seo = $seoRepository->findOneBy([]); // Assuming you want to get the first setting
+    
+        if (!$seo) {
+            throw new \RuntimeException('No setting found.');
+        }
+    
+        $method = $isBoolean ? 'is' . ucfirst($property) : 'get' . ucfirst($property);
+    
+        if (!method_exists($seo, $method)) {
+            throw new \BadMethodCallException(sprintf('Method "%s" does not exist in class "%s".', $method, get_class($seo)));
+        }
+    
+        return $seo->$method();
+    }
+    
 
     public function onSliders()
     {

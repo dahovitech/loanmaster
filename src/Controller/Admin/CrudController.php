@@ -390,6 +390,10 @@ class CrudController extends AbstractController
             $entity = $this->entityManager->getRepository($entityClass)->findOneBy([], ['id' => 'desc']);
             if ($entity === null) {
                 $entity = new $entityClass();
+                $this->entityManager->persist($entity);
+                $this->entityManager->flush($entity);
+                $entity = $this->entityManager->getRepository($entityClass)->findOneBy([], ['id' => 'desc']);
+
             }
             return $entity;
         }

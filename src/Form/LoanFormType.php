@@ -51,7 +51,7 @@ class LoanFormType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'loan.form.saveButton',
-                'attr' => ['class' => 'btn btn-primary']
+                'attr' => ['class' => 'btn btn-primary w-100 mt-3']
             ]);
     }
 

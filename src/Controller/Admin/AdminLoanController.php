@@ -28,8 +28,12 @@ class AdminLoanController extends AbstractController
     #[Route('/list', name: 'list')]
     public function list(): Response
     {
-        $loans = $this->entityManager->getRepository(Loan::class)->findAll();
-
+        $loans = $this->entityManager->getRepository(Loan::class)
+        ->createQueryBuilder('l')
+        ->orderBy('l.id', 'DESC') // Trie par l'ID en ordre décroissant
+        ->getQuery()
+        ->getResult();
+        
         return $this->render('@admin/user/loan/list.html.twig', [
             'loans' => $loans,
         ]);

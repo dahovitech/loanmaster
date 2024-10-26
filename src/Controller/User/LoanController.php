@@ -40,7 +40,14 @@ class LoanController extends AbstractController
 
             return $this->redirectToRoute("app_user_dashboard");
         }
-        $loans = $this->entityManager->getRepository(Loan::class)->findBy(['user' => $this->getUser()]);
+        
+        $loans = $this->entityManager->getRepository(Loan::class)
+        ->createQueryBuilder('l')
+        ->where('l.user = :user')
+        ->setParameter('user', $user)
+        ->orderBy('l.id', 'DESC') // Trie par l'ID en ordre décroissant
+        ->getQuery()
+        ->getResult();
 
         return $this->render('user/loan/list.html.twig', [
             'loans' => $loans,
@@ -134,7 +141,7 @@ class LoanController extends AbstractController
             $template_name = "submit.html.twig";
         }
         if ($user->getAccountType() == "professional") {
-            $template_name = "submit_pro.html.twig";
+            $template_name = "submit.html.twig";
         }
 
         return $this->render('user/loan/' . $template_name, [

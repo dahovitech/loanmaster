@@ -6,11 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'setting_translations')]
-#[ORM\Index(name: 'setting_translation_idx', columns: ['locale', 'object_id', 'field'])]
-class SettingTranslation extends AbstractPersonalTranslation
+#[ORM\Table(name: 'seo_translations')]
+#[ORM\Index(name: 'seo_translation_idx', columns: ['locale', 'object_id', 'field'])]
+class SeoTranslation extends AbstractPersonalTranslation
 {
-    #[ORM\ManyToOne(targetEntity: Setting::class, inversedBy: 'translations')]
+    #[ORM\ManyToOne(targetEntity: Seo::class, inversedBy: 'translations')]
     #[ORM\JoinColumn(name: 'object_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     protected $object;
 

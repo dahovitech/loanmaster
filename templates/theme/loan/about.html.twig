@@ -1,38 +1,38 @@
 {% extends '@theme/'~setting('theme')~'/base.html.twig' %}
 {% block title %}
-	{{ setting('seoAboutTitle')|raw|trim }}
+	{{ seo('seoAboutTitle')|raw|trim }}
 {% endblock %}
 {% block description %}
-	{{ setting('seoAboutDescription')|raw|trim }}
+	{{ seo('seoAboutDescription')|raw|trim }}
 {% endblock %}
 {% block keywords %}
-	{{ setting('seoAboutKeywords')|raw|trim }}
+	{{ seo('seoAboutKeywords')|raw|trim }}
 {% endblock %}
 {% block canonical %}
 	{{ url('about')|raw|trim }}
 {% endblock %}
 
 {% block ogTitle %}
-	{{ setting('seoAboutTitle')|raw|trim }}
+	{{ seo('seoAboutTitle')|raw|trim }}
 {% endblock %}
 {% block ogDescription %}
-	{{ setting('seoAboutDescription')|raw|trim }}
+	{{ seo('seoAboutDescription')|raw|trim }}
 {% endblock %}
 {% block ogImage %}
-	{{ absolute_url(setting('seoImage')|default('#'))|raw|trim }}
+	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
 {% endblock %}
 {% block ogUrl %}
 	{{ url('about') |raw|trim}}
 {% endblock %}
 
 {% block twitterTitle %}
-	{{ setting('seoAboutTitle')|raw|trim }}
+	{{ seo('seoAboutTitle')|raw|trim }}
 {% endblock %}
 {% block twitterDescription %}
-	{{ setting('seoAboutDescription')|raw|trim }}
+	{{ seo('seoAboutDescription')|raw|trim }}
 {% endblock %}
 {% block twitterImage %}
-	{{ absolute_url(setting('seoImage')|default('#'))|raw|trim }}
+	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
 {% endblock %}
 {% block twitterUrl %}
 	{{ url('about')|raw|trim }}

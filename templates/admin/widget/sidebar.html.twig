@@ -4,8 +4,8 @@
 			<img src="{{ asset(setting("logoLight")|default('#')) }}" alt="{{setting("title")}}" width="200">
 		</div>
 		{# <div>
-																							<h4 class="logo-text">{{ setting('title')|default("DOCUFASTER") }}</h4>
-																						</div> #}
+			<h4 class="logo-text">{{ setting('title')|default("DOCUFASTER") }}</h4>
+		</div> #}
 		<div class="toggle-icon ms-auto">
 			<i class='bx bx-arrow-to-left'></i>
 		</div>
@@ -76,6 +76,7 @@
 					<li><a href="{{path('app_crud_index',{entityName:'page'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Page</div></a></li>
 					<li><a href="{{path('app_crud_index',{entityName:'step'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Process</div></a></li>
 					<li><a href="{{path('app_crud_index',{entityName:'theme'})}}"><div class="parent-icon"><i class='bx bx-chevron-right-circle'></i></div><div class="menu-title">Theme</div></a></li>
+					<li><a href="{{path('app_crud_index',{entityName:'seo'})}}"><div class="parent-icon"><i class='bx bx-cog'></i></div><div class="menu-title">Seo</div></a></li>
 					<li><a href="{{path('app_crud_index',{entityName:'setting'})}}"><div class="parent-icon"><i class='bx bx-cog'></i></div><div class="menu-title">{{ "admin.menu.setting"|trans}}</div></a></li>
 				</ul>
 			</li>
