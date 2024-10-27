@@ -66,8 +66,12 @@
                 {{ idDoc | trans }}
             </p>
             <p>
-                <strong>Document d'identité:</strong>
-                <a href="{{ asset(user.getIdDocument().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+                <strong>Document d'identité (recto):</strong>
+                <a href="{{ asset(user.getIdDocumentFront().getWebPath()|default("#")) }}" target="_blank">Voir</a>
+            </p>
+            <p>
+                <strong>Document d'identité (verso):</strong>
+                <a href="{{ asset(user.getIdDocumentBack().getWebPath()|default("#")) }}" target="_blank">Voir</a>
             </p>
             <p>
                 <strong>Type de preuve d'adresse:</strong>

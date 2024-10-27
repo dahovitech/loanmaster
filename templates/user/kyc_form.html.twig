@@ -29,15 +29,25 @@
         <div class="card-body">
             {{ form_start(form, { 'attr': { 'class': 'kyc-form' } }) }}
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="idDocumentType" class="form-label">{{ form.idDocumentType.vars.label|trans }}</label>
                         {{ form_widget(form.idDocumentType, { 'attr': { 'class': 'form-select' } }) }}
                         {{ form_errors(form.idDocumentType) }}
                     </div>
-                    <div class="col-md-6">
-                        <label for="idDocument" class="form-label">{{ form.idDocument.vars.label|trans }}</label>
-                        {{ form_widget(form.idDocument) }}
-                        {{ form_errors(form.idDocument) }}
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="idDocumentFront" class="form-label">{{ form.idDocumentFront.vars.label|trans }}</label>
+                                {{ form_widget(form.idDocumentFront) }}
+                                {{ form_errors(form.idDocumentFront) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="idDocumentBack" class="form-label">{{ form.idDocumentBack.vars.label|trans }}</label>
+                                {{ form_widget(form.idDocumentBack) }}
+                                {{ form_errors(form.idDocumentBack) }}
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             

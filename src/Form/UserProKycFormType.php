@@ -92,8 +92,12 @@ class UserProKycFormType extends AbstractType
                 ],
                 'required' => true,
             ])
-            ->add('idDocument', MediaType::class, [
-                'label' => 'form.idDocument.label',
+            ->add('idDocumentFront', MediaType::class, [
+                'label' => 'form.idDocumentFront.label',
+                'required' => true,
+            ])
+            ->add('idDocumentBack', MediaType::class, [
+                'label' => 'form.idDocumentBack.label',
                 'required' => true,
             ])
             ->add('proofOfAddressType', ChoiceType::class, [

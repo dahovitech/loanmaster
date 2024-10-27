@@ -84,7 +84,12 @@ class AdminController extends AbstractController
     #[Route("/client/lists", name: "clientLists")]
     public function adminClientLists(): Response
     {
-        $users = $this->entityManager->getRepository(User::class)->findAll();
+        $users = $this->entityManager->getRepository(User::class)
+        ->createQueryBuilder('l')
+        ->orderBy('l.id', 'DESC') // Trie par l'ID en ordre décroissant
+        ->getQuery()
+        ->getResult();
+        
         $data = [];
         foreach ($users as $user) {
             if (!$user->hasRole("ROLE_ADMIN") && !$user->hasRole("ROLE_SUPER_ADMIN")) {

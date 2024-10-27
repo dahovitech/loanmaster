@@ -421,6 +421,8 @@ form.idDocumentType.idCard: "Carte d'identité"
 form.idDocumentType.passport: "Passeport"
 form.idDocumentType.driverLicense: "Permis de conduire"
 form.idDocument.label: "Document d'identité (PDF,JPG,PNG)"
+form.idDocumentFront.label: Document d'identification (recto)
+form.idDocumentBack.label: Document d'identification (verso)
 
 form.proofOfAddressType.label: "Type de justificatif de domicile"
 form.proofOfAddressType.electricityBill: "Facture d'électricité"

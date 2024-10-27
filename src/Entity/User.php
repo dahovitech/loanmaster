@@ -95,7 +95,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $resetToken = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $idDocument;
+    private $idDocumentFront;
+
+    #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
+    private $idDocumentBack;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $idDocumentType = null;
@@ -693,24 +696,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * Get the value of idDocument
-     */
-    public function getIdDocument()
+    public function getIdDocumentFront(): ?Media
     {
-        return $this->idDocument;
+        return $this->idDocumentFront;
     }
 
-    /**
-     * Set the value of idDocument
-     *
-     * @return  self
-     */
-    public function setIdDocument($idDocument)
+    public function setIdDocumentFront(?Media $idDocumentFront): self
     {
-        $this->idDocument = $idDocument;
+        $this->idDocumentFront = $idDocumentFront;
+        return $this;
+    }
 
+    public function getIdDocumentBack(): ?Media
+    {
+        return $this->idDocumentBack;
+    }
+
+    public function setIdDocumentBack(?Media $idDocumentBack): self
+    {
+        $this->idDocumentBack = $idDocumentBack;
         return $this;
     }
 
