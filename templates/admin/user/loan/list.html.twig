@@ -1,13 +1,13 @@
 {% extends "@admin/base.html.twig" %}
 
 {% block title %}
-	{{ 'loan.list.title'|trans }}
+	Listes des prêts
 {% endblock %}
 
 {% block body %}
 	<!--breadcrumb-->
 	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-		<div class="breadcrumb-title pe-3">{{ 'loan.list.title'|trans }}</div>
+		<div class="breadcrumb-title pe-3">Listes des prêts</div>
 		<div class="ps-3">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb mb-0 p-0">
@@ -16,7 +16,7 @@
 							<i class="bx bx-home-alt"></i>
 						</a>
 					</li>
-					<li class="breadcrumb-item active" aria-current="page">{{ 'loan.list.title'|trans }}</li>
+					<li class="breadcrumb-item active" aria-current="page">Listes des prêts</li>
 				</ol>
 			</nav>
 		</div>
@@ -24,7 +24,7 @@
 	<!--end breadcrumb-->
 	<div class="row">
 		<div class="col-md-12">
-			<h6 class="mb-0 text-uppercase">{{ 'loan.list.title'|trans }}</h6>
+			<h6 class="mb-0 text-uppercase">Listes des prêts</h6>
 			<hr/>
 			<div class="card">
 				<div class="card-body">
@@ -38,6 +38,7 @@
 									<th>Nom complet</th>
 									<th>{{ 'loan.list.amount'|trans }}</th>
 									<th>{{ 'loan.list.status'|trans }}</th>
+									<th>Type</th>
 									<th>{{ 'loan.list.actions'|trans }}</th>
 								</tr>
 							</thead>
@@ -52,6 +53,9 @@
 										<td>{{ loan.amount }}</td>
 										{% set status = "status." ~ loan.status  %}
 										<td>{{ status|trans }}</td>
+										{% set accountType = "form.accountType.choice." ~ loan.user.accountType  %}
+										<td>{{ accountType|trans }}</td>
+										
 										<td>
 											{% if loan.payStatus == "pending" %}
 												<a class="btn btn-primary btn-sm" href="{{ path('admin_loan_pay_info', {'id': loan.id}) }}">Ajouter infos paie</a>
