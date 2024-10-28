@@ -6,6 +6,6 @@
 
 {% block body %}
     <h1>{{ 'loan.email.greeting'|trans({}, 'messages', user.locale) }}, {{ user.firstname }}</h1>
-    <p>{{ 'loan.email.body'|trans({'%loanNumber%': loan.loanNumber, '%amount%': loan.amount,'%devise%': setting('devise')}, 'messages', user.locale) }}</p>
+    <p>{{ 'loan.email.body'|trans({'%loanNumber%': loan.loanNumber, '%amount%': loan.amount,'%devise%': setting('devise')}, 'messages', user.locale)|raw }}</p>
     <p>{{ 'loan.email.closing'|trans({}, 'messages', user.locale) }}</p>
 {% endblock %}

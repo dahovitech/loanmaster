@@ -729,7 +729,7 @@ email.subject.bankinfo: Félicitations pour votre demande
 email.bankinfo.greeting: "Bonjour %firstname%,"
 email.bankinfo.message: Nous avons l'immense plaisir de vous annoncer que votre demande a été approuvée avec succès. Vous pouvez dès maintenant finaliser votre inscription auprès de la banque %name% en cliquant <a target='_blank' href='%url%'>ici</a>.
 email.bankinfo.thanks: Nous vous sommes profondément reconnaissants pour la confiance que vous nous témoignez.
-loan.email.subject: Votre demande de prêt a été approuvée
+loan.email.subject: Votre demande de prêt a été soumise
 loan.email.greeting: Bonjour
 loan.email.body: Votre demande de prêt numéro %loanNumber% d'un montant de <strong>%amount%</strong> a été enregistrée avec succès. Vous serez informé(e) dès que votre demande sera prise en compte.
 loan.email.closing: Nous vous remercions de la confiance que vous nous accordez.

@@ -104,7 +104,7 @@
 
 			<tr>
 				<td>
-					{{ 'contract_pro.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d.m.Y')})|raw }}
+					{{ 'contract_pro.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d.m.Y'), '%end_date%': loan.endDate|date('d.m.Y')})|raw }}
 				</td>
 			</tr>
 

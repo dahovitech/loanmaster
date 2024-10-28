@@ -20,10 +20,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserType extends AbstractType
 {
-    public function __construct(private Util $util) {}
+    public function __construct(
+        private Util $util,
+        private TranslatorInterface $translator
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -129,7 +133,7 @@ class UserType extends AbstractType
             ])
             ->add('monthlyIncome', NumberType::class, [
                 'required' => true,
-                'label' => "form.monthlyIncome"
+                'label' => $this->translator->trans("form.monthlyIncome",['%devise%'=> $this->util->getSetting()->getDevise()])
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,

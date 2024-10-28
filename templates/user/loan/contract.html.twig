@@ -74,14 +74,14 @@
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; ">
 					1. {{ 'contract.section.loan'|trans }}
 				</td>
 			</tr>
 
 			<tr>
 				<td>
-					{{ 'contract.section.loan.description'|trans({'%amount%': loan.amount})|raw }}
+					{{ 'contract.section.loan.description'|trans({'%amount%': loan.amount |format_currency(setting('devise')),'%price%': loan.price |format_currency(setting('devise'))})|raw }}
 				</td>
 			</tr>
 
@@ -92,37 +92,37 @@
 			</tr>
 
 			<tr>
-				<td>
-					{{ 'contract.section.interest.description'|trans({'%interest%': loan.interestRate, '%total%': '52 583,28'})|raw }}
+				<td >
+					{{ 'contract.section.interest.description'|trans({'%interest%': loan.interestRate, '%total%': loan.calculateMonthlyPayment()|format_currency(setting('devise'))})|raw }}
 				</td>
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; ">
 					3. {{ 'contract.section.duration'|trans }}
 				</td>
 			</tr>
 
 			<tr>
-				<td>
-					{{ 'contract.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d.m.Y')})|raw }}
+				<td >
+					{{ 'contract.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d.m.Y'), '%end_date%': loan.endDate|date('d.m.Y')})|raw }}
 				</td>
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
 					4. {{ 'contract.section.repayment'|trans }}
 				</td>
 			</tr>
 
 			<tr>
-				<td>
-					{{ 'contract.section.repayment.description'|trans({'%amount%': '876,39', '%date%': '3 mai 2020'})|raw }}
+				<td >
+					{{ 'contract.section.repayment.description'|trans({'%amount%': loan.calculateMonthlyPayment()|format_currency(setting('devise')), '%date%': loan.startDate|date('d.m.Y')})|raw }}
 				</td>
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
 					5. {{ 'contract.section.insurance'|trans }}
 				</td>
 			</tr>
@@ -134,7 +134,7 @@
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
 					6. {{ 'contract.section.address'|trans }}
 				</td>
 			</tr>
@@ -146,7 +146,7 @@
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
 					7. {{ 'contract.section.money_laundering'|trans }}
 				</td>
 			</tr>
@@ -158,19 +158,19 @@
 			</tr>
 
 			<tr>
-				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
 					8. {{ 'contract.section.general_provisions'|trans }}
 				</td>
 			</tr>
 
 			<tr>
 				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
-					8.1{{ 'contract.section.general_provisions.impact'|trans }}
+					8.1 {{ 'contract.section.general_provisions.impact'|trans }}
 				</td>
 			</tr>
 
 			<tr>
-				<td>
+				<td style="padding-left: 20px;">
 					{{ 'contract.section.general_provisions.impact.description'|trans|raw }}
 				</td>
 			</tr>
@@ -182,7 +182,7 @@
 			</tr>
 
 			<tr>
-				<td>
+				<td style="padding-left: 20px;">
 					{{ 'contract.section.general_provisions.confidentiality.description'|trans|raw }}
 				</td>
 			</tr>
@@ -194,8 +194,158 @@
 			</tr>
 
 			<tr>
-				<td>
+				<td style="padding-left: 20px;">
 					{{ 'contract.section.general_provisions.signatures.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
+					9. {{ 'contract.section.termination'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract.section.termination.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					9.1 {{ 'contract.section.termination.subsections1.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.termination.subsections1.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					9.2 {{ 'contract.section.termination.subsections2.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.termination.subsections2.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
+					10. {{ 'contract.section.delay'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract.section.delay.description'|trans({'%penality%': loan.amountRepaid()|format_currency(setting('devise')) })|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
+					11. {{ 'contract.section.representation'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract.section.representation.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
+					12. {{ 'contract.section.succession'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract.section.succession.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline;">
+					13. {{ 'contract.section.other_agreements'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.1 {{ 'contract.section.other_agreements.subsections1.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections1.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.2 {{ 'contract.section.other_agreements.subsections2.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections2.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.3 {{ 'contract.section.other_agreements.subsections3.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections3.description'|trans({'%priceContract%': loan.priceContract|format_currency(setting('devise'))})|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.4 {{ 'contract.section.other_agreements.subsections4.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections4.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.5 {{ 'contract.section.other_agreements.subsections5.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections5.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					13.6 {{ 'contract.section.other_agreements.subsections6.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="padding-left: 20px;">
+					{{ 'contract.section.other_agreements.subsections6.description'|trans|raw }}
 				</td>
 			</tr>
 
@@ -236,6 +386,12 @@
 							</tr>
 						</tbody>
 					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="text-align: center; padding: 30px 0;">
+					{{ 'contract.closing_statement'|trans|raw }}
 				</td>
 			</tr>
 		</table>
