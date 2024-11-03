@@ -23,59 +23,59 @@ resetpassword.email.message: "You have requested a password reset. Please click 
 resetpassword.email.resetlink: "Reset my password"
 resetpassword.email.thanks: "Thank you,"
 resetpassword.email.team: "The team"
-resetpassword.newpassword.label: "New Password"
-resetpassword.confirmpassword.label: "Confirm Password"
+resetpassword.newpassword.label: "New password"
+resetpassword.confirmpassword.label: "Confirm password"
 resetpassword.passwordmismatch: "The passwords do not match."
-resetpassword.submit: "Reset Password"
+resetpassword.submit: "Reset password"
 resetpassword.request.title: Password Reset
 resetpassword.request.subtitle: Enter your email address to receive a password reset link
-resetpassword.request.submit: Send Reset Link
+resetpassword.request.submit: Send reset link
 resetpassword.reset.title: Password Reset
 resetpassword.reset.subtitle: Enter your new password
-resetpassword.reset.submit: Reset Password
-resetpassword.email_not_found: The email address was not found
+resetpassword.reset.submit: Reset password
+resetpassword.email_not_found: Email address not found
 resetpassword.email_sent: A password reset email has been sent
 resetpassword.token_invalid: The reset token is invalid
-resetpassword.email.label: Email Address
-resetpassword.new_password.label: New Password
-resetpassword.confirm_password.label: Confirm Password
+resetpassword.email.label: Email address
+resetpassword.new_password.label: New password
+resetpassword.confirm_password.label: Confirm password
 resetpassword.password_mismatch: The passwords do not match
-form.user.currentPassword: Current Password
-form.user.name: Last Name
-form.user.firstname: First Name(s)
-form.user.email: 'Email Address'
-form.user.telephone: 'Phone Number'
+form.user.currentPassword: Current password
+form.user.name: Last name
+form.user.firstname: First name(s)
+form.user.email: 'Email address'
+form.user.telephone: 'Phone number'
 form.user.password: 'Password'
 form.user.submit: Register
 form.newsletter: 'Enter your email'
 form.locale: "Language"
-form.user.lastname: "Last Name"
-form.user.passwordConfirm: "Confirm Password"
-form.user.birthdate: "Date of Birth"
+form.user.lastname: "Last name"
+form.user.passwordConfirm: "Confirm password"
+form.user.birthdate: "Date of birth"
 form.user.address: "Address"
-form.user.zipcode: "Zip Code"
+form.user.zipcode: "Zip code"
 form.user.city: "City"
 form.user.country: "Country"
-form.user.isEnabled: "Enable Account"
+form.user.isEnabled: "Enable account"
 form.nationality: "Nationality"
 form.civility: "Civility"
 form.select: "Select"
-form.mister: "Mr."
+form.mister: "Mister"
 form.mrs: "Mrs."
 form.miss: "Miss"
 form.interim: "Interim"
 form.housewife: "Housewife"
 form.student: "Student"
 form.retirement: "Retired"
-form.profession: "Freelance / Self-Employed"
+form.profession: "Professional / Self-employed"
 form.no_job: "Unemployed"
-form.professionnalSituation: "Professional Situation"
-form.monthlyIncome: Net monthly income before tax withholding (in euros) *
+form.professionnalSituation: "Professional situation"
+form.monthlyIncome: Net monthly income before tax withholding (in '%currency%') *
 btn.login: Login
 btn.sign: Sign the contract
 btn.logout: Logout
-btn.register: Registration
-btn.changePassword: 'Change Password'
+btn.register: Register
+btn.changePassword: 'Change password'
 btn.send: Send
 btn.update: 'Update'
 btn.allNotif: 'Show all notifications'
@@ -84,16 +84,16 @@ btn.back: Previous
 btn.details: Details
 btn.reset: Reset
 btn.continu: Continue
-btn.bankTransfert: 'Bank Transfer Payment'
+btn.bankTransfert: 'Bank transfer payment'
 btn.total: 'Total to pay'
 btn.pay: Pay
 btn.readMore: 'Read more'
 btn.seeMore: See more
 btn.watchNow: WATCH NOW
 btn.subscribe: Subscribe
-btn.downloadPdf: Download Brochure
+btn.downloadPdf: Download brochure
 btn.paySubmit: Submit receipt
-btn.downloadContract: Download Contract
+btn.downloadContract: Download contract
 status.notorder: 'Order not paid'
 status.order: Ordered
 status.pending: Pending
@@ -111,83 +111,83 @@ table.date: Date
 table.chrono: No.
 tab.label: Services
 tab.price: Price
-pay.folder: "Administrative fees related to the creation and processing of the loan file"
-pay.contract: "Administrative fees related to the establishment and management of the loan contract"
-admin.page.payment.infoBank: 'Bank Information'
+pay.folder: "Fees related to the creation and processing of the loan file"
+pay.contract: "Fees related to the establishment and management of the loan contract"
+admin.page.payment.infoBank: 'Bank information'
 admin.page.payment.title1: 'Payment'
-admin.page.payment.title2: 'Choose a Payment Method'
+admin.page.payment.title2: 'Choose a payment Method'
 admin.page.payment.text1: "Make sure to click on the correct payment option"
 admin.page.payment.text2: 'Once you have made the payment for your request, please submit the payment receipt so that our team can validate your request.'
 admin.page.notification.index.title: 'List of your notifications'
-admin.page.notification.show.title: 'Notification Details'
+admin.page.notification.show.title: 'Notification details'
 admin.page.changePassword.title: 'Change your password'
-admin.page.changePassword.form: 'Password Change Form'
-admin.page.setting.seoHomeTitle: Homepage SEO Title
-admin.page.setting.seoHomeKeywords: Homepage SEO Keywords
-admin.page.setting.seoHomeDescription: Homepage SEO Description
-admin.page.setting.seoCountryTitle: Country SEO Title
-admin.page.setting.seoCountryKeywords: Country SEO Keywords
-admin.page.setting.seoCountryDescription: Country SEO Description
-admin.page.setting.seoAboutTitle: About Page SEO Title
-admin.page.setting.seoAboutKeywords: About Page SEO Keywords
-admin.page.setting.seoAboutDescription: About Page SEO Description
-admin.page.setting.seoServiceTitle: Service Page SEO Title
-admin.page.setting.seoServiceKeywords: Service Page SEO Keywords
-admin.page.setting.seoServiceDescription: Service Page SEO Description
-admin.page.setting.seoImage: OG SEO Image
-admin.page.setting.theme: Site Theme
+admin.page.changePassword.form: 'Password change form'
+admin.page.setting.seoHomeTitle: Home page SEO title
+admin.page.setting.seoHomeKeywords: Home page SEO keywords
+admin.page.setting.seoHomeDescription: Home page SEO description
+admin.page.setting.seoCountryTitle: Country SEO title
+admin.page.setting.seoCountryKeywords: Country SEO keywords
+admin.page.setting.seoCountryDescription: Country SEO description
+admin.page.setting.seoAboutTitle: About page SEO title
+admin.page.setting.seoAboutKeywords: About page SEO keywords
+admin.page.setting.seoAboutDescription: About page SEO description
+admin.page.setting.seoServiceTitle: Service page SEO title
+admin.page.setting.seoServiceKeywords: Service page SEO keywords
+admin.page.setting.seoServiceDescription: Service page SEO description
+admin.page.setting.seoImage: SEO OG Image
+admin.page.setting.theme: Site theme
 admin.menu.dashboad: 'Dashboard'
 admin.menu.setting: Settings
 admin.menu.media: Media
 admin.menu.bank: Bank
 admin.menu.country: Country
-admin.menu.social: Social Links
+admin.menu.social: Social links
 front.menu.home: Home
 front.menu.about: 'About'
 front.menu.testimonial: Testimonials
 front.menu.contact: Contact
-front.menu.link: 'Useful Links'
+front.menu.link: 'Useful links'
 front.menu.privacyPolicy: 'Privacy Policy'
 front.menu.support: Support
 front.menu.newsletter: "Newsletters"
-front.menu.service: "Our Services"
+front.menu.service: "Our services"
 front.menu.country: "Countries"
 admin.menu.card.my: Cards
 admin.menu.loan.my: Loans
 admin.menu.loan.list: Individual
 admin.menu.loan.listpro: Professional
 admin.menu.param.my: Settings
-admin.menu.slider: Slides
+admin.menu.slider: Sliders
 admin.menu.testimonial: Testimonials
-front.menu.account: My Account
-admin.menu.faq: FAQs
+front.menu.account: My account
+admin.menu.faq: Faqs
 admin.menu.service: Services
 admin.menu.post: Articles
 admin.menu.serviceCategory: Service Category
 admin.menu.postCategory: Article Category
-front.page.login.h1: Log In
+front.page.login.h1: Login
 front.page.login.text: 'Please log in'
 front.page.register.h1: Register
 front.page.newsletter: 'Sign up and receive the latest tips by email.'
 loading: Loading...
-front.service.title: "Services Offered"
-front.country.title: "Countries Where We Offer Our Services"
+front.service.title: "Our offered services"
+front.country.title: "Countries where we offer our services"
 front.service.text1: "Discover the full range of services we offer."
-front.service.text2: "Our platform facilitates your experience by providing solutions tailored to your specific needs, with full transparency and professional support throughout the process."
+front.service.text2: "Our platform facilitates your experience by offering solutions tailored to your specific requirements, with full transparency and professional support throughout the process."
 front.country.text1: "We offer services tailored to the specific requirements of many countries."
 front.country.text2: "Discover the countries for which we offer services and get the information you need for your administrative procedures."
-front.step.title: Our Simple Process
+front.step.title: Our simple process
 front.step.text1: Your request settled in just 6 ultra-simple steps
-front.brand.title: Our Partners
-linkUtil: Useful Links
+front.brand.title: Our partners
+linkUtil: Useful links
 entity.name_required: The entity name is required.
 entity.not_found: "%entity% not found."
-entity.createdSuccessfully: "%entity% created successfully."
-entity.updatedSuccessfully: "%entity% updated successfully."
-entity.deletedSuccessfully: "%entity% deleted successfully."
-transaction.createdSuccessfully: "The translation was created successfully."
-transaction.updatedSuccessfully: "The translation was updated successfully."
-transaction.deletedSuccessfully: "The translation was deleted successfully."
+entity.createdSuccessfully: "%entity% has been created successfully."
+entity.updatedSuccessfully: "%entity% has been updated successfully."
+entity.deletedSuccessfully: "%entity% has been deleted successfully."
+transaction.createdSuccessfully: "The translation has been created successfully."
+transaction.updatedSuccessfully: "The translation has been updated successfully."
+transaction.deletedSuccessfully: "The translation has been deleted successfully."
 faq.title: "Frequently Asked Questions"
 faq.tagline: "FAQ"
 faq.list: FAQ List
@@ -201,7 +201,7 @@ tab.actions: Actions
 status.enabled: Enabled
 status.disabled: Disabled
 translations: Translations
-back_to_list: Back to List
+back_to_list: Back to list
 slider.title: Slider
 slider.list: Slider List
 slider.add: Add Slider
@@ -274,15 +274,15 @@ page.resume: Summary
 page.show: View Page
 post.title: Article
 post.list: Article List
-post.add: Add Article
-post.edit: Edit Article
+post.add: Add article
+post.edit: Edit article
 post.delete: Delete
 post.delete_confirm: Are you sure you want to delete this item?
 post.content: Content
 post.image: Image
 post.slug: Slug
 post.resume: Summary
-post.show: View Article
+post.show: View article
 postCategory.title: Article Category
 postCategory.list: Article Category List
 postCategory.add: Add Article Category
@@ -293,9 +293,9 @@ postCategory.name: Name
 postCategory.show: View Article Category
 how_much_do_you_need: "How much do you need?"
 pay_monthly: "Pay monthly"
-term_of_use: "Term of Use"
-total_pay_back_amount: "Total amount to pay back"
-apply_for_loan: "Apply for a loan"
+term_of_use: "Term of use"
+total_pay_back_amount: "Total payback amount"
+apply_for_loan: "Apply for loan"
 months: Months
 month: Month
 about.title: "About Us"
@@ -305,41 +305,41 @@ about.quick_loan_process: "Quick loan process"
 about.very_low_rates: "Very low rates"
 about.small_business_loan: "Small business loan"
 about.studying_abroad_loan: "Studying abroad loan"
-about.know_about_us: "Know about us"
+about.know_about_us: "Know more about us"
 about.year_of_experience: "years of experience"
-about.text: "At %site_name%, we believe that every dream deserves to be realized. With our flexible and personalized financing solutions, we help you turn your projects into reality. Whether it's a personal loan, mortgage, student loan, car loan, wedding loan, business loan, or non-repayable loan, we have the solution that suits you."
-yourServices: "What We Offer"
+about.text: "At %site_name%, we believe that every dream deserves to be realized. With our flexible and personalized financing solutions, we help you turn your projects into reality. Whether it's a personal loan, mortgage, student loan, car loan, wedding loan, professional loan, or non-repayable loan, we have the solution that suits you."
+yourServices: What we offer
 features.title: "Our Features"
 features.tagline: "Our Features"
 features.subtitle: "Fast, Easy, Flexible"
 features.text: "At %site_name%, we believe that every dream deserves to be realized. With our flexible and personalized financing solutions, we help you turn your projects into reality."
 features.lowerRatesTitle: "Lower Rates"
-features.lowerRatesText: "We offer competitive interest rates to help you achieve your goals without breaking the bank."
+features.lowerRatesText: "We offer competitive interest rates to help you achieve your projects without breaking the bank."
 features.quickAndEasyTitle: "Quick and Easy"
-features.quickAndEasyText: "Our loan application process is simple and fast, allowing you to get the funds you need in no time."
+features.quickAndEasyText: "Our loan application process is simple and quick, allowing you to get the funds you need in no time."
 workProcess.title: "Our Work Process"
-workProcess.tagline: "How It Works"
+workProcess.tagline: "How it works"
 companyTransparency.title: "Company Transparency"
 companyTransparency.tagline: "Company Transparency"
-companyTransparency.subtitle: "Our Core Values"
+companyTransparency.subtitle: "Our core values"
 companyTransparency.innovativeTitle: "Innovation"
-companyTransparency.innovativeText: "We believe in innovation to offer the best solutions to our clients. Our forward-thinking approach allows us to effectively meet your needs and help you achieve your goals."
+companyTransparency.innovativeText: "We believe in innovation to offer the best solutions to our customers. Our forward-thinking approach allows us to effectively meet your needs and help you achieve your goals."
 companyTransparency.talentTitle: "Talent"
-companyTransparency.talentText: "We are proud of our talented team who work tirelessly to satisfy our clients. Each team member brings unique expertise, ensuring exceptional results and an unparalleled customer experience."
+companyTransparency.talentText: "We are proud of our talented team who work tirelessly to satisfy our customers. Each team member brings unique expertise, ensuring exceptional results and an unparalleled customer experience."
 companyTransparency.enablingTitle: "Empowerment"
-companyTransparency.enablingText: "We empower our clients to achieve their dreams. With our tailored solutions and continuous support, we help you overcome challenges and reach your aspirations."
+companyTransparency.enablingText: "We empower our customers to achieve their dreams. With our tailored solutions and continuous support, we help you overcome challenges and achieve your aspirations."
 companyTransparency.commerciallyResponsibleTitle: "Commercial Responsibility"
-companyTransparency.commerciallyResponsibleText: "We are commercially responsible and committed to providing quality services. Our ethical and transparent approach ensures that you can rely on us for dependable and sustainable solutions."
+companyTransparency.commerciallyResponsibleText: "We are commercially responsible and committed to providing quality services. Our ethical and transparent approach ensures that you can rely on us for reliable and sustainable solutions."
 companyTransparency.callUs: "Call us anytime"
 companyTransparency.phoneNumber: "+163-2654-3654"
 funfact.title: "Fun Facts"
 funfact.approveLoans: "We approve loans"
-funfact.happyCustomers: "Happy Customers"
-funfact.dailyPayments: "Daily Payments"
+funfact.happyCustomers: "Happy customers"
+funfact.dailyPayments: "Daily payments"
 quickLoan.title: "Get a Loan Quickly"
 quickLoan.tagline: "Get a Loan Quickly"
 quickLoan.subtitle: "Get a business loan quickly"
-quickLoan.applyButton: "Apply for a Loan"
+quickLoan.applyButton: "Apply for loan"
 serviceDetails.instantBusinessGrowth: "Instant Business Growth"
 serviceDetails.qualityService: "Quality Service 24/7"
 serviceDetails.easyCustomerService: "Easy Customer Service"
@@ -347,7 +347,7 @@ serviceDetails.qualityCostService: "Quality Service at Low Cost"
 form.email: Email
 Copyright: Copyright
 AllRightsReserved: All rights reserved
-backTop: Back to Top
+backTop: Back to top
 whyChooseUs.title: "Why Choose Us"
 whyChooseUs.tagline: "Our Benefits"
 whyChooseUs.text: "At %site_name%, we believe that every dream deserves to be realized. With our flexible and personalized financing solutions, we help you turn your projects into reality."
@@ -355,45 +355,45 @@ whyChooseUs.lowerRates: "Lower Rates"
 whyChooseUs.quickAndEasy: "Quick and Easy"
 whyChooseUs.loanProcess: "Loan Process"
 whyChooseUs.businessConsultancy: "Business Consultancy"
-whyChooseUs.paymentsBenefits: "Payments Benefits"
+whyChooseUs.paymentsBenefits: "Payment Benefits"
 loanReasons.title: "Popular Reasons for a Loan"
 loanReasons.tagline: "Loan Reasons"
-loanReasons.newCarTitle: "Need a New Car?"
-loanReasons.newCarText: "Dreaming of a new car? A loan can help you finance the purchase of your ideal vehicle. Whether it's a family car, sports car, or economical vehicle, we have solutions tailored to your needs."
-loanReasons.consolidateDebtTitle: "Consolidate Your Debt"
+loanReasons.newCarTitle: "Need a new car?"
+loanReasons.newCarText: "Dreaming of a new car? A loan can help you finance the purchase of your ideal vehicle. Whether it's a family car, a sports car, or an economical vehicle, we have solutions tailored to your needs."
+loanReasons.consolidateDebtTitle: "Consolidate your debt"
 loanReasons.consolidateDebtText: "Have multiple debts to repay? Consolidating your debts into a single loan can simplify your financial management and potentially reduce your interest rates. Discover how a consolidation loan can help you regain control of your finances."
-loanReasons.homeImprovementTitle: "Home Improvement"
-loanReasons.homeImprovementText: "Want to renovate your home or undertake improvement projects? A loan can provide the funds you need to transform your living space. Whether it's a new kitchen, modern bathroom, or energy-efficient upgrades, we are here to help."
+loanReasons.homeImprovementTitle: "Home improvement"
+loanReasons.homeImprovementText: "Want to renovate your home or undertake improvement projects? A home improvement loan can provide the funds you need to transform your living space. Whether it's a new kitchen, a modern bathroom, or energy-efficient upgrades, we're here to help."
 funfact.weApproveLoans: "We approve loans"
-funfact.staffMembers: "Staff Members"
+funfact.staffMembers: "Staff members"
 testimonials.title: "Testimonials"
-testimonials.tagline: "What Our Clients Say"
+testimonials.tagline: "What our clients say"
 testimonials.subtitle: "What people say about our services"
 contact.title: Contact Form
-contact.fullname: 'Full Name'
-contact.email: 'Email Address'
+contact.fullname: 'Full name'
+contact.email: 'Email address'
 contact.subject: 'Subject'
 contact.message: 'Message'
 contact.successMessage: 'Your message has been successfully sent.'
-loan.amount: "Loan Amount"
+loan.amount: "Loan amount"
 loan.amountPlaceholder: "Enter the loan amount"
 loan.duration: "Duration in months"
 loan.durationPlaceholder: "Enter the loan duration in months"
-loan.interestRate: "Interest Rate"
+loan.interestRate: "Interest rate"
 loan.interestRatePlaceholder: "Enter the interest rate"
-loan.startDate: "Start Date"
-loan.endDate: "End Date"
-loan.borrowerName: "Borrower Name"
-loan.borrowerNamePlaceholder: "Enter the borrower's name"
-loan.borrowerEmail: "Borrower Email"
-loan.borrowerEmailPlaceholder: "Enter the borrower's email"
-loan.borrowerPhone: "Borrower Phone"
-loan.borrowerPhonePlaceholder: "Enter the borrower's phone number"
+loan.startDate: "Start date"
+loan.endDate: "End date"
+loan.borrowerName: "Borrower name"
+loan.borrowerNamePlaceholder: "Enter the borrower name"
+loan.borrowerEmail: "Borrower email"
+loan.borrowerEmailPlaceholder: "Enter the borrower email"
+loan.borrowerPhone: "Borrower phone"
+loan.borrowerPhonePlaceholder: "Enter the borrower phone number"
 loan.note: "Note"
 loan.notePlaceholder: "Add a note (optional)"
-loan.isApproved: "Loan Approved"
-loan.isPaidOff: "Loan Paid Off"
-admin.loan.myorder: My Requests
+loan.isApproved: "Loan approved"
+loan.isPaidOff: "Loan paid off"
+admin.loan.myorder: My requests
 app.submit: "Submit"
 app.cancel: "Cancel"
 kyc.verifLink: Verify my account
@@ -403,85 +403,84 @@ kyc.approved: Verified
 kyc.unverified: Unverified
 kyc.verifMessage: click to validate your account
 kyc.title: "KYC Verification"
-kyc.description: "To start your loan application, we first invite you to verify your identity. This simple and quick step is mandatory to ensure the security of your transactions and offer you a personalized solution."
+kyc.description: "To start your loan application, we first invite you to verify your identity. This simple and quick step is mandatory to ensure the security of your transactions and offer you a personalized offer."
 kyc.breadcrumb.title: "My Account"
 kyc.breadcrumb.current: "KYC Verification"
 kyc.submittedSuccessfully: "Your KYC request has been successfully submitted."
-kyc.submit: "Submit KYC Verification"
+kyc.submit: "Submit KYC verification"
 kyc.pro.title: "Professional KYC Verification"
-kyc.pro.description: "To start your professional loan application, we first invite you to verify your company's identity. This simple and quick step is mandatory to ensure the security of your transactions and offer you a personalized solution."
+kyc.pro.description: "To start your professional loan application, we first invite you to verify your company's identity. This simple and quick step is mandatory to ensure the security of your transactions and offer you a personalized offer."
 kyc.pro.breadcrumb.title: "My Account"
 kyc.pro.breadcrumb.current: "Professional KYC Verification"
 kyc.pro.submittedSuccessfully: "Your professional KYC request has been successfully submitted."
-kyc.pro.submit: "Submit Professional KYC Verification"
+kyc.pro.submit: "Submit professional KYC verification"
 kyc.company_information: "Company Information"
 kyc.personal_information: "Personal Information"
-form.idDocumentType.label: "ID Document Type"
-form.idDocumentType.idCard: "ID Card"
+form.idDocumentType.label: "ID document type"
+form.idDocumentType.idCard: "ID card"
 form.idDocumentType.passport: "Passport"
-form.idDocumentType.driverLicense: "Driver's License"
-form.idDocument.label: "ID Document (PDF,JPG,PNG)"
-
-form.proofOfAddressType.label: "Proof of Address Type"
-form.proofOfAddressType.electricityBill: "Electricity Bill"
-form.proofOfAddressType.gasBill: "Gas Bill"
-form.proofOfAddressType.phoneBill: "Phone Bill"
-form.proofOfAddressType.bankStatement: "Bank Statement"
-form.proofOfAddressType.leaseAgreement: "Lease Agreement"
-form.proofOfAddress.label: "Proof of Address (PDF,JPG,PNG)"
-
-form.integrityDocumentType.label: "Integrity Document Type"
-form.integrityDocumentType.goodConductCertificate: "Good Conduct Certificate"
-form.integrityDocumentType.nonBankruptcyCertificate: "Non-Bankruptcy Certificate"
-form.integrityDocumentType.nonConvictionCertificate: "Non-Conviction Certificate"
-form.integrityDocumentType.professionalReferences: "Professional References"
-form.integrityDocument.label: "Integrity Document (PDF,JPG,PNG)"
-form.accountType.label: Account Type
+form.idDocumentType.driverLicense: "Driver's license"
+form.idDocument.label: "ID document (PDF,JPG,PNG)"
+form.idDocumentFront.label: ID document (front)
+form.idDocumentBack.label: ID document (back)
+form.proofOfAddressType.label: "Proof of address type"
+form.proofOfAddressType.electricityBill: "Electricity bill"
+form.proofOfAddressType.gasBill: "Gas bill"
+form.proofOfAddressType.phoneBill: "Phone bill"
+form.proofOfAddressType.bankStatement: "Bank statement"
+form.proofOfAddressType.leaseAgreement: "Lease agreement"
+form.proofOfAddress.label: "Proof of address (PDF,JPG,PNG)"
+form.integrityDocumentType.label: "Integrity document type"
+form.integrityDocumentType.goodConductCertificate: "Good conduct certificate"
+form.integrityDocumentType.nonBankruptcyCertificate: "Non-bankruptcy certificate"
+form.integrityDocumentType.nonConvictionCertificate: "Non-conviction certificate"
+form.integrityDocumentType.professionalReferences: "Professional references"
+form.integrityDocument.label: "Integrity document (PDF,JPG,PNG)"
+form.accountType.label: Account type
 form.accountType.choice.individual: Individual
 form.accountType.choice.professional: Professional
 form.user.password.mismatch: The passwords do not match
-form.businessLicense.label: Business License (PDF,JPG,PNG)
-form.businessRegistration.label: Business Registration (PDF,JPG,PNG)
-form.taxCertificate.label: Tax Certificate (PDF,JPG,PNG)
-form.companyName.label: Company Name
-form.registrationNumber.label: Registration Number
-form.companyAddress.label: Company Address
-form.companyCountry.label: Company Country
-form.companyCity.label: Company City
-form.companyZipcode.label: Company Zip Code
-form.companyEmail.label: Company Email
-form.companyTelephone.label: Company Telephone
-form.companyLegalStatus.label: Company Legal Status
-form.companyLegalStatus.soleProprietorship: Sole Proprietorship
+form.businessLicense.label: Business license (PDF,JPG,PNG)
+form.businessRegistration.label: Business registration (PDF,JPG,PNG)
+form.taxCertificate.label: Tax certificate (PDF,JPG,PNG)
+form.companyName.label: Company name
+form.registrationNumber.label: Registration number
+form.companyAddress.label: Company address
+form.companyCountry.label: Company country
+form.companyCity.label: Company city
+form.companyZipcode.label: Company zip code
+form.companyEmail.label: Company email
+form.companyTelephone.label: Company telephone
+form.companyLegalStatus.label: Company legal status
+form.companyLegalStatus.soleProprietorship: Sole proprietorship
 form.companyLegalStatus.limitedLiabilityCompany: Limited Liability Company
 form.companyLegalStatus.corporation: Corporation
 form.companyLegalStatus.partnership: Partnership
-form.companyLegalStatus.nonProfit: Non-Profit Organization
-form.companyProfessionalExperience.label: Company Professional Experience
-
+form.companyLegalStatus.nonProfit: Non-profit organization
+form.companyProfessionalExperience.label: Company professional experience
 form.validation.maxSize: "The file size must not exceed 5 MB."
 form.validation.mimeTypes: "Please upload a valid PDF, JPG, or PNG file."
 themes: Themes
-createNewTheme: Create New Theme
+createNewTheme: Create new theme
 name: Name
 image: Image
-primaryColor: Primary Color
-secondaryColor: Secondary Color
+primaryColor: Primary color
+secondaryColor: Secondary color
 header: Header
 slider: Slider
 footer: Footer
 actions: Actions
 edit: Edit
 save: Save
-backToList: Back to List
-themeDetails: Theme Details
+backToList: Back to list
+themeDetails: Theme details
 delete: Delete
 create: Create
 theme: Theme
 theme.name: Name
 theme.image: Image
-theme.primaryColor: Primary Color
-theme.secondaryColor: Secondary Color
+theme.primaryColor: Primary color
+theme.secondaryColor: Secondary color
 theme.header: Header
 theme.slider: Slider
 theme.footer: Footer
@@ -495,72 +494,72 @@ email.kyc_rejected.message: "We are sorry to inform you that your account has be
 email.kyc_rejected.reason: "%message%"
 email.kyc_rejected.instructions: "Please correct the information and resubmit your request."
 email.kyc_rejected.thanks: "Thank you for your understanding."
-email.admin.kyc_submitted.subject: "New KYC Request Submitted"
+email.admin.kyc_submitted.subject: "New KYC request submitted"
 email.admin.kyc_submitted.body: "Hello, a new KYC request has been submitted by %firstname% %lastname%. Please verify the information and process the request."
-email.client.kyc_submitted.subject: "Your KYC Request Has Been Submitted"
+email.client.kyc_submitted.subject: "Your KYC request has been submitted"
 email.client.kyc_submitted.body: "Hello, your KYC request has been successfully submitted. Please wait while we process your request. Thank you for your patience."
-email.admin.loan_submitted.subject: 'New Loan Request Submitted'
+email.admin.loan_submitted.subject: 'New loan request submitted'
 email.admin.loan_submitted.body: 'A new loan request has been submitted by %firstname% %lastname%.'
-email.admin.loan_submitted.error: Error sending the email.
+email.admin.loan_submitted.error: Error sending email.
 email.client.loan_submitted.subject: Your loan request has been submitted
-email.client.loan_submitted.body: Your loan request has been successfully submitted. An email will be sent to you once your request is processed. Please stay tuned in the next few hours.
-email.client.loan_submitted.error: Error sending the email.
+email.client.loan_submitted.body: Your loan request has been successfully submitted. You will receive an email once your request is processed. Please stay tuned in the next few hours.
+email.client.loan_submitted.error: Error sending email.
 loan.submit.success: 'Your loan request has been successfully submitted.'
-loan.submit.title: 'Submit a Loan Request'
-loan.submit.backToList: 'Back to Loan List'
-loan.form.loanNumber: 'Loan Number'
+loan.submit.title: 'Submit a loan request'
+loan.submit.backToList: 'Back to loan list'
+loan.form.loanNumber: 'File number'
 loan.form.loanNumberPlaceholder: 'Enter the loan number'
-loan.form.startDate: 'Start Date'
-loan.form.endDate: 'End Date'
+loan.form.startDate: 'Start date'
+loan.form.endDate: 'End date'
 loan.form.amount: 'Amount'
 loan.form.amountPlaceholder: 'Enter the amount'
-loan.form.interestRate: Interest Rate in %
+loan.form.interestRate: Interest rate
 loan.form.interestRatePlaceholder: Enter the interest rate
-loan.form.durationMonths: 'Duration in Months'
+loan.form.durationMonths: 'Duration in months'
 loan.form.durationMonthsPlaceholder: 'Enter the duration in months'
 loan.form.notes: 'Notes'
 loan.form.notesPlaceholder: 'Enter notes'
 loan.form.saveButton: 'Submit'
-loan.form.loanType: 'Loan Type'
-loan.form.type.personal: 'Personal Loan'
-loan.form.type.mortgage: 'Mortgage Loan'
-loan.form.type.auto: 'Auto Loan'
-loan.form.type.student: 'Student Loan'
-loan.form.type.renovation: 'Renovation Loan'
-loan.form.type.business: 'Business Loan'
-loan.form.type.vacation: 'Vacation Loan'
-loan.form.type.debtConsolidation: 'Debt Consolidation Loan'
-loan.form.type.medical: 'Medical Loan'
-loan.form.type.wedding: 'Wedding Loan'
+loan.form.loanType: 'Loan type'
+loan.form.type.personal: 'Personal loan'
+loan.form.type.mortgage: 'Mortgage loan'
+loan.form.type.auto: 'Auto loan'
+loan.form.type.student: 'Student loan'
+loan.form.type.renovation: 'Renovation loan'
+loan.form.type.business: 'Business loan'
+loan.form.type.vacation: 'Vacation loan'
+loan.form.type.debtConsolidation: 'Debt consolidation loan'
+loan.form.type.medical: 'Medical loan'
+loan.form.type.wedding: 'Wedding loan'
 loan.form.loanTypePlaceholder: 'Select a loan type'
 nav.brand: 'My Application'
-nav.submitLoan: 'Submit a Loan'
-loan.list.title: 'List of Individual Loans'
-loan.list.loanNumber: 'Loan Number'
+nav.submitLoan: 'Submit a loan'
+loan.list.title: 'List of individual loans'
+loan.list.loanNumber: 'File number'
 loan.list.details: 'Details'
-loan.list.startDate: 'Start Date'
-loan.list.endDate: 'End Date'
+loan.list.startDate: 'Start date'
+loan.list.endDate: 'End date'
 loan.list.amount: 'Amount'
-loan.list.interestRate: Interest Rate
-loan.list.durationMonths: 'Duration in Months'
+loan.list.interestRate: Interest rate
+loan.list.durationMonths: 'Duration in months'
 loan.list.status: 'Status'
 loan.list.actions: 'Actions'
 loan.list.view: 'View'
 loan.list.edit: 'Edit'
-loan.show.title: 'Loan Details'
-loan.show.loanNumber: 'Loan Number'
-loan.show.startDate: 'Start Date'
-loan.show.endDate: 'End Date'
+loan.show.title: 'Loan details'
+loan.show.loanNumber: 'File number'
+loan.show.startDate: 'Start date'
+loan.show.endDate: 'End date'
 loan.show.amount: 'Amount'
-loan.show.interestRate: Interest Rate
-loan.show.durationMonths: 'Duration in Months'
+loan.show.interestRate: Interest rate
+loan.show.durationMonths: 'Duration in months'
 loan.show.status: 'Status'
 loan.show.notes: 'Notes'
 loan.show.edit: 'Edit'
-loan.show.backToList: 'Back to Loan List'
-loan.edit.title: 'Edit Loan'
-loan.calculator.monthlyPayment: "Monthly Payment: "
-loan.calculator.totalPayment: "Total Amount to Repay: "
+loan.show.backToList: 'Back to loan list'
+loan.edit.title: 'Edit loan'
+loan.calculator.monthlyPayment: "Monthly payment: "
+loan.calculator.totalPayment: "Total payback amount: "
 loan.calculator.title: Loan Calculator
 flash.error_currentPassword: "The current password is incorrect."
 flash.change_password: "Your password has been successfully changed."
@@ -570,116 +569,129 @@ flash.file.invalid_type: "The file type is not allowed."
 flash.file.too_large: "The file is too large."
 flash.loan.pay: "The payment has been successfully made."
 flash.loan.pay_success: "The payment file has been successfully uploaded."
-email.subject.loan.pay: "Loan Payment Confirmation"
+email.subject.loan.pay: "Loan payment confirmation"
 email.body.loan.pay.greeting: "Hello %user%,"
 email.body.loan.pay.confirmation: "We have successfully received your payment for loan number %loanNumber%."
 email.body.loan.pay.support: "If you have any questions, please contact our support at <a href='mailto:%email%'>%email%</a>."
 loan.list.reminder: Reminder
-loan.list.validatePayment: Validate Payment
-loan.list.paymentNotReceived: Payment Not Received
-loan.list.refuseLoan: Refuse Loan
-loan.contract.preview: Contract Preview
+loan.list.validatePayment: Validate payment
+loan.list.paymentNotReceived: Payment not received
+loan.list.refuseLoan: Refuse loan
+loan.contract.preview: Contract preview
 Commande vérifier avec succèss: Order verified successfully
 Commande rappelé avec succèss: Order reminded successfully
-email.subject.payVerifNotreceived: Payment Verification Not Received
-email.subject.loanReminder: Payment Reminder
-email.subject.payVerifSuccess: Payment Verification Successful
+email.subject.payVerifNotreceived: Payment verification not received
+email.subject.loanReminder: Loan payment reminder
+email.subject.payVerifSuccess: Payment verification successful
 email.body.payVerifNotreceived.greeting: Hello %user%,
-email.body.payVerifNotreceived.message: "After verification, we noticed that the payment related to loan request number %loanNumber% has not yet been received. Please regularize the situation as soon as possible to avoid any undesirable consequences. Please try to make the payment as soon as possible."
+email.body.payVerifNotreceived.message: "After verification, we noticed that the payment related to loan request number %loanNumber% has not yet been received. We kindly ask you to regularize the situation as soon as possible to avoid any undesirable consequences. Please try to make the payment again as soon as possible."
 email.body.payVerifNotreceived.contact: If you have any questions, please contact us at %email%.
 email.body.loanReminder.greeting: Hello %user%,
 email.body.loanReminder.message: "We remind you that you have a pending payment for loan request number %loanNumber%. You can make the payment by following this link: <a href='%url%'> %url% </a>."
 email.body.loanReminder.contact: If you have any questions, please contact us at %email%.
 email.body.payVerifSuccess.greeting: Hello %user%,
-email.body.payVerifSuccess.message: "We have successfully verified the payment for loan number %loanNumber%. Your file will be processed in the shortest possible time. You will receive an email as soon as the processing begins."
+email.body.payVerifSuccess.message: "We have successfully verified the payment for loan number %loanNumber%. Your file will be processed as soon as possible. You will receive an email as soon as the processing begins."
 email.body.payVerifSuccess.contact: If you have any questions, please contact us at %email%.
 loan.form.price: File processing fee
-email.subject.loanOrderPay: Loan Request Payment
+email.subject.loanOrderPay: Loan request payment
 email.body.loanOrderPay.greeting: Hello %user%,
-email.body.loanOrderPay.message: "Your loan request number %loanNumber% has been duly registered. We invite you to settle the processing fees so that your file can be handled by one of our agents as soon as possible. You can view the details of your request by following this link: <a href='%url%'> %url% </a>"
+email.body.loanOrderPay.message: "Your loan request number %loanNumber% has been duly recorded. We invite you to settle the processing fees so that your file can be handled by one of our agents as soon as possible. You can view the details of your request by following this link: <a href='%url%'> %url% </a>"
 email.body.loanOrderPay.contact: If you have any questions, please contact us at %email%.
-contract.title: Financial Loan Agreement
+contract.title: Financial Loan Contract
 contract.header.department: Department of Justice and Human Rights
 contract.header.court: Court of First Instance
 contract.header.notarized_act: Notarized Act
-contract.date: This loan agreement ("Agreement") has been concluded and is effective as of %date%.
+contract.date: This loan agreement ("Agreement") was concluded and came into effect on %date%.
 contract.section.loan: Loan
-contract.section.loan.description: The <strong>lender</strong> grants a <strong>loan</strong> of <strong>%amount% %currency%</strong> to the <strong>borrower</strong> (hereinafter referred to as "the loan"). The lender grants this loan without requiring any collateral. To secure the repayment of the loan, it is necessary to take out <strong>insurance</strong>. In case of force majeure or inability to repay, the insurance company will cover the outstanding capital. To this end, we invite you to give your consent so that we may initiate the insurance formalities to ensure the smooth transaction. Once the loan agreement is signed, the loan amount will be transferred to the borrower's bank account within <strong>48 hours</strong>.
-contract.section.interest: Interest
-contract.section.interest.description: The borrower must pay an annual interest rate of <strong>%interest% %</strong> on the loan amount. The total amount to be repaid, including interest, amounts to <strong>%total% %currency%</strong>.
-contract.section.duration: Loan Duration
-contract.section.duration.description: The loan duration extends over <strong>%duration% months</strong> from <strong>%date%</strong>.
+contract.section.loan.description: The <strong>lender</strong> grants a <strong>loan</strong> of <strong>%amount% EUR</strong> to the <strong>borrower</strong> (hereinafter referred to as "the loan"). The lender grants this loan without requiring collateral. To secure the repayment of the loan, it is necessary to subscribe to an <strong>insurance</strong>. In case of force majeure or inability to repay, the insurance company will cover the outstanding capital. The registration fees for the credit, amounting to <strong>%price%</strong>, are entirely borne by the borrower after signing the contract. For this purpose, we invite you to give your agreement so that we can initiate the insurance formalities to ensure the smooth running of the transaction. Once the loan agreement is signed, the loan amount will be transferred to the borrower's bank account within <strong>48 hours</strong>.
+contract.section.interest: Interest and interest payment
+contract.section.interest.description: The annual interest rate is <strong>3%</strong>. The interest is calculated at the prevailing amortization rates. The lender's account is provided for this purpose. The total interest over <strong>36 months</strong> is therefore <strong>%total%</strong>.
+contract.section.duration: Loan duration
+contract.section.duration.description: The loan duration extends over <strong>%duration% months</strong> from <strong>%date%</strong> to <strong>%end_date%</strong>.
 contract.section.repayment: Repayment
-contract.section.repayment.description: A grace period of three months is granted to the borrower to allow investment of the loan amount. Loan repayments are made monthly. The borrower is required to transfer an amount of <strong>%amount% %currency%</strong> to the lender on <strong>%date%</strong>.
+contract.section.repayment.description: A three-month deferral period is granted to the borrower to allow them to invest the loan amount. Loan repayments are made monthly. The borrower is required to transfer an amount of <strong>%amount%</strong> to the lender each month.
 contract.section.insurance: Insurance
-contract.section.insurance.description: It is important to note that a contractual loan does not guarantee automatic and unconditional granting by the lender. However, the borrower must take out credit insurance with the lender's bank to cover repayment in case of illegality.
-contract.section.address: Address of Residence
+contract.section.insurance.description: It is important to note that a contractual loan does not automatically and unconditionally guarantee the granting by the lender. However, the borrower must subscribe to credit insurance with the lender's bank to cover the repayment in case of illegality.
+contract.section.address: Home address
 contract.section.address.description: In accordance with this agreement, the borrower declares that their registered office is located at the address specified in this contract and undertakes to inform the lender of any change.
-contract.section.money_laundering: Money Laundering
+contract.section.money_laundering: Money laundering
 contract.section.money_laundering.description: The lender confirms that the loaned funds are legitimate and are in no way intended for money laundering.
-contract.section.general_provisions: General Provisions
-contract.section.general_provisions.impact: Impact on Third Parties
-contract.section.general_provisions.impact.description: No provision of this agreement confers rights or benefits to third parties, and none of the parties may invoke rights, interests, or remedies under this agreement.
+contract.section.general_provisions: General provisions
+contract.section.general_provisions.impact: Impact on third parties
+contract.section.general_provisions.impact.description: No provision of this agreement confers any rights or benefits on third parties, and neither party may invoke any rights, interests, or remedies under this agreement.
 contract.section.general_provisions.confidentiality: Confidentiality
-contract.section.general_provisions.confidentiality.description: Except as otherwise required by law or any applicable regulation (including stock exchange rules), the parties agree to treat all terms and contents of this agreement as confidential.
+contract.section.general_provisions.confidentiality.description: Subject to any contrary provision of law or any applicable regulation (including stock exchange rules), the parties undertake to treat all terms and contents of this agreement confidentially.
 contract.section.general_provisions.signatures: Signatures
-contract.section.general_provisions.signatures.description: Each contracting party may sign this agreement as a counterpart. Each counterpart constitutes an original, but together they form a single document. This agreement may be signed by fax or any other digitized signature and sent electronically.
-contract.signature.borrower: "The Borrower:"
+contract.section.general_provisions.signatures.description: Each party may sign this agreement as a counterpart. Each counterpart constitutes an original, but together they form a single document. This agreement may be signed by fax or any other digitized signature and sent electronically.
+contract.section.termination: Termination
+contract.section.termination.description: "This contract may only be terminated by the investor or the manager in the following cases:"
+contract.section.termination.subsections1.title: Non-compliance
+contract.section.termination.subsections1.description: Demonstrable non-compliance with the provisions of this Agreement by one of the contracting parties. In this case, the party initiating the termination must inform the other party by registered letter with acknowledgment of receipt and bears all costs leading to the termination of the loan contract. Failing this, a one-month period is granted to the other party to fulfill their obligations. The losing party is responsible for the consequences of the termination.
+contract.section.termination.subsections2.title: Default of payment
+contract.section.termination.subsections2.description: If the borrower is in default of payment for more than three months, the lender terminates the loan without notice and demands immediate payment of the remaining part of the loan with interest.
+contract.section.delay: Delay
+contract.section.delay.description: In case of default in the repayment of the loan, the borrower must pay the creditor default interest of <strong>25%</strong> of the amount due for each day of non-payment. That is a penalty of <strong> %penality% </strong> per day until the payment date.
+contract.section.representation: Representation
+contract.section.representation.description: The parties may withdraw from this agreement at any time and in any action, represented by a duly appointed lawyer, bailiff, or notary.
+contract.section.succession: Succession
+contract.section.succession.description: It is important that the debtor subscribes to credit insurance with the bank responsible for the money transfer. In case of death or a situation that could interrupt the repayment of the loan, the credit insurance takes over the repayment of all remaining durations of the contracted loan. The credit insurance formalities are taken care of by the beneficiary after the money transfer to the reserved account is exhausted.
+contract.section.other_agreements: Other agreements
+contract.section.other_agreements.subsections1.title: Modifications to this Agreement
+contract.section.other_agreements.subsections1.description: Modifications to this Agreement and any revocation must be made in writing.
+contract.section.other_agreements.subsections2.title: Provisions of the Civil Code
+contract.section.other_agreements.subsections2.description: For all matters not covered in this document, the provisions of the applicable Civil Code apply.
+contract.section.other_agreements.subsections3.title: Contract establishment fees
+contract.section.other_agreements.subsections3.description: The borrower undertakes to pay a sum of %priceContract% for the establishment of the contract and the legalization of the document.
+contract.section.other_agreements.subsections4.title: Dispute resolution
+contract.section.other_agreements.subsections4.description: The parties agree that any dispute arising from this agreement will be resolved in the first instance and will be settled by mutual agreement.
+contract.section.other_agreements.subsections5.title: Effective date of the contract
+contract.section.other_agreements.subsections5.description: This Agreement shall enter into force upon its signature by both parties. The contract is established in two copies, one for the borrower and the other for the lender.
+contract.section.other_agreements.subsections6.title: Loan transfer
+contract.section.other_agreements.subsections6.description: The borrower must complete the loan transfer formalities with the partner bank so that the lender can take possession of the loan securely and transparently. This agreement is issued for compliance and enforcement purposes. Any attempt at fraud will be strictly prosecuted and punished by law.
+contract.signature.borrower: "The borrower:"
 contract.signature.notary: "The Notary:"
 contract.signature.lender: "The Lender (%bank_name%):"
+contract.closing_statement: The Contracting Parties declare that they have read, understood, and signed. The contract is signed by the borrower and the mention "read and approved" is in front of them.
 contract_pro.title: Professional Loan Contract
 contract_pro.header.department: Department of Justice and Business Law
 contract_pro.header.court: Commercial Court
 contract_pro.header.notarized_act: Commercial Notarized Act
-
-contract_pro.date: This professional loan agreement ("Agreement") was concluded and entered into force on %date%.
-
+contract_pro.date: This professional loan agreement ("Agreement") was concluded and came into effect on %date%.
 contract_pro.section.loan: Financing
 contract_pro.section.loan.description: |
-  The <strong>lender</strong> grants a <strong>professional credit</strong> of <strong>%amount% EUR</strong> to the company <strong>%companyName%</strong> (hereinafter referred to as "the Borrower"). The lender grants this financing subject to the following guarantees. To secure the repayment of the loan, the Borrower undertakes to: (1) take out <strong>business credit insurance</strong>, (2) provide the following guarantees: pledge of business assets, personal guarantee of the manager, and/or mortgage on real estate assets according to agreement. The registration and guarantee fees will be entirely borne by the Borrower. The release of funds will occur after the constitution of the required guarantees and validation of the complete file. The loan amount will then be transferred to the Borrower's professional account within a period of <strong>72 business hours</strong>.
-
-contract_pro.section.interest: Financial Conditions
+  The <strong>lender</strong> grants a <strong>professional credit</strong> of <strong>%amount% EUR</strong> to the company <strong>%companyName%</strong> (hereinafter referred to as "the Borrower"). The lender grants this financing subject to the following guarantees: (1) subscription to a <strong>business credit insurance</strong>, (2) provision of the following guarantees: pledge on the business, personal guarantee of the manager, and/or mortgage on real estate assets according to the agreement. The registration and guarantee fees will be entirely borne by the Borrower. The release of funds will occur after the constitution of the required guarantees and validation of the complete file. The loan amount will then be transferred to the Borrower's professional account within a maximum of <strong>72 business hours</strong>.
+contract_pro.section.interest: Financial conditions
 contract_pro.section.interest.description: The Borrower undertakes to pay interest calculated at an annual rate of <strong>%interest% %</strong> on the outstanding credit. The total cost of the credit, including interest and bank fees, is <strong>%total% €</strong>.
-
-contract_pro.section.duration: Duration and Terms
-contract_pro.section.duration.description: The credit is granted for a duration of <strong>%duration% months</strong> from <strong>%date%</strong>. The detailed repayment schedule is attached to this agreement.
-
-contract_pro.section.repayment: Repayment Plan
-contract_pro.section.repayment.description: A three-month deferment period is granted to the borrower to allow them to invest the loan amount. Loan repayments are made monthly. The borrower must transfer an amount of <strong>%amount% EUR</strong> to the lender on <strong>%date%</strong>.
-
-contract_pro.section.insurance: Insurance and Guarantees
+contract_pro.section.duration: Duration and terms
+contract_pro.section.duration.description: The credit is granted for a duration of <strong>%duration% months</strong> from <strong>%date%</strong> to <strong>%end_date%</strong>
+contract_pro.section.repayment: Repayment plan
+contract_pro.section.repayment.description: A three-month deferral period is granted to the borrower to allow them to invest the loan amount. Loan repayments are made monthly. The borrower is required to transfer an amount of <strong>%amount%</strong> to the lender each month.
+contract_pro.section.insurance: Insurance and guarantees
 contract_pro.section.insurance.description: |
-  The Borrower undertakes to maintain, throughout the duration of the loan, insurance covering the following risks: (1) death-disability insurance for the manager, (2) business interruption insurance, (3) insurance of the assets given as guarantee. The insurance policies must designate the Lender as the primary beneficiary.
-
-contract_pro.section.address: Registered Office
+  The Borrower undertakes to maintain, throughout the duration of the loan, insurance covering the following risks: (1) death-disability insurance for the manager, (2) business interruption insurance, (3) insurance for the assets given as collateral. The insurance policies must designate the Lender as the primary beneficiary.
+contract_pro.section.address: Registered office
 contract_pro.section.address.description: |
-  The Borrower certifies that its registered office is located at the address mentioned herein. Any change must be notified to the Lender by registered letter with acknowledgment of receipt within a period of 15 days.
-
-contract_pro.section.money_laundering: Compliance and Origin of Funds
-contract_pro.section.money_laundering.description: The parties declare their compliance with the regulations relating to the fight against money laundering and the financing of terrorism. The Borrower undertakes to use the funds in accordance with the declared purpose of the financing.
-
-contract_pro.section.general_provisions: General Provisions
-contract_pro.section.general_provisions.impact: Assignment and Transfer
+  The Borrower certifies that its registered office is located at the address specified in this agreement. Any change must be notified to the Lender by registered letter with acknowledgment of receipt within a period of 15 days.
+contract_pro.section.money_laundering: Compliance and origin of funds
+contract_pro.section.money_laundering.description: The parties declare that they comply with the regulations on the fight against money laundering and the financing of terrorism. The Borrower undertakes to use the funds in accordance with the declared purpose of the financing.
+contract_pro.section.general_provisions: General provisions
+contract_pro.section.general_provisions.impact: Assignment and transfer
 contract_pro.section.general_provisions.impact.description: The Lender may assign or transfer all or part of its rights and obligations under this contract. The Borrower may not assign or transfer its rights without the prior written consent of the Lender.
-
-contract_pro.section.general_provisions.confidentiality: Confidentiality and Communication
-contract_pro.section.general_provisions.confidentiality.description: The parties undertake to maintain the confidentiality of the information exchanged, subject to legal obligations of communication and reporting requirements to supervisory authorities.
-
+contract_pro.section.general_provisions.confidentiality: Confidentiality and communication
+contract_pro.section.general_provisions.confidentiality.description: The parties undertake to maintain the confidentiality of the exchanged information, subject to legal obligations of communication and reporting requirements to regulatory authorities.
 contract_pro.section.general_provisions.signatures: Signatures
 contract_pro.section.general_provisions.signatures.description: This contract is established in three original copies. The qualified electronic signature is accepted in accordance with the applicable regulations.
-
 contract_pro.signature.borrower: "For the Borrower:"
 contract_pro.signature.notary: "The Notary:"
-contract_pro.signature.lender: "For the Lender (%bank_name%):"
-
+contract_pro.signature.lender: "For the Lender (%bank_name%) :"
 flash.contrat.signature: "The contract signature has been successfully submitted."
 flash.contrat.signature_success: "The contract signature has been successfully recorded."
 email.body.contract_signature.greeting: "Hello %user%,"
 email.body.contract_signature.message: "Your loan contract number %loanNumber% has been successfully signed. You will be notified after verification."
 email.body.contract_signature.thanks: "Thank you for your trust."
-email.subject.contract.send: "Contract Sent"
+email.subject.contract.send: "Contract sending"
 email.body.contract.send.greeting: "Hello %user%,"
-email.body.contract.send.message: "Your loan contract number %loanNumber% has been finalized by our legal department and has been successfully sent. It is now accessible in your login area. <a href='%url_preview%' target='_blank'>View Contract Preview</a>, <a href='%url_signature%' target='_blank'>Sign Contract</a>."
+email.body.contract.send.message: "Your loan contract number %loanNumber% has been finalized by our legal department and has been successfully sent. It is now accessible in your login area. <a href='%url_preview%' target='_blank'>View contract preview</a>, <a href='%url_signature%' target='_blank'>Sign the contract</a>."
 email.body.contract.send.thanks: "Thank you for your trust."
 signature.title: "Contract Signature"
 signature.label: "Sign here:"
@@ -687,52 +699,52 @@ signature.clear: "Clear"
 signature.save: "Save"
 signature.error.empty: "Please sign before submitting."
 signature.success: "Signature successfully recorded."
-signature.error.submit: "Error submitting the signature."
-email.subject.contrat.signature: "Contract Signature"
+signature.error.submit: "Error submitting signature."
+email.subject.contrat.signature: "Contract signature"
 flash.status.signed: "The contract has been successfully signed."
 flash.status.unsigned: "The contract has been successfully invalidated."
-email.subject.contract.signed: "Contract Signature Validated"
-email.subject.contract.unsigned: "Contract Signature Invalid"
-email.body.contract.signed: "The signature of your loan contract number %loanNumber% has been successfully validated. You can now proceed with the contract fees to obtain your loan from our partner bank. Make the payment by following this link: <a href='%url%'>%url%</a>."
-email.body.contract.unsigned: "The signature of your loan contract number %loanNumber% does not match your official documents. <a href='%url_signature%' target='_blank'>Resign the contract</a>."
-btn.contract.signed: "Validate Signature"
-btn.contract.unsigned: "Invalidate Signature"
+email.subject.contract.signed: "Contract signature validated"
+email.subject.contract.unsigned: "Contract signature invalid"
+email.body.contract.signed: "The signature of your loan contract number %loanNumber% has been successfully validated. You can now proceed with the contract fees to obtain your loan with our partner bank. Make the payment by following this link: <a href='%url%'>%url%</a>."
+email.body.contract.unsigned: "The signature of your loan contract number %loanNumber% does not comply with your official documents. <a href='%url_signature%' target='_blank'>Resign the contract</a>."
+btn.contract.signed: "Validate signature"
+btn.contract.unsigned: "Invalidate signature"
 email.subject.bankinfo: Congratulations on your request
 email.bankinfo.greeting: "Hello %firstname%,"
 email.bankinfo.message: We are pleased to inform you that your request has been successfully approved. You can now finalize your registration with the bank %name% by clicking <a target='_blank' href='%url%'>here</a>.
 email.bankinfo.thanks: We are deeply grateful for the trust you place in us.
-loan.email.subject: Your loan request has been approved
+loan.email.subject: Your loan request has been submitted
 loan.email.greeting: Hello
-loan.email.body: Your loan request number %loanNumber% for an amount of %amount% %currency% has been successfully registered. You will be informed as soon as your request is processed.
+loan.email.body: Your loan request number %loanNumber% for an amount of <strong>%amount%</strong> has been successfully recorded. You will be notified as soon as your request is processed.
 loan.email.closing: Thank you for your trust.
-loan.form.type.business_real_estate: Business Real Estate
-loan.form.type.equipment_vehicle: Business Equipment or Vehicle
+loan.form.type.business_real_estate: Business real estate
+loan.form.type.equipment_vehicle: Professional equipment or vehicle
 loan.form.type.franchise: Franchise
 loan.form.type.stock: Stock
-loan.form.type.business_goodwill: Business Goodwill
-loan.form.type.cash_flow: Cash Flow
-loan.form.type.business_takeover: Business Takeover
+loan.form.type.business_goodwill: Business goodwill
+loan.form.type.cash_flow: Cash flow
+loan.form.type.business_takeover: Business takeover
 loan.form.type.development_innovation: Development / Innovation
-loan.form.projectName: Project Name
+loan.form.projectName: Project name
 loan.form.projectNamePlaceholder: Enter the project name
-loan.form.projectDescription: Project Description
+loan.form.projectDescription: Project description
 loan.form.projectDescriptionPlaceholder: Enter the project description
-loan.form.projectStartDate: Project Start Date
+loan.form.projectStartDate: Project start date
 loan.form.projectStartDatePlaceholder: Select the start date
-loan.form.projectEndDate: Project End Date
+loan.form.projectEndDate: Project end date
 loan.form.projectEndDatePlaceholder: Select the end date
-loan.form.projectBudget: Project Budget
+loan.form.projectBudget: Project budget
 loan.form.projectBudgetPlaceholder: Enter the project budget
-loan.form.projectLocation: Project Location
+loan.form.projectLocation: Project location
 loan.form.projectLocationPlaceholder: Enter the project location
-loan.form.projectManager: Project Manager
-loan.form.projectManagerPlaceholder: Enter the manager's name
-loan.form.projectTeam: Project Team
+loan.form.projectManager: Project manager
+loan.form.projectManagerPlaceholder: Enter the project manager's name
+loan.form.projectTeam: Project team
 loan.form.projectTeamPlaceholder: Enter the team members
-loan.form.projectMilestones: Project Milestones
+loan.form.projectMilestones: Project milestones
 loan.form.projectMilestonesPlaceholder: Enter the project milestones
-loan.form.projectRisks: Project Risks
+loan.form.projectRisks: Project risks
 loan.form.projectRisksPlaceholder: Enter the project risks
-loan.form.projectBenefits: Project Benefits
+loan.form.projectBenefits: Project benefits
 loan.form.projectBenefitsPlaceholder: Enter the project benefits
-flash.kyc.verified: Your account is not verified. Please proceed with the verification.
+flash.kyc.verified: Your account is unverified. Please proceed with the verification.
