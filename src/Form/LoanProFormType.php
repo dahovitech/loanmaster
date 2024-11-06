@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Loan;
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -121,7 +122,11 @@ class LoanProFormType extends AbstractType
                 'required' => true,
                 'attr' => ['placeholder' => 'loan.form.projectBenefitsPlaceholder']
             ])
-
+            ->add('captcha', CaptchaType::class,[
+                'label' => false,
+                "mapped"=>false,
+                'required' => true,
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'loan.form.saveButton',
                 'attr' => ['class' => 'btn btn-primary']

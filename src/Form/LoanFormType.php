@@ -4,12 +4,13 @@ namespace App\Form;
 
 use App\Entity\Loan;
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class LoanFormType extends AbstractType
 {
@@ -48,6 +49,11 @@ class LoanFormType extends AbstractType
                 'label' => 'loan.form.notes',
                 'required' => false,
                 'attr' => ['placeholder' => 'loan.form.notesPlaceholder']
+            ])
+            ->add('captcha', CaptchaType::class,[
+                'label' => false,
+                "mapped"=>false,
+                'required' => true,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'loan.form.saveButton',

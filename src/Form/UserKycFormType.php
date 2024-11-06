@@ -3,11 +3,12 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\MediaType;
+use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserKycFormType extends AbstractType
 {
@@ -58,6 +59,11 @@ class UserKycFormType extends AbstractType
             ])
             ->add('integrityDocument', MediaType::class, [
                 'label' => 'form.integrityDocument.label',
+                'required' => true,
+            ])
+            ->add('captcha', CaptchaType::class,[
+                'label' => false,
+                "mapped"=>false,
                 'required' => true,
             ])
         ;

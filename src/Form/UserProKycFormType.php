@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Media;
 use App\Form\MediaType;
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -127,6 +128,11 @@ class UserProKycFormType extends AbstractType
             ])
             ->add('integrityDocument', MediaType::class, [
                 'label' => 'form.integrityDocument.label',
+                'required' => true,
+            ])
+            ->add('captcha', CaptchaType::class,[
+                'label' => false,
+                "mapped"=>false,
                 'required' => true,
             ])
         ;
