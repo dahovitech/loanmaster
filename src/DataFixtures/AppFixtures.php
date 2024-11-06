@@ -6,6 +6,7 @@ use Faker\Factory;
 use App\Entity\Bank;
 use App\Entity\User;
 use App\Entity\Language;
+use App\Entity\Seo;
 use App\Entity\Setting;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -172,7 +173,8 @@ class AppFixtures extends Fixture
         $setting->setEmail("contact@oragofinance.online");
         $setting->setEmailSender("noreply@oragofinance.online");
         $setting->setDevise("€");
-        $manager->persist($setting);;
+       
+        $manager->persist($seo);
 
         $manager->flush();
     }
