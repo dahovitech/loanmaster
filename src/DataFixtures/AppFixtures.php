@@ -173,8 +173,7 @@ class AppFixtures extends Fixture
         $setting->setEmail("contact@oragofinance.online");
         $setting->setEmailSender("noreply@oragofinance.online");
         $setting->setDevise("€");
-       
-        $manager->persist($seo);
+        $manager->persist($setting);
 
         $manager->flush();
     }
