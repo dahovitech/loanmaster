@@ -76,10 +76,14 @@
                         {{ form_errors(form.integrityDocument) }}
                     </div>
                 </div>
-
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                      {{ form_row(form.captcha) }}
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <div class="col-md-6 offset-md-3">
-                        {{ form_row(form.captcha) }}
+                      
                         <button type="submit" class="btn btn-outline-dark  w-100">{{ 'kyc.submit'|trans|upper }}</button>
                     </div>
                 </div>
