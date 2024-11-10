@@ -35,10 +35,10 @@ class LoanController extends AbstractController
     public function list(): Response
     {
         $user=$this->getUser();
-        if(!$user->getVerificationStatus()=="approved"){
+        if($user->getVerificationStatus()!="approved"){
             $this->addFlash('warning', $this->translator->trans('flash.kyc.verified'));
 
-            return $this->redirectToRoute("app_user_dashboard");
+            return $this->redirectToRoute("app_user_loan_submit");
         }
         
         $loans = $this->entityManager->getRepository(Loan::class)
@@ -141,7 +141,7 @@ class LoanController extends AbstractController
             $template_name = "submit.html.twig";
         }
         if ($user->getAccountType() == "professional") {
-            $template_name = "submit.html.twig";
+            $template_name = "submit_pro.html.twig";
         }
 
         return $this->render('user/loan/' . $template_name, [
