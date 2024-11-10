@@ -38,7 +38,7 @@ class LoanController extends AbstractController
         if($user->getVerificationStatus()!="approved"){
             $this->addFlash('warning', $this->translator->trans('flash.kyc.verified'));
 
-            return $this->redirectToRoute("app_user_loan_submit");
+            return $this->redirectToRoute("app_user_dashboard");
         }
         
         $loans = $this->entityManager->getRepository(Loan::class)
