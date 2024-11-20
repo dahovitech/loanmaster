@@ -25,4 +25,31 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'lodash-es' => [
+        'version' => '4.17.21',
+    ],
+    'blurhash' => [
+        'version' => '2.0.5',
+    ],
+    'marked' => [
+        'version' => '4.0.12',
+    ],
+    'turndown' => [
+        'version' => '7.2.0',
+    ],
+    'turndown-plugin-gfm' => [
+        'version' => '1.0.2',
+    ],
+    'color-parse' => [
+        'version' => '1.4.2',
+    ],
+    'color-convert' => [
+        'version' => '2.0.1',
+    ],
+    'vanilla-colorful/lib/entrypoints/hex' => [
+        'version' => '0.7.2',
+    ],
+    'color-name' => [
+        'version' => '1.1.4',
+    ],
 ];

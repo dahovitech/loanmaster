@@ -12,9 +12,11 @@
 
 namespace FOS\CKEditorBundle\Exception;
 
+use Throwable;
+
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
-interface FOSCKEditorException extends \Throwable
+interface FOSCKEditorException extends Throwable
 {
 }

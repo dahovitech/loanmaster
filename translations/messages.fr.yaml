@@ -764,3 +764,6 @@ loan.form.projectRisksPlaceholder: Entrez les risques du projet
 loan.form.projectBenefits: Avantages du projet
 loan.form.projectBenefitsPlaceholder: Entrez les avantages du projet
 flash.kyc.verified: Votre compte est non vérifié. Veuillez procéder à la vérification.
+cookie_consent.message: "Ce site utilise des cookies pour améliorer votre expérience. En continuant à naviguer, vous acceptez notre utilisation des cookies."
+cookie_consent.accept: "J'accepte"
+cookie_consent.reject: "Refuser"

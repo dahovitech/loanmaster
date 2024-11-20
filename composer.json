@@ -14,7 +14,7 @@
         "doctrine/orm": "^3.2",
         "dompdf/dompdf": "^3.0",
         "fakerphp/faker": "^1.23",
-        "friendsofsymfony/ckeditor-bundle": "^2.5",
+        "friendsofsymfony/ckeditor-bundle": "2.4",
         "gregwar/captcha-bundle": "^2.3",
         "helios-ag/fm-elfinder-bundle": "^12.5",
         "knplabs/knp-paginator-bundle": "^6.4",
@@ -43,11 +43,10 @@
         "symfony/runtime": "6.4.*",
         "symfony/security-bundle": "6.4.*",
         "symfony/serializer": "6.4.*",
-        "symfony/stimulus-bundle": "^2.19",
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
-        "symfony/ux-turbo": "^2.19",
+        "symfony/ux-turbo": "^2.21",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
         "symfony/yaml": "6.4.*",
@@ -86,9 +85,9 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "ckeditor:install": "symfony-cmd",
             "elfinder:install": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "importmap:install": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

@@ -32,9 +32,18 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
-                    {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                 {{ form_start(form) }}
+                    {{ form_row(form.title) }}
+                    {{ form_row(form.subtitle) }} 
+                   {# <div id="editor"></div> #}
+                    {{ form_row(form.description) }}
+
+                    {{ form_row(form.image) }}
+                    {{ form_row(form.btnText) }}
+                    {{ form_row(form.btnUrl) }}
+                    {{ form_row(form.isEnabled) }}
                     <button class="btn btn-primary" type="submit">{{ 'slider.edit'|trans }}</button>
+                
                     {{ form_end(form) }}
                 </div>
 

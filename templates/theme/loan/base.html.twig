@@ -90,5 +90,6 @@
 		<script src="{{ asset('theme/loan/assets/vendors/jquery-lettering/jquery.lettering.min.js') }}"></script>
 		<!-- template js -->
 		<script src="{{ asset('theme/loan/assets/js/easilon.js') }}"></script>
+		{{ include('@theme/'~setting('theme')~'/inc/cookie_consent.html.twig') }}
 	</body>
 </html>

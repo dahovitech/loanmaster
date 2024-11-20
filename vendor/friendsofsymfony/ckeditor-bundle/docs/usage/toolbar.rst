@@ -17,7 +17,7 @@ easily switch the toolbar configuration by using the ``full``, ``standard`` or
             my_config:
                 toolbar: full
 
-Or directly configure your widget:
+Or you can configure it your widget:
 
 .. code-block:: php
 

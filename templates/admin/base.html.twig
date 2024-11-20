@@ -1,3 +1,4 @@
+{# @admin/base.html.twig #}
 <!DOCTYPE html>
 <html class="semi-dark" lang="{{ app.request.locale }}">
 <head>
@@ -38,7 +39,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"/>
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        
     {% endblock %}
 </head>
 <body>
@@ -73,7 +74,17 @@
     <script src="{{ asset('admin/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
 
-    
+  {#  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/balloon/ckeditor.js"></script>
+
+<script type="importmap">
+		{
+			"imports": {
+				"ckeditor5": "{{ asset('ckeditor5/ckeditor5.js') }}",
+				"ckeditor5/": "{{ asset('ckeditor5/') }}"
+			}
+		}
+		</script> #}
+		
     <script>
         $(document).ready(function () {
              if ($("#tab1").length && $.fn.DataTable) {
@@ -92,9 +103,8 @@
             }
         });
     </script>
-    
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+   {% block javascripts %}
+      {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
     {% endblock %}
     
     {% for label, messages in app.flashes %}
@@ -104,5 +114,7 @@
             </script>
         {% endfor %}
     {% endfor %}
+
+    {# <script type="module" src="{{ asset('js/ckeditor.js') }}"></script> #}
 </body>
 </html>
