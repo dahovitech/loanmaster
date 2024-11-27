@@ -43,7 +43,7 @@
 	<section class="apply-loan section-space">
 		<div class="container">
 			<div
-				class="apply-loan__form row" >
+				class="apply-loan__form row">
 				<!-- Loan Details -->
 				<div class="apply-loan__details offset-md-2 col-md-8">
 					<h2 class="apply-loan__details__title">{{"registration.subtitle"|trans}}</h2>
@@ -82,7 +82,7 @@
 						<div class="col-md-6">
 							{{ form_row(registrationForm.country) }}
 						</div>
-                        <div class="col-md-4">
+						<div class="col-md-4">
 							{{ form_row(registrationForm.city) }}
 						</div>
 						<div class="col-md-4">
@@ -100,8 +100,14 @@
 						<div class="col-md-12">
 							{{ form_row(registrationForm.plainPassword) }}
 						</div>
+						<div class="col-md-12">
+							{{ form_row(registrationForm.captcha) }}
+						</div>
+						
 						<div class="mb-3">
-							<button type="submit"   class="easilon-btn">{{"form.user.submit"|trans}}</button>
+						<div class="col-md-12">
+							<button type="submit" class="easilon-btn">{{"form.user.submit"|trans}}</button>
+						</div>
 						</div>
 
 					</div>
