@@ -37,43 +37,54 @@
 {% endblock %}
 
 {% block body %}
-	<!--<< Breadcrumb Section Start >>-->
-	<div class="breadcrumb-wrapper section-padding bg-cover" style="background-image: url({{ asset(page.image) }});">
+	<section class="page-header">
+		<div class="page-header__bg" style="background-image: url({{ asset(page.image) }});"></div>
+		<!-- /.page-header__bg -->
 		<div class="container">
-			<div class="page-heading">
-				<h1 class="wow fadeInUp" data-wow-delay=".3s">{{page.title|raw}}</h1>
-				<ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
+			<div class="page-header__content">
+				<h2 class="page-header__title">{{page.title|raw}}</h2>
+				<ul class="easilon-breadcrumb list-unstyled">
 					<li>
-						<a href="{{path('home')}}">
-							{{"front.menu.home"|trans}}
-						</a>
+						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
 					</li>
 					<li>
-						<i class="fal fa-minus"></i>
-					</li>
-					<li>
-						{{page.title|raw}}
+						<span>{{page.title|raw}}</span>
 					</li>
 				</ul>
+				<!-- /.thm-breadcrumb list-unstyled -->
 			</div>
+			<!-- /.page-header__content -->
 		</div>
-	</div>
+		<!-- /.container -->
+		<div class="page-header__border-box">
+			<div class="page-header__border page-header__border--1"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--2"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--3"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--4"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--5"></div>
+			<!-- /.page-header__border -->
+		</div>
+		<!-- /.page-header__border-box -->
+	</section>
 
-	<!--<< Visa Details Section Start >>-->
-	<section class="visa-details-section fix section-padding">
+
+	<section class="p-5">
 		<div class="container">
-			<div class="visa-details-wrapper">
-				<div class="page-details-items">
-							
-							<div class="details-content">								{{page.content|raw}}
-								
-							</div>
-						</div>
+			
+				<div class="details-content">
+					{{page.content|raw}}
+
+				</div>
+			
 			</div>
 		</div>
 	</section>
-		{{ include('@theme/'~setting('theme')~'/inc/action1.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
 
-	{{ include('@theme/'~setting('theme')~'/inc/testimonial1.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/testimonial.html.twig') }}
 
 {% endblock %}

@@ -27,7 +27,7 @@
 				<ul class="list-unstyled topbar__pages">
 					{% for page in pages() %}
 						<li>
-							<a href="{{path('page_index',{slug: page.slug})}}">{{page.name}}</a>
+							<a href="{{path('page_show',{slug: page.slug})}}">{{page.title}}</a>
 						</li>
 					{% endfor %}
 

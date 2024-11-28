@@ -134,6 +134,7 @@ class FrontController extends AbstractController
     #[Route(path: '/page/{slug}', name: 'page_show')]
     public function page_show($slug): Response
     {
+        
         $page = $this->entityManager->getRepository(Page::class)->findOneBy(["slug" => $slug, "isEnabled" => true]);
         if(!$page){
             $translation = $this->entityManager->getRepository(PageTranslation::class)->findOneBy(["field" => "slug", "content" => trim(strip_tags($slug))]);

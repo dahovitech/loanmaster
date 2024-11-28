@@ -33,7 +33,7 @@
 						<ul class="list-unstyled footer-widget__links">
 							{% for page in pages() %}
 								<li>
-									<a href="{{path('page_index',{slug: page.slug})}}">{{page.name}}</a>
+									<a href="{{path('page_show',{slug: page.slug})}}">{{page.title}}</a>
 								</li>
 							{% endfor %}
 						</ul>
