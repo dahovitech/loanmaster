@@ -25,7 +25,7 @@ class Page
 
     #[ORM\Column(type: Types::TEXT)]
     #[Gedmo\Translatable]
-    private ?string $Content = null;
+    private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
@@ -71,12 +71,12 @@ class Page
 
     public function getContent(): ?string
     {
-        return $this->Content;
+        return $this->content;
     }
 
-    public function setContent(string $Content): self
+    public function setContent(string $content): self
     {
-        $this->Content = $Content;
+        $this->content = $content;
 
         return $this;
     }
