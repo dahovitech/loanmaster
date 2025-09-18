@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Playground - LoanMaster</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphql-playground-react@1.7.26/build/static/css/index.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .playground-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+        }
+        .playground {
+            flex: 1;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.875rem;
+            color: #6c757d;
+            text-align: center;
+        }
+        .example-queries {
+            background: #fff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem;
+        }
+        .example-queries h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            color: #495057;
+        }
+        .query-example {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .query-example:hover {
+            background: #e9ecef;
+        }
+        .query-example strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: #495057;
+        }
+        .query-example code {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="playground-container">
+        <header class="header">
+            <h1>🚀 LoanMaster GraphQL API</h1>
+            <p>Explorez notre API GraphQL avec Event Sourcing et temps réel</p>
+        </header>
+        
+        <div class="example-queries">
+            <h3>📚 Exemples de Requêtes</h3>
+            <div class="query-example" onclick="loadQuery(exampleQueries.loanStatistics)">
+                <strong>Statistiques des Prêts</strong>
+                <code>query { loanStatistics { totalLoans approvalRate ... } }</code>
+            </div>
+            <div class="query-example" onclick="loadQuery(exampleQueries.createLoan)">
+                <strong>Créer une Demande de Prêt</strong>
+                <code>mutation { createLoanApplication(input: { ... }) { loan { id status } } }</code>
+            </div>
+            <div class="query-example" onclick="loadQuery(exampleQueries.auditHistory)">
+                <strong>Historique d'Audit</strong>
+                <code>query { auditHistory(entityType: "loan") { eventType occurredAt } }</code>
+            </div>
+            <div class="query-example" onclick="loadQuery(exampleQueries.timeTravel)">
+                <strong>Time Travel (Reconstruction d'État)</strong>
+                <code>query { reconstructState(entityType: "loan", entityId: "...") { state } }</code>
+            </div>
+        </div>
+        
+        <div id="playground" class="playground"></div>
+        
+        <footer class="footer">
+            <span>LoanMaster GraphQL API v1.0 - Event Sourcing • Audit Complet • Temps Réel</span>
+            <span style="float: right;">Endpoint: {{ endpoint }}</span>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/graphql-playground-react@1.7.26/build/static/js/middleware.js"></script>
+    
+    <script>
+        // Exemples de requêtes
+        const exampleQueries = {
+            loanStatistics: `# Statistiques complètes des prêts
+query GetLoanStatistics {
+  loanStatistics {
+    totalLoans
+    pendingLoans
+    approvedLoans
+    activeLoans
+    completedLoans
+    rejectedLoans
+    totalRequested
+    totalApproved
+    totalOutstanding
+    averageAmount
+    approvalRate
+    completionRate
+    defaultRate
+    averageRiskScore
+    riskDistribution {
+      level
+      count
+      percentage
+    }
+  }
+}`,
+            
+            createLoan: `# Créer une nouvelle demande de prêt
+mutation CreateLoanApplication {
+  createLoanApplication(
+    input: {
+      customerId: "12345678-1234-1234-1234-123456789012"
+      requestedAmount: 50000.0
+      durationMonths: 24
+      purpose: "Rénovation domiciliaire"
+      customerData: {
+        firstName: "Jean"
+        lastName: "Dupont"
+        email: "jean.dupont@example.com"
+        income: 75000
+      }
+      financialData: {
+        creditScore: 720
+        existingDebts: 15000
+        bankAccount: "FR1420041010050500013M02606"
+      }
+    }
+  ) {
+    success
+    loan {
+      id
+      status
+      requestedAmount
+      riskScore
+      version
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}`,
+            
+            auditHistory: `# Historique d'audit pour conformité
+query GetAuditHistory {
+  auditHistory(
+    entityType: "loan"
+    limit: 20
+  ) {
+    id
+    entityType
+    entityId
+    eventType
+    userId
+    ipAddress
+    occurredAt
+    context
+  }
+}`,
+            
+            timeTravel: `# Reconstruction d'état à un moment donné (Time Travel)
+query ReconstructLoanState {
+  reconstructState(
+    entityType: "loan"
+    entityId: "12345678-1234-1234-1234-123456789012"
+    pointInTime: "2025-09-18T12:00:00Z"
+  ) {
+    entityId
+    entityType
+    version
+    state
+    pointInTime
+    eventsApplied {
+      eventType
+      version
+      occurredAt
+      payload
+    }
+  }
+}`,
+            
+            realtimeSubscription: `# Souscription temps réel aux mises à jour
+subscription LoanStatusUpdates {
+  loanStatusUpdated {
+    loan {
+      id
+      status
+      customerId
+    }
+    previousStatus
+    timestamp
+    triggeredBy
+  }
+}`,
+            
+            complexQuery: `# Requête complexe avec relations
+query GetLoansWithDetails($filters: LoanFilters, $pagination: PaginationInput) {
+  loans(filters: $filters, pagination: $pagination) {
+    edges {
+      node {
+        id
+        customerId
+        requestedAmount
+        approvedAmount
+        currentBalance
+        status
+        riskScore
+        riskLevel
+        interestRate
+        createdAt
+        updatedAt
+        
+        # Relations
+        customer {
+          firstName
+          lastName
+          email
+          totalLoansCount
+          onTimePaymentRate
+        }
+        
+        payments {
+          id
+          amount
+          method
+          processedAt
+          status
+        }
+        
+        riskAssessments {
+          score
+          level
+          assessedAt
+          approvalRecommendation
+        }
+        
+        # Event Sourcing
+        version
+        events {
+          eventType
+          version
+          occurredAt
+        }
+        
+        # Audit Trail
+        auditTrail {
+          eventType
+          occurredAt
+          userId
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}`
+        };
+        
+        // Variables d'exemple
+        const exampleVariables = {
+            "filters": {
+                "status": ["PENDING", "APPROVED"],
+                "amountRange": {
+                    "min": 10000,
+                    "max": 100000
+                },
+                "dateRange": {
+                    "start": "2025-01-01T00:00:00Z",
+                    "end": "2025-12-31T23:59:59Z"
+                }
+            },
+            "pagination": {
+                "first": 10
+            }
+        };
+        
+        // Initialisation du Playground
+        window.addEventListener('load', function() {
+            GraphQLPlayground.init(document.getElementById('playground'), {
+                endpoint: '{{ endpoint }}',
+                subscriptionEndpoint: '{{ subscriptionEndpoint }}',
+                settings: {
+                    'editor.theme': 'light',
+                    'editor.cursorShape': 'line',
+                    'editor.fontSize': 14,
+                    'editor.fontFamily': 'Fira Code, Monaco, Consolas, monospace',
+                    'request.credentials': 'include',
+                    'prettier.printWidth': 80,
+                    'prettier.tabWidth': 2,
+                    'prettier.useTabs': false
+                },
+                tabs: [
+                    {
+                        endpoint: '{{ endpoint }}',
+                        query: exampleQueries.loanStatistics,
+                        name: 'Statistiques des Prêts'
+                    },
+                    {
+                        endpoint: '{{ endpoint }}',
+                        query: exampleQueries.createLoan,
+                        name: 'Créer un Prêt'
+                    },
+                    {
+                        endpoint: '{{ endpoint }}',
+                        query: exampleQueries.complexQuery,
+                        variables: JSON.stringify(exampleVariables, null, 2),
+                        name: 'Requête Complexe'
+                    }
+                ],
+                workspaceName: 'LoanMaster API',
+                headers: {
+                    'Authorization': 'Bearer demo-token',
+                    'X-Correlation-ID': 'playground-' + Date.now()
+                }
+            });
+        });
+        
+        // Fonction pour charger une requête d'exemple
+        function loadQuery(query) {
+            // Cette fonction serait implémentée pour charger la requête dans l'éditeur
+            console.log('Loading query:', query);
+        }
+        
+        // Messages d'aide
+        console.log('🚀 Bienvenue dans le GraphQL Playground de LoanMaster!');
+        console.log('💡 Utilisez les exemples ci-dessus pour commencer');
+        console.log('🔐 N\'oubliez pas d\'ajouter votre token d\'authentification dans les headers');
+        console.log('📊 Explorez les capacités Event Sourcing et temps réel');
+    </script>
+</body>
+</html>

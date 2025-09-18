@@ -1,0 +1,337 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard Notifications Temps Réel{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .notification-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 4px solid var(--primary-color); }
+        .stat-value { font-size: 2rem; font-weight: bold; color: var(--primary-color); }
+        .stat-label { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+        .realtime-indicator { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #28a745; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .notification-table { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .status-badge { padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; }
+        .status-sent { background: #d4edda; color: #155724; }
+        .status-failed { background: #f8d7da; color: #721c24; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .chart-container { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-bell me-2"></i>Dashboard Notifications Temps Réel</h1>
+        <p class="text-muted">Gestion et monitoring des notifications Mercure</p>
+    </div>
+    <div class="admin-actions">
+        <span class="realtime-indicator me-2"></span>
+        <span class="text-success me-3">Temps réel actif</span>
+        <a href="{{ path('admin_notifications_test') }}" class="btn btn-outline-primary me-2">
+            <i class="fas fa-flask me-1"></i>Test
+        </a>
+        <a href="{{ path('admin_notifications_history') }}" class="btn btn-primary">
+            <i class="fas fa-history me-1"></i>Historique
+        </a>
+    </div>
+</div>
+
+<!-- Statistiques principales -->
+<div class="notification-stats">
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.today_notifications }}</div>
+        <div class="stat-label">Notifications aujourd'hui</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ subscription_stats.total_active_subscriptions }}</div>
+        <div class="stat-label">Abonnements actifs</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.average_success_rate }}%</div>
+        <div class="stat-label">Taux de succès (7j)</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ mercure_stats.active_subscriptions|default(0) }}</div>
+        <div class="stat-label">Connexions Mercure</div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Graphiques de distribution -->
+    <div class="col-md-6">
+        <div class="chart-container">
+            <h5>Répartition par type (7 derniers jours)</h5>
+            <canvas id="typeChart" height="200"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="chart-container">
+            <h5>Statuts des notifications</h5>
+            <canvas id="statusChart" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Notifications récentes -->
+<div class="notification-table">
+    <div class="table-header p-3 border-bottom bg-light">
+        <h5 class="mb-0">Notifications récentes</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Destinataires</th>
+                    <th>Statut</th>
+                    <th>Succès</th>
+                    <th>Temps d'exécution</th>
+                    <th>Créée</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notification in recent_notifications %}
+                <tr>
+                    <td>
+                        <code class="small">{{ notification.notificationId|slice(0, 8) }}...</code>
+                    </td>
+                    <td>
+                        <span class="badge bg-info">{{ notification.type }}</span>
+                    </td>
+                    <td>{{ notification.recipients|length }}</td>
+                    <td>
+                        <span class="status-badge status-{{ notification.status }}">
+                            {{ notification.status|upper }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="text-success">{{ notification.deliveredCount }}</span>
+                        {% if notification.failedCount > 0 %}
+                            / <span class="text-danger">{{ notification.failedCount }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <small>{{ (notification.executionTime * 1000)|round }}ms</small>
+                    </td>
+                    <td>
+                        <small title="{{ notification.createdAt|date('d/m/Y H:i:s') }}">
+                            {{ notification.createdAt|date('H:i') }}
+                        </small>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_notifications_details', {id: notification.id}) }}" 
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-4">
+                        Aucune notification récente
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Panel de contrôle temps réel -->
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-broadcast-tower me-2"></i>Diffusion Système</h5>
+            </div>
+            <div class="card-body">
+                <form id="broadcastForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="broadcastMessage" class="form-label">Message</label>
+                                <textarea class="form-control" id="broadcastMessage" rows="2" 
+                                         placeholder="Message à diffuser à tous les utilisateurs connectés..."></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="broadcastPriority" class="form-label">Priorité</label>
+                                <select class="form-select" id="broadcastPriority">
+                                    <option value="normal">Normale</option>
+                                    <option value="high">Élevée</option>
+                                    <option value="urgent">Urgente</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="targetCustomers" value="ROLE_CUSTOMER" checked>
+                                <label class="form-check-label" for="targetCustomers">Clients</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="targetAnalysts" value="ROLE_ANALYST">
+                                <label class="form-check-label" for="targetAnalysts">Analystes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="targetManagers" value="ROLE_MANAGER">
+                                <label class="form-check-label" for="targetManagers">Managers</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-satellite-dish me-1"></i>Diffuser
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Maintenance</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-danger" onclick="cleanupNotifications()">
+                        <i class="fas fa-trash me-1"></i>Nettoyer (30j+)
+                    </button>
+                    <a href="{{ path('admin_notifications_subscriptions') }}" class="btn btn-outline-info">
+                        <i class="fas fa-users me-1"></i>Gérer abonnements
+                    </a>
+                </div>
+                <hr>
+                <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Dernière mise à jour: <span id="lastUpdate">{{ "now"|date('H:i:s') }}</span>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Données pour les graphiques
+        const typeData = {{ stats.type_distribution|json_encode|raw }};
+        const statusData = {{ stats.status_distribution|json_encode|raw }};
+
+        // Graphique des types
+        const typeCtx = document.getElementById('typeChart').getContext('2d');
+        new Chart(typeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: typeData.map(item => item.type),
+                datasets: [{
+                    data: typeData.map(item => item.count),
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+
+        // Graphique des statuts
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        new Chart(statusCtx, {
+            type: 'bar',
+            data: {
+                labels: statusData.map(item => item.status),
+                datasets: [{
+                    data: statusData.map(item => item.count),
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Diffusion système
+        document.getElementById('broadcastForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const message = document.getElementById('broadcastMessage').value.trim();
+            if (!message) {
+                alert('Veuillez saisir un message');
+                return;
+            }
+
+            const priority = document.getElementById('broadcastPriority').value;
+            const targetRoles = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => cb.value);
+
+            if (targetRoles.length === 0) {
+                alert('Veuillez sélectionner au moins un groupe cible');
+                return;
+            }
+
+            if (!confirm(`Diffuser "${message}" à ${targetRoles.join(', ')} ?`)) return;
+
+            try {
+                const response = await fetch('{{ path('admin_notifications_broadcast') }}', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        priority: priority,
+                        target_roles: targetRoles
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Message diffusé avec succès à ${result.delivered_count} destinataires`);
+                    document.getElementById('broadcastMessage').value = '';
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                alert('Erreur de communication: ' + error.message);
+            }
+        });
+
+        // Nettoyage des notifications
+        async function cleanupNotifications() {
+            if (!confirm('Supprimer les notifications de plus de 30 jours ?')) return;
+
+            try {
+                const response = await fetch('{{ path('admin_notifications_cleanup') }}', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'days=30'
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Nettoyage terminé: ${result.deleted_notifications} notifications supprimées`);
+                    location.reload();
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                alert('Erreur: ' + error.message);
+            }
+        }
+
+        // Mise à jour automatique
+        setInterval(() => {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }, 30000);
+    </script>
+{% endblock %}
