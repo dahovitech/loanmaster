@@ -616,12 +616,29 @@ Le système Oragon est conçu pour être facilement extensible. Les futures amé
 - [x] Méthodes de compatibilité pour transition en douceur
 - [x] Tests et validation des structures
 
-### 🔄 Phase 3 - Nouvelles entités traduisibles (PROCHAINE ÉTAPE)
-- [ ] `BankTranslation` pour les informations bancaires
-- [ ] `NotificationTranslation` pour les notifications système
-- [ ] `FaqTranslation` pour les questions fréquentes  
-- [ ] `LoanTypeTranslation` pour les types de prêts
-- [ ] Repositories et migrations correspondantes
+### ✅ Phase 3 - Nouvelles entités traduisibles (COMPLÉTÉE - Partie 1)
+- [x] `BankTranslation` pour les informations bancaires
+- [x] `NotificationTranslation` pour les notifications système
+- [x] `FaqTranslation` pour les questions fréquentes (migration Gedmo → Oragon)
+- [ ] `LoanTypeTranslation` pour les types de prêts (en attente - entité LoanType à créer)
+- [x] Repositories et migrations correspondantes
+
+#### Détails Phase 3 - Partie 1
+**BankTranslation :**
+- Champs traduits : `name`, `address`, `signBank`, `signNotary`
+- Relation OneToMany avec `Bank`
+- Repository avec méthodes findByBankAndLanguage, findBanksWithoutTranslation, etc.
+
+**NotificationTranslation :**
+- Champs traduits : `subject`, `content`
+- Migration complète de Gedmo vers Oragon (suppression annotations `#[Gedmo\Translatable]`)
+- Relation OneToMany avec `Notification`
+
+**FaqTranslation (Migration Gedmo → Oragon) :**
+- Réécriture complète de l'entité (ancien pattern AbstractPersonalTranslation → nouveau pattern Oragon)
+- Champs traduits : `question`, `answer`
+- Suppression des annotations Gedmo de l'entité `Faq`
+- Mise à jour des relations (object → translatable)
 
 ### ⏳ Phase 4 - Interface d'administration spécialisée
 - [ ] Contrôleurs CRUD dédiés par entité (PageController, SeoController, etc.)
@@ -638,10 +655,10 @@ Le système Oragon est conçu pour être facilement extensible. Les futures amé
 - [ ] Documentation utilisateur finale
 
 ### 📊 Résumé du progrès
-- ✅ **2/5 phases terminées** (40%)
-- 🎯 **Prochaine étape :** Phase 3 - Création des nouvelles entités traduisibles
-- 🏗️ **Architecture :** Système Oragon opérationnel pour Page et Seo
-- 🔄 **Migration :** Prêt pour la migration des données Gedmo → Oragon
+- ✅ **2.75/5 phases terminées** (55%) - Phase 3 en cours
+- 🎯 **Prochaine étape :** Phase 3 finale - Création de LoanType + Phase 4 Interface admin
+- 🏗️ **Architecture :** Système Oragon opérationnel pour Page, Seo, Bank, Notification, Faq
+- 🔄 **Migration :** Prêt pour la migration des données Gedmo → Oragon (toutes entités)
 
 ---
 
