@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contenu partagé - {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center mb-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Contenu partagé reçu</h1>
+                    <p class="text-gray-600">Gérez le contenu que vous avez partagé avec LoanMaster</p>
+                </div>
+            </div>
+
+            {% if shared_data %}
+                <div class="space-y-4">
+                    {% if shared_data.title %}
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+                            <p class="text-gray-900">{{ shared_data.title }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if shared_data.text %}
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Texte</label>
+                            <p class="text-gray-900 whitespace-pre-wrap">{{ shared_data.text }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if shared_data.url %}
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">URL</label>
+                            <a href="{{ shared_data.url }}" target="_blank" rel="noopener" 
+                               class="text-blue-600 hover:text-blue-800 break-all">
+                                {{ shared_data.url }}
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    {% if shared_data.files_count > 0 %}
+                        <div class="border rounded-lg p-4 bg-gray-50">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fichiers partagés</label>
+                            <p class="text-gray-900">
+                                {{ shared_data.files_count }} fichier(s) reçu(s)
+                            </p>
+                            <p class="text-sm text-gray-600 mt-1">
+                                Les fichiers ont été traités et sont disponibles dans votre espace documents.
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    <div class="border rounded-lg p-4 bg-blue-50">
+                        <label class="block text-sm font-medium text-blue-700 mb-2">Informations de réception</label>
+                        <p class="text-blue-900 text-sm">
+                            Reçu le {{ shared_data.received_at|date('d/m/Y à H:i') }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex space-x-4">
+                    <a href="{{ path('loan_create') }}" 
+                       class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                        📋 Créer un prêt avec ces informations
+                    </a>
+                    <a href="{{ path('user_documents') }}" 
+                       class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors">
+                        📁 Voir mes documents
+                    </a>
+                    <a href="{{ path('app_home') }}" 
+                       class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors">
+                        🏠 Retour à l'accueil
+                    </a>
+                </div>
+            {% else %}
+                <div class="text-center py-8">
+                    <div class="text-gray-400 text-6xl mb-4">📄</div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun contenu partagé</h3>
+                    <p class="text-gray-600 mb-6">
+                        Utilisez la fonction de partage de votre navigateur ou appareil pour envoyer du contenu vers LoanMaster.
+                    </p>
+                    <a href="{{ path('app_home') }}" 
+                       class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                        Retour à l'accueil
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Instructions d'utilisation -->
+        <div class="mt-8 bg-blue-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-blue-900 mb-3">💡 Comment partager du contenu</h3>
+            <div class="space-y-2 text-blue-800">
+                <p>• <strong>Sur mobile :</strong> Utilisez le bouton "Partager" de votre navigateur ou d'autres apps</p>
+                <p>• <strong>Documents :</strong> Partagez des photos, PDFs ou autres documents directement vers LoanMaster</p>
+                <p>• <strong>Liens :</strong> Partagez des URL d'articles ou de sites web pertinents</p>
+                <p>• <strong>Texte :</strong> Copiez-collez ou partagez du texte pour créer rapidement des demandes</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Notification de succès pour PWA
+if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+        type: 'SHARE_TARGET_PROCESSED',
+        data: {{ shared_data|json_encode|raw }}
+    });
+}
+
+// Analytics pour le partage
+if (typeof gtag !== 'undefined') {
+    gtag('event', 'share_target_used', {
+        event_category: 'PWA',
+        event_label: 'Content shared to app'
+    });
+}
+</script>
+{% endblock %}
