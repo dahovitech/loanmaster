@@ -7,7 +7,8 @@ parameters:
     locale: '%env(LOCALE)%'
 
 imports:
-    - { resource: services_monitoring.yaml }\n    - { resource: services_event_sourcing.yaml }
+    - { resource: services_monitoring.yaml }
+    - { resource: services_event_sourcing.yaml }\n    - { resource: services_graphql.yaml }
 
 services:
     # default configuration for services in *this* file

@@ -1,0 +1,90 @@
+services:
+    # GraphQL Types personnalisés
+    App\GraphQL\Types\DateTimeType:
+        tags:
+            - { name: 'graphql.scalar_type' }
+
+    App\GraphQL\Types\UUIDType:
+        tags:
+            - { name: 'graphql.scalar_type' }
+
+    App\GraphQL\Types\JSONType:
+        tags:
+            - { name: 'graphql.scalar_type' }
+
+    # Résolveurs GraphQL
+    App\GraphQL\Resolver\LoanResolver:
+        arguments:
+            $loanRepository: '@App\Infrastructure\EventSourcing\Repository\LoanEventSourcedRepository'
+            $projectionHandler: '@App\Infrastructure\EventSourcing\EventHandler\LoanProjectionHandler'
+            $queryBus: '@App\Infrastructure\EventSourcing\QueryBus'
+        tags:
+            - { name: 'graphql.resolver' }
+
+    App\GraphQL\Resolver\LoanMutationResolver:
+        arguments:
+            $commandBus: '@App\Infrastructure\EventSourcing\CommandBus'
+            $loanRepository: '@App\Infrastructure\EventSourcing\Repository\LoanEventSourcedRepository'
+        tags:
+            - { name: 'graphql.resolver' }
+
+    App\GraphQL\Resolver\AuditResolver:
+        arguments:
+            $auditService: '@App\Infrastructure\EventSourcing\AuditService'
+            $eventStore: '@App\Infrastructure\EventSourcing\EventStore'
+        tags:
+            - { name: 'graphql.resolver' }
+
+    App\GraphQL\Resolver\LoanSubscriptionResolver:
+        tags:
+            - { name: 'graphql.resolver' }
+
+    # Middleware GraphQL
+    App\GraphQL\Middleware\AuthenticationMiddleware:
+        tags:
+            - { name: 'graphql.middleware' }
+
+    App\GraphQL\Middleware\AuditMiddleware:
+        arguments:
+            $auditService: '@App\Infrastructure\EventSourcing\AuditService'
+        tags:
+            - { name: 'graphql.middleware' }
+
+    App\GraphQL\Middleware\RateLimitMiddleware:
+        arguments:
+            $cache: '@cache.app'
+        tags:
+            - { name: 'graphql.middleware' }
+
+    # Service de schéma GraphQL
+    App\GraphQL\SchemaBuilder:
+        arguments:
+            $schemaPath: '%kernel.project_dir%/graphql/schema.graphql'
+            $resolvers:
+                - '@App\GraphQL\Resolver\LoanResolver'
+                - '@App\GraphQL\Resolver\LoanMutationResolver'
+                - '@App\GraphQL\Resolver\AuditResolver'
+                - '@App\GraphQL\Resolver\LoanSubscriptionResolver'
+        tags:
+            - { name: 'graphql.schema_builder' }
+
+    # Contrôleur GraphQL principal
+    App\Controller\GraphQLController:
+        arguments:
+            $loanResolver: '@App\GraphQL\Resolver\LoanResolver'
+            $loanMutationResolver: '@App\GraphQL\Resolver\LoanMutationResolver'
+            $auditResolver: '@App\GraphQL\Resolver\AuditResolver'
+            $subscriptionResolver: '@App\GraphQL\Resolver\LoanSubscriptionResolver'
+            $authMiddleware: '@App\GraphQL\Middleware\AuthenticationMiddleware'
+            $auditMiddleware: '@App\GraphQL\Middleware\AuditMiddleware'
+            $rateLimitMiddleware: '@App\GraphQL\Middleware\RateLimitMiddleware'
+        tags:
+            - { name: 'controller.service_arguments' }
+
+    # WebSocket pour souscriptions temps réel
+    App\GraphQL\WebSocket\SubscriptionServer:
+        arguments:
+            $port: '%env(int:WEBSOCKET_PORT)%'
+            $host: '%env(WEBSOCKET_HOST)%'
+        tags:
+            - { name: 'graphql.websocket' }
