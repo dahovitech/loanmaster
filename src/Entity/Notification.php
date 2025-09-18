@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\NotificationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 class Notification
@@ -23,7 +23,6 @@ class Notification
     private ?string $subject = null;
 
     #[ORM\Column(name:'create_at', type: "datetime", nullable:true)]
-    #[Gedmo\Timestampable(on: 'create')]
     private  $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'notifications')]
@@ -31,6 +30,17 @@ class Notification
 
     #[ORM\Column(length: 255)]
     private ?string $status = null;
+
+    /**
+     * @var Collection<int, NotificationTranslation>
+     */
+    #[ORM\OneToMany(targetEntity: NotificationTranslation::class, mappedBy: 'translatable', cascade: ['persist', 'remove'])]
+    private Collection $translations;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -94,6 +104,36 @@ class Notification
     public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NotificationTranslation>
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(NotificationTranslation $translation): static
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations->add($translation);
+            $translation->setTranslatable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(NotificationTranslation $translation): static
+    {
+        if ($this->translations->removeElement($translation)) {
+            // set the owning side to null (unless already changed)
+            if ($translation->getTranslatable() === $this) {
+                $translation->setTranslatable(null);
+            }
+        }
 
         return $this;
     }
