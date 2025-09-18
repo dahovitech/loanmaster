@@ -2,7 +2,7 @@
 # Auteur: Prudence ASSOGBA
 
 admin_translations:
-    resource: '../src/Controller/Admin/TranslationController.php'
+    resource: 'App\Controller\Admin\TranslationController'
     type: attribute
     prefix: '/admin'
     requirements:
@@ -10,7 +10,7 @@ admin_translations:
 
 # Routes optionnelles pour les traductions publiques
 oragon_translations:
-    resource: '../src/Controller/TranslationController.php'
+    resource: 'App\Controller\TranslationController'
     type: attribute
     prefix: '/translations'
     condition: "context.getMethod() in ['GET', 'POST']"

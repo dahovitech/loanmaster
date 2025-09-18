@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test des Traductions - Système Oragon{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">🔧 Test des Traductions - Système Oragon</h1>
+    
+    <div class="alert alert-info">
+        <strong>Mode développement uniquement</strong><br>
+        Cette page permet de tester le système de traduction Oragon en temps réel.
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🌐 Langues Disponibles</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for language in languages %}
+                        <a href="{{ path('change_locale', {locale: language.code}) }}" 
+                           class="list-group-item list-group-item-action {% if language.code == current_locale %}active{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ language.name }}</strong>
+                                    {% if language.nativeName %}
+                                        <small class="text-muted">({{ language.nativeName }})</small>
+                                    {% endif %}
+                                    <br>
+                                    <code>{{ language.code }}</code>
+                                    <span class="badge badge-secondary">{{ language.dir|upper }}</span>
+                                    {% if language.isDefault %}
+                                        <span class="badge badge-primary">Défaut</span>
+                                    {% endif %}
+                                </div>
+                                <span class="badge badge-success">{{ language.sortOrder }}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📚 Tests des Domaines</h5>
+                </div>
+                <div class="card-body">
+                    {% for domain in domains %}
+                    <div class="mb-3">
+                        <h6>Domaine: <code>{{ domain }}</code></h6>
+                        <div class="btn-group" role="group">
+                            {% for language in languages %}
+                            <a href="/translations/api/{{ language.code }}/{{ domain }}" 
+                               class="btn btn-outline-primary btn-sm" 
+                               target="_blank">
+                                {{ language.code|upper }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>🔗 API Endpoints</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <code>GET /translations/api/languages</code>
+                            <a href="/translations/api/languages" class="btn btn-sm btn-outline-info ml-2" target="_blank">Test</a>
+                        </li>
+                        <li class="mt-2">
+                            <code>GET /translations/api/{locale}</code>
+                            <div class="btn-group ml-2" role="group">
+                                {% for language in languages %}
+                                <a href="/translations/api/{{ language.code }}" 
+                                   class="btn btn-sm btn-outline-success" 
+                                   target="_blank">{{ language.code }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <li class="mt-2">
+                            <code>GET /translations/api/{locale}/{domain}</code>
+                            <small class="text-muted d-block">Utilisez les boutons ci-dessus pour tester</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🧪 Tests de Traduction en Direct</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Clés de test communes :</h6>
+                            <ul>
+                                <li><code>{{ 'hello'|trans }}</code> → "{{ 'hello'|trans }}"</li>
+                                <li><code>{{ 'welcome'|trans }}</code> → "{{ 'welcome'|trans }}"</li>
+                                <li><code>{{ 'login'|trans }}</code> → "{{ 'login'|trans }}"</li>
+                                <li><code>{{ 'logout'|trans }}</code> → "{{ 'logout'|trans }}"</li>
+                                <li><code>{{ 'save'|trans }}</code> → "{{ 'save'|trans }}"</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Domaines de test :</h6>
+                            <ul>
+                                <li><code>{{ 'form.email'|trans }}</code> → "{{ 'form.email'|trans }}"</li>
+                                <li><code>{{ 'nav.home'|trans }}</code> → "{{ 'nav.home'|trans }}"</li>
+                                <li><code>{{ 'error.404'|trans }}</code> → "{{ 'error.404'|trans }}"</li>
+                                <li><code>{{ 'button.submit'|trans }}</code> → "{{ 'button.submit'|trans }}"</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning mt-3">
+                        <strong>Note :</strong> Si certaines traductions apparaissent comme des clés non traduites, 
+                        cela signifie qu'elles n'existent pas encore dans les fichiers de traduction.
+                        Utilisez l'interface d'administration pour les ajouter.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('admin_translations_index') }}" class="btn btn-primary">
+            🔧 Interface d'Administration
+        </a>
+        <a href="{{ path('app_default_index') }}" class="btn btn-secondary">
+            🏠 Retour à l'accueil
+        </a>
+    </div>
+</div>
+
+<style>
+.badge {
+    font-size: 0.75em;
+}
+code {
+    background-color: #f8f9fa;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+}
+</style>
+{% endblock %}
