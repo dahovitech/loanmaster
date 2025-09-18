@@ -1,29 +1,183 @@
+# config/packages/messenger.yaml
 framework:
     messenger:
-        failure_transport: failed
-
+        # Configuration des transports
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # Transport principal pour les tâches critiques
+            async_priority_high:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: 'high_priority'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 0
+                    
+            # Transport pour les tâches normales
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
-                    use_notify: true
-                    check_delayed_interval: 60000
+                    queue_name: 'default'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 5
+                    delay: 2000
+                    multiplier: 2
+                    max_delay: 10000
+                    
+            # Transport pour les tâches de notification
+            notifications:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: 'notifications'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
                 retry_strategy:
                     max_retries: 3
-                    multiplier: 2
-            failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+                    delay: 5000
+                    
+            # Transport pour les rapports et analytics
+            reports:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: 'reports'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 2
+                    delay: 10000
+                    
+            # Transport pour les tâches de maintenance
+            maintenance:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: 'maintenance'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 1
+                    delay: 30000
 
-        default_bus: messenger.bus.default
+            # Transport pour les webhooks externes
+            webhooks:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: 'webhooks'
+                    exchange:
+                        name: 'loanmaster_exchange'
+                        type: 'direct'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 5
+                    delay: 1000
+                    multiplier: 3
 
-        buses:
-            messenger.bus.default: []
-
+        # Configuration du routage des messages
         routing:
-            #Symfony\Component\Mailer\Messenger\SendEmailMessage: async
-            #Symfony\Component\Notifier\Message\ChatMessage: async
-            #Symfony\Component\Notifier\Message\SmsMessage: async
+            # Messages critiques - haute priorité
+            'App\Application\Message\LoanApprovalMessage': async_priority_high
+            'App\Application\Message\LoanDisbursementMessage': async_priority_high
+            'App\Application\Message\KycVerificationMessage': async_priority_high
+            'App\Application\Message\PaymentProcessingMessage': async_priority_high
+            
+            # Messages de notification
+            'App\Application\Message\EmailNotificationMessage': notifications
+            'App\Application\Message\SmsNotificationMessage': notifications
+            'App\Application\Message\PushNotificationMessage': notifications
+            
+            # Messages de rapport et analytics
+            'App\Application\Message\GenerateReportMessage': reports
+            'App\Application\Message\CalculateStatisticsMessage': reports
+            'App\Application\Message\UpdateCacheMessage': reports
+            
+            # Messages de maintenance
+            'App\Application\Message\DatabaseCleanupMessage': maintenance
+            'App\Application\Message\LogArchiveMessage': maintenance
+            'App\Application\Message\CacheWarmupMessage': maintenance
+            
+            # Webhooks externes
+            'App\Application\Message\WebhookMessage': webhooks
+            
+            # Messages normaux - transport par défaut
+            '*': async
 
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+        # Configuration des handlers par défaut
+        default_bus: messenger.bus.default
+        
+        # Configuration des bus
+        buses:
+            messenger.bus.default:
+                default_middleware: true
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - validation
+                    - 'App\Infrastructure\Messenger\Middleware\AuditMiddleware'
+                    - 'App\Infrastructure\Messenger\Middleware\MetricsMiddleware'
+
+        # Configuration des workers
+        failure_transport: failed
+
+# Configuration spécifique par environnement
+when@prod:
+    framework:
+        messenger:
+            transports:
+                async_priority_high:
+                    options:
+                        prefetch_count: 5  # Limitation pour éviter la surcharge
+                async:
+                    options:
+                        prefetch_count: 10
+                notifications:
+                    options:
+                        prefetch_count: 20
+                reports:
+                    options:
+                        prefetch_count: 2  # Reports sont plus lourds
+                maintenance:
+                    options:
+                        prefetch_count: 1
+
+when@dev:
+    framework:
+        messenger:
+            transports:
+                # En dev, utiliser le transport sync pour debug
+                async_priority_high:
+                    dsn: 'sync://'
+                async:
+                    dsn: 'doctrine://default'
+                notifications:
+                    dsn: 'doctrine://default'
+
+when@test:
+    framework:
+        messenger:
+            transports:
+                async_priority_high:
+                    dsn: 'in-memory://'
+                async:
+                    dsn: 'in-memory://'
+                notifications:
+                    dsn: 'in-memory://'
+                reports:
+                    dsn: 'in-memory://'
+                maintenance:
+                    dsn: 'in-memory://'
+                webhooks:
+                    dsn: 'in-memory://'

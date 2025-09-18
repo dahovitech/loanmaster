@@ -1,0 +1,141 @@
+{
+  "name": "LoanMaster",
+  "short_name": "LoanMaster",
+  "description": "Plateforme de gestion de prêts professionnelle",
+  "start_url": "{{ url('app_home') }}",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "{{ app.request.locale }}",
+  "dir": "ltr",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    {
+      "src": "{{ asset('icons/icon-72x72.png') }}",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-96x96.png') }}",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-128x128.png') }}",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-144x144.png') }}",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-152x152.png') }}",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-192x192.png') }}",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-384x384.png') }}",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "{{ asset('icons/icon-512x512.png') }}",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nouveau prêt",
+      "short_name": "Nouveau prêt",
+      "description": "Créer une nouvelle demande de prêt",
+      "url": "{{ url('loan_create') }}",
+      "icons": [{"src": "{{ asset('icons/shortcut-new-loan.png') }}", "sizes": "96x96"}]
+    },
+    {
+      "name": "Mes prêts",
+      "short_name": "Mes prêts", 
+      "description": "Voir mes prêts en cours",
+      "url": "{{ url('loan_list') }}",
+      "icons": [{"src": "{{ asset('icons/shortcut-my-loans.png') }}", "sizes": "96x96"}]
+    },
+    {
+      "name": "Profil",
+      "short_name": "Profil",
+      "description": "Gérer mon profil et KYC",
+      "url": "{{ url('user_profile') }}",
+      "icons": [{"src": "{{ asset('icons/shortcut-profile.png') }}", "sizes": "96x96"}]
+    },
+    {
+      "name": "Support",
+      "short_name": "Support",
+      "description": "Contacter le support client",
+      "url": "{{ url('app_contact') }}",
+      "icons": [{"src": "{{ asset('icons/shortcut-support.png') }}", "sizes": "96x96"}]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "{{ asset('screenshots/desktop-1.png') }}",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard principal LoanMaster"
+    },
+    {
+      "src": "{{ asset('screenshots/mobile-1.png') }}",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Interface mobile LoanMaster"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "protocol_handlers": [
+    {
+      "protocol": "web+loanmaster",
+      "url": "{{ url('app_handle_protocol', {'protocol': '%s'}) }}"
+    }
+  ],
+  "share_target": {
+    "action": "{{ url('pwa_share_target') }}",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "documents",
+          "accept": ["image/*", "application/pdf"]
+        }
+      ]
+    }
+  }
+}
