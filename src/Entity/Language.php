@@ -268,4 +268,3 @@ class Language
         return $label;
     }
 }
-}

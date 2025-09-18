@@ -275,12 +275,13 @@ vers le nouveau système Oragon avec des entités Translation dédiées.
                     // Récupérer les traductions Gedmo existantes
                     $gedmoTranslations = $this->getGedmoTranslations($page, $locale);
                     
-                    if (!empty($gedmoTranslations) && !$isDryRun) {
-                        // TODO: Créer la nouvelle entité PageTranslation Oragon
-                        // Cette partie sera implémentée quand les nouvelles entités seront créées
+                    if (!empty($gedmoTranslations)) {
+                        if (!$isDryRun) {
+                            // Créer la nouvelle entité PageTranslation Oragon
+                            $this->createPageTranslation($page, $language, $gedmoTranslations);
+                            $this->entityManager->flush();
+                        }
                         $results['migrated']++;
-                    } elseif (!empty($gedmoTranslations)) {
-                        $results['migrated']++; // Compter pour le dry-run
                     } else {
                         $results['skipped']++;
                     }
@@ -335,12 +336,13 @@ vers le nouveau système Oragon avec des entités Translation dédiées.
                     // Récupérer les traductions Gedmo existantes pour tous les champs SEO
                     $gedmoTranslations = $this->getSeoGedmoTranslations($seo, $locale);
                     
-                    if (!empty($gedmoTranslations) && !$isDryRun) {
-                        // TODO: Créer la nouvelle entité SeoTranslation Oragon
-                        // Cette partie sera implémentée quand les nouvelles entités seront créées
+                    if (!empty($gedmoTranslations)) {
+                        if (!$isDryRun) {
+                            // Créer la nouvelle entité SeoTranslation Oragon
+                            $this->createSeoTranslation($seo, $language, $gedmoTranslations);
+                            $this->entityManager->flush();
+                        }
                         $results['migrated']++;
-                    } elseif (!empty($gedmoTranslations)) {
-                        $results['migrated']++; // Compter pour le dry-run
                     } else {
                         $results['skipped']++;
                     }
@@ -490,5 +492,48 @@ vers le nouveau système Oragon avec des entités Translation dédiées.
             ['Erreurs rencontrées' => $totalErrors],
             ['Statut' => $totalErrors === 0 ? '✅ Succès' : '⚠️ Avec erreurs']
         );
+    }
+
+    /**
+     * Crée une entité PageTranslation Oragon à partir des traductions Gedmo
+     */
+    private function createPageTranslation(Page $page, Language $language, array $gedmoTranslations): void
+    {
+        $pageTranslation = new \App\Entity\PageTranslation();
+        $pageTranslation->setPage($page);
+        $pageTranslation->setLanguage($language);
+        
+        // Mapper les champs de Gedmo vers Oragon
+        $pageTranslation->setTitle($gedmoTranslations['title'] ?? $page->getTitle());
+        $pageTranslation->setContent($gedmoTranslations['content'] ?? $page->getContent());
+        $pageTranslation->setSlug($gedmoTranslations['slug'] ?? $page->getSlug());
+        $pageTranslation->setResume($gedmoTranslations['resume'] ?? $page->getResume());
+        
+        $this->entityManager->persist($pageTranslation);
+    }
+
+    /**
+     * Crée une entité SeoTranslation Oragon à partir des traductions Gedmo
+     */
+    private function createSeoTranslation(Seo $seo, Language $language, array $gedmoTranslations): void
+    {
+        $seoTranslation = new \App\Entity\SeoTranslation();
+        $seoTranslation->setSeo($seo);
+        $seoTranslation->setLanguage($language);
+        
+        // Mapper tous les champs SEO de Gedmo vers Oragon
+        $seoTranslation->setSeoHomeTitle($gedmoTranslations['seoHomeTitle'] ?? $seo->getSeoHomeTitle());
+        $seoTranslation->setSeoHomeKeywords($gedmoTranslations['seoHomeKeywords'] ?? $seo->getSeoHomeKeywords());
+        $seoTranslation->setSeoHomeDescription($gedmoTranslations['seoHomeDescription'] ?? $seo->getSeoHomeDescription());
+        
+        $seoTranslation->setSeoAboutTitle($gedmoTranslations['seoAboutTitle'] ?? $seo->getSeoAboutTitle());
+        $seoTranslation->setSeoAboutKeywords($gedmoTranslations['seoAboutKeywords'] ?? $seo->getSeoAboutKeywords());
+        $seoTranslation->setSeoAboutDescription($gedmoTranslations['seoAboutDescription'] ?? $seo->getSeoAboutDescription());
+        
+        $seoTranslation->setSeoServiceTitle($gedmoTranslations['seoServiceTitle'] ?? $seo->getSeoServiceTitle());
+        $seoTranslation->setSeoServiceKeywords($gedmoTranslations['seoServiceKeywords'] ?? $seo->getSeoServiceKeywords());
+        $seoTranslation->setSeoServiceDescription($gedmoTranslations['seoServiceDescription'] ?? $seo->getSeoServiceDescription());
+        
+        $this->entityManager->persist($seoTranslation);
     }
 }
