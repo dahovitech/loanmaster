@@ -22,28 +22,28 @@ class Language
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: 'native_name', length: 255, nullable: true)]
     private ?string $nativeName = null;
 
     #[ORM\Column(length: 8)]
     private ?string $dir = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(name: 'is_active', type: 'boolean')]
     private bool $isActive = true;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(name: 'is_enabled', type: 'boolean')]
     private bool $isEnabled = true;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(name: 'is_default', type: 'boolean')]
     private bool $isDefault = false;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'sort_order')]
     private int $sortOrder = 0;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(name: 'created_at', type: 'datetime_immutable')]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(name: 'updated_at', type: 'datetime_immutable')]
     private ?\DateTimeImmutable $updatedAt = null;
 
     // Relations vers les entités de traduction
