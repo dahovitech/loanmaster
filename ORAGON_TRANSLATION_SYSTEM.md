@@ -616,11 +616,11 @@ Le système Oragon est conçu pour être facilement extensible. Les futures amé
 - [x] Méthodes de compatibilité pour transition en douceur
 - [x] Tests et validation des structures
 
-### ✅ Phase 3 - Nouvelles entités traduisibles (COMPLÉTÉE - Partie 1)
+### ✅ Phase 3 - Nouvelles entités traduisibles (TERMINÉE)
 - [x] `BankTranslation` pour les informations bancaires
 - [x] `NotificationTranslation` pour les notifications système
 - [x] `FaqTranslation` pour les questions fréquentes (migration Gedmo → Oragon)
-- [ ] `LoanTypeTranslation` pour les types de prêts (en attente - entité LoanType à créer)
+- [x] `LoanTypeTranslation` pour les types de prêts
 - [x] Repositories et migrations correspondantes
 
 #### Détails Phase 3 - Partie 1
@@ -640,6 +640,12 @@ Le système Oragon est conçu pour être facilement extensible. Les futures amé
 - Suppression des annotations Gedmo de l'entité `Faq`
 - Mise à jour des relations (object → translatable)
 
+**LoanTypeTranslation :**
+- Entité `LoanType` créée avec champs : `code`, `name`, `description`, `isActive`, `defaultInterestRate`, etc.
+- Champs traduits : `name`, `description`
+- Relation OneToMany avec `LoanType`
+- Migration de l'entité `Loan` : remplacement du champ `loanType` string par relation ManyToOne vers `LoanType`
+
 ### ⏳ Phase 4 - Interface d'administration spécialisée
 - [ ] Contrôleurs CRUD dédiés par entité (PageController, SeoController, etc.)
 - [ ] Formulaires Symfony personnalisés pour chaque type de traduction
@@ -655,9 +661,9 @@ Le système Oragon est conçu pour être facilement extensible. Les futures amé
 - [ ] Documentation utilisateur finale
 
 ### 📊 Résumé du progrès
-- ✅ **2.75/5 phases terminées** (55%) - Phase 3 en cours
-- 🎯 **Prochaine étape :** Phase 3 finale - Création de LoanType + Phase 4 Interface admin
-- 🏗️ **Architecture :** Système Oragon opérationnel pour Page, Seo, Bank, Notification, Faq
+- ✅ **3/5 phases terminées** (60%) - Phase 3 COMPLÈTE
+- 🎯 **Prochaine étape :** Phase 4 Interface admin spécialisée
+- 🏗️ **Architecture :** Système Oragon opérationnel pour Page, Seo, Bank, Notification, Faq, LoanType
 - 🔄 **Migration :** Prêt pour la migration des données Gedmo → Oragon (toutes entités)
 
 ---
