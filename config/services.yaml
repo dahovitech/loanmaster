@@ -11,6 +11,7 @@ imports:
     - { resource: services_event_sourcing.yaml }
     - { resource: services_graphql.yaml }
     - { resource: services_notification.yaml }
+    - { resource: services_ai_ml.yaml }
 
 services:
     # default configuration for services in *this* file
