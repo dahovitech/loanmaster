@@ -32,6 +32,9 @@ class Language
     private bool $isActive = true;
 
     #[ORM\Column(type: 'boolean')]
+    private bool $isEnabled = true;
+
+    #[ORM\Column(type: 'boolean')]
     private bool $isDefault = false;
 
     #[ORM\Column]
@@ -72,6 +75,7 @@ class Language
             'nativeName' => $this->getNativeName(),
             'dir' => $this->getDir(),
             'isActive' => $this->isIsActive(),
+            'isEnabled' => $this->isIsEnabled(),
             'isDefault' => $this->isIsDefault(),
             'sortOrder' => $this->getSortOrder(),
             'createdAt' => $this->getCreatedAt()?->format('Y-m-d H:i:s'),
@@ -144,6 +148,7 @@ class Language
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+        $this->isEnabled = $isActive; // Garde les deux champs synchronisés
         $this->updateTimestamp();
 
         return $this;
@@ -152,13 +157,19 @@ class Language
     // Méthode de compatibilité avec l'ancien système
     public function isIsEnabled(): bool
     {
-        return $this->isActive;
+        return $this->isEnabled;
+    }
+
+    public function getIsEnabled(): bool
+    {
+        return $this->isEnabled;
     }
 
     // Méthode de compatibilité avec l'ancien système
     public function setIsEnabled(bool $isEnabled): self
     {
-        $this->isActive = $isEnabled;
+        $this->isEnabled = $isEnabled;
+        $this->isActive = $isEnabled; // Garde les deux champs synchronisés
         $this->updateTimestamp();
 
         return $this;
@@ -261,7 +272,7 @@ class Language
             $label .= ' [Défaut]';
         }
         
-        if (!$this->isActive) {
+        if (!$this->isEnabled) {
             $label .= ' [Inactif]';
         }
         
