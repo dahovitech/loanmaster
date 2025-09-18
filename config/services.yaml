@@ -8,7 +8,9 @@ parameters:
 
 imports:
     - { resource: services_monitoring.yaml }
-    - { resource: services_event_sourcing.yaml }\n    - { resource: services_graphql.yaml }
+    - { resource: services_event_sourcing.yaml }
+    - { resource: services_graphql.yaml }
+    - { resource: services_notification.yaml }
 
 services:
     # default configuration for services in *this* file
