@@ -1,0 +1,58 @@
+# Routes pour la conformité RGPD et audit trail
+
+# Routes admin pour le dashboard de conformité
+admin_compliance:
+    resource: '../src/Controller/Admin/ComplianceDashboardController.php'
+    type: annotation
+    prefix: /admin/compliance
+    requirements:
+        _locale: '%app_locales%'
+
+# Routes API pour GDPR
+api_gdpr:
+    resource: '../src/Controller/Api/GDPRController.php'
+    type: annotation
+    prefix: /api/gdpr
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _format: json
+
+# Route pour l'export des données de conformité
+compliance_export:
+    path: /admin/compliance/export/{type}/{format}
+    controller: App\Controller\Admin\ComplianceDashboardController::export
+    methods: [GET]
+    requirements:
+        type: 'audit_logs|consents'
+        format: 'csv|json|xml'
+        _locale: '%app_locales%'
+
+# Route pour les API de statistiques (AJAX)
+compliance_api_stats:
+    path: /admin/compliance/api/stats
+    controller: App\Controller\Admin\ComplianceDashboardController::apiStats
+    methods: [GET]
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _format: json
+
+compliance_api_recent_activity:
+    path: /admin/compliance/api/recent-activity
+    controller: App\Controller\Admin\ComplianceDashboardController::apiRecentActivity
+    methods: [GET]
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _format: json
+
+# Route pour le nettoyage automatique
+compliance_cleanup:
+    path: /admin/compliance/cleanup
+    controller: App\Controller\Admin\ComplianceDashboardController::cleanup
+    methods: [POST]
+    requirements:
+        _locale: '%app_locales%'
+    defaults:
+        _format: json

@@ -1,0 +1,301 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event Sourcing Dashboard{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .event-timeline {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .event-item {
+            border-left: 3px solid #667eea;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+        }
+        .audit-table {
+            font-size: 0.9rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <i class="fas fa-chart-line"></i> Event Sourcing Dashboard
+                <small class="text-muted">- Audit complet et monitoring</small>
+            </h1>
+        </div>
+    </div>
+
+    <!-- Métriques principales -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">{{ loanStats.total_loans|default(0)|number_format(0, '.', ',') }}</div>
+                <div>Total Prêts</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">{{ loanStats.approval_rate|default(0)|number_format(1) }}%</div>
+                <div>Taux d'Approbation</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">{{ totalEvents|default(0)|number_format(0, '.', ',') }}</div>
+                <div>Événements (24h)</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">{{ snapshotStats.total_snapshots|default(0)|number_format(0, '.', ',') }}</div>
+                <div>Snapshots</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation rapide -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-tachometer-alt"></i> Navigation Rapide</h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group" role="group">
+                        <a href="{{ path('admin_event_sourcing_events') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-list"></i> Explorateur d'Événements
+                        </a>
+                        <a href="{{ path('admin_event_sourcing_audit') }}" class="btn btn-outline-info">
+                            <i class="fas fa-search"></i> Audit Trail
+                        </a>
+                        <a href="{{ path('admin_event_sourcing_metrics') }}" class="btn btn-outline-success">
+                            <i class="fas fa-chart-bar"></i> Métriques
+                        </a>
+                        <a href="{{ path('admin_event_sourcing_time_travel') }}" class="btn btn-outline-warning">
+                            <i class="fas fa-history"></i> Time Travel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Événements récents -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-clock"></i> Événements Récents (24h)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="event-timeline">
+                        {% for event in recentEvents %}
+                            <div class="event-item">
+                                <div class="d-flex justify-content-between">
+                                    <strong>{{ event.eventName }}</strong>
+                                    <small class="text-muted">{{ event.occurredOn|date('H:i:s') }}</small>
+                                </div>
+                                <div class="text-muted small">
+                                    Aggregate: {{ event.aggregateId|slice(0, 8) }}...
+                                    | Version: {{ event.version }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="text-muted">Aucun événement récent.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rapport d'audit -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-shield-alt"></i> Rapport d'Audit (24h)</h5>
+                </div>
+                <div class="card-body">
+                    {% if auditReport is not empty %}
+                        <div class="table-responsive">
+                            <table class="table table-sm audit-table">
+                                <thead>
+                                    <tr>
+                                        <th>Type d'Entité</th>
+                                        <th>Événement</th>
+                                        <th>Nombre</th>
+                                        <th>Entités</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in auditReport %}
+                                        <tr>
+                                            <td><span class="badge badge-secondary">{{ item.entity_type }}</span></td>
+                                            <td>{{ item.event_type }}</td>
+                                            <td>{{ item.event_count }}</td>
+                                            <td>{{ item.unique_entities }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">Aucune activité d'audit récente.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques détaillées des prêts -->
+    {% if loanStats is not empty %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-chart-pie"></i> Statistiques Détaillées des Prêts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <canvas id="statusChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td>Prêts en attente</td>
+                                            <td><span class="badge badge-warning">{{ loanStats.pending_loans|default(0) }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prêts approuvés</td>
+                                            <td><span class="badge badge-success">{{ loanStats.approved_loans|default(0) }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prêts actifs</td>
+                                            <td><span class="badge badge-info">{{ loanStats.active_loans|default(0) }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prêts rejetés</td>
+                                            <td><span class="badge badge-danger">{{ loanStats.rejected_loans|default(0) }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Montant moyen demandé</td>
+                                            <td>{{ loanStats.avg_requested_amount|default(0)|number_format(2) }} €</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Score de risque moyen</td>
+                                            <td>{{ loanStats.avg_risk_score|default(0)|number_format(0) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Actions rapides -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-tools"></i> Actions Rapides</h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary" onclick="refreshDashboard()">
+                            <i class="fas fa-sync"></i> Actualiser
+                        </button>
+                        <a href="{{ path('api_event_sourcing_loans_statistics') }}" class="btn btn-outline-info" target="_blank">
+                            <i class="fas fa-download"></i> API Statistiques
+                        </a>
+                        <button class="btn btn-outline-warning" onclick="exportAuditReport()">
+                            <i class="fas fa-file-export"></i> Exporter Audit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Graphique de répartition des statuts
+        {% if loanStats is not empty %}
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['En attente', 'Approuvés', 'Actifs', 'Complétés', 'Rejetés'],
+                datasets: [{
+                    data: [
+                        {{ loanStats.pending_loans|default(0) }},
+                        {{ loanStats.approved_loans|default(0) }},
+                        {{ loanStats.active_loans|default(0) }},
+                        {{ loanStats.completed_loans|default(0) }},
+                        {{ loanStats.rejected_loans|default(0) }}
+                    ],
+                    backgroundColor: [
+                        '#ffc107',
+                        '#28a745',
+                        '#17a2b8',
+                        '#6c757d',
+                        '#dc3545'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+        function refreshDashboard() {
+            location.reload();
+        }
+
+        function exportAuditReport() {
+            // Implémentation de l'export
+            alert('Fonctionnalité d\'export en cours de développement');
+        }
+
+        // Auto-refresh toutes les 30 secondes
+        setInterval(function() {
+            // Mise à jour des métriques sans recharger la page
+            // fetch('/admin/event-sourcing/metrics-api').then(...);
+        }, 30000);
+    </script>
+{% endblock %}

@@ -1,0 +1,159 @@
+<!--start header -->
+<header>
+    <div class="topbar d-flex align-items-center">
+        <nav class="navbar navbar-expand">
+            <div class="mobile-toggle-menu">
+                <i class='bx bx-menu'></i>
+            </div>
+            <div class="top-menu ms-auto">
+                <ul class="navbar-nav align-items-center">
+                    {% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+                        {% if app.user.verificationStatus is null %}
+                            {% if app.user.accountType == 'individual' %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" style="font-size: 15px;" href="{{ path('app_user_kyc') }}">
+                                        <i class="bx bx-badge-check"></i>
+                                        {{ "kyc.verifLink"|trans|upper }}
+                                    </a>
+                                </li>
+                            {% elseif app.user.accountType == 'professional' %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" style="font-size: 15px;" href="{{ path('app_user_pro_kyc') }}">
+                                        <i class="bx bx-badge-check"></i>
+                                        {{ "kyc.verifLink"|trans|upper }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if app.user.verificationStatus == "pending" %}
+                            <li class="nav-item">
+                                <a class="nav-link text-info" style="font-size: 15px;" href="#">
+                                    <i class="bx bx-badge-check"></i>
+                                    {{ "kyc.pending"|trans|upper }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if app.user.verificationStatus == "rejected" %}
+                            {% if app.user.accountType == 'individual' %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-warning" style="font-size: 15px;" href="{{ path('app_user_kyc') }}">
+                                        <i class="bx bx-badge-check"></i>
+                                        {{ "kyc.rejected"|trans|upper }}
+                                    </a>
+                                </li>
+                            {% elseif app.user.accountType == 'professional' %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-warning" style="font-size: 15px;" href="{{ path('app_user_pro_kyc') }}">
+                                        <i class="bx bx-badge-check"></i>
+                                        {{ "kyc.rejected"|trans|upper }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if app.user.verificationStatus == "approved" %}
+                            <li class="nav-item">
+                                <a class="nav-link text-success" style="font-size: 15px;" href="#">
+                                    <i class="bx bx-badge-check"></i>
+                                    {{ "kyc.approved"|trans|upper }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-item dropdown dropdown-large">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="alert-count">{{ notif_count(app.user) }}</span>
+                                <i class='bx bx-bell'></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="javascript:;">
+                                    <div class="msg-header">
+                                        <p class="msg-header-title">Notifications</p>
+                                    </div>
+                                </a>
+                                <div class="header-notifications-list">
+                                    {% for n in notifications %}
+                                        <a class="dropdown-item" href="{{ path('app_user_notification_show', { id: n.id }) }}">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <h6 class="msg-name">{{ n.subject|trans }}<span class="msg-time float-end">{{ n.createdAt|date('H:i') }}</span></h6>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% else %}
+                                        <a class="dropdown-item" href="javascript:;">
+                                            <div class="d-flex align-items-center">
+                                                <p>{{ "btn.notNotif"|trans }}</p>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+
+                                    <a href="{{ path('app_user_notification_index') }}">
+                                        <div class="text-center msg-footer">{{ "btn.allNotif"|trans }}</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+
+                    {% set currentLanguage = app.session.get('language')|default(app.request.locale) %}
+
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" type="button" id="languageMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img width="20" src="{{ asset('flags/1x1/' ~ currentLanguage ~ '.svg') }}" alt="">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="languageMenuButton">
+                            {% for language in ArrayLocales() %}
+                                {# Replace with your list of supported languages #}
+                                {% if language != currentLanguage %}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('switch_language', { 'language': language }) }}"><img width="20" src="{{ asset('flags/1x1/' ~ language ~ '.svg') }}" alt=""></a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="user-box dropdown">
+                        <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ asset('img/user.png') }}" class="user-img" alt="user avatar">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">{{ app.user ? app.user.firstname : "" }} {{ app.user ? app.user.lastname : "" }}</p>
+                                <p class="designattion mb-0">{{ app.user ? app.user.email : "" }}</p>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_admin_change_password') }}">
+                                        <i class="bx bx-user"></i>
+                                        <span>{{ "btn.changePassword"|trans }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_user_change_password') }}">
+                                        <i class="bx bx-user"></i>
+                                        <span>{{ "btn.changePassword"|trans }}</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <div class="dropdown-divider mb-0"></div>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                    <i class='bx bx-log-out-circle'></i>
+                                    <span>{{ "btn.logout"|trans }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

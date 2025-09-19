@@ -1,0 +1,333 @@
+{# templates/base.html.twig - Base template with PWA integration #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{% block title %}LoanMaster{% endblock %}</title>
+    
+    {# PWA Meta Tags #}
+    <meta name="application-name" content="LoanMaster">
+    <meta name="apple-mobile-web-app-title" content="LoanMaster">
+    <meta name="description" content="{% block meta_description %}Plateforme de gestion de prêts professionnelle{% endblock %}">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    {# Manifest Link #}
+    <link rel="manifest" href="{{ url('pwa_manifest') }}">
+    
+    {# Icons for different platforms #}
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-57x57.png">
+    
+    {# Microsoft Tiles #}
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    {# Preload critical resources #}
+    <link rel="preload" href="/css/app.css" as="style">
+    <link rel="preload" href="/js/app.js" as="script">
+    <link rel="preload" href="/fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    
+    {# DNS Prefetch for external resources #}
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//api.example.com">
+    
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/css/app.css">
+    {% endblock %}
+    
+    {# Critical CSS inline for better performance #}
+    <style>
+        /* Critical CSS for above-the-fold content */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* PWA specific styles */
+        @media (display-mode: standalone) {
+            body {
+                -webkit-user-select: none;
+                -webkit-touch-callout: none;
+            }
+            
+            .header {
+                padding-top: env(safe-area-inset-top);
+            }
+            
+            .footer {
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+        }
+        
+        /* iOS specific adjustments */
+        @supports (-webkit-appearance: none) {
+            .ios-safe-area {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+        }
+    </style>
+</head>
+<body class="{% if app.request.get('standalone') %}standalone{% endif %}">
+    {# Loading screen for PWA #}
+    <div id="app-loading" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+    
+    {# PWA Update Banner (hidden by default) #}
+    <div id="pwa-update-banner" style="display: none;"></div>
+    
+    {# Connection Status Indicator #}
+    <div id="connection-status" class="connection-indicator" style="display: none;"></div>
+    
+    {# Main App Content #}
+    <div id="app-content">
+        {% block header %}
+            <header class="header ios-safe-area">
+                <nav class="navbar">
+                    <div class="nav-container">
+                        <a href="{{ path('app_home') }}" class="nav-brand">
+                            <img src="/icons/icon-72x72.png" alt="LoanMaster" width="32" height="32">
+                            LoanMaster
+                        </a>
+                        
+                        <div class="nav-menu">
+                            {% if app.user %}
+                                <a href="{{ path('loan_list') }}" class="nav-link">Mes prêts</a>
+                                <a href="{{ path('user_profile') }}" class="nav-link">Profil</a>
+                                <a href="{{ path('app_logout') }}" class="nav-link">Déconnexion</a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="nav-link">Connexion</a>
+                                <a href="{{ path('app_register') }}" class="nav-link">Inscription</a>
+                            {% endif %}
+                        </div>
+                        
+                        {# Mobile menu toggle #}
+                        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </nav>
+            </header>
+        {% endblock %}
+        
+        <main class="main-content ios-safe-area">
+            {% block flash_messages %}
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endblock %}
+            
+            {% block body %}{% endblock %}
+        </main>
+        
+        {% block footer %}
+            <footer class="footer ios-safe-area">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="{{ path('app_about') }}">À propos</a>
+                        <a href="{{ path('app_contact') }}">Contact</a>
+                        <a href="{{ path('app_privacy') }}">Confidentialité</a>
+                        <a href="{{ path('app_terms') }}">CGU</a>
+                    </div>
+                    <div class="footer-copyright">
+                        © {{ 'now'|date('Y') }} LoanMaster. Tous droits réservés.
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+    </div>
+    
+    {# PWA Install Prompt (will be shown dynamically) #}
+    <div id="pwa-install-prompt" style="display: none;"></div>
+    
+    {% block javascripts %}
+        {# Core JavaScript #}
+        <script src="/js/app.js"></script>
+        
+        {# PWA JavaScript - loaded asynchronously #}
+        <script>
+            // Load PWA functionality asynchronously
+            const pwaScript = document.createElement('script');
+            pwaScript.src = '/js/pwa.js';
+            pwaScript.async = true;
+            document.head.appendChild(pwaScript);
+            
+            // App initialization
+            document.addEventListener('DOMContentLoaded', function() {
+                // Hide loading screen
+                const loading = document.getElementById('app-loading');
+                if (loading) {
+                    loading.style.display = 'none';
+                }
+                
+                // Show app content
+                const content = document.getElementById('app-content');
+                if (content) {
+                    content.style.opacity = '1';
+                }
+                
+                // Initialize app features
+                initializeApp();
+            });
+            
+            function initializeApp() {
+                // App-specific initialization
+                console.log('🚀 LoanMaster PWA initialized');
+                
+                // Check if running as PWA
+                if (window.matchMedia('(display-mode: standalone)').matches || 
+                    window.navigator.standalone === true) {
+                    document.body.classList.add('pwa-mode');
+                    console.log('📱 Running as PWA');
+                }
+                
+                // Initialize offline support with Service Worker registration
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                            .then(function(registration) {
+                                console.log('✅ Service Worker registered:', registration.scope);
+                                return navigator.serviceWorker.ready;
+                            })
+                            .then(function(registration) {
+                                console.log('✅ Service Worker ready');
+                            })
+                            .catch(function(error) {
+                                console.error('❌ Service Worker registration failed:', error);
+                            });
+                    });
+                }
+            }
+            
+            function toggleMobileMenu() {
+                const menu = document.querySelector('.nav-menu');
+                menu.classList.toggle('active');
+            }
+            
+            // Handle PWA events
+            window.addEventListener('beforeinstallprompt', function(e) {
+                console.log('📱 PWA install prompt available');
+            });
+            
+            window.addEventListener('appinstalled', function(e) {
+                console.log('✅ PWA installed');
+                // Track installation
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'pwa_installed', {
+                        event_category: 'PWA',
+                        event_label: 'Installation'
+                    });
+                }
+            });
+            
+            // Handle network status
+            window.addEventListener('online', function() {
+                console.log('🌐 App is online');
+                document.body.classList.remove('offline');
+            });
+            
+            window.addEventListener('offline', function() {
+                console.log('📴 App is offline');
+                document.body.classList.add('offline');
+            });
+            
+            // Performance monitoring
+            window.addEventListener('load', function() {
+                // Measure and report performance metrics
+                if ('performance' in window) {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    console.log('⚡ Page load time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+                }
+            });
+        </script>
+    {% endblock %}
+    
+    {# Structured Data for better SEO #}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "LoanMaster",
+        "url": "{{ app.request.schemeAndHttpHost }}",
+        "description": "Plateforme de gestion de prêts professionnelle",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "LoanMaster"
+        }
+    }
+    </script>
+    
+    {# Additional meta for better PWA integration #}
+    <script>
+        // Set theme color dynamically based on user preferences
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1e293b');
+        }
+        
+        // Handle keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                // Open search modal
+                console.log('🔍 Search shortcut activated');
+            }
+        });
+    </script>
+</body>
+</html>

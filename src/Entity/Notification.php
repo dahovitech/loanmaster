@@ -69,11 +69,6 @@ class Notification
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $sentAt = null;
 
-    public function __construct()
-    {
-        $this->createdAt = new DateTimeImmutable();
-    }
-
     /**
      * @var Collection<int, NotificationTranslation>
      */
@@ -82,6 +77,7 @@ class Notification
 
     public function __construct()
     {
+        $this->createdAt = new DateTimeImmutable();
         $this->translations = new ArrayCollection();
     }
 

@@ -1,0 +1,8 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %} Signature de contrat {% endblock %}
+
+{% block body %}
+    <p>Dosssier N° {{loanNumber}}</p>
+	<a href="{{ absolute_url(asset(fil)) }}" target="_blank">Voir la signature</a>
+{% endblock %}

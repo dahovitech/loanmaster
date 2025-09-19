@@ -1,0 +1,511 @@
+# GraphQL Schema pour LoanMaster
+# API flexible avec Event Sourcing et temps réel
+
+type Query {
+    # Requêtes sur les prêts
+    loans(
+        filters: LoanFilters
+        pagination: PaginationInput
+        sorting: LoanSorting
+    ): LoanConnection!
+    
+    loan(id: UUID!): Loan
+    
+    # Statistiques et analytics
+    loanStatistics(
+        filters: StatisticsFilters
+    ): LoanStatistics!
+    
+    # Audit et conformité
+    auditHistory(
+        entityType: String!
+        entityId: UUID
+        userId: String
+        since: DateTime
+        until: DateTime
+        limit: Int = 100
+    ): [AuditEntry!]!
+    
+    # Event Sourcing
+    eventHistory(
+        aggregateId: UUID!
+        fromVersion: Int = 1
+    ): [DomainEvent!]!
+    
+    # Time Travel
+    reconstructState(
+        entityType: String!
+        entityId: UUID!
+        pointInTime: DateTime!
+    ): ReconstructedState
+}
+
+type Mutation {
+    # Gestion des prêts
+    createLoanApplication(
+        input: CreateLoanApplicationInput!
+    ): CreateLoanApplicationPayload!
+    
+    changeLoanStatus(
+        input: ChangeLoanStatusInput!
+    ): ChangeLoanStatusPayload!
+    
+    assessLoanRisk(
+        input: AssessLoanRiskInput!
+    ): AssessLoanRiskPayload!
+    
+    fundLoan(
+        input: FundLoanInput!
+    ): FundLoanPayload!
+    
+    processPayment(
+        input: ProcessPaymentInput!
+    ): ProcessPaymentPayload!
+}
+
+type Subscription {
+    # Notifications temps réel
+    loanStatusUpdated(
+        customerId: UUID
+    ): LoanStatusUpdateEvent!
+    
+    newLoanApplication: LoanApplicationEvent!
+    
+    riskAlerts(
+        threshold: RiskLevel!
+    ): RiskAlertEvent!
+    
+    auditEvents(
+        entityType: String
+    ): AuditEvent!
+}
+
+# Types principaux
+type Loan {
+    id: UUID!
+    customerId: UUID!
+    requestedAmount: Float!
+    approvedAmount: Float
+    currentBalance: Float!
+    status: LoanStatus!
+    purpose: String!
+    durationMonths: Int!
+    interestRate: Float!
+    riskScore: Int
+    riskLevel: RiskLevel
+    
+    # Données temporelles
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    fundedAt: DateTime
+    completedAt: DateTime
+    
+    # Relations
+    customer: Customer
+    payments: [Payment!]!
+    riskAssessments: [RiskAssessment!]!
+    
+    # Event Sourcing
+    version: Int!
+    events: [DomainEvent!]!
+    
+    # Calculs dynamiques
+    totalPaid: Float!
+    remainingPayments: Int!
+    nextPaymentDue: DateTime
+    isOverdue: Boolean!
+    
+    # Audit
+    auditTrail: [AuditEntry!]!
+}
+
+type Customer {
+    id: UUID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String
+    
+    # Adresse
+    address: Address
+    
+    # Données financières (masquées)
+    income: Float
+    creditScore: Int
+    
+    # Relations
+    loans: [Loan!]!
+    
+    # Métriques
+    totalLoansCount: Int!
+    totalBorrowed: Float!
+    onTimePaymentRate: Float!
+}
+
+type Payment {
+    id: UUID!
+    loanId: UUID!
+    amount: Float!
+    method: PaymentMethod!
+    transactionId: String
+    
+    # Répartition du paiement
+    principalPaid: Float!
+    interestPaid: Float!
+    feesPaid: Float!
+    
+    # Dates
+    scheduledDate: DateTime
+    processedAt: DateTime!
+    
+    # Statut
+    status: PaymentStatus!
+    isEarlyPayment: Boolean!
+    
+    # Relations
+    loan: Loan!
+}
+
+type RiskAssessment {
+    id: UUID!
+    loanId: UUID!
+    score: Int!
+    level: RiskLevel!
+    factors: [RiskFactor!]!
+    method: String!
+    assessedBy: String
+    assessedAt: DateTime!
+    
+    # Recommandations
+    approvalRecommendation: ApprovalRecommendation!
+    requiredDocuments: [DocumentType!]!
+    interestRateAdjustment: Float!
+    
+    # Relations
+    loan: Loan!
+}
+
+# Types d'événements
+type DomainEvent {
+    id: UUID!
+    aggregateId: UUID!
+    eventType: String!
+    version: Int!
+    payload: JSON!
+    occurredAt: DateTime!
+    metadata: JSON
+}
+
+type AuditEntry {
+    id: UUID!
+    entityType: String!
+    entityId: UUID!
+    eventType: String!
+    oldValues: JSON
+    newValues: JSON
+    userId: String
+    ipAddress: String
+    userAgent: String
+    correlationId: String
+    occurredAt: DateTime!
+    context: JSON
+}
+
+type ReconstructedState {
+    entityId: UUID!
+    entityType: String!
+    version: Int!
+    state: JSON!
+    pointInTime: DateTime!
+    eventsApplied: [DomainEvent!]!
+}
+
+# Statistiques
+type LoanStatistics {
+    # Compteurs
+    totalLoans: Int!
+    pendingLoans: Int!
+    approvedLoans: Int!
+    activeLoans: Int!
+    completedLoans: Int!
+    rejectedLoans: Int!
+    defaultedLoans: Int!
+    
+    # Montants
+    totalRequested: Float!
+    totalApproved: Float!
+    totalOutstanding: Float!
+    averageAmount: Float!
+    
+    # Taux
+    approvalRate: Float!
+    completionRate: Float!
+    defaultRate: Float!
+    
+    # Risque
+    averageRiskScore: Float!
+    riskDistribution: [RiskDistribution!]!
+    
+    # Période
+    periodStart: DateTime
+    periodEnd: DateTime
+}
+
+type RiskDistribution {
+    level: RiskLevel!
+    count: Int!
+    percentage: Float!
+}
+
+# Connexions et pagination
+type LoanConnection {
+    edges: [LoanEdge!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type LoanEdge {
+    node: Loan!
+    cursor: String!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
+# Inputs pour les mutations
+input CreateLoanApplicationInput {
+    customerId: UUID!
+    requestedAmount: Float!
+    durationMonths: Int!
+    purpose: String!
+    customerData: JSON
+    financialData: JSON
+}
+
+input ChangeLoanStatusInput {
+    loanId: UUID!
+    newStatus: LoanStatus!
+    reason: String!
+    comments: String
+    additionalData: JSON
+}
+
+input AssessLoanRiskInput {
+    loanId: UUID!
+    assessmentMethod: String!
+    factors: JSON
+}
+
+input FundLoanInput {
+    loanId: UUID!
+    amount: Float!
+    method: String!
+    bankAccount: String
+    expectedTransferDate: DateTime
+}
+
+input ProcessPaymentInput {
+    loanId: UUID!
+    amount: Float!
+    method: PaymentMethod!
+    transactionId: String
+    isEarlyPayment: Boolean = false
+}
+
+# Filtres et tri
+input LoanFilters {
+    status: [LoanStatus!]
+    riskLevel: [RiskLevel!]
+    amountRange: FloatRange
+    dateRange: DateRange
+    customerId: UUID
+    search: String
+}
+
+input StatisticsFilters {
+    dateRange: DateRange
+    status: [LoanStatus!]
+    riskLevel: [RiskLevel!]
+}
+
+input LoanSorting {
+    field: LoanSortField!
+    direction: SortDirection!
+}
+
+input PaginationInput {
+    first: Int
+    after: String
+    last: Int
+    before: String
+}
+
+input FloatRange {
+    min: Float
+    max: Float
+}
+
+input DateRange {
+    start: DateTime
+    end: DateTime
+}
+
+# Types de retour pour les mutations
+type CreateLoanApplicationPayload {
+    loan: Loan!
+    success: Boolean!
+    errors: [ValidationError!]!
+}
+
+type ChangeLoanStatusPayload {
+    loan: Loan!
+    success: Boolean!
+    errors: [ValidationError!]!
+}
+
+type AssessLoanRiskPayload {
+    loan: Loan!
+    assessment: RiskAssessment!
+    success: Boolean!
+    errors: [ValidationError!]!
+}
+
+type FundLoanPayload {
+    loan: Loan!
+    success: Boolean!
+    errors: [ValidationError!]!
+}
+
+type ProcessPaymentPayload {
+    loan: Loan!
+    payment: Payment!
+    success: Boolean!
+    errors: [ValidationError!]!
+}
+
+type ValidationError {
+    field: String!
+    message: String!
+    code: String
+}
+
+# Types d'événements de subscription
+type LoanStatusUpdateEvent {
+    loan: Loan!
+    previousStatus: LoanStatus!
+    timestamp: DateTime!
+    triggeredBy: String
+}
+
+type LoanApplicationEvent {
+    loan: Loan!
+    timestamp: DateTime!
+}
+
+type RiskAlertEvent {
+    loan: Loan!
+    riskLevel: RiskLevel!
+    score: Int!
+    timestamp: DateTime!
+}
+
+type AuditEvent {
+    entry: AuditEntry!
+    timestamp: DateTime!
+}
+
+# Enums
+enum LoanStatus {
+    PENDING
+    UNDER_REVIEW
+    REQUIRES_DOCUMENTS
+    APPROVED
+    REJECTED
+    FUNDED
+    ACTIVE
+    COMPLETED
+    DEFAULTED
+    CANCELLED
+}
+
+enum RiskLevel {
+    LOW
+    MEDIUM
+    HIGH
+    CRITICAL
+}
+
+enum PaymentMethod {
+    BANK_TRANSFER
+    CREDIT_CARD
+    DEBIT_CARD
+    CASH
+    CHECK
+    DIGITAL_WALLET
+}
+
+enum PaymentStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+    REFUNDED
+}
+
+enum ApprovalRecommendation {
+    APPROVE
+    CONDITIONAL
+    REJECT
+    MANUAL_REVIEW
+}
+
+enum DocumentType {
+    IDENTITY
+    INCOME_PROOF
+    BANK_STATEMENTS
+    EMPLOYMENT_VERIFICATION
+    CREDIT_REPORT
+    TAX_RETURNS
+    COLLATERAL_DOCUMENTS
+}
+
+enum LoanSortField {
+    CREATED_AT
+    UPDATED_AT
+    AMOUNT
+    STATUS
+    RISK_SCORE
+    CUSTOMER_NAME
+}
+
+enum SortDirection {
+    ASC
+    DESC
+}
+
+# Types scalaires personnalisés
+scalar DateTime
+scalar UUID
+scalar JSON
+
+# Types d'adresse
+type Address {
+    street: String!
+    city: String!
+    postalCode: String!
+    country: String!
+    state: String
+}
+
+input AddressInput {
+    street: String!
+    city: String!
+    postalCode: String!
+    country: String!
+    state: String
+}

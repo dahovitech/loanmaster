@@ -1,0 +1,66 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+
+{% block title %}
+	{{service.name|raw|trim}}
+{% endblock %}
+{% block description %}
+	{{service.resume|raw|trim}}
+{% endblock %}
+{% block canonical %}
+	{{ url('service_show',{slug: service.slug})|trim }}
+{% endblock %}
+
+{% block ogTitle %}
+	{{service.name|raw|trim}}
+{% endblock %}
+{% block ogDescription %}
+	{{service.resume|raw|trim}}
+{% endblock %}
+{% block ogImage %}
+	{{ absolute_url(service.image|default('#'))|trim }}
+{% endblock %}
+{% block ogUrl %}
+	{{ url('service_show',{slug: service.slug})|trim }}
+{% endblock %}
+
+{% block twitterTitle %}
+	{{service.name|trim}}
+{% endblock %}
+{% block twitterDescription %}
+	{{service.resume|raw|trim}}
+{% endblock %}
+{% block twitterImage %}
+	{{ absolute_url(service.image|default('#'))|trim }}
+{% endblock %}
+{% block twitterUrl %}
+	{{ url('service_show',{slug: service.slug})|trim }}
+{% endblock %}
+
+{% block body %}
+  <section class="page-header">
+            <div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <div class="page-header__content">
+                    <h2 class="page-header__title">{{service.name|raw}}</h2>
+                    <ul class="easilon-breadcrumb list-unstyled">
+                        <li><a href="{{path('home')}}">{{"front.menu.home"|trans}}</a></li>
+                        <li><a href="{{path('service_index')}}">{{"front.menu.service"|trans}}</a></li>
+                        <li><span>{{service.name|raw}}</span></li>
+                    </ul><!-- /.thm-breadcrumb list-unstyled -->
+                </div><!-- /.page-header__content -->
+            </div><!-- /.container -->
+            <div class="page-header__border-box">
+                <div class="page-header__border page-header__border--1"></div><!-- /.page-header__border -->
+                <div class="page-header__border page-header__border--2"></div><!-- /.page-header__border -->
+                <div class="page-header__border page-header__border--3"></div><!-- /.page-header__border -->
+                <div class="page-header__border page-header__border--4"></div><!-- /.page-header__border -->
+                <div class="page-header__border page-header__border--5"></div><!-- /.page-header__border -->
+            </div><!-- /.page-header__border-box -->
+        </section><!-- /.page-header -->
+	{{ include('@theme/'~setting('theme')~'/inc/service_show.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/loan_calculator.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/faq.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+
+{% endblock %}

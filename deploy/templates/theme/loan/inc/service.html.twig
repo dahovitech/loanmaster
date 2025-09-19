@@ -1,0 +1,152 @@
+<section class="services-one section-space-top" id="services">
+	<div class="services-one__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/services-bg-1-1.png') }});"></div>
+	<!-- /.services-one__bg -->
+	<div class="container">
+		<div class="sec-title sec-title--center">
+			<div class="sec-title__top">
+				<div class="sec-title__shape">
+					<div class="sec-title__shape__one"></div>
+					<!-- /.sec-title__shape__one -->
+					<div class="sec-title__shape__two"></div>
+					<!-- /.sec-title__shape__one -->
+				</div>
+				<!-- /.sec-title__shape -->
+				<h6 class="sec-title__tagline">{{"yourServices"|trans}}</h6>
+				<!-- /.sec-title__tagline -->
+				<div class="sec-title__shape">
+					<div class="sec-title__shape__one"></div>
+					<!-- /.sec-title__shape__one -->
+					<div class="sec-title__shape__two"></div>
+					<!-- /.sec-title__shape__one -->
+				</div>
+				<!-- /.sec-title__shape -->
+			</div>
+			<!-- /.sec-title__top -->
+		</div>
+		<!-- /.sec-title -->
+	</div>
+	<!-- /.container -->
+	<div class="services-one__slide">
+		{% for service in services() %}
+			<h2 class="services-one__slide__text services-one__slide__text--{{ loop.index == 1 ? 'one' : 'two' }}">{{service.name|raw}}</h2>
+			<span class="services-one__slide__icon">
+				<i class="{{service.icon|raw}}"></i>
+			</span>
+		{% endfor %}
+	</div>
+
+	<div class="container">
+		<div class="services-one__main-tab-box tabs-box">
+			<div class="tab-box-buttons wow fadeInLeft animated" data-wow-delay="00ms" data-wow-duration="1500ms">
+				<ul class="tab-buttons">
+					{% for key, service in services() %}
+						<li data-tab="#{{service.slug}}" class="tab-btn {{key == 0 ? 'active-btn' : ' '}}">
+							<div class="tab-btn__inner">
+								{{service.name|raw}}
+								<a href="{{path('service_show',{slug: service.slug})}}" class="tab-btn__icon">
+									<i class="icon-next"></i>
+								</a>
+							</div>
+						</li>
+					{% endfor %}
+
+				</ul>
+				<!-- /.tab-buttons -->
+			</div>
+			<!-- /.tab-box-buttons -->
+			<div class="tabs-content wow fadeInRight animated" data-wow-delay="200ms" data-wow-duration="1500ms">
+				{% for key, service in services() %}
+					<div class="tab {{key == 0 ? 'active-tab' : ' '}} fadeInUp animated" data-wow-delay="200ms" id="{{service.slug}}" style="display:  {{key == 0 ? 'block' : 'none'}};">
+						<div class="services-one__service">
+							<a href="{{path('service_show',{slug: service.slug})}}" class="services-one__service__image">
+								<img src="{{asset(service.image)}}" alt="service">
+								<img src="{{asset(service.image)}}" alt="service">
+								<span class="services-one__service__overlay"></span>
+							</a>
+							<!-- /.services-one__service__image -->
+						</div>
+						<!-- /.services-one__service -->
+					</div>
+				{% endfor %}
+				<!-- /.modern-tiels-tab -->
+			</div>
+			<!-- /.tab-content -->
+		</div>
+		<!-- /.tabs-box -->
+	</div>
+	<!-- /.container -->
+<section class="features-one">
+    <div class="features-one__bg"></div>
+    <!-- /.features-one__bg -->
+    <div class="container">
+        <div class="features-one__inner">
+            <div class="features-one__inner__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/features-inner-bg-1-1.png') }});"></div>
+            <!-- /.features-one__inner__bg -->
+            <div class="features-one__image wow fadeInLeft" data-wow-duration="1500ms" style="background-image: url({{ asset('theme/loan/assets/images/resources/main-slider-image-2-2.jpg') }});"></div>
+            <!-- /.features-one__image -->
+            <div class="features-one__content wow fadeInRight" data-wow-duration="1500ms">
+                <div class="sec-title @@extraClassName">
+                    <div class="sec-title__top">
+                        <div class="sec-title__shape">
+                            <div class="sec-title__shape__one"></div>
+                            <!-- /.sec-title__shape__one -->
+                            <div class="sec-title__shape__two"></div>
+                            <!-- /.sec-title__shape__one -->
+                        </div>
+                        <!-- /.sec-title__shape -->
+                        <h6 class="sec-title__tagline">{{ 'features.tagline'|trans }}</h6>
+                        <!-- /.sec-title__tagline -->
+                    </div>
+                    <!-- /.sec-title__top -->
+                    <h3 class="sec-title__title">{{ 'features.subtitle'|trans }}</h3>
+                    <!-- /.sec-title__title -->
+                </div>
+                <!-- /.sec-title -->
+                <div class="features-one__text-box">
+                    <p class="features-one__text">{{ 'features.text'|trans({'%site_name%': setting('title')}) }}</p>
+                    <!-- /.features-one__text -->
+                </div>
+                <!-- /.features-one__text-box -->
+                <div class="features-one__features">
+                    <div class="features-one__features__item">
+                        <span class="features-one__features__icon">
+                            <i class="icon-low-price"></i>
+                        </span>
+                        <!-- /.features-one__features__icon -->
+                        <div class="features-one__features__content">
+                            <h3 class="features-one__features__title">{{ 'features.lowerRatesTitle'|trans }}</h3>
+                            <!-- /.features-one__features__title -->
+                            <p class="features-one__features__text">{{ 'features.lowerRatesText'|trans }}</p>
+                            <!-- /.features-one__features__text -->
+                        </div>
+                        <!-- /.features-one__features__content -->
+                    </div>
+                    <!-- /.features-one__features__item -->
+                    <div class="features-one__features__item">
+                        <span class="features-one__features__icon">
+                            <i class="icon-loan-1"></i>
+                        </span>
+                        <!-- /.features-one__features__icon -->
+                        <div class="features-one__features__content">
+                            <h3 class="features-one__features__title">{{ 'features.quickAndEasyTitle'|trans }}</h3>
+                            <!-- /.features-one__features__title -->
+                            <p class="features-one__features__text">{{ 'features.quickAndEasyText'|trans }}</p>
+                            <!-- /.features-one__features__text -->
+                        </div>
+                        <!-- /.features-one__features__content -->
+                    </div>
+                    <!-- /.features-one__features__item -->
+                </div>
+                <!-- /.features-one__features -->
+            </div>
+            <!-- /.features-one__content -->
+        </div>
+        <!-- /.features-one__inner -->
+    </div>
+    <!-- /.container -->
+    <img src="{{ asset('theme/loan/assets/images/shapes/features-money-1-1.png') }}" alt="money" class="features-one__money">
+</section>
+
+	<!-- /.features-one -->
+</section>
+<!-- /.services-one section-space-top -->

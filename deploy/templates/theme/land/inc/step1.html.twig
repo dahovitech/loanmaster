@@ -1,0 +1,29 @@
+	<!--<< Simple Process Section Start >>-->
+	<section class="simple-process-section fix section-padding">
+		<div class="container">
+			<div class="section-title text-center">
+				<span class="wow fadeInUp">{{"front.step.title"|trans}}</span>
+				<h2 class="title-anim">
+					{{"front.step.text1"|trans}}
+				</h2>
+			</div>
+			<div class="row">
+				{% for step in steps() %}
+					<div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+						<div class="single-simple-process-items">
+							<div class="icon center">
+								<i class="{{step.icon}}"></i>
+							</div>
+							<div class="content">
+								<span>{{step.position}}</span>
+								<h3>{{step.title}}</h3>
+								<p>{{step.description|raw}}</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+
+			</div>
+		</div>
+	</section>

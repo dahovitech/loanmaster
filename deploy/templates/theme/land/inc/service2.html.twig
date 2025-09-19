@@ -1,0 +1,36 @@
+<!--<< Service Section Start >>-->
+	<section class="service-section fix section-padding">
+		<div class="container">
+			<div class="section-title text-center">
+				<span class="wow fadeInUp">{{"front.service.title"|trans|raw}}</span>
+				<h2 class="title-anim">
+					{{"front.service.text1"|trans|raw}}
+				</h2>
+			</div>
+		</div>
+		<div class="service-wrapper">
+			<div class="row">
+				{% for service in services() %}
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 wow fadeInUp" data-wow-delay=".2s">
+						<div class="service-card-items">
+							<h3>
+								<a href="{{path('service_show',{slug: service.slug})}}">{{service.name}}</a>
+							</h3>
+							<p>
+								{{service.resume|raw}}
+							</p>
+							<div class="service-thumb">
+								<img src="{{service.image}}" alt="img">
+							</div>
+							<a href="{{path('service_show',{slug: service.slug})}}" class="link-btn">
+								<span>{{"btn.readMore"|trans}}</span>
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+					</div>
+				{% endfor %}
+
+			</div>
+
+		</div>
+	</section>

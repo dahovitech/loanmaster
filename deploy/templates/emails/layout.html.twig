@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ setting('title') }}</title>
+    <style type="text/css">
+        /* Reset CSS */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            color: #333;
+        }
+        p {
+            margin: 0 0 10px;
+        }
+        a {
+            color: #007bff;
+        }
+        /* Media Queries */
+        @media only screen and (max-width: 600px) {
+            table {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div><img width="200" src="{{ absolute_url(setting('emailImg')|default('lol'))}}" alt=""></div>
+                <h1>{% block subject %}{% endblock %}</h1>
+                <div>{% block body %}{% endblock %}</div>
+                <p> © {{ date('Y')|date('Y') }},<br>{{ setting('title') }}</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

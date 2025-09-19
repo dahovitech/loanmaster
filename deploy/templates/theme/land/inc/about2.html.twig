@@ -1,0 +1,110 @@
+<!--<< About Section Start >>-->
+<section class="about-section section-padding">
+	<div class="line-shape">
+		<img src="{{ asset('theme/land/assets/img/service/line-shape-2.png') }}" alt="shape-img">
+	</div>
+	<div class="container">
+		<div class="about-wrapper-2">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="about-image-items">
+						<div class="about-image-1 bg-cover wow fadeInLeft" data-wow-delay=".3s" style="background-image: url('assets/img/about/about-5.jpg');">
+							<div class="about-image-2 wow fadeInUp" data-wow-delay=".5s">
+								<img src="{{ asset('theme/land/assets/img/about/about-6.jpg') }}" alt="about-img">
+							</div>
+						</div>
+						<div class="circle-shape">
+							<img src="{{ asset('theme/land/assets/img/about/circle-2.png') }}" alt="img" class="text-circle">
+							<div class="about-title">
+								<h2>
+									<span class="count">13</span>
+								</h2>
+								<p>{{ 'yearsOfExperience'|trans }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 mt-5 mt-lg-0">
+					<div class="about-content">
+						<div class="section-title">
+							<span class="wow fadeInUp">{{ 'aboutAgency'|trans }}</span>
+							<h2 class="title-anim">
+								{{ 'welcomeTo'|trans }}
+							</h2>
+						</div>
+						<p class="mt-4 mt-md-0 wow fadeInUp" data-wow-delay=".5s">
+							{{ 'transmdsDescription'|trans({'%siteName%': setting('title')}) }}
+						</p>
+						<div class="single-tab-items">
+							<ul class="nav mb-4" role="tablist">
+								<li class="nav-item wow fadeInUp" data-wow-delay=".5s" role="presentation">
+									<a href="#objectives" data-bs-toggle="tab" class="nav-link  active" aria-selected="false" role="tab" tabindex="-1">
+										{{ 'objectives'|trans }}
+									</a>
+								</li>
+								<li class="nav-item wow fadeInUp" data-wow-delay=".7s" role="presentation">
+									<a href="#process" data-bs-toggle="tab" class="nav-link" aria-selected="false" role="tab" tabindex="-1">
+										{{ 'yourProcess'|trans }}
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div id="objectives" class="tab-pane fade  active show" role="tabpanel">
+								<div class="about-tabs-area">
+									<div class="about-list-items">
+
+										<ul>
+											{% for i in 1..7 %}
+												<li>
+													<i class="far fa-check"></i>
+													{% set ob = 'objective' ~ i %}
+													{{  ob | trans }}
+												</li>
+											{% endfor %}
+										</ul>
+									</div>
+									<div class="about-author">
+										<div class="author-image">
+											<img src="{{ asset('theme/land/assets/img/about/client-2.png') }}" alt="author-img">
+											<div class="content">
+												<h6>{{ 'fiveMillionCustomers'|trans }}</h6>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div id="process" class="tab-pane fade" role="tabpanel">
+								<div class="about-tabs-area">
+									<div class="about-list-items">
+
+										<ul>
+											{% for step in steps() %}
+												<li>
+													<i class="{{step.icon}}"></i>
+													{{ step.title }}
+												</li>
+											{% endfor %}
+
+
+										</ul>
+									</div>
+									<div class="about-author">
+										<div class="author-image">
+											<img src="{{ asset('theme/land/assets/img/about/client-2.png') }}" alt="author-img">
+											<div class="content">
+												<h6>{{ 'fiveMillionCustomers'|trans }}</h6>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,23 @@
+<h3 class="mt-5">{{"front.faq.title"|trans}}</h3>
+
+<div class="faq-content style-2 style-color">
+	<div class="faq-accordion">
+		<div class="accordion" id="accordions">
+        {% for faq in faqs() %}
+        <div class="accordion-item wow fadeInUp" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+				<h4 class="accordion-header">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{faq.id}}" aria-expanded="false" aria-controls="faq{{faq.id}}">
+						{{faq.question|raw}}
+					</button>
+				</h4>
+				<div id="faq{{faq.id}}" class="accordion-collapse collapse" data-bs-parent="#accordions" style="">
+					<div class="accordion-body">
+						{{faq.answer|raw}}
+					</div>
+				</div>
+			</div>
+        {% endfor %}
+		
+		</div>
+	</div>
+</div>

@@ -1,0 +1,45 @@
+<!--<< Hero Section Start >>-->
+<section class="hero-section hero-1">
+	<div class="swiper-dot">
+		<div class="dot"></div>
+	</div>
+	<div class="swiper hero-slider">
+
+		<div class="swiper-wrapper">
+			{% for slider in sliders() %}
+				<div class="swiper-slide">
+					<div class="shape-image" data-animation="fadeInLeft" data-delay="2.1s">
+						<img src="{{ asset('theme/land/assets/img/hero/object1.png') }}" alt="shape-img">
+					</div>
+					<div class="shape-image-2 fadeInRight animated" data-animation="fadeInRight" data-delay="2.3s">
+						<img src="{{ asset('theme/land/assets/img/hero/right-shape.png') }}" alt="shape-img">
+					</div>
+					<div class="hero-image bg-cover" style="background-image: url({{slider.image|raw}});"></div>
+					<div class="container">
+						<div class="row g-4">
+							<div class="col-lg-8">
+								<div class="hero-content">
+									<h6 data-animation="slideInRight" data-duration="2s" data-delay=".3s">{{slider.subtitle|raw}}</h6>
+									<h1 data-animation="slideInRight" data-duration="2s" data-delay=".5s">
+										{{slider.title|raw}}
+									</h1>
+									<p data-animation="slideInRight" data-duration="2s" data-delay=".7s">
+										{{slider.description|raw}}
+									</p>
+									<div class="hero-button">
+										<a href="{{slider.btnUrl|raw}}" class="theme-btn theme-color-2" data-animation="slideInRight" data-duration="2s" data-delay=".9s">
+											<span>{{slider.btnText|raw}}
+												<i class="fas fa-chevron-right"></i>
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	</div>
+</section>

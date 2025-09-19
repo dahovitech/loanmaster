@@ -1,0 +1,120 @@
+{# @admin/base.html.twig #}
+<!DOCTYPE html>
+<html class="semi-dark" lang="{{ app.request.locale }}">
+<head>
+    <title>
+        {% block title %}
+            {{ setting('title')|default("LoanMaster") }}
+        {% endblock %}
+    </title>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset(setting('favicon') ? setting('favicon'): ' ') }}" type="image/png"/>
+    
+    <!-- Plugins CSS -->
+    <link href="{{ asset('admin/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('admin/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet"/>
+
+    <!-- Loader CSS -->
+    <link href="{{ asset('admin/assets/css/pace.min.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('admin/assets/js/pace.min.js') }}"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/css/icons.css') }}" rel="stylesheet">
+
+    <!-- Theme Style CSS -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/dark-theme.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/semi-dark.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/header-colors.css') }}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"/>
+
+    {% block stylesheets %}
+        
+    {% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        {% block sidebar %}
+            {{ render(controller('App\\Controller\\WidgetController::back_sidebar')) }}
+        {% endblock %}
+
+        {% block header %}
+            {{ render(controller('App\\Controller\\WidgetController::back_header')) }}
+        {% endblock %}
+
+        <div class="page-wrapper">
+            <div class="page-content">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+
+        {% block footer %}
+            {{ render(controller('App\\Controller\\WidgetController::back_footer')) }}
+        {% endblock %}
+    </div>
+
+    <!-- Main JS Scripts -->
+    <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/app.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('admin/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+
+  {#  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/balloon/ckeditor.js"></script>
+
+<script type="importmap">
+		{
+			"imports": {
+				"ckeditor5": "{{ asset('ckeditor5/ckeditor5.js') }}",
+				"ckeditor5/": "{{ asset('ckeditor5/') }}"
+			}
+		}
+		</script> #}
+		
+    <script>
+        $(document).ready(function () {
+             if ($("#tab1").length && $.fn.DataTable) {
+                $('#tab1').DataTable({
+                
+                });
+            }
+            if ($("#tab2").length && $.fn.DataTable) {
+                $('#tab2').DataTable({
+                   
+                });
+            }
+           if ($(".tab2").length && $.fn.DataTable) {
+                $('.tab2').DataTable({
+                });
+            }
+        });
+    </script>
+   {% block javascripts %}
+      {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
+    {% endblock %}
+    
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <script>
+                swal("{{ message }}", " ", "{{ label }}");
+            </script>
+        {% endfor %}
+    {% endfor %}
+
+    {# <script type="module" src="{{ asset('js/ckeditor.js') }}"></script> #}
+</body>
+</html>

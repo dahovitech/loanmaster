@@ -1,0 +1,577 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Consentements RGPD{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .consent-card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .consent-status-granted { border-left: 4px solid #28a745; }
+        .consent-status-denied { border-left: 4px solid #dc3545; }
+        .consent-status-withdrawn { border-left: 4px solid #fd7e14; }
+        .consent-status-pending { border-left: 4px solid #6c757d; }
+        
+        .status-badge-granted { background-color: #28a745; }
+        .status-badge-denied { background-color: #dc3545; }
+        .status-badge-withdrawn { background-color: #fd7e14; }
+        .status-badge-pending { background-color: #6c757d; }
+        
+        .expiring-soon { background-color: #fff3cd; }
+        .expired { background-color: #f8d7da; }
+        
+        .consent-type-badge {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    <!-- En-tête -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('admin_compliance_dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Gestion des consentements</li>
+                        </ol>
+                    </nav>
+                    <h1 class="h3 mb-0">Gestion des Consentements RGPD</h1>
+                    <p class="text-muted">{{ totalConsents }} consentements trouvés</p>
+                </div>
+                <div>
+                    <a href="{{ path('admin_compliance_export', {type: 'consents', format: 'csv'}) }}" class="btn btn-outline-primary">
+                        <i class="fas fa-download"></i> Export CSV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques des consentements -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stats-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="text-uppercase mb-1">Taux d'acceptation</h6>
+                            <h3 class="mb-0">
+                                {% if stats.consentRates is defined and stats.consentRates is not empty %}
+                                    {% set totalGranted = 0 %}
+                                    {% set totalAll = 0 %}
+                                    {% for type, rates in stats.consentRates %}
+                                        {% set totalGranted = totalGranted + rates.granted %}
+                                        {% set totalAll = totalAll + rates.total %}
+                                    {% endfor %}
+                                    {{ totalAll > 0 ? ((totalGranted / totalAll) * 100) | number_format(1) : 0 }}%
+                                {% else %}
+                                    0%
+                                {% endif %}
+                            </h3>
+                            <small class="text-light">Global</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card consent-card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="text-uppercase mb-1">Expirent bientôt</h6>
+                            <h3 class="mb-0">{{ stats.expiringSoon ?? 0 }}</h3>
+                            <small class="text-light">Dans les 30 jours</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-clock fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card consent-card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="text-uppercase mb-1">Consentements actifs</h6>
+                            <h3 class="mb-0">
+                                {{ consents | filter(c => c.status == 'granted' and not c.expired) | length }}
+                            </h3>
+                            <small class="text-light">Valides</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-shield-alt fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card consent-card bg-danger text-white">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="text-uppercase mb-1">Retraits récents</h6>
+                            <h3 class="mb-0">
+                                {{ consents | filter(c => c.status == 'withdrawn') | length }}
+                            </h3>
+                            <small class="text-light">Ce mois</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-user-times fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter"></i> Filtres
+                        <button class="btn btn-sm btn-outline-secondary float-end" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </h6>
+                </div>
+                <div class="collapse {% if filters is not empty %}show{% endif %}" id="filtersCollapse">
+                    <div class="card-body">
+                        <form method="GET" class="row g-3">
+                            <div class="col-md-2">
+                                <label class="form-label">Type de consentement</label>
+                                <select name="consentType" class="form-select">
+                                    <option value="">Tous</option>
+                                    <option value="data_processing" {% if filters.consentType == 'data_processing' %}selected{% endif %}>
+                                        Traitement des données
+                                    </option>
+                                    <option value="marketing" {% if filters.consentType == 'marketing' %}selected{% endif %}>
+                                        Marketing
+                                    </option>
+                                    <option value="analytics" {% if filters.consentType == 'analytics' %}selected{% endif %}>
+                                        Analytics
+                                    </option>
+                                    <option value="cookies" {% if filters.consentType == 'cookies' %}selected{% endif %}>
+                                        Cookies
+                                    </option>
+                                    <option value="profiling" {% if filters.consentType == 'profiling' %}selected{% endif %}>
+                                        Profilage
+                                    </option>
+                                    <option value="data_sharing" {% if filters.consentType == 'data_sharing' %}selected{% endif %}>
+                                        Partage des données
+                                    </option>
+                                    <option value="automated_decision" {% if filters.consentType == 'automated_decision' %}selected{% endif %}>
+                                        Décision automatisée
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Statut</label>
+                                <select name="status" class="form-select">
+                                    <option value="">Tous</option>
+                                    <option value="granted" {% if filters.status == 'granted' %}selected{% endif %}>Accordé</option>
+                                    <option value="denied" {% if filters.status == 'denied' %}selected{% endif %}>Refusé</option>
+                                    <option value="withdrawn" {% if filters.status == 'withdrawn' %}selected{% endif %}>Retiré</option>
+                                    <option value="pending" {% if filters.status == 'pending' %}selected{% endif %}>En attente</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">ID Utilisateur</label>
+                                <input type="number" name="userId" class="form-control" value="{{ filters.userId ?? '' }}" placeholder="ID">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Date début</label>
+                                <input type="date" name="startDate" class="form-control" value="{{ filters.startDate ? filters.startDate | date('Y-m-d') : '' }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Date fin</label>
+                                <input type="date" name="endDate" class="form-control" value="{{ filters.endDate ? filters.endDate | date('Y-m-d') : '' }}">
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">Expirant</label>
+                                <div class="form-check">
+                                    <input type="checkbox" name="expiring" value="1" class="form-check-input" {% if filters.expiring %}checked{% endif %}>
+                                    <label class="form-check-label">Oui</label>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">Expiré</label>
+                                <div class="form-check">
+                                    <input type="checkbox" name="expired" value="1" class="form-check-input" {% if filters.expired %}checked{% endif %}>
+                                    <label class="form-check-label">Oui</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> Filtrer
+                                </button>
+                                {% if filters is not empty %}
+                                    <a href="{{ path('admin_compliance_consent_management') }}" class="btn btn-outline-secondary ms-2">
+                                        <i class="fas fa-times"></i> Effacer
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des consentements -->
+    <div class="row">
+        <div class="col-12">
+            {% if consents is empty %}
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-user-shield fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Aucun consentement trouvé</h5>
+                        <p class="text-muted">Essayez de modifier vos critères de recherche.</p>
+                    </div>
+                </div>
+            {% else %}
+                {% for consent in consents %}
+                    <div class="card consent-card consent-status-{{ consent.status }} mb-3 
+                        {% if consent.daysUntilExpiry is not null and consent.daysUntilExpiry <= 30 and consent.daysUntilExpiry > 0 %}expiring-soon{% endif %}
+                        {% if consent.expired %}expired{% endif %}">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge consent-type-badge bg-secondary me-2">
+                                            {{ consent.consentType | replace({'_': ' '}) }}
+                                        </span>
+                                    </div>
+                                    <small class="text-muted">ID: {{ consent.id }}</small>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <h6 class="mb-1">Utilisateur</h6>
+                                    <span class="fw-bold">{{ consent.userId }}</span>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <h6 class="mb-1">Statut</h6>
+                                    <span class="badge status-badge-{{ consent.status }}">
+                                        {% if consent.status == 'granted' %}Accordé
+                                        {% elseif consent.status == 'denied' %}Refusé
+                                        {% elseif consent.status == 'withdrawn' %}Retiré
+                                        {% else %}En attente
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <h6 class="mb-1">Date création</h6>
+                                    <span title="{{ consent.createdAt | date('Y-m-d H:i:s') }}">
+                                        {{ consent.createdAt | date('d/m/Y H:i') }}
+                                    </span>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <h6 class="mb-1">Expiration</h6>
+                                    {% if consent.expiresAt %}
+                                        <span title="{{ consent.expiresAt | date('Y-m-d H:i:s') }}"
+                                              class="{% if consent.expired %}text-danger{% elseif consent.daysUntilExpiry is not null and consent.daysUntilExpiry <= 30 %}text-warning{% endif %}">
+                                            {% if consent.expired %}
+                                                <i class="fas fa-times-circle"></i> Expiré
+                                            {% elseif consent.daysUntilExpiry is not null %}
+                                                <i class="fas fa-clock"></i> {{ consent.daysUntilExpiry }}j
+                                            {% else %}
+                                                {{ consent.expiresAt | date('d/m/Y') }}
+                                            {% endif %}
+                                        </span>
+                                    {% else %}
+                                        <span class="text-muted">Permanent</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-2 text-end">
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#consentModal{{ consent.id }}">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        {% if consent.status == 'granted' %}
+                                            <button class="btn btn-outline-warning" onclick="withdrawConsent({{ consent.id }})">
+                                                <i class="fas fa-user-times"></i>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mt-2">
+                                        <small class="text-muted">
+                                            Version {{ consent.version }}
+                                            {% if consent.locale %}
+                                                | {{ consent.locale | upper }}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if consent.withdrawalReason %}
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <div class="alert alert-warning alert-sm mb-0">
+                                            <i class="fas fa-info-circle"></i>
+                                            <strong>Raison du retrait :</strong> {{ consent.withdrawalReason }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Modal détails du consentement -->
+                    <div class="modal fade" id="consentModal{{ consent.id }}" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Détails du consentement #{{ consent.id }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Informations générales</h6>
+                                            <table class="table table-sm">
+                                                <tr>
+                                                    <td>Type de consentement :</td>
+                                                    <td><strong>{{ consent.consentType | replace({'_': ' '}) | title }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Statut :</td>
+                                                    <td>
+                                                        <span class="badge status-badge-{{ consent.status }}">
+                                                            {% if consent.status == 'granted' %}Accordé
+                                                            {% elseif consent.status == 'denied' %}Refusé
+                                                            {% elseif consent.status == 'withdrawn' %}Retiré
+                                                            {% else %}En attente
+                                                            {% endif %}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Utilisateur ID :</td>
+                                                    <td><strong>{{ consent.userId }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Version :</td>
+                                                    <td>{{ consent.version }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Locale :</td>
+                                                    <td>{{ consent.locale | upper }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Base légale :</td>
+                                                    <td>{{ consent.legalBasis ?? 'Non spécifiée' }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <h6>Dates importantes</h6>
+                                            <table class="table table-sm">
+                                                <tr>
+                                                    <td>Créé le :</td>
+                                                    <td><strong>{{ consent.createdAt | date('d/m/Y H:i:s') }}</strong></td>
+                                                </tr>
+                                                {% if consent.updatedAt %}
+                                                    <tr>
+                                                        <td>Mis à jour le :</td>
+                                                        <td>{{ consent.updatedAt | date('d/m/Y H:i:s') }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if consent.withdrawnAt %}
+                                                    <tr>
+                                                        <td>Retiré le :</td>
+                                                        <td>{{ consent.withdrawnAt | date('d/m/Y H:i:s') }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if consent.expiresAt %}
+                                                    <tr>
+                                                        <td>Expire le :</td>
+                                                        <td class="{% if consent.expired %}text-danger{% elseif consent.daysUntilExpiry is not null and consent.daysUntilExpiry <= 30 %}text-warning{% endif %}">
+                                                            {{ consent.expiresAt | date('d/m/Y H:i:s') }}
+                                                            {% if consent.daysUntilExpiry is not null %}
+                                                                (dans {{ consent.daysUntilExpiry }} jours)
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            </table>
+                                            
+                                            <h6>Informations techniques</h6>
+                                            <table class="table table-sm">
+                                                {% if consent.ipAddress %}
+                                                    <tr>
+                                                        <td>Adresse IP :</td>
+                                                        <td><code>{{ consent.ipAddress }}</code></td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if consent.userAgent %}
+                                                    <tr>
+                                                        <td>User Agent :</td>
+                                                        <td><small>{{ consent.userAgent | slice(0, 50) }}...</small></td>
+                                                    </tr>
+                                                {% endif %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if consent.consentText %}
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <h6>Texte du consentement</h6>
+                                                <div class="border p-3 bg-light rounded">
+                                                    {{ consent.consentText }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if consent.withdrawalReason %}
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <h6>Raison du retrait</h6>
+                                                <div class="alert alert-warning">
+                                                    {{ consent.withdrawalReason }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    {% if consent.metadata %}
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <h6>Métadonnées</h6>
+                                                <pre class="bg-light p-3 rounded"><code>{{ consent.metadata | json_encode(constant('JSON_PRETTY_PRINT')) }}</code></pre>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    {% if consent.status == 'granted' %}
+                                        <button type="button" class="btn btn-warning" onclick="withdrawConsent({{ consent.id }})">
+                                            <i class="fas fa-user-times"></i> Retirer le consentement
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if totalPages > 1 %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <nav aria-label="Navigation des pages">
+                    <ul class="pagination justify-content-center">
+                        {% if currentPage > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('admin_compliance_consent_management', filters | merge({page: currentPage - 1})) }}">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in range(max(1, currentPage - 2), min(totalPages, currentPage + 2)) %}
+                            <li class="page-item {% if page == currentPage %}active{% endif %}">
+                                <a class="page-link" href="{{ path('admin_compliance_consent_management', filters | merge({page: page})) }}">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        {% if currentPage < totalPages %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('admin_compliance_consent_management', filters | merge({page: currentPage + 1})) }}">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+                <div class="text-center text-muted">
+                    Page {{ currentPage }} sur {{ totalPages }} ({{ totalConsents }} consentements au total)
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function withdrawConsent(consentId) {
+            if (!confirm('Êtes-vous sûr de vouloir retirer ce consentement ? Cette action est irréversible.')) {
+                return;
+            }
+
+            // Dans une vraie application, ceci ferait un appel AJAX
+            alert('Fonctionnalité de retrait de consentement à implémenter via l\'API GDPR');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Raccourcis clavier
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Fermer tous les modals ouverts
+                    const openModals = document.querySelectorAll('.modal.show');
+                    openModals.forEach(modal => {
+                        bootstrap.Modal.getInstance(modal)?.hide();
+                    });
+                }
+            });
+
+            // Auto-refresh pour les consentements expirants
+            setInterval(function() {
+                const expiringSoonElements = document.querySelectorAll('.expiring-soon');
+                if (expiringSoonElements.length > 0) {
+                    // Optionnel : rafraîchir la page si des consentements sont sur le point d'expirer
+                    console.log(`${expiringSoonElements.length} consentements expirent bientôt`);
+                }
+            }, 60000); // Vérifier toutes les minutes
+        });
+    </script>
+{% endblock %}

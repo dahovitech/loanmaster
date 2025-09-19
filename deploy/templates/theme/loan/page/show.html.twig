@@ -1,0 +1,90 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+
+{% block title %}
+	{{page.title|raw|trim}}
+{% endblock %}
+{% block description %}
+	{{page.resume|raw|trim}}
+{% endblock %}
+{% block canonical %}
+	{{ url('page_show',{slug: page.slug})|trim }}
+{% endblock %}
+
+{% block ogTitle %}
+	{{page.title|raw|trim}}
+{% endblock %}
+{% block ogDescription %}
+	{{page.resume|raw|trim}}
+{% endblock %}
+{% block ogImage %}
+	{{ absolute_url(page.image|default('#'))|trim }}
+{% endblock %}
+{% block ogUrl %}
+	{{ url('page_show',{slug: page.slug})|trim }}
+{% endblock %}
+
+{% block twitterTitle %}
+	{{page.title|trim}}
+{% endblock %}
+{% block twitterDescription %}
+	{{page.resume|raw|trim}}
+{% endblock %}
+{% block twitterImage %}
+	{{ absolute_url(page.image|default('#'))|trim }}
+{% endblock %}
+{% block twitterUrl %}
+	{{ url('page_show',{slug: page.slug})|trim }}
+{% endblock %}
+
+{% block body %}
+	<section class="page-header">
+		<div class="page-header__bg" style="background-image: url({{ asset(page.image) }});"></div>
+		<!-- /.page-header__bg -->
+		<div class="container">
+			<div class="page-header__content">
+				<h2 class="page-header__title">{{page.title|raw}}</h2>
+				<ul class="easilon-breadcrumb list-unstyled">
+					<li>
+						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
+					</li>
+					<li>
+						<span>{{page.title|raw}}</span>
+					</li>
+				</ul>
+				<!-- /.thm-breadcrumb list-unstyled -->
+			</div>
+			<!-- /.page-header__content -->
+		</div>
+		<!-- /.container -->
+		<div class="page-header__border-box">
+			<div class="page-header__border page-header__border--1"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--2"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--3"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--4"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--5"></div>
+			<!-- /.page-header__border -->
+		</div>
+		<!-- /.page-header__border-box -->
+	</section>
+
+
+	<section class="p-5">
+		<div class="container">
+			
+				<div class="details-content">
+					{{page.content|raw}}
+
+				</div>
+			
+			</div>
+		</div>
+	</section>
+	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/testimonial.html.twig') }}
+
+{% endblock %}

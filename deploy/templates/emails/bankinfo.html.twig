@@ -1,0 +1,13 @@
+{# templates/emails/bankinfo.html.twig #}
+
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ subject }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.bankinfo.greeting'|trans({'%firstname%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.bankinfo.message'|trans({'%url%': loan.bank.url,'%name%': loan.bank.name}, 'messages', user.locale)|raw }}</p>
+    <p>{{ 'email.bankinfo.thanks'|trans({}, 'messages', user.locale) }}</p>
+{% endblock %}

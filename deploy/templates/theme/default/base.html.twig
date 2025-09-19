@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}
+				{{setting('title')}}
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="{{ asset(setting('favicon')?setting("favicon").getWebPath():' ') }}" type="image/png"/>
+		<!-- Css -->
+		<link href="{{ asset('theme/docu/assets/libs/tiny-slider/tiny-slider.css')}}" rel="stylesheet">
+		<link
+		href="{{ asset('theme/docu/assets/libs/tobii/css/tobii.min.css')}}" rel="stylesheet">
+		<!-- Bootstrap Css -->
+		<link
+		href="{{ asset('theme/docu/assets/css/bootstrap.min.css')}}" id="bootstrap-style" class="theme-opt" rel="stylesheet" type="text/css"/>
+		<!-- Icons Css -->
+		<link href="{{ asset('theme/docu/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('theme/docu/assets/libs/@iconscout/unicons/css/line.css')}}" type="text/css" rel="stylesheet"/>
+		<!-- Style Css-->
+		<link
+		href="{{ asset('theme/docu/assets/css/style.min.css')}}" id="color-opt" class="theme-opt" rel="stylesheet" type="text/css"/>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+
+	</head>
+	<body>
+		{% block header %}
+			{{ render(controller('App\\Controller\\WidgetController::front_header')) }}
+		{% endblock %}
+		{% block body %}{% endblock %}
+		{% block footer %}
+			{{ render(controller('App\\Controller\\WidgetController::front_footer')) }}
+		{% endblock %}
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<script>
+					swal("{{ message }}", " ", "{{ label }}");
+					
+				</script>
+			{% endfor %}
+		{% endfor %}
+		<script src="{{ asset('theme/docu/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+		<!-- SLIDER -->
+		<script src="{{ asset('theme/docu/assets/libs/tiny-slider/min/tiny-slider.js')}}"></script>
+		<!-- Lightbox -->
+		<script src="{{ asset('theme/docu/assets/libs/tobii/js/tobii.min.js')}}"></script>
+		<!-- Main Js -->
+		<script src="{{ asset('theme/docu/assets/libs/feather-icons/feather.min.js')}}"></script>
+		<script src="{{ asset('theme/docu/assets/js/plugins.init.js')}}"></script>
+		<script src="{{ asset('theme/docu/assets/js/app.js')}}"></script>
+		<script>	
+			var chatButton = document.createElement('div');
+			chatButton.innerHTML = `
+			<a href="mailto: {{setting('email')}}" target="_bank"><img width="50" src="{{asset('img/customer-service.png')}}" alt=""></a>
+			`
+			;
+			chatButton.style.position = 'fixed';
+			chatButton.style.bottom = '30px';
+			chatButton.style.right = '30px';
+			document.body.appendChild(chatButton);
+			chatButton.style.borderRadius = '50%';
+		</script>
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</body>
+</html>

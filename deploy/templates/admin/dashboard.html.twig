@@ -1,0 +1,165 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block body %}
+
+	{% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-info">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">{{"admin.loan.myorder"|trans}}</p>
+								<h4 class="my-1 text-info">{{ loan(app.user)|length }}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('app_user_loan_list') }}">{{"btn.details"|trans}}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+								<i class='bx bx-money'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{# <div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-danger">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">{{"admin.page.visa.index.title"|trans}}</p>
+								<h4 class="my-1 text-danger">{{visas|default("")|length}}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('app_demandeVisa_index') }}">{{"btn.details"|trans}}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+								<i class='bx bxs-notepad'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-success">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">{{"admin.page.permisConduire.index.title"|trans}}</p>
+								<h4 class="my-1 text-success">{{permis|default("")|length}}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('app_demande_permisConduire_index') }}">{{ "btn.details"|trans }}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
+								<i class='bx bxs-notepad'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> #}
+
+
+		</div>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-info">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">Nombres de demande</p>
+								<h4 class="my-1 text-info">{{loans()|length}}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('admin_loan_list') }}">{{"btn.details"|trans}}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+								<i class='bx bx-money'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{# <div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-danger">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">{{"admin.page.visa.index.title"|trans}}</p>
+								<h4 class="my-1 text-danger">{{listvisas|length}}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('app_demande_list') }}">{{"btn.details"|trans}}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+								<i class='bx bxs-notepad'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card radius-10 border-start border-0 border-3 border-success">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary">{{"admin.page.permisConduire.index.title"|trans}}</p>
+								<h4 class="my-1 text-success">{{listpermis|length}}</h4>
+								<p class="mb-0 font-13">
+									<a href="{{ path('app_demande_list') }}">{{ "btn.details"|trans }}</a>
+								</p>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
+								<i class='bx bxs-notepad'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> #}
+
+
+		</div>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') == false or is_granted('ROLE_SUPER_ADMIN') == false %}
+		<!--end row-->
+		<div class="row">
+
+			<div class="col-md-10">
+				<h4>{{"admin.page.notification.index.title"|trans}}</h4>
+				<hr/>
+				<div class="card card-bordered ">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table id="tab2" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th>{{"table.subject"|trans}}</th>
+										<th>{{"table.status"|trans}}</th>
+										<th>{{"table.date"|trans}}</th>
+										<th>{{"table.actions"|trans}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for notif in notifications %}
+										<tr>
+											<td>{{notif.subject|raw}}</td>
+											{% set status =  "status." ~ notif.status %}
+											<td>{{status|trans }}</td>
+											<td>{{notif.createdAt|date('d M Y H:i')|format_datetime() }}</td>
+											<td>
+												<a href="{{ path('app_user_notification_show', {'id': notif.id}) }}">{{"btn.details"|trans}}</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

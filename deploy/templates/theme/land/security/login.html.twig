@@ -1,0 +1,82 @@
+{% extends '@theme/auth_base.html.twig' %}
+
+{% block title %}
+	{{"front.page.login.h1"|trans}}
+{% endblock %}
+
+{% block body %}
+
+
+	<!-- Hero Start -->
+	<section class="bg-home">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-7 col-md-6 d-none d-md-block">
+					<div class="me-lg-5">
+						<img src="{{ asset('theme/land/assets/img/about/about.jpg')}}" class="img-fluid d-block mx-auto" alt="">
+					</div>
+				</div>
+				<div class="col-lg-5 col-md-6">
+					<div class="card login-page shadow rounded border-0">
+						<div class="card-header  text-center">
+							<a class="logo" href="{{ path("home") }}">
+								<img src="{{ asset(setting("logoDark")|default('#')) }}" height="40" class="logo-light-mode" alt="">
+							</a>
+							<h2 class="card-title text-center mt-4">{{"front.page.login.h1"|trans|upper}}</h2>
+
+						</div>
+						<div class="card-body">
+
+							<form method="post">
+								{% if error %}
+									<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+								{% endif %}
+
+								{# {% if app.user %}
+																	<div class="mb-3">
+																		You are logged in as
+																		{{ app.user.userIdentifier }},
+																		<a href="{{ path('app_logout') }}">Logout</a>
+																	</div>
+																{% endif %} #}
+
+								{# <h1 class="h3 mb-3 text-center font-weight-normal">{{"front.page.login.text"|trans}}</h1> #}
+								<div class="row">
+									<div class="col-lg-12">
+										<label for="inputEmail">{{"form.user.email"|trans}}</label>
+										<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+									</div>
+									<div class="col-lg-12">
+
+										<label for="inputPassword">{{"form.user.password"|trans}}</label>
+										<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+									</div>
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+									<div class="col-lg-12">
+										<br>
+										<a href="{{ path("register") }}" class="sub-menu-item">{{"btn.register"|trans}}</a>?
+
+									</div>
+									<div class="col-lg-12 text-center">
+										<button class="theme-btn mt-5" type="submit">
+											<span>
+										{{"btn.login"|trans}}
+									</span>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!---->
+				</div>
+				<!--end col-->
+			</div>
+			<!--end row-->
+		</div>
+		<!--end container-->
+	</section>
+	<!--end section-->
+	<!-- Hero End -->
+
+{% endblock %}

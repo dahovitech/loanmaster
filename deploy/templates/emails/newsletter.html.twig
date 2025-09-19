@@ -1,0 +1,14 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}Newsletter{% endblock %}
+
+{% block body %}
+     <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ useremail }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

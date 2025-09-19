@@ -1,0 +1,45 @@
+{# templates/funfact.html.twig #}
+<section class="funfact-one">
+    <div class="funfact-one__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/funfact-bg-1-1.jpg') }});"></div>
+    <!-- /.funfact-one__bg -->
+    <div class="container">
+        <div class="row gutter-y-40">
+            <div class="funfact-one__col col-lg-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="funfact-one__item">
+                    <h3 class="funfact-one__item__number count-box">
+                        <span class="count-text" data-stop="80.5" data-speed="1500"></span>
+                        <span>k</span>
+                    </h3>
+                    <h4 class="funfact-one__item__title">{{ 'funfact.happyCustomers'|trans }}</h4><!-- /.funfact-one__item__title -->
+                </div><!-- /.funfact-one__item -->
+            </div><!-- /.col-lg-3 col-sm-6 -->
+            <div class="funfact-one__col col-lg-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="funfact-one__item">
+                    <h3 class="funfact-one__item__number count-box">
+                        <span>{{setting('devise')}}</span>
+                        <span class="count-text" data-stop="195" data-speed="1500"></span>
+                        <span>k</span>
+                    </h3>
+                    <h4 class="funfact-one__item__title">{{ 'funfact.dailyPayments'|trans }}</h4><!-- /.funfact-one__item__title -->
+                </div><!-- /.funfact-one__item -->
+            </div><!-- /.col-lg-3 col-sm-6 -->
+            <div class="funfact-one__col col-lg-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="funfact-one__item">
+                    <h3 class="funfact-one__item__number count-box">
+                        <span class="count-text" data-stop="99" data-speed="1500"></span>
+                        <span>%</span>
+                    </h3>
+                    <h4 class="funfact-one__item__title">{{ 'funfact.weApproveLoans'|trans }}</h4><!-- /.funfact-one__item__title -->
+                </div><!-- /.funfact-one__item -->
+            </div><!-- /.col-lg-3 col-sm-6 -->
+            <div class="funfact-one__col col-lg-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                <div class="funfact-one__item">
+                    <h3 class="funfact-one__item__number count-box">
+                        <span class="count-text" data-stop="361" data-speed="1500"></span>
+                    </h3>
+                    <h4 class="funfact-one__item__title">{{ 'funfact.staffMembers'|trans }}</h4><!-- /.funfact-one__item__title -->
+                </div><!-- /.funfact-one__item -->
+            </div><!-- /.col-lg-3 col-sm-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.funfact-one -->

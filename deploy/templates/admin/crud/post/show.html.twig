@@ -1,0 +1,47 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}{{ 'post.show'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'post.show'|trans }}</h1>
+
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'post.show'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_admin_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_crud_index',{entityName: entityName}) }}">
+                            <i class="bx bx-list-alt"></i> {{ 'post.list'|trans }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'post.show'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <p><strong>{{ 'post.title'|trans }}:</strong> {{ entity.title }}</p>
+                    <p><strong>{{ 'post.content'|trans }}:</strong> {{ entity.content }}</p>
+                    <p><strong>{{ 'post.image'|trans }}:</strong> {{ entity.image }}</p>
+                    <p><strong>{{ 'post.slug'|trans }}:</strong> {{ entity.slug }}</p>
+                    <p><strong>{{ 'post.resume'|trans }}:</strong> {{ entity.resume }}</p>
+                    <p><strong>{{ 'tab.status'|trans }}:</strong> {{ entity.isEnabled ? 'status.enabled'|trans : 'status.disabled'|trans }}</p>
+                </div>
+
+                <a class="btn btn-block btn-outline-primary" href="{{ path('app_crud_index',{entityName: entityName}) }}">{{ 'back_to_list'|trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

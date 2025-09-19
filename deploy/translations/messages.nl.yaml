@@ -1,0 +1,750 @@
+registration.title: "Inschrijving"
+registration.subtitle: "Inschrijvingsformulier"
+registration.success: "Uw inschrijving is succesvol geregistreerd. Controleer uw e-mail om uw adres te bevestigen."
+registration.token_invalid: "De bevestigingstoken is ongeldig."
+registration.confirmed: "Uw e-mailadres is succesvol bevestigd. U kunt nu inloggen."
+registration.confirm.title: "Inschrijvingsbevestiging"
+registration.confirm.message: "Er is een bevestigingse-mail verzonden naar uw e-mailadres. Controleer uw inbox en klik op de bevestigingslink."
+registration.confirmed.title: "Bevestiging succesvol"
+registration.confirmed.message: "Uw e-mailadres is succesvol bevestigd. U kunt nu inloggen."
+registration.email.greeting: "Beste,"
+registration.email.message: "Bedankt voor uw inschrijving. Klik op de volgende link om uw e-mailadres te bevestigen:"
+registration.email.confirm_link: "Bevestig mijn e-mailadres"
+registration.email.thanks: "Met vriendelijke groet,"
+registration.email.team: "Het team"
+registration.email.subject: Bevestig uw e-mailadres
+resetpassword.emailnotfound: "Het e-mailadres is niet gevonden."
+resetpassword.emailsent: "Er is een wachtwoordherstel e-mail verzonden."
+resetpassword.tokeninvalid: "De hersteltoken is ongeldig."
+resetpassword.success: "Uw wachtwoord is succesvol hersteld."
+resetpassword.email.subject: "Wachtwoordherstel"
+resetpassword.email.greeting: "Beste,"
+resetpassword.email.message: "U hebt een wachtwoordherstel aangevraagd. Klik op de volgende link om uw wachtwoord te herstellen:"
+resetpassword.email.resetlink: "Herstel mijn wachtwoord"
+resetpassword.email.thanks: "Met vriendelijke groet,"
+resetpassword.email.team: "Het team"
+resetpassword.newpassword.label: "Nieuw wachtwoord"
+resetpassword.confirmpassword.label: "Bevestig wachtwoord"
+resetpassword.passwordmismatch: "De wachtwoorden komen niet overeen."
+resetpassword.submit: "Herstel wachtwoord"
+resetpassword.request.title: Wachtwoordherstel
+resetpassword.request.subtitle: Voer uw e-mailadres in om een wachtwoordherstel link te ontvangen
+resetpassword.request.submit: Herstel link verzenden
+resetpassword.reset.title: Wachtwoordherstel
+resetpassword.reset.subtitle: Voer uw nieuwe wachtwoord in
+resetpassword.reset.submit: Herstel wachtwoord
+resetpassword.email_not_found: Het e-mailadres is niet gevonden
+resetpassword.email_sent: Er is een wachtwoordherstel e-mail verzonden
+resetpassword.token_invalid: De hersteltoken is ongeldig
+resetpassword.email.label: E-mailadres
+resetpassword.new_password.label: Nieuw wachtwoord
+resetpassword.confirm_password.label: Bevestig wachtwoord
+resetpassword.password_mismatch: De wachtwoorden komen niet overeen
+form.user.currentPassword: Huidig wachtwoord
+form.user.name: Achternaam
+form.user.firstname: Voornaam(en)
+form.user.email: 'E-mailadres'
+form.user.telephone: 'Telefoonnummer'
+form.user.password: 'Wachtwoord'
+form.user.submit: Inschrijven
+form.newsletter: 'Voer uw e-mail in'
+form.locale: "Taal"
+form.user.lastname: "Achternaam"
+form.user.passwordConfirm: "Bevestig wachtwoord"
+form.user.birthdate: "Geboortedatum"
+form.user.address: "Adres"
+form.user.zipcode: "Postcode"
+form.user.city: "Stad"
+form.user.country: "Land"
+form.user.isEnabled: "Account activeren"
+form.nationality: "Nationaliteit"
+form.civility: "Aanhef"
+form.select: "Selecteren"
+form.mister: "De heer"
+form.mrs: "Mevrouw"
+form.miss: "Juffrouw"
+form.interim: "Interim"
+form.housewife: "Huisvrouw"
+form.student: "Student"
+form.retirement: "Gepensioneerd"
+form.profession: "Vrij beroep / Zelfstandige"
+form.no_job: "Werkloos"
+form.professionnalSituation: "Beroepssituatie"
+form.monthlyIncome: Maandelijks netto inkomen voor inkomstenbelasting (in '%devise%') *
+btn.login: Login
+btn.sign: Contract ondertekenen
+btn.logout: Uitloggen
+btn.register: Inschrijven
+btn.changePassword: 'Wachtwoord wijzigen'
+btn.send: Verzenden
+btn.update: 'Bijwerken'
+btn.allNotif: 'Alle meldingen weergeven'
+btn.notNotif: 'Geen meldingen'
+btn.back: Vorige
+btn.details: Details
+btn.reset: Reset
+btn.continu: Doorgaan
+btn.bankTransfert: 'Betaling via overschrijving'
+btn.total: 'Totaal te betalen'
+btn.pay: Betalen
+btn.readMore: 'Lees meer'
+btn.seeMore: Meer zien
+btn.watchNow: KIJK
+btn.subscribe: Abonneer
+btn.downloadPdf: Brochure downloaden
+btn.paySubmit: Reçu indienen
+btn.downloadContract: Contract downloaden
+status.notorder: 'Bestelling niet betaald'
+status.order: Besteld
+status.pending: In afwachting
+status.loading: In behandeling
+status.notsee: 'Niet gezien'
+status.see: Gezien
+status.success: Goedgekeurd
+status.loadpay: 'Betaling in afwachting van verificatie'
+status.refus: 'Verzoek afgewezen'
+status.notreceived: 'Betaling niet ontvangen'
+table.subject: Onderwerp
+table.actions: Acties
+table.status: Status
+table.date: Datum
+table.chrono: Nr.
+tab.label: Diensten
+tab.price: Prijs
+pay.folder: "Administratieve kosten verbonden aan het aanmaken en behandelen van het kredietdossier"
+pay.contract: "Administratieve kosten verbonden aan het opstellen en beheren van het kredietcontract"
+admin.page.payment.infoBank: 'Bankgegevens'
+admin.page.payment.title1: 'Betaling'
+admin.page.payment.title2: 'Kies een betaalmethode'
+admin.page.payment.text1: "Zorg ervoor dat u op de juiste betaaloptie klikt"
+admin.page.payment.text2: 'Nadat u de betaling voor uw aanvraag hebt gedaan, dient u het betalingsbewijs in zodat ons team uw aanvraag kan valideren.'
+admin.page.notification.index.title: 'Lijst van uw meldingen'
+admin.page.notification.show.title: 'Details van de melding'
+admin.page.changePassword.title: 'Wijzig uw wachtwoord'
+admin.page.changePassword.form: 'Wachtwoordwijzigingsformulier'
+admin.page.setting.seoHomeTitle: SEO-titel van de homepage
+admin.page.setting.seoHomeKeywords: SEO-trefwoorden van de homepage
+admin.page.setting.seoHomeDescription: SEO-beschrijving van de homepage
+admin.page.setting.seoCountryTitle: SEO-titel van land
+admin.page.setting.seoCountryKeywords: SEO-trefwoorden van land
+admin.page.setting.seoCountryDescription: SEO-beschrijving van land
+admin.page.setting.seoAboutTitle: SEO-titel van de Over ons-pagina
+admin.page.setting.seoAboutKeywords: SEO-trefwoorden van de Over ons-pagina
+admin.page.setting.seoAboutDescription: SEO-beschrijving van de Over ons-pagina
+admin.page.setting.seoServiceTitle: SEO-titel van de Dienstpagina
+admin.page.setting.seoServiceKeywords: SEO-trefwoorden van de Dienstpagina
+admin.page.setting.seoServiceDescription: SEO-beschrijving van de Dienstpagina
+admin.page.setting.seoImage: SEO OG-afbeelding
+admin.page.setting.theme: Website-thema
+admin.menu.dashboad: 'Dashboard'
+admin.menu.setting: Instellingen
+admin.menu.media: Media
+admin.menu.bank: Bank
+admin.menu.country: Land
+admin.menu.social: Sociale links
+front.menu.home: Home
+front.menu.about: 'Over ons'
+front.menu.testimonial: Getuigenissen
+front.menu.contact: Contact
+front.menu.link: 'Nuttige links'
+front.menu.privacyPolicy: 'Privacybeleid'
+front.menu.support: Ondersteuning
+front.menu.newsletter: "Nieuwsbrieven"
+front.menu.service: "Onze diensten"
+front.menu.country: "Land"
+admin.menu.card.my: Kaarten
+admin.menu.loan.my: Leningen
+admin.menu.loan.list: Particulier
+admin.menu.loan.listpro: Professioneel
+admin.menu.param.my: Instellingen
+admin.menu.slider: Slides
+admin.menu.testimonial: Getuigenissen
+front.menu.account: Mijn account
+admin.menu.faq: Faq's
+admin.menu.service: Diensten
+admin.menu.post: Artikelen
+admin.menu.serviceCategory: Dienstcategorie
+admin.menu.postCategory: Artikelcategorie
+front.page.login.h1: Inloggen
+front.page.login.text: 'Log in'
+front.page.register.h1: Inschrijven
+front.page.newsletter: 'Schrijf u in en ontvang de nieuwste tips per e-mail.'
+loading: Laden...
+front.service.title: "Onze aangeboden diensten"
+front.country.title: "De landen waar we onze diensten aanbieden"
+front.service.text1: "Ontdek het volledige scala aan diensten die we aanbieden."
+front.service.text2: "Onze platform maakt uw ervaring gemakkelijker door u oplossingen aan te bieden die aan uw specifieke vereisten voldoen, met volledige transparantie en professionele ondersteuning gedurende het hele proces."
+front.country.text1: "We bieden diensten aan die voldoen aan de specifieke vereisten van vele landen."
+front.country.text2: "Ontdek de landen waarvoor we diensten aanbieden en verkrijg de informatie die u nodig hebt voor uw administratieve procedures."
+front.step.title: Ons eenvoudige proces
+front.step.text1: Uw aanvraag in slechts 6 ultra-eenvoudige stappen afgehandeld
+front.brand.title: Onze partners
+linkUtil: Nuttige links
+entity.name_required: De naam van de entiteit is vereist.
+entity.not_found: "%entity% is niet gevonden."
+entity.createdSuccessfully: "%entity% is succesvol aangemaakt."
+entity.updatedSuccessfully: "%entity% is succesvol bijgewerkt."
+entity.deletedSuccessfully: "%entity% is succesvol verwijderd."
+transaction.createdSuccessfully: "De vertaling is succesvol aangemaakt."
+transaction.updatedSuccessfully: "De vertaling is succesvol bijgewerkt."
+transaction.deletedSuccessfully: "De vertaling is succesvol verwijderd."
+faq.title: "Veelgestelde vragen"
+faq.tagline: "FAQ"
+faq.list: FAQ-lijst
+faq.add: FAQ toevoegen
+faq.edit: FAQ bewerken
+faq.delete: Verwijderen
+faq.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+faq.question: Vraag
+tab.status: Status
+tab.actions: Acties
+status.enabled: Ingeschakeld
+status.disabled: Uitgeschakeld
+translations: Vertalingen
+back_to_list: Terug naar de lijst
+slider.title: Slider
+slider.list: Sliderlijst
+slider.add: Slider toevoegen
+slider.edit: Slider bewerken
+slider.delete: Verwijderen
+slider.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+slider.title_field: Titel
+slider.subtitle: Ondertitel
+slider.description: Beschrijving
+slider.image: Afbeelding
+slider.btnText: Knoptekst
+slider.btnUrl: Knop-URL
+slider.status: Status
+slider.actions: Acties
+service.title: Dienst
+service.list: Dienstlijst
+service.add: Dienst toevoegen
+service.edit: Dienst bewerken
+service.delete: Verwijderen
+service.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+service.name: Naam
+service.resume: Samenvatting
+service.description: Beschrijving
+service.image: Afbeelding
+service.category: Categorie
+service.status: Status
+service.actions: Acties
+serviceCategory.title: Dienstcategorie
+serviceCategory.list: Dienstcategorieënlijst
+serviceCategory.add: Dienstcategorie toevoegen
+serviceCategory.edit: Dienstcategorie bewerken
+serviceCategory.delete: Verwijderen
+serviceCategory.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+serviceCategory.name: Naam
+serviceCategory.show: Dienstcategorie bekijken
+step.title: Stap
+step.list: Stappenlijst
+step.add: Stap toevoegen
+step.edit: Stap bewerken
+step.delete: Verwijderen
+step.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+step.description: Beschrijving
+step.image: Afbeelding
+step.icon: Pictogram
+step.position: Positie
+step.show: Stap bekijken
+testimonial.title: Getuigenis
+testimonial.list: Getuigenissenlijst
+testimonial.add: Getuigenis toevoegen
+testimonial.edit: Getuigenis bewerken
+testimonial.delete: Verwijderen
+testimonial.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+testimonial.author: Auteur
+testimonial.message: Bericht
+testimonial.avatar: Avatar
+testimonial.country: Land
+testimonial.position: Positie
+testimonial.rating: Beoordeling
+testimonial.show: Getuigenis bekijken
+page.title: Pagina
+page.list: Paginalijst
+page.add: Pagina toevoegen
+page.edit: Pagina bewerken
+page.delete: Verwijderen
+page.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+page.content: Inhoud
+page.image: Afbeelding
+page.slug: Slug
+page.resume: Samenvatting
+page.show: Pagina bekijken
+post.title: Artikel
+post.list: Artikelenlijst
+post.add: Artikel toevoegen
+post.edit: Artikel bewerken
+post.delete: Verwijderen
+post.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+post.content: Inhoud
+post.image: Afbeelding
+post.slug: Slug
+post.resume: Samenvatting
+post.show: Artikel bekijken
+postCategory.title: Artikelcategorie
+postCategory.list: Artikelcategorieënlijst
+postCategory.add: Artikelcategorie toevoegen
+postCategory.edit: Artikelcategorie bewerken
+postCategory.delete: Verwijderen
+postCategory.delete_confirm: Weet u zeker dat u dit item wilt verwijderen?
+postCategory.name: Naam
+postCategory.show: Artikelcategorie bekijken
+how_much_do_you_need: "Hoeveel hebt u nodig?"
+pay_monthly: "Maandelijks betalen"
+term_of_use: "Gebruiksduur"
+total_pay_back_amount: "Totaal terug te betalen bedrag"
+apply_for_loan: "Vraag een lening aan"
+months: Maanden
+month: Maand
+about.title: "Over ons"
+about.welcome: "Welkom bij %site_name%"
+about.description: "Onze leningen maken uw dromen waar"
+about.quick_loan_process: "Snelle leningprocedure"
+about.very_low_rates: "Zeer lage tarieven"
+about.small_business_loan: "Lening voor kleine ondernemingen"
+about.studying_abroad_loan: "Lening voor studie in het buitenland"
+about.know_about_us: "Meer over ons weten"
+about.year_of_experience: "jaar ervaring"
+about.text: "Bij %site_name% geloven we dat elke droom het verdient om waar te worden. Met onze flexibele en persoonlijke financieringsoplossingen helpen we u uw projecten te realiseren. Of het nu gaat om een persoonlijke lening, hypotheek, studentenlening, autolening, huwelijkslening, zakelijke lening of een niet-terugbetalingslening, we hebben de oplossing die bij u past."
+yourServices: Wat we aanbieden
+features.title: "Onze kenmerken"
+features.tagline: "Onze kenmerken"
+features.subtitle: "Snel, Gemakkelijk, Flexibel"
+features.text: "Bij %site_name% geloven we dat elke droom het verdient om waar te worden. Met onze flexibele en persoonlijke financieringsoplossingen helpen we u uw projecten te realiseren."
+features.lowerRatesTitle: "Lagere tarieven"
+features.lowerRatesText: "We bieden concurrerende rentepercentages om u te helpen uw projecten te realiseren zonder u te ruïneren."
+features.quickAndEasyTitle: "Snel en gemakkelijk"
+features.quickAndEasyText: "Ons leningaanvraagproces is eenvoudig en snel, zodat u snel de benodigde fondsen kunt ontvangen."
+workProcess.title: "Ons werkproces"
+workProcess.tagline: "Hoe het werkt"
+companyTransparency.title: "Bedrijfstransparantie"
+companyTransparency.tagline: "Bedrijfstransparantie"
+companyTransparency.subtitle: "Onze fundamentele waarden"
+companyTransparency.innovativeTitle: "Innovatie"
+companyTransparency.innovativeText: "We geloven in innovatie om onze klanten de beste oplossingen te bieden. Onze vooruitstrevende aanpak helpt ons effectief aan uw behoeften te voldoen en u te helpen uw doelen te bereiken."
+companyTransparency.talentTitle: "Talent"
+companyTransparency.talentText: "We zijn trots op ons getalenteerd team dat onophoudelijk werkt om onze klanten tevreden te stellen. Elk teamlid brengt een unieke expertise in, waardoor we uitzonderlijke resultaten en een ongeëvenaarde klantbeleving garanderen."
+companyTransparency.enablingTitle: "Bevoegdheid"
+companyTransparency.enablingText: "We bevoegden onze klanten om hun dromen te verwezenlijken. Met onze persoonlijke oplossingen en onze voortdurende ondersteuning helpen we u om uitdagingen te overwinnen en uw aspiraties te bereiken."
+companyTransparency.commerciallyResponsibleTitle: "Commercieel verantwoordelijk"
+companyTransparency.commerciallyResponsibleText: "We zijn commercieel verantwoordelijk en verplichten ons ertoe om kwalitatieve diensten te leveren. Onze ethische en transparante aanpak garandeert dat u op ons kunt rekenen voor betrouwbare en duurzame oplossingen."
+companyTransparency.callUs: "Bel ons op elk moment"
+companyTransparency.phoneNumber: "+163-2654-3654"
+funfact.title: "Leuke feiten"
+funfact.approveLoans: "We keuren leningen goed"
+funfact.happyCustomers: "Tevreden klanten"
+funfact.dailyPayments: "Dagelijkse betalingen"
+quickLoan.title: "Krijg snel een lening"
+quickLoan.tagline: "Krijg snel een lening"
+quickLoan.subtitle: "Krijg snel een zakelijke lening"
+quickLoan.applyButton: "Vraag een lening aan"
+serviceDetails.instantBusinessGrowth: "Instant bedrijfsgroei"
+serviceDetails.qualityService: "Kwaliteitsservice 24/7"
+serviceDetails.easyCustomerService: "Eenvoudige klantenservice"
+serviceDetails.qualityCostService: "Kwaliteitsservice tegen lagere kosten"
+form.email: E-mail
+Copyright: Auteursrechten
+AllRightsReserved: Alle rechten voorbehouden
+backTop: Terug naar boven
+whyChooseUs.title: "Waarom ons kiezen"
+whyChooseUs.tagline: "Onze voordelen"
+whyChooseUs.text: "Bij %site_name% geloven we dat elke droom het verdient om waar te worden. Met onze flexibele en persoonlijke financieringsoplossingen helpen we u uw projecten te realiseren."
+whyChooseUs.lowerRates: "Lagere tarieven"
+whyChooseUs.quickAndEasy: "Snel en gemakkelijk"
+whyChooseUs.loanProcess: "Leningproces"
+whyChooseUs.businessConsultancy: "Zakelijke consultatie"
+whyChooseUs.paymentsBenefits: "Betalingsvoordelen"
+loanReasons.title: "Populaire redenen voor een lening"
+loanReasons.tagline: "Leningredenen"
+loanReasons.newCarTitle: "Nieuwe auto nodig?"
+loanReasons.newCarText: "Droomt u van een nieuwe auto? Een lening kan u helpen om de aankoop van uw ideale voertuig te financieren. Of het nu gaat om een gezinsauto, een sportauto of een zuinig voertuig, we hebben oplossingen die aan uw behoeften voldoen."
+loanReasons.consolidateDebtTitle: "Consolideer uw schuld"
+loanReasons.consolidateDebtText: "Heeft u meerdere schulden die u moet terugbetalen? Door uw schulden te consolideren in één lening kunt u uw financiële beheer vereenvoudigen en mogelijk uw rentepercentages verlagen. Ontdek hoe een consolidatielening u kan helpen om de controle over uw financiën terug te krijgen."
+loanReasons.homeImprovementTitle: "Huisverbetering"
+loanReasons.homeImprovementText: "Wilt u uw huis renoveren of verbeteringsprojecten ondernemen? Een verbeteringslening kan u de benodigde fondsen verschaffen om uw woonruimte te transformeren. Of het nu gaat om een nieuwe keuken, een moderne badkamer of energieverbeteringen, we zijn er om u te helpen."
+funfact.weApproveLoans: "We keuren leningen goed"
+funfact.staffMembers: "Personeelsleden"
+testimonials.title: "Getuigenissen"
+testimonials.tagline: "Wat klanten zeggen"
+testimonials.subtitle: "Wat mensen zeggen over onze diensten"
+contact.title: Contactformulier
+contact.fullname: 'Volledige naam'
+contact.email: 'E-mailadres'
+contact.subject: 'Onderwerp'
+contact.message: 'Bericht'
+contact.successMessage: 'Uw bericht is succesvol verzonden.'
+loan.amount: "Leningbedrag"
+loan.amountPlaceholder: "Voer het leningbedrag in"
+loan.duration: "Duur in maanden"
+loan.durationPlaceholder: "Voer de leningduur in maanden in"
+loan.interestRate: "Rentepercentage"
+loan.interestRatePlaceholder: "Voer het rentepercentage in"
+loan.startDate: "Startdatum"
+loan.endDate: "Einddatum"
+loan.borrowerName: "Naam van de lener"
+loan.borrowerNamePlaceholder: "Voer de naam van de lener in"
+loan.borrowerEmail: "E-mail van de lener"
+loan.borrowerEmailPlaceholder: "Voer de e-mail van de lener in"
+loan.borrowerPhone: "Telefoon van de lener"
+loan.borrowerPhonePlaceholder: "Voer het telefoonnummer van de lener in"
+loan.note: "Notitie"
+loan.notePlaceholder: "Voeg een notitie toe (optioneel)"
+loan.isApproved: "Lening goedgekeurd"
+loan.isPaidOff: "Lening afbetaald"
+admin.loan.myorder: Mijn aanvragen
+app.submit: "Indienen"
+app.cancel: "Annuleren"
+kyc.verifLink: Mijn account verifiëren
+kyc.pending: In afwachting
+kyc.rejected: Afgewezen
+kyc.approved: Geverifieerd
+kyc.unverified: Niet geverifieerd
+kyc.verifMessage: klikken om uw account te valideren
+kyc.title: "KYC-verificatie"
+kyc.description: "Om uw leningaanvraag te starten, vragen we u eerst om uw identiteit te verifiëren. Deze eenvoudige en snelle stap is verplicht om de veiligheid van uw transacties te garanderen en u een persoonlijke aanbieding te bieden."
+kyc.breadcrumb.title: "Mijn Account"
+kyc.breadcrumb.current: "KYC-verificatie"
+kyc.submittedSuccessfully: "Uw KYC-aanvraag is succesvol ingediend."
+kyc.submit: "KYC-verificatie indienen"
+kyc.pro.title: "Professionele KYC-verificatie"
+kyc.pro.description: "Om uw zakelijke leningaanvraag te starten, vragen we u eerst om de identiteit van uw bedrijf te verifiëren. Deze eenvoudige en snelle stap is verplicht om de veiligheid van uw transacties te garanderen en u een persoonlijke aanbieding te bieden."
+kyc.pro.breadcrumb.title: "Mijn Account"
+kyc.pro.breadcrumb.current: "Professionele KYC-verificatie"
+kyc.pro.submittedSuccessfully: "Uw professionele KYC-aanvraag is succesvol ingediend."
+kyc.pro.submit: "Professionele KYC-verificatie indienen"
+kyc.company_information: "Bedrijfsinformatie"
+kyc.personal_information: "Persoonlijke informatie"
+form.idDocumentType.label: "Type identiteitsdocument"
+form.idDocumentType.idCard: "Identiteitskaart"
+form.idDocumentType.passport: "Paspoort"
+form.idDocumentType.driverLicense: "Rijbewijs"
+form.idDocument.label: "Identiteitsdocument (PDF,JPG,PNG)"
+form.idDocumentFront.label: Identificatiedocument (voorkant)
+form.idDocumentBack.label: Identificatiedocument (achterkant)
+form.proofOfAddressType.label: "Type bewijs van adres"
+form.proofOfAddressType.electricityBill: "Elektriciteitsfactuur"
+form.proofOfAddressType.gasBill: "Gasfactuur"
+form.proofOfAddressType.phoneBill: "Telefoonfactuur"
+form.proofOfAddressType.bankStatement: "Bankafschrift"
+form.proofOfAddressType.leaseAgreement: "Huurcontract"
+form.proofOfAddress.label: "Bewijs van adres (PDF,JPG,PNG)"
+form.integrityDocumentType.label: "Type integriteitsdocument"
+form.integrityDocumentType.goodConductCertificate: "Certificaat van goed gedrag"
+form.integrityDocumentType.nonBankruptcyCertificate: "Certificaat van niet-faillissement"
+form.integrityDocumentType.nonConvictionCertificate: "Certificaat van niet-veroordeling"
+form.integrityDocumentType.professionalReferences: "Professionele referenties"
+form.integrityDocument.label: "Integriteitsdocument (PDF,JPG,PNG)"
+form.accountType.label: Type account
+form.accountType.choice.individual: Particulier
+form.accountType.choice.professional: Professioneel
+form.user.password.mismatch: De wachtwoorden komen niet overeen
+form.businessLicense.label: Zakelijke licentie (PDF,JPG,PNG)
+form.businessRegistration.label: Bedrijfsregistratie (PDF,JPG,PNG)
+form.taxCertificate.label: Belastingcertificaat (PDF,JPG,PNG)
+form.companyName.label: Bedrijfsnaam
+form.registrationNumber.label: Registratienummer
+form.companyAddress.label: Bedrijfsadres
+form.companyCountry.label: Bedrijfsland
+form.companyCity.label: Bedrijfsstad
+form.companyZipcode.label: Bedrijfspostcode
+form.companyEmail.label: Bedrijfs-e-mail
+form.companyTelephone.label: Bedrijfstelefoon
+form.companyLegalStatus.label: Juridische status van het bedrijf
+form.companyLegalStatus.soleProprietorship: Eenmanszaak
+form.companyLegalStatus.limitedLiabilityCompany: Besloten vennootschap
+form.companyLegalStatus.corporation: Naamloze vennootschap
+form.companyLegalStatus.partnership: Vennootschap onder firma
+form.companyLegalStatus.nonProfit: Non-profitorganisatie
+form.companyProfessionalExperience.label: Professionele ervaring van het bedrijf
+form.validation.maxSize: "De bestandsgrootte mag niet groter zijn dan 5 MB."
+form.validation.mimeTypes: "Upload een geldig PDF-, JPG- of PNG-bestand."
+themes: Thema's
+createNewTheme: Nieuw thema maken
+name: Naam
+image: Afbeelding
+primaryColor: Primaire kleur
+secondaryColor: Secundaire kleur
+header: Koptekst
+slider: Slider
+footer: Voettekst
+actions: Acties
+edit: Bewerken
+save: Opslaan
+backToList: Terug naar de lijst
+themeDetails: Themadetails
+delete: Verwijderen
+create: Maken
+theme: Thema
+theme.name: Naam
+theme.image: Afbeelding
+theme.primaryColor: Primaire kleur
+theme.secondaryColor: Secundaire kleur
+theme.header: Koptekst
+theme.slider: Slider
+theme.footer: Voettekst
+email.kyc_approved.title: "Uw account is geverifieerd"
+email.kyc_approved.greeting: "Beste %firstname%,"
+email.kyc_approved.message: "Uw account is succesvol geverifieerd. U kunt nu toegang krijgen tot alle functies van onze platform."
+email.kyc_approved.thanks: "Bedankt voor uw vertrouwen."
+email.kyc_rejected.title: "Uw account is afgewezen"
+email.kyc_rejected.greeting: "Beste %firstname%,"
+email.kyc_rejected.message: "Het spijt ons u te moeten mededelen dat uw account is afgewezen om de volgende reden:"
+email.kyc_rejected.reason: "%message%"
+email.kyc_rejected.instructions: "Corrigeer de informatie en dien uw aanvraag opnieuw in."
+email.kyc_rejected.thanks: "Bedankt voor uw begrip."
+email.admin.kyc_submitted.subject: "Nieuwe KYC-aanvraag ingediend"
+email.admin.kyc_submitted.body: "Beste, er is een nieuwe KYC-aanvraag ingediend door %firstname% %lastname%. Controleer de informatie en behandel de aanvraag."
+email.client.kyc_submitted.subject: "Uw KYC-aanvraag is ingediend"
+email.client.kyc_submitted.body: "Beste, uw KYC-aanvraag is succesvol ingediend. Wacht geduldig terwijl we uw aanvraag behandelen. Bedankt voor uw geduld."
+email.admin.loan_submitted.subject: 'Nieuwe leningaanvraag ingediend'
+email.admin.loan_submitted.body: 'Er is een nieuwe leningaanvraag ingediend door %firstname% %lastname%.'
+email.admin.loan_submitted.error: Fout bij het verzenden van de e-mail.
+email.client.loan_submitted.subject: Uw leningaanvraag is ingediend
+email.client.loan_submitted.body: Uw leningaanvraag is succesvol ingediend. Er wordt een e-mail verzonden zodra uw aanvraag is verwerkt. Blijf in de komende uren alert.
+email.client.loan_submitted.error: Fout bij het verzenden van de e-mail.
+loan.submit.success: 'Uw leningaanvraag is succesvol ingediend.'
+loan.submit.title: 'Leningaanvraag indienen'
+loan.submit.backToList: 'Terug naar de leningenlijst'
+loan.form.loanNumber: 'Dossiernummer'
+loan.form.loanNumberPlaceholder: 'Voer het leningnummer in'
+loan.form.startDate: 'Startdatum'
+loan.form.endDate: 'Einddatum'
+loan.form.amount: 'Bedrag'
+loan.form.amountPlaceholder: 'Voer het bedrag in'
+loan.form.interestRate: Rentepercentage
+loan.form.interestRatePlaceholder: Voer het rentepercentage in
+loan.form.durationMonths: 'Duur in maanden'
+loan.form.durationMonthsPlaceholder: 'Voer de duur in maanden in'
+loan.form.notes: 'Notities'
+loan.form.notesPlaceholder: 'Voer notities in'
+loan.form.saveButton: 'Opslaan'
+loan.form.loanType: 'Type lening'
+loan.form.type.personal: 'Persoonlijke lening'
+loan.form.type.mortgage: 'Hypotheeklening'
+loan.form.type.auto: 'Autolening'
+loan.form.type.student: 'Studentenlening'
+loan.form.type.renovation: 'Renovatielening'
+loan.form.type.business: 'Zakelijke lening'
+loan.form.type.vacation: 'Vakantielening'
+loan.form.type.debtConsolidation: 'Schuldconsolidatielening'
+loan.form.type.medical: 'Medische lening'
+loan.form.type.wedding: 'Huwelijkslening'
+loan.form.loanTypePlaceholder: 'Selecteer een type lening'
+nav.brand: 'Mijn Applicatie'
+nav.submitLoan: 'Lening indienen'
+loan.list.title: 'Lijst van leningen voor particulieren'
+loan.list.loanNumber: 'Dossiernummer'
+loan.list.details: 'Details'
+loan.list.startDate: 'Startdatum'
+loan.list.endDate: 'Einddatum'
+loan.list.amount: 'Bedrag'
+loan.list.interestRate: Rentepercentage
+loan.list.durationMonths: 'Duur in maanden'
+loan.list.status: 'Status'
+loan.list.actions: 'Acties'
+loan.list.view: 'Bekijken'
+loan.list.edit: 'Bewerken'
+loan.show.title: 'Details van de lening'
+loan.show.loanNumber: 'Dossiernummer'
+loan.show.startDate: 'Startdatum'
+loan.show.endDate: 'Einddatum'
+loan.show.amount: 'Bedrag'
+loan.show.interestRate: Rentepercentage
+loan.show.durationMonths: 'Duur in maanden'
+loan.show.status: 'Status'
+loan.show.notes: 'Notities'
+loan.show.edit: 'Bewerken'
+loan.show.backToList: 'Terug naar de leningenlijst'
+loan.edit.title: 'Lening bewerken'
+loan.calculator.monthlyPayment: "Maandelijkse betaling: "
+loan.calculator.totalPayment: "Totaal te betalen bedrag: "
+loan.calculator.title: Leningberekenaar
+flash.error_currentPassword: "Het huidige wachtwoord is onjuist."
+flash.change_password: "Uw wachtwoord is succesvol gewijzigd."
+flash.loan.not_found: "De lening is niet gevonden."
+flash.file.not_uploaded: "Er is geen bestand geüpload."
+flash.file.invalid_type: "Het bestandstype is niet toegestaan."
+flash.file.too_large: "Het bestand is te groot."
+flash.loan.pay: "De betaling is succesvol gedaan."
+flash.loan.pay_success: "Het betalingsbestand is succesvol geüpload."
+email.subject.loan.pay: "Bevestiging van leningbetaling"
+email.body.loan.pay.greeting: "Beste %user%,"
+email.body.loan.pay.confirmation: "We hebben uw betaling voor de lening nummer %loanNumber% succesvol ontvangen."
+email.body.loan.pay.support: "Als u vragen heeft, aarzel dan niet om onze ondersteuning te contacteren op <a href='mailto:%email%'>%email%</a>."
+loan.list.reminder: Herinnering
+loan.list.validatePayment: Betaling valideren
+loan.list.paymentNotReceived: Betaling niet ontvangen
+loan.list.refuseLoan: Lening weigeren
+loan.contract.preview: Contractvoorbeeld
+Commande vérifier avec succèss: Bestelling succesvol geverifieerd
+Commande rappelé avec succèss: Bestelling succesvol herinnerd
+email.subject.payVerifNotreceived: Betalingsverificatie niet ontvangen
+email.subject.loanReminder: Betalingsherinnering
+email.subject.payVerifSuccess: Betalingsverificatie succesvol
+email.body.payVerifNotreceived.greeting: Beste %user%,
+email.body.payVerifNotreceived.message: "Na verificatie blijkt dat de betaling voor de leningaanvraag nummer %loanNumber% nog niet is ontvangen. Wij vragen u vriendelijk om de situatie zo snel mogelijk te regelen om ongewenste gevolgen te voorkomen. Probeer de betaling opnieuw uit te voeren zodra mogelijk."
+email.body.payVerifNotreceived.contact: Als u vragen heeft, aarzel dan niet om ons te contacteren op %email%.
+email.body.loanReminder.greeting: Beste %user%,
+email.body.loanReminder.message: "Wij herinneren u eraan dat u een betaling in afwachting hebt voor de leningaanvraag nummer %loanNumber%. U kunt de betaling doen door deze link te volgen: <a href='%url%'> %url% </a>."
+email.body.loanReminder.contact: Als u vragen heeft, aarzel dan niet om ons te contacteren op %email%.
+email.body.payVerifSuccess.greeting: Beste %user%,
+email.body.payVerifSuccess.message: "We hebben de betaling voor de lening nummer %loanNumber% succesvol geverifieerd. Uw dossier zal zo snel mogelijk worden behandeld. U ontvangt een e-mail zodra de behandeling begint."
+email.body.payVerifSuccess.contact: Als u vragen heeft, aarzel dan niet om ons te contacteren op %email%.
+loan.form.price: Administratieve kosten voor dossierbehandeling
+email.subject.loanOrderPay: Betaling van leningaanvraag
+email.body.loanOrderPay.greeting: Beste %user%,
+email.body.loanOrderPay.message: "Uw leningaanvraag nummer %loanNumber% is duidelijk geregistreerd. Wij vragen u vriendelijk om de administratieve kosten te betalen zodat uw dossier zo snel mogelijk door een van onze agenten kan worden behandeld. U kunt de details van uw aanvraag bekijken door deze link te volgen: <a href='%url%'> %url% </a>"
+email.body.loanOrderPay.contact: Als u vragen heeft, aarzel dan niet om ons te contacteren op %email%.
+contract.title: Financieel Leningcontract
+contract.header.department: Departement van Justitie en Mensenrechten
+contract.header.court: Eerste Aanleg Gerechtshof
+contract.header.notarized_act: Notariële Akte
+contract.date: Deze leningsovereenkomst ("Overeenkomst") is gesloten en in werking getreden op %date%.
+contract.section.loan: Lening
+contract.section.loan.description: De <strong>lener</strong> verleent een <strong>lening</strong> van <strong>%amount% EUR</strong> aan de <strong>lener</strong> (hierna "de lening" genoemd). De lener verstrekt deze lening zonder vereiste van garanties. Om de terugbetaling van de lening te waarborgen, is het noodzakelijk om een <strong>verzekering</strong> af te sluiten. In geval van overmacht of onvermogen tot terugbetaling, neemt de verzekeringsmaatschappij het resterende kapitaal over. De kosten voor de registratie van de krediet, in het bedrag van <strong>%price%</strong>, worden volledig door de lener gedragen na ondertekening van het contract. Tot dit doel vragen we u om uw toestemming te geven zodat we de verzekeringsformaliteiten kunnen starten om een soepel verloop van de transactie te waarborgen. Zodra de leningsovereenkomst is ondertekend, wordt het leningbedrag binnen <strong>48 uur</strong> overgemaakt naar de bankrekening van de lener.
+contract.section.interest: Rente en rentebetaling
+contract.section.interest.description: Het jaarlijkse rentepercentage is <strong>3%</strong>. De rente wordt berekend tegen de geldende aflossingspercentages. De rekening van de lener is daarvoor voorzien. Het totale rentebedrag over <strong>36 maanden</strong> bedraagt dus <strong>%total%</strong>.
+contract.section.duration: Duur van de lening
+contract.section.duration.description: De duur van de lening strekt zich uit over <strong>%duration% maanden</strong> vanaf <strong>%date%</strong> tot <strong>%end_date%</strong>.
+contract.section.repayment: Terugbetaling
+contract.section.repayment.description: Er wordt een uitstelperiode van drie maanden verleend aan de lener om het leningbedrag te investeren. De terugbetalingen van de lening vinden maandelijks plaats. De lener is verplicht om maandelijks een bedrag van <strong>%amount%</strong> over te maken aan de lener.
+contract.section.insurance: Verzekering
+contract.section.insurance.description: Het is belangrijk om te noteren dat een contractuele lening geen automatische en onvoorwaardelijke toekenning door de lener garandeert. De lener moet echter een kredietverzekering afsluiten bij de bank van de lener om de terugbetaling te dekken in geval van illegaliteit.
+contract.section.address: Adres van de woonplaats
+contract.section.address.description: Volgens deze overeenkomst verklaart de lener dat zijn woonplaats zich bevindt op het in deze overeenkomst vermelde adres en verbindt zich ertoe de lener daarvan op de hoogte te stellen in geval van verandering.
+contract.section.money_laundering: Witwassen van geld
+contract.section.money_laundering.description: De lener bevestigt dat de geleende fondsen legitiem zijn en niet bedoeld zijn voor witwassen van geld.
+contract.section.general_provisions: Algemene bepalingen
+contract.section.general_provisions.impact: Impact op derden
+contract.section.general_provisions.impact.description: Geen bepaling van deze overeenkomst verleent rechten of voordelen aan derden, en geen van de partijen kan rechten, belangen of rechtsmiddelen aanroepen op grond van deze overeenkomst.
+contract.section.general_provisions.confidentiality: Vertrouwelijkheid
+contract.section.general_provisions.confidentiality.description: Behalve wettelijke of regelgevende bepalingen (inclusief beursregels), verbinden de partijen zich ertoe alle voorwaarden en inhoud van deze overeenkomst vertrouwelijk te behandelen.
+contract.section.general_provisions.signatures: Handtekeningen
+contract.section.general_provisions.signatures.description: Elke contracterende partij kan deze overeenkomst ondertekenen als tegenpartij. Elke tegenpartij vormt een origineel, maar samen vormen ze één enkel document. Deze overeenkomst kan worden ondertekend door fax of een andere gedigitaliseerde handtekening en elektronisch worden verzonden.
+contract.section.termination: Opzegging
+contract.section.termination.description: "Deze overeenkomst kan door de belegger of de beheerder alleen worden opgezegd in de volgende gevallen:"
+contract.section.termination.subsections1.title: Nalatigheid
+contract.section.termination.subsections1.description: Aantoonbare nalatigheid van de bepalingen van deze Overeenkomst door een van de contracterende partijen. In dat geval moet de partij die de initiatief neemt om de overeenkomst op te zeggen, de andere partij daarvan op de hoogte stellen door een aangetekende brief met terugzendbewijs en draagt alle kosten die leiden tot de opzegging van de leningsovereenkomst. Indien niet, wordt een termijn van een maand verleend aan de andere partij om haar verplichtingen na te komen. De verliezende partij is verantwoordelijk voor de gevolgen van de opzegging.
+contract.section.termination.subsections2.title: Betalingsachterstand
+contract.section.termination.subsections2.description: Als de lener gedurende meer dan drie maanden in betalingsachterstand is, beëindigt de lener de lening zonder voorafgaande kennisgeving en eist de onmiddellijke betaling van het resterende deel van de lening met rente.
+contract.section.delay: Vertraging
+contract.section.delay.description: In geval van betalingsachterstand van de lening moet de lener aan de schuldeiser een vertragingstoeslag betalen van <strong>25%</strong> van het verschuldigde bedrag voor elke dag van niet-betaling. Dat is een boete van <strong> %penality% </strong> per dag tot de datum van betaling.
+contract.section.representation: Vertegenwoordiging
+contract.section.representation.description: De partijen kunnen zich op elk moment en in elke actie, vertegenwoordigd door een advocaat, een deurwaarder of een notaris die wettelijk is aangesteld, terugtrekken uit deze overeenkomst.
+contract.section.succession: Opvolging
+contract.section.succession.description: Het is belangrijk dat de schuldenaar een kredietverzekering afsluit bij de bank die verantwoordelijk is voor de geldoverdracht. In geval van overlijden of een situatie die de terugbetaling van de lening kan onderbreken, neemt de kredietverzekering de terugbetaling van alle resterende leningstermijnen over. De formaliteiten van de kredietverzekering worden door de begunstigde gedragen na het uitputten van de geldoverdracht naar de gereserveerde rekening.
+contract.section.other_agreements: Andere overeenkomsten
+contract.section.other_agreements.subsections1.title: Wijzigingen aan deze Overeenkomst
+contract.section.other_agreements.subsections1.description: Wijzigingen aan deze Overeenkomst en elke intrekking moeten schriftelijk worden gedaan.
+contract.section.other_agreements.subsections2.title: Bepalingen van de Burgerlijke Wet
+contract.section.other_agreements.subsections2.description: Voor alle zaken die niet in dit document worden behandeld, zijn de bepalingen van de geldende Burgerlijke Wet van toepassing.
+contract.section.other_agreements.subsections3.title: Kosten voor het opstellen van de overeenkomst
+contract.section.other_agreements.subsections3.description: De lener verbindt zich ertoe een som van %priceContract% te betalen in het kader van het opstellen van de overeenkomst en de wettiging van het document.
+contract.section.other_agreements.subsections4.title: Geschillenbeslechting
+contract.section.other_agreements.subsections4.description: De partijen komen overeen dat elk geschil dat voortvloeit uit deze overeenkomst in eerste instantie zal worden beslecht en in onderling overleg zal worden geregeld.
+contract.section.other_agreements.subsections5.title: Inwerkingtreding van de overeenkomst
+contract.section.other_agreements.subsections5.description: Deze Overeenkomst treedt in werking zodra deze door beide partijen is ondertekend. De overeenkomst wordt opgesteld in twee exemplaren, één exemplaar voor de lener en één voor de lener.
+contract.section.other_agreements.subsections6.title: Leningsoverdracht
+contract.section.other_agreements.subsections6.description: De lener moet de formaliteiten voor de overdracht van zijn lening bij de partnerbank voltooien zodat de lener veilig en transparant bezit kan nemen van de lening. Deze overeenkomst wordt afgegeven ter naleving en toepassing van de wet. Elke poging tot fraude zal streng worden bestraft en door de wet worden vervolgd.
+contract.signature.borrower: "De lener:"
+contract.signature.notary: "De Notaris:"
+contract.signature.lender: "De Lener (%bank_name%):"
+contract.closing_statement: De contracterende partijen verklaren deze overeenkomst gelezen, begrepen en ondertekend te hebben. De overeenkomst wordt ondertekend door de lener en de vermelding "gelezen en goedgekeurd" staat voor hem.
+contract_pro.title: Professioneel Leningcontract
+contract_pro.header.department: Departement van Justitie en Zakelijke Rechten
+contract_pro.header.court: Handelsrechtbank
+contract_pro.header.notarized_act: Notariële Zakelijke Akte
+contract_pro.date: Deze zakelijke leningsovereenkomst ("Overeenkomst") is gesloten en in werking getreden op %date%.
+contract_pro.section.loan: Financiering
+contract_pro.section.loan.description: |
+  De <strong>lener</strong> verleent een <strong>zakelijke krediet</strong> van <strong>%amount% EUR</strong> aan de maatschappij <strong>%companyName%</strong> (hierna "de Lener" genoemd). De lener verstrekt deze financiering onder voorbehoud van de hieronder vermelde garanties. Om de terugbetaling van de lening te waarborgen, verbindt de Lener zich tot: (1) het afsluiten van een <strong>kredietverzekering voor bedrijven</strong>, (2) het verstrekken van de volgende garanties: pandrecht op de onderneming, persoonlijke borgtocht van de directeur en/of hypotheek op de vastgoedbezittingen overeenkomstig overeenkomst. De kosten voor registratie en garantie zullen volledig door de Lener worden gedragen. De vrijgave van de fondsen zal plaatsvinden na het voltooien van de vereiste garanties en de goedkeuring van het volledige dossier. Het leningbedrag zal dan binnen <strong>72 werkdagen</strong> worden overgemaakt naar de zakelijke rekening van de Lener.
+contract_pro.section.interest: Financiële voorwaarden
+contract_pro.section.interest.description: De Lener verbindt zich ertoe rente te betalen die wordt berekend tegen een jaarlijkse rentepercentage van <strong>%interest% %</strong> op het kredietsaldo. De totale kosten van de krediet, inclusief rente en bankkosten, bedragen <strong>%total% €</strong>.
+contract_pro.section.duration: Duur en voorwaarden
+contract_pro.section.duration.description: De krediet wordt verleend voor een periode van <strong>%duration% maanden</strong> vanaf <strong>%date%</strong> tot <strong>%end_date%</strong>
+contract_pro.section.repayment: Terugbetalingsplan
+contract_pro.section.repayment.description: Er wordt een uitstelperiode van drie maanden verleend aan de lener om het leningbedrag te investeren. De terugbetalingen van de lening vinden maandelijks plaats. De lener is verplicht om maandelijks een bedrag van <strong>%amount%</strong> over te maken aan de lener.
+contract_pro.section.insurance: Verzekeringen en garanties
+contract_pro.section.insurance.description: |
+  De Lener verbindt zich ertoe gedurende de hele looptijd van de lening een verzekering te onderhouden die de volgende risico's dekt: (1) overlijdens- en invaliditeitsverzekering van de directeur, (2) verzekering tegen bedrijfsverlies, (3) verzekering van de als garantie gegeven activa. De verzekeringspolissen moeten de Lener als eerste begunstigde aanwijzen.
+contract_pro.section.address: Hoofdkantoor
+contract_pro.section.address.description: |
+  De Lener verklaart dat haar hoofdkantoor zich bevindt op het in deze overeenkomst vermelde adres. Elke verandering moet binnen een termijn van 15 dagen door een aangetekende brief met terugzendbewijs worden gemeld aan de Lener.
+contract_pro.section.money_laundering: Naleving en oorsprong van de fondsen
+contract_pro.section.money_laundering.description: De partijen verklaren de regelgeving inzake de bestrijding van witwassen en de financiering van terrorisme na te leven. De Lener verbindt zich ertoe de fondsen overeenkomstig het vermelde doel van de financiering te gebruiken.
+contract_pro.section.general_provisions: Algemene bepalingen
+contract_pro.section.general_provisions.impact: Overdracht en overmaking
+contract_pro.section.general_provisions.impact.description: De Lener kan zijn rechten en verplichtingen uit deze overeenkomst geheel of gedeeltelijk overdragen of overmaken. De Lener kan zijn rechten niet overdragen of overmaken zonder de voorafgaande schriftelijke toestemming van de Lener.
+contract_pro.section.general_provisions.confidentiality: Vertrouwelijkheid en communicatie
+contract_pro.section.general_provisions.confidentiality.description: De partijen verbinden zich ertoe de uitgewisselde informatie vertrouwelijk te behandelen, onder voorbehoud van de wettelijke verplichtingen tot communicatie en de behoefte aan rapportage aan de toezichthoudende autoriteiten.
+contract_pro.section.general_provisions.signatures: Handtekeningen
+contract_pro.section.general_provisions.signatures.description: Deze overeenkomst wordt opgesteld in drie originele exemplaren. De gekwalificeerde elektronische handtekening wordt geaccepteerd overeenkomstig de geldende regelgeving.
+contract_pro.signature.borrower: "Voor de Lener:"
+contract_pro.signature.notary: "De Notaris:"
+contract_pro.signature.lender: "Voor de Lener (%bank_name%):"
+flash.contrat.signature: "De handtekening van het contract is succesvol ingediend."
+flash.contrat.signature_success: "De handtekening van het contract is succesvol geregistreerd."
+email.body.contract_signature.greeting: "Beste %user%,"
+email.body.contract_signature.message: "Uw leningcontract nummer %loanNumber% is succesvol ondertekend. U wordt na verificatie op de hoogte gebracht."
+email.body.contract_signature.thanks: "Bedankt voor uw vertrouwen."
+email.subject.contract.send: "Verzending van het contract"
+email.body.contract.send.greeting: "Beste %user%,"
+email.body.contract.send.message: "Uw leningcontract nummer %loanNumber% is door onze juridische dienst afgerond en succesvol verzonden. Het is nu toegankelijk in uw inloggenvak. <a href='%url_preview%' target='_blank'>Voorbeeld van het contract bekijken</a>, <a href='%url_signature%' target='_blank'>Contract ondertekenen</a>."
+email.body.contract.send.thanks: "Bedankt voor uw vertrouwen."
+signature.title: "Ondertekening van het Contract"
+signature.label: "Onderteken hier:"
+signature.clear: "Wissen"
+signature.save: "Opslaan"
+signature.error.empty: "Onderteken voordat u indient."
+signature.success: "Handtekening succesvol opgeslagen."
+signature.error.submit: "Fout bij het indienen van de handtekening."
+email.subject.contrat.signature: "Ondertekening van contract"
+flash.status.signed: "Het contract is succesvol ondertekend."
+flash.status.unsigned: "Het contract is succesvol ongeldig gemaakt."
+email.subject.contract.signed: "Ondertekening van contract goedgekeurd"
+email.subject.contract.unsigned: "Ondertekening van contract niet geldig"
+email.body.contract.signed: "De handtekening van uw leningcontract nummer %loanNumber% is succesvol goedgekeurd. U kunt nu de kosten van het contract betalen om uw lening bij onze partnerbank te ontvangen. Voer de betaling uit door deze link te volgen: <a href='%url%'>%url%</a>."
+email.body.contract.unsigned: "De handtekening van uw leningcontract nummer %loanNumber% komt niet overeen met uw officiële documenten. <a href='%url_signature%' target='_blank'>Onderteken het contract opnieuw</a>."
+btn.contract.signed: "Handtekening goedkeuren"
+btn.contract.unsigned: "Handtekening ongeldig maken"
+email.subject.bankinfo: Gefeliciteerd met uw aanvraag
+email.bankinfo.greeting: "Beste %firstname%,"
+email.bankinfo.message: Wij hebben het immense genoegen u te kunnen mededelen dat uw aanvraag succesvol is goedgekeurd. U kunt nu uw registratie bij de bank %name% afmaken door hier te klikken <a target='_blank' href='%url%'>hier</a>.
+email.bankinfo.thanks: Wij zijn u zeer dankbaar voor het vertrouwen dat u ons schenkt.
+loan.email.subject: Uw leningaanvraag is ingediend
+loan.email.greeting: Hallo
+loan.email.body: Uw leningaanvraag nummer %loanNumber% van een bedrag van <strong>%amount%</strong> is succesvol geregistreerd. U wordt op de hoogte gebracht zodra uw aanvraag is verwerkt.
+loan.email.closing: Wij danken u voor het vertrouwen dat u ons schenkt.
+loan.form.type.business_real_estate: Bedrijfsonroerend goed
+loan.form.type.equipment_vehicle: Bedrijfsmiddelen of voertuig
+loan.form.type.franchise: Franchise
+loan.form.type.stock: Voorraad
+loan.form.type.business_goodwill: Bedrijfsgoede wil
+loan.form.type.cash_flow: Kassastroom
+loan.form.type.business_takeover: Bedrijfsovername
+loan.form.type.development_innovation: Ontwikkeling / Innovatie
+loan.form.projectName: Projectnaam
+loan.form.projectNamePlaceholder: Voer de projectnaam in
+loan.form.projectDescription: Projectbeschrijving
+loan.form.projectDescriptionPlaceholder: Voer de projectbeschrijving in
+loan.form.projectStartDate: Projectstartdatum
+loan.form.projectStartDatePlaceholder: Selecteer de startdatum
+loan.form.projectEndDate: Projecteinddatum
+loan.form.projectEndDatePlaceholder: Selecteer de einddatum
+loan.form.projectBudget: Projectbudget
+loan.form.projectBudgetPlaceholder: Voer het projectbudget in
+loan.form.projectLocation: Projectlocatie
+loan.form.projectLocationPlaceholder: Voer de projectlocatie in
+loan.form.projectManager: Projectverantwoordelijke
+loan.form.projectManagerPlaceholder: Voer de naam van de projectverantwoordelijke in
+loan.form.projectTeam: Projectteam
+loan.form.projectTeamPlaceholder: Voer de teamleden in
+loan.form.projectMilestones: Projectmijlpalen
+loan.form.projectMilestonesPlaceholder: Voer de projectmijlpalen in
+loan.form.projectRisks: Projectrisico's
+loan.form.projectRisksPlaceholder: Voer de projectrisico's in
+loan.form.projectBenefits: Projectvoordelen
+loan.form.projectBenefitsPlaceholder: Voer de projectvoordelen in
+flash.kyc.verified: Uw account is niet geverifieerd. Voer de verificatie uit.

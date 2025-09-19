@@ -1,0 +1,11 @@
+{% extends '@emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'email.subject.loanReminder'|trans({}, 'messages', user.locale) }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.body.loanReminder.greeting'|trans({'%user%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.loanReminder.message'|trans({'%loanNumber%': loan.loanNumber, '%url%': url}, 'messages', user.locale)|raw }}</p>
+    <p>{{ 'email.body.loanReminder.contact'|trans({'%email%': setting('email')}, 'messages', user.locale) }}</p>
+{% endblock %}

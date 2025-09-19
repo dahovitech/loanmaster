@@ -1,0 +1,29 @@
+contract.title: Contrat de Prêt Financier
+contract.header.department: Département de la Justice et des Droits de l'Homme
+contract.header.court: Tribunal de Première Instance
+contract.header.notarized_act: Acte Notarié
+contract.date: Cet accord de prêt ("Accord") a été conclu et est entré en vigueur le %date%.
+contract.section.loan: Prêt
+contract.section.loan.description: Le <strong>prêteur</strong> accorde un <strong>prêt</strong> de <strong>%amount% %devise%</strong> à l'<strong>emprunteur</strong> (ci-après dénommé "le prêt"). Le prêteur octroie ce prêt sans exigence de garanties. Pour sécuriser le remboursement du prêt, il est nécessaire de souscrire une <strong>assurance</strong>. En cas de force majeure ou d'incapacité de remboursement, la compagnie d'assurance prendra en charge le capital restant dû. À cette fin, nous vous invitons à nous donner votre accord afin que nous puissions entamer les formalités d'assurance pour assurer le bon déroulement de la transaction. Une fois l'accord de prêt signé, le montant du prêt sera transféré sur le compte bancaire de l'emprunteur dans les <strong>48 heures</strong>.
+contract.section.interest: Intérêt
+contract.section.interest.description: L'emprunteur doit s'acquitter d'un taux d'intérêt annuel de <strong>%interest% %</strong> sur le montant du prêt. Le montant total à rembourser, incluant les intérêts, s'élève à <strong>%total% %devise%</strong>.
+contract.section.duration: Durée du prêt
+contract.section.duration.description: La durée du prêt s'étend sur <strong>%duration% mois</strong> à compter du <strong>%date%</strong>.
+contract.section.repayment: Remboursement
+contract.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount% %devise%</strong> au prêteur le <strong>%date%</strong>.
+contract.section.insurance: Assurance
+contract.section.insurance.description: Il est important de noter qu'un prêt contractuel ne garantit pas l'octroi automatique et inconditionnel par le prêteur. Cependant, l'emprunteur doit souscrire une assurance-crédit auprès de la banque du prêteur pour couvrir le remboursement en cas d'illégalité.
+contract.section.address: Adresse du domicile
+contract.section.address.description: Conformément à cet accord, l'emprunteur déclare que son siège social est situé à l'adresse précisée dans le présent contrat et s'engage à en informer le prêteur en cas de changement.
+contract.section.money_laundering: Blanchiment d'argent
+contract.section.money_laundering.description: Le prêteur confirme que les fonds prêtés sont légitimes et ne sont en aucun cas destinés au blanchiment d'argent.
+contract.section.general_provisions: Dispositions générales
+contract.section.general_provisions.impact: Impact sur les tiers
+contract.section.general_provisions.impact.description: Aucune disposition du présent accord ne confère de droits ou d'avantages à des tiers, et aucune des parties ne peut invoquer de droits, intérêts ou recours en vertu de cet accord.
+contract.section.general_provisions.confidentiality: Confidentialité
+contract.section.general_provisions.confidentiality.description: Sauf disposition contraire de la loi ou de toute réglementation applicable (y compris les règles boursières), les parties s'engagent à traiter de manière confidentielle toutes les modalités et le contenu du présent accord.
+contract.section.general_provisions.signatures: Signatures
+contract.section.general_provisions.signatures.description: Chaque partie contractante peut signer le présent accord en tant que contrepartie. Chaque contrepartie constitue un original, mais l'ensemble ne forme qu'un seul document. Cet accord peut être signé par fax ou toute autre signature numérisée et envoyé électroniquement.
+contract.signature.borrower: "L'emprunteur :"
+contract.signature.notary: "Le Notaire :"
+contract.signature.lender: "Le Prêteur (%bank_name%):"

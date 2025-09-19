@@ -1,0 +1,33 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+{% block title %}{{ seo('seoHomeTitle')|raw|trim }}{% endblock %}
+{% block description %}{{ seo('seoHomeDescription')|raw|trim }}{% endblock %}
+{% block keywords %}{{ seo('seoHomeKeywords') |raw|trim}}{% endblock %}
+{% block canonical %}{{ url('home')|raw|trim }}{% endblock %}
+
+{% block ogTitle %}{{ seo('seoHomeTitle')|raw|trim }}{% endblock %}
+{% block ogDescription %}{{ seo('seoHomeDescription')|raw|trim }}{% endblock %}
+{% block ogImage %}{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}{% endblock %}
+{% block ogUrl %}{{ url('home')|raw|trim }}{% endblock %}
+
+{% block twitterTitle %}{{ seo('seoHomeTitle')|raw|trim }}{% endblock %}
+{% block twitterDescription %}{{ seo('seoHomeDescription')|raw|trim }}{% endblock %}
+{% block twitterImage %}{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}{% endblock %}
+{% block twitterUrl %}{{ url('home')|raw|trim }}{% endblock %}
+{% block body %}
+	{{ include('@theme/'~setting('theme')~'/inc/slider.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/about.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/service.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/step.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/company_transparency.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/faq.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/testimonial.html.twig') }}
+
+	{{ include('@theme/'~setting('theme')~'/inc/brand.html.twig') }}
+	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+
+
+{% endblock %}

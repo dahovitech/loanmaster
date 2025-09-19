@@ -1,0 +1,78 @@
+{% extends '@theme/base.html.twig' %}
+
+{% block body %}
+	<!-- Hero Start -->
+	<section class="bg-half-170 bg-light d-table w-100" style="padding-top: 100px;background: url({{asset('theme/docu/assets/images/company/aboutus.png')}}) center center">
+		<div class="container">
+			<div class="row mt-5 justify-content-center">
+				<div class="col-lg-12 text-center">
+					<div class="pages-heading">
+						<h4 class="title mb-0">
+							Privacy Policy
+						</h4>
+					</div>
+				</div>
+				<!--end col-->
+			</div>
+			<!--end row-->
+
+			<div class="position-breadcrumb">
+				<nav aria-label="breadcrumb" class="d-inline-block">
+					<ul class="breadcrumb rounded shadow mb-0 px-4 py-2">
+						<li class="breadcrumb-item">
+							<a href="{{ path("app_home") }}">Home</a>
+						</li>
+				
+						<li class="breadcrumb-item active" aria-current="page">Privacy Policy</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!--end container-->
+	</section>
+	<!--end section-->
+	<!-- Hero End -->
+	<!-- Partners start -->
+		<section class="py-4 border-bottom border-top"> <div
+			class="container">
+			{# <h1>Politique de confidentialité</h1>
+						<p>En tant que plateforme de demande de permis de conduire, visa et passeport, nous sommes engagés à protéger la vie privée de nos utilisateurs. Cette politique de confidentialité décrit comment nous collectons, utilisons et protégeons les informations que nous recevons de la part des utilisateurs de notre plateforme.</p>
+						<h2>Collecte d'informations</h2>
+						<p>Nous collectons des informations personnelles telles que le nom, l'adresse, l'adresse e-mail, le numéro de téléphone et les informations de passeport ou de permis de conduire de nos utilisateurs. Nous pouvons également collecter des informations de navigation telles que l'adresse IP, les pages visitées et le temps passé sur notre site.</p>
+						<h2>Utilisation des informations</h2>
+						<p>Nous utilisons les informations que nous collectons pour traiter les demandes de permis de conduire, visa et passeport de nos utilisateurs. Nous pouvons également utiliser les informations pour communiquer avec les utilisateurs concernant leur demande et leur fournir des mises à jour sur l'état de leur demande.</p>
+						<p>Nous ne vendons ni ne louons les informations personnelles de nos utilisateurs à des tiers. Nous pouvons partager des informations avec des prestataires de services tiers tels que des agences gouvernementales, des entreprises de vérification de sécurité et des sociétés de traitement de paiement, uniquement dans le cadre de la fourniture de services liés à la demande de permis de conduire, visa et passeport.</p>
+						<h2>Sécurité des informations</h2>
+						<p>Nous prenons des mesures de sécurité pour protéger les informations personnelles de nos utilisateurs contre la perte, l'utilisation abusive et l'accès non autorisé, la divulgation, la modification ou la destruction. Nous utilisons des protocoles de sécurité standard pour protéger les informations personnelles de nos utilisateurs.</p>
+						<h2>Cookies</h2>
+						<p>Nous utilisons des cookies pour améliorer l'expérience de navigation de nos utilisateurs. Les cookies sont des petits fichiers qui sont stockés sur le disque dur de l'utilisateur et qui nous permettent de suivre les préférences de l'utilisateur, de personnaliser l'expérience utilisateur et de collecter des informations de navigation.</p>
+						<h2>Modifications de la politique de confidentialité</h2>
+						<p>Nous pouvons modifier cette politique de confidentialité de temps en temps. Toutes les modifications apportées à cette politique de confidentialité seront affichées sur cette page. Les utilisateurs seront informés de tout changement important de cette politique de confidentialité.</p>
+						<h2>Contactez-nous</h2>
+						<p>Si vous avez des questions concernant cette politique de confidentialité ou les pratiques de confidentialité de notre plateforme, vous pouvez nous contacter à tout moment à l'adresse e-mail suivante :
+							{{setting('email')}}.</p> #}
+			<h1>Privacy Policy</h1>
+			<p>As a driver's license, visa and passport application platform, we are committed to protecting the privacy of our users. This privacy policy describes how we collect, use and safeguard the information we receive from users of our platform.</p>
+			<h2>Collection of information</h2>
+			<p>We collect personal information such as name, address, email address, phone number, and passport or driver's license information from our users. We may also collect browsing information such as IP address, pages visited and time spent on our site.</p>
+			<h2>Use of Information</h2>
+			<p>We use the information we collect to process our users' driver's license, visa and passport applications. We may also use the information to communicate with users regarding their request and provide them with updates on the status of their request.</p>
+			<p>We do not sell or rent our users' personal information to third parties. We may share information with third party service providers such as government agencies, security verification companies and payment processing companies, only in connection with the provision of services related to the application for a driver's license, visa and passport.</p>
+			<h2>Information Security</h2>
+			<p>We take security measures to protect our users' personal information from loss, misuse, and unauthorized access, disclosure, alteration, or destruction. We use industry-standard security protocols to protect our users' personal information.</p>
+			<h2>Cookies</h2>
+			<p>We use cookies to improve our users' browsing experience. Cookies are small files that are stored on the user's hard drive and that allow us to track user preferences, personalize the user experience and collect browsing information.</p>
+			<h2>Changes to Privacy Policy</h2>
+			<p>We may change this Privacy Policy from time to time. Any changes to this privacy policy will be posted on this page. Users will be notified of any material changes to this Privacy Policy.</p>
+			<h2>Contact us</h2>
+			<p>If you have any questions about this Privacy Policy or the privacy practices of our Platform, you can contact us at any time at the following email address:
+				{{setting('email')}}.</p>
+
+		</div>
+		<!--end container-->
+	</section>
+	<!--end section-->
+	<!-- Partners End -->
+
+
+{% endblock %}

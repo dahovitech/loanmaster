@@ -1,0 +1,28 @@
+{# templates/admin/user/show.html.twig #}
+
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}Détails de l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'utilisateur</h1>
+
+    <div class="user-details">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Nom:</strong> {{ user.lastname }}</p>
+        <p><strong>Prénom:</strong> {{ user.firstname }}</p>
+        <p><strong>Téléphone:</strong> {{ user.telephone }}</p>
+        <p><strong>Civilité:</strong> {{ user.civility }}</p>
+        <p><strong>Date de naissance:</strong> {{ user.birthdate ? user.birthdate|date('d/m/Y') : 'Non spécifié' }}</p>
+        <p><strong>Nationalité:</strong> {{ user.nationality }}</p>
+        <p><strong>Adresse:</strong> {{ user.address }}</p>
+        <p><strong>Code postal:</strong> {{ user.zipcode }}</p>
+        <p><strong>Ville:</strong> {{ user.city }}</p>
+        <p><strong>Pays:</strong> {{ user.country }}</p>
+        <p><strong>Situation professionnelle:</strong> {{ user.professionnalSituation }}</p>
+        <p><strong>Revenu mensuel:</strong> {{ user.monthlyIncome }}</p>
+        <p><strong>Statut de vérification:</strong> {{ user.verificationStatus }}</p>
+    </div>
+
+    <a href="{{ path('app_admin_clientLists') }}" class="btn btn-primary">Retour à la liste des clients</a>
+{% endblock %}

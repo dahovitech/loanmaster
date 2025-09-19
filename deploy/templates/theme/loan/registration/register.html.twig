@@ -1,0 +1,125 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+
+{% block title %}
+	{{"front.page.register.h1"|trans}}
+{% endblock %}
+
+{% block body %}
+	<section class="page-header">
+		<div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+		<!-- /.page-header__bg -->
+		<div class="container">
+			<div class="page-header__content">
+				<h2 class="page-header__title">{{"registration.title"|trans}}</h2>
+				<ul class="easilon-breadcrumb list-unstyled">
+					<li>
+						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
+					</li>
+					<li>
+						<span>{{"registration.title"|trans}}</span>
+					</li>
+				</ul>
+				<!-- /.thm-breadcrumb list-unstyled -->
+			</div>
+			<!-- /.page-header__content -->
+		</div>
+		<!-- /.container -->
+		<div class="page-header__border-box">
+			<div class="page-header__border page-header__border--1"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--2"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--3"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--4"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--5"></div>
+			<!-- /.page-header__border -->
+		</div>
+		<!-- /.page-header__border-box -->
+	</section>
+
+
+	<section class="apply-loan section-space">
+		<div class="container">
+			<div
+				class="apply-loan__form row">
+				<!-- Loan Details -->
+				<div class="apply-loan__details offset-md-2 col-md-8">
+					<h2 class="apply-loan__details__title">{{"registration.subtitle"|trans}}</h2>
+					{% for flash_error in app.flashes('verify_email_error') %}
+						<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+					{% endfor %}
+					{{ form_start(registrationForm) }}
+					<div class="apply-loan__form__row row">
+						<div class="col-md-12">
+							{{ form_row(registrationForm.accountType) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_row(registrationForm.locale) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.email) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.telephone) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.lastname) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.firstname) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.civility) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.birthdate) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.nationality) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.country) }}
+						</div>
+						<div class="col-md-4">
+							{{ form_row(registrationForm.city) }}
+						</div>
+						<div class="col-md-4">
+							{{ form_row(registrationForm.zipcode) }}
+						</div>
+						<div class="col-md-4">
+							{{ form_row(registrationForm.address) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.professionnalSituation) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(registrationForm.monthlyIncome) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_row(registrationForm.plainPassword) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_row(registrationForm.captcha) }}
+						</div>
+						
+						<div class="mb-3">
+						<div class="col-md-12">
+							<button type="submit" class="easilon-btn">{{"form.user.submit"|trans}}</button>
+						</div>
+						</div>
+
+					</div>
+					{{ form_end(registrationForm) }}
+					<!-- /.pply-loan__form -->
+				</div>
+				<!-- /.apply-loan__details -->
+			</div>
+			<!-- /.apply-loan__form -->
+		</div>
+		<!-- /.container -->
+	</section>
+	<!-- /.apply-loan section-space -->
+
+{% endblock %}

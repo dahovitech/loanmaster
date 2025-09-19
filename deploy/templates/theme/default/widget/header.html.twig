@@ -1,0 +1,58 @@
+  <!-- Navbar Start -->
+        <header id="topnav" class="defaultscroll sticky">
+            <div class="container">
+                <!-- Logo container-->
+                <a class="logo" href="{{ path("home") }}">
+                    <img src="{{ asset(setting("logoDark").getWebPath()|default('lol')) }}" height="40" class="logo-light-mode" alt="">
+                    <img src="{{ asset(setting("logoLight").getWebPath()|default('lol')) }}" height="40" class="logo-dark-mode" alt="">
+                </a>                
+                <!-- Logo End -->
+
+                <!-- End Logo container-->
+                <div class="menu-extras">
+                    <div class="menu-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </div>
+                </div>
+
+        
+
+                <div id="navigation">
+                    <!-- Navigation Menu-->   
+                    <ul class="navigation-menu">
+                        <li><a href="{{ path("home") }}" class="sub-menu-item">{{"front.menu.home"|trans}}</a></li>
+                        <li><a href="{{ path("about") }}" class="sub-menu-item">{{"front.menu.about"|trans}}</a></li>
+                        {% if app.user %}
+                                <li><a href="{{ path("app_admin_dashboard") }}" class="sub-menu-item">{{"admin.menu.dashboad"|trans}}</a></li>
+                            
+                            {% else %}
+                                <li><a href="{{ path("login") }}" class="sub-menu-item">{{"btn.login"|trans}}</a></li>
+                                <li><a href="{{ path("register") }}" class="sub-menu-item">{{"btn.register"|trans}}</a></li>
+                        {% endif %}
+                       
+                        {% set currentLanguage = app.session.get('language')|default(app.request.locale) %}
+                        <li class="has-submenu parent-menu-item">
+                            <a href="javascript:void(0)"><img width="20" src="{{ asset('flags/1x1/' ~ currentLanguage ~ '.svg') }}" alt=""> </a><span class="menu-arrow"></span>
+                            <ul class="submenu">
+                                {% for language in ArrayLocales() %} {# Replace with your list of supported languages #}
+                                    {% if language != currentLanguage %}
+                                        <li><a class="sub-menu-item" href="{{ path('switch_language', {'language': language}) }}"><img width="20" src="{{ asset('flags/1x1/' ~ language ~ '.svg') }}" alt=""></a></li>
+                                    {% endif %}
+							    {% endfor %}
+                            </ul>
+                        </li>
+                       
+
+                       
+                    </ul><!--end navigation menu-->
+                </div><!--end navigation-->
+            </div><!--end container-->
+        </header><!--end header-->

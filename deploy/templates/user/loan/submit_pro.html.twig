@@ -1,0 +1,128 @@
+{# templates/loan/submit_pro.html.twig #}
+{% extends "@admin/base.html.twig" %}
+
+{% block title %}
+    {{ 'loan.submit.title'|trans }}
+{% endblock %}
+
+{% block body %}
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'loan.submit.title'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_user_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{path('app_user_loan_list')}}">
+                            <i class="bx bx-list"></i>
+                            {{ 'loan.list.title'|trans }}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'loan.submit.title'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-4">
+            <h6 class="mb-0 text-uppercase">{{ 'loan.calculator.title'|trans }}</h6>
+            <hr/>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="amountSlider">{{ 'loan.form.amount'|trans }}</label>
+                        <input type="range" class="form-control-range" id="amountSlider" min="100000" max="50000000" step="1000" value="100000">
+                        <span id="amountValue">100000</span> {{setting("devise")}}
+                    </div>
+                    <div class="form-group">
+                        <label for="durationSlider">{{ 'loan.form.durationMonths'|trans }}</label>
+                        <input type="range" class="form-control-range" id="durationSlider" min="24" max="480" step="1" value="24">
+                        <span id="durationValue">24</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="interestRate">{{ 'loan.form.interestRate'|trans }}</label>
+                        <input type="number" class="form-control" id="interestRate" value="3" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'loan.calculator.monthlyPayment'|trans }}</label>
+                        <span id="monthlyPayment">0</span> {{setting("devise")}}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'loan.calculator.totalPayment'|trans }}</label>
+                        <span id="totalPayment">0</span> {{setting("devise")}}
+                    </div>
+                    <button id="applyButton" class="btn btn-primary">Appliquer</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h6 class="mb-0 text-uppercase">{{ 'loan.submit.title'|trans }}</h6>
+            <hr/>
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function calculateLoan() {
+                const amount = parseFloat($('#amountSlider').val());
+                const durationMonths = parseFloat($('#durationSlider').val());
+                const interestRate = parseFloat($('#interestRate').val()) / 100 / 12;
+
+                const monthlyPayment = (amount * interestRate) / (1 - Math.pow(1 + interestRate, -durationMonths));
+                const totalPayment = monthlyPayment * durationMonths;
+
+                $('#monthlyPayment').text(monthlyPayment.toFixed(2));
+                $('#totalPayment').text(totalPayment.toFixed(2));
+            }
+
+            $('#amountSlider').on('input', function () {
+                $('#amountValue').text($(this).val());
+                calculateLoan();
+            });
+
+            $('#durationSlider').on('input', function () {
+                $('#durationValue').text($(this).val());
+                calculateLoan();
+            });
+
+            $('#interestRate').on('input', function () {
+                calculateLoan();
+            });
+
+            $('#applyButton').on('click', function () {
+                const amount = $('#amountSlider').val();
+                const durationMonths = $('#durationSlider').val();
+                $('#loan_form_amount').val(amount);
+                $('#loan_form_durationMonths').val(durationMonths);
+                $('#loan_pro_form_amount').val(amount);
+                $('#loan_pro_form_durationMonths').val(durationMonths);
+            });
+
+            // Initialisation des valeurs des curseurs et des champs associés
+            $('#amountSlider').val(100000);
+            $('#amountValue').text(100000);
+            $('#durationSlider').val(24);
+            $('#durationValue').text(24);
+            $('#interestRate').val(3);
+
+            calculateLoan();
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,141 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+
+{% block title %}
+	{{"front.page.login.h1"|trans}}
+{% endblock %}
+
+{% block body %}
+
+	<section class="page-header">
+		<div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+		<!-- /.page-header__bg -->
+		<div class="container">
+			<div class="page-header__content">
+				<h2 class="page-header__title">{{"btn.login"|trans}}</h2>
+				<ul class="easilon-breadcrumb list-unstyled">
+					<li>
+						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
+					</li>
+					<li>
+						<span>{{"btn.login"|trans}}</span>
+					</li>
+				</ul>
+				<!-- /.thm-breadcrumb list-unstyled -->
+			</div>
+			<!-- /.page-header__content -->
+		</div>
+		<!-- /.container -->
+		<div class="page-header__border-box">
+			<div class="page-header__border page-header__border--1"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--2"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--3"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--4"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--5"></div>
+			<!-- /.page-header__border -->
+		</div>
+		<!-- /.page-header__border-box -->
+	</section>
+
+	{# <!-- Hero Start -->
+		<section class="bg-home d-flex align-items-center">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-7 col-md-6">
+						<div class="me-lg-5">
+							<img src="{{ asset('theme/docu/assets/images/user/login.svg')}}" class="img-fluid d-block mx-auto" alt="">
+						</div>
+					</div>
+					<div class="col-lg-5 col-md-6">
+						<div class="card login-page shadow rounded border-0">
+							<div class="card-header  text-center">
+								<a class="logo" href="{{ path("home") }}">
+									<img src="{{ asset(setting("logoDark").getWebPath()|default('lol')) }}" height="40" class="logo-light-mode" alt="">
+								</a>
+								<h4 class="card-title">{{"front.page.login.h1"|trans}}</h4>
+	
+							</div>
+							<div
+								class="card-body">
+	
+								
+							</div>
+						</div>
+						<!---->
+					</div>
+					<!--end col-->
+				</div>
+				<!--end row-->
+			</div>
+			<!--end container-->
+		</section>
+		<!--end section-->
+		<!-- Hero End --> #}
+
+	<section class="login-page section-space">
+		<div class="container">
+			<div class="row gutter-y-80">
+				<div class="col-xl-6 wow fadeInLeft" data-wow-duration="1500ms">
+					<div class="login-page__image">
+						<div class="login-page__image__inner">
+							<img src="{{asset('theme/loan/assets/images/resources/login-1-1.jpg')}}" alt="login">
+						</div>
+						<!-- /.login-page__image__inner -->
+					</div>
+					<!-- /.login-page__image -->
+				</div>
+				<!-- /.col-xl-6 -->
+				<div class="col-xl-6 wow fadeInRight fadeInRight" data-wow-duration="1500ms">
+					<div class="login-page__wrap__bg" style="background-image: url({{asset('theme/loan/assets/images/shapes/login-bg-1.png')}});"></div>
+					<form method="post" class="login-page__form">
+						{% if error %}
+							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+						<div class="login-page__wrap__content mb-5">
+							<h3 class="login-page__wrap__title">{{"front.page.login.text"|trans}}</h3>
+						</div>
+						<!-- /.login-page__wrap__content -->
+						<div class="login-page__form__input-box">
+							<input placeholder="{{'form.user.email'|trans}}" type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+							<span class="login-page__form__icon">
+								<i class="icon-mail-2"></i>
+							</span>
+							<!-- /.login-page__form__icon -->
+						</div>
+						<div class="login-page__form__input-box">
+
+							<input placeholder="{{'form.user.password'|trans}}" type="password" name="password" id="inputPassword" class="login-page__password" autocomplete="current-password" required>
+							<span class="login-page__form__icon">
+								<i class="icon-padlock"></i>
+							</span>
+							<!-- /.login-page__form__icon -->
+							<i class="toggle-password pass-field-icon fa fa-fw fa-eye-slash"></i>
+						</div>
+						<div class="login-page__form__input-box login-page__form__input-box--bottom">
+
+							<a href="{{path('reset_password_request')}}" class="login-page__form__forgot">forgot password?</a>
+							<a href="{{ path("register") }}" class="login-page__form__forgot">{{"btn.register"|trans}}?</a>
+
+							<!-- /.login-page__form__forgot -->
+						</div>
+						<!-- /.login-page__form__input-box -->
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+						<div class="login-page__form__input-box">
+							<button class="easilon-btn mt-5" type="submit">
+								{{"btn.login"|trans}}
+							</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.col-xl-6 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</section>
+	<!-- /.login-page section-space -->
+{% endblock %}
