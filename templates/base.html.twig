@@ -6,9 +6,9 @@
     <title>{% block title %}LoanMaster - {{ 'Votre partenaire financier de confiance'|trans }}{% endblock %}</title>
     
     <!-- favicons Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}" />
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-16x16.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}" />
     <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}" />
     <meta name="description" content="{% block description %}LoanMaster - Votre partenaire financier de confiance pour tous vos besoins de crédit et de financement{% endblock %}" />
 
@@ -35,7 +35,7 @@
     <div class="custom-cursor__cursor-two"></div>
 
     <div class="preloader">
-        <div class="preloader__image" style="background-image: url({{ asset('assets/images/loader.png') }});"></div>
+        <div class="preloader__image" style="background-image: url({{ asset('loader.png') }});"></div>
     </div>
 
     <div class="page-wrapper">
@@ -89,7 +89,7 @@
                 <div class="main-header__inner">
                     <div class="main-header__logo logo-retina">
                         <a href="{{ path('app_home') }}">
-                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="LoanMaster" width="150">
+                            <img src="{{ asset('logo-dark.png') }}" alt="LoanMaster" width="150">
                         </a>
                     </div>
                     <div class="main-header__right">
@@ -138,7 +138,7 @@
                         <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
                             <div class="footer-widget footer-widget--about">
                                 <a href="{{ path('app_home') }}" class="footer-widget__logo">
-                                    <img src="{{ asset('assets/images/logo-light.png') }}" width="150" alt="LoanMaster">
+                                    <img src="{{ asset('logo-light.png') }}" width="150" alt="LoanMaster">
                                 </a>
                                 <p class="footer-widget__about-text">{{ 'LoanMaster est votre partenaire financier de confiance, offrant des solutions de crédit adaptées à tous vos besoins.'|trans }}</p>
                                 <form action="#" class="footer-widget__newsletter mc-form">
@@ -242,7 +242,7 @@
             <span class="mobile-nav__close mobile-nav__toggler"><i class="icon-close"></i></span>
             <div class="logo-box logo-retina">
                 <a href="{{ path('app_home') }}" aria-label="logo image">
-                    <img src="{{ asset('assets/images/logo-light.png') }}" width="155" alt="LoanMaster" />
+                    <img src="{{ asset('logo-light.png') }}" width="155" alt="LoanMaster" />
                 </a>
             </div>
             <div class="mobile-nav__container"></div>
