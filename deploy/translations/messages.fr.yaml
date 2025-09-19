@@ -1,0 +1,769 @@
+registration.title: "Inscription"
+registration.subtitle: "Formulaire d'Inscription"
+registration.success: "Votre inscription a été enregistrée avec succès. Veuillez vérifier votre email pour confirmer votre adresse."
+registration.token_invalid: "Le token de confirmation est invalide."
+registration.confirmed: "Votre adresse e-mail a été confirmée avec succès. Vous pouvez maintenant vous connecter."
+registration.confirm.title: "Confirmation de l'inscription"
+registration.confirm.message: "Un email de confirmation a été envoyé à votre adresse e-mail. Veuillez vérifier votre boîte de réception et cliquer sur le lien de confirmation."
+registration.confirmed.title: "Confirmation réussie"
+registration.confirmed.message: "Votre adresse e-mail a été confirmée avec succès. Vous pouvez maintenant vous connecter."
+registration.email.greeting: "Bonjour,"
+registration.email.message: "Merci de vous être inscrit. Veuillez cliquer sur le lien suivant pour confirmer votre adresse e-mail :"
+registration.email.confirm_link: "Confirmer mon adresse e-mail"
+registration.email.thanks: "Merci,"
+registration.email.team: "L'équipe"
+registration.email.subject: Confirmez votre adresse e-mail
+resetpassword.emailnotfound: "L'adresse e-mail n'a pas été trouvée."
+resetpassword.emailsent: "Un e-mail de réinitialisation de mot de passe a été envoyé."
+resetpassword.tokeninvalid: "Le token de réinitialisation est invalide."
+resetpassword.success: "Votre mot de passe a été réinitialisé avec succès."
+resetpassword.email.subject: "Réinitialisation de votre mot de passe"
+resetpassword.email.greeting: "Bonjour,"
+resetpassword.email.message: "Vous avez demandé la réinitialisation de votre mot de passe. Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe :"
+resetpassword.email.resetlink: "Réinitialiser mon mot de passe"
+resetpassword.email.thanks: "Merci,"
+resetpassword.email.team: "L'équipe"
+resetpassword.newpassword.label: "Nouveau mot de passe"
+resetpassword.confirmpassword.label: "Confirmer le mot de passe"
+resetpassword.passwordmismatch: "Les mots de passe ne correspondent pas."
+resetpassword.submit: "Réinitialiser le mot de passe"
+resetpassword.request.title: Réinitialisation de mot de passe
+resetpassword.request.subtitle: Entrez votre adresse e-mail pour recevoir un lien de réinitialisation de mot de passe
+resetpassword.request.submit: Envoyer le lien de réinitialisation
+resetpassword.reset.title: Réinitialisation de mot de passe
+resetpassword.reset.subtitle: Entrez votre nouveau mot de passe
+resetpassword.reset.submit: Réinitialiser le mot de passe
+resetpassword.email_not_found: L'adresse e-mail n'a pas été trouvée
+resetpassword.email_sent: Un e-mail de réinitialisation de mot de passe a été envoyé
+resetpassword.token_invalid: Le jeton de réinitialisation est invalide
+resetpassword.email.label: Adresse e-mail
+resetpassword.new_password.label: Nouveau mot de passe
+resetpassword.confirm_password.label: Confirmer le mot de passe
+resetpassword.password_mismatch: Les mots de passe ne correspondent pas
+form.user.currentPassword: Mots de passe actuel
+form.user.name: Nom de famille
+form.user.firstname: Prénom(s)
+form.user.email: 'Adresse e-mail'
+form.user.telephone: 'Numéro de téléphone'
+form.user.password: 'Mot de passe'
+form.user.submit: S'inscrire
+form.newsletter: 'Entrez votre e-mail'
+form.locale: "Langue"
+form.user.lastname: "Nom de famille"
+form.user.passwordConfirm: "Confirmer le mot de passe"
+form.user.birthdate: "Date de naissance"
+form.user.address: "Adresse"
+form.user.zipcode: "Code postal"
+form.user.city: "Ville"
+form.user.country: "Pays"
+form.user.isEnabled: "Activer le compte"
+form.nationality: "Nationalité"
+form.civility: "Civilité"
+form.select: "Sélectionner"
+form.mister: "Monsieur"
+form.mrs: "Madame"
+form.miss: "Mademoiselle"
+form.interim: "Intérim"
+form.housewife: "Femme au foyer"
+form.student: "Étudiant"
+form.retirement: "Retraité"
+form.profession: "Profession libérale / Travailleur Indépendant"
+form.no_job: "Sans emploi"
+form.professionnalSituation: "Situation professionnelle"
+form.monthlyIncome: Revenus mensuels nets avant prélèvement d'impôt à la source (en '%devise%') *
+btn.login: Connexion
+btn.sign: Signer le contrat
+btn.logout: Déconnexion
+btn.register: Inscription
+btn.changePassword: 'Modifier le mot de passe'
+btn.send: Envoyer
+btn.update: 'Mise à jour'
+btn.allNotif: 'Afficher toutes les notifications'
+btn.notNotif: 'Aucune notification'
+btn.back: Précédent
+btn.details: Détails
+btn.reset: Réinitialiser
+btn.continu: Continuer
+btn.bankTransfert: 'Paiement par virement'
+btn.total: 'Total à payé'
+btn.pay: Payer
+btn.readMore: 'Lire plus'
+btn.seeMore: Voir plus
+btn.watchNow: REGARDEZ
+btn.subscribe: Abonnez-vous
+btn.downloadPdf: Télécharger la brochure
+btn.paySubmit: soumettre le reçu
+btn.downloadContract: Télécharger le contrat
+status.notorder: 'Commande non payée'
+status.order: Ordonné
+status.pending: En attente
+status.loading: En cours
+status.notsee: 'Pas vu'
+status.see: Vu
+status.success: Approuvée
+status.loadpay: 'Paiement en attente de vérification'
+status.refus: 'Demande rejetée'
+status.notreceived: 'Paiement non reçu'
+table.subject: Sujet
+table.actions: Actions
+table.status: État
+table.date: Date
+table.chrono: N°.
+tab.label: Services
+tab.price: Prix
+pay.folder: "Frais administratifs liés à la création et au traitement du dossier de crédit"
+pay.contract: "Frais administratifs liés à l'établissement et à la gestion du contrat de crédit"
+admin.page.payment.infoBank: 'Informations bancaires'
+admin.page.payment.title1: 'Paiement'
+admin.page.payment.title2: 'Choisir un paiement Méthode'
+admin.page.payment.text1: "Assurez-vous de cliquer sur l'option de paiement correcte"
+admin.page.payment.text2: 'Une fois que vous avez effectué le paiement pour votre demande, veuillez soumettre le reçu de paiement afin que notre équipe puisse valider votre demande.'
+admin.page.notification.index.title: 'Liste de vos notifications'
+admin.page.notification.show.title: 'Détails de la notification'
+admin.page.changePassword.title: 'Modifier votre mot de passe'
+admin.page.changePassword.form: 'Formulaire de changement de mot de passe'
+admin.page.setting.seoHomeTitle: Titre SEO de la page d'accueil
+admin.page.setting.seoHomeKeywords: Mots-clés SEO de la page d'accueil
+admin.page.setting.seoHomeDescription: Description SEO de la page d'accueil
+admin.page.setting.seoCountryTitle: Titre SEO de pays
+admin.page.setting.seoCountryKeywords: Mots-clés SEO de pays
+admin.page.setting.seoCountryDescription: Description SEO de pays
+admin.page.setting.seoAboutTitle: Titre SEO de la page À propos
+admin.page.setting.seoAboutKeywords: Mots-clés SEO de la page À propos
+admin.page.setting.seoAboutDescription: Description SEO de la page À propos
+admin.page.setting.seoServiceTitle: Titre SEO de la page Service
+admin.page.setting.seoServiceKeywords: Mots-clés SEO de la page Service
+admin.page.setting.seoServiceDescription: Description SEO de la page Service
+admin.page.setting.seoImage: Image SEO OG
+admin.page.setting.theme: Theme du site
+admin.menu.dashboad: 'Tableau de bord'
+admin.menu.setting: Paramètres
+admin.menu.media: Médias
+admin.menu.bank: Banque
+admin.menu.country: Pays
+admin.menu.social: Liens social
+front.menu.home: Acceuil
+front.menu.about: 'À propos'
+front.menu.testimonial: Témoignages
+front.menu.contact: Contact
+front.menu.link: 'Liens utiles'
+front.menu.privacyPolicy: 'Politique de confidentialité'
+front.menu.support: Appui
+front.menu.newsletter: "Newsletters"
+front.menu.service: "Nos services"
+front.menu.country: "Pays"
+admin.menu.card.my: Cartes
+admin.menu.loan.my: Prêts
+admin.menu.loan.list: Particulier
+admin.menu.loan.listpro: Professionnel
+admin.menu.param.my: Réglages
+admin.menu.slider: Slides
+admin.menu.testimonial: Témoignages
+front.menu.account: Mon compte
+admin.menu.faq: Faqs
+admin.menu.service: Services
+admin.menu.post: Articles
+admin.menu.serviceCategory: Service Catégorie
+admin.menu.postCategory: Article Catégorie
+front.page.login.h1: Se connecter
+front.page.login.text: 'Veuillez vous connecter'
+front.page.register.h1: S'inscrire
+front.page.newsletter: 'Inscrivez-vous et recevez les derniers conseils par courriel.'
+loading: Chargement...
+front.service.title: "Nos services offerts"
+front.country.title: "Les pays où nous proposons nos services"
+front.service.text1: "Découvrez l’éventail complet de services que nous offrons."
+front.service.text2: "Notre plateforme facilite votre expérience en vous proposant des solutions adaptées à vos exigences spécifiques, avec une transparence totale et une assistance professionnelle tout au long du processus."
+front.country.text1: "Nous offrons des services adaptés aux exigences spécifiques de nombreux pays."
+front.country.text2: "Découvrez les pays pour lesquels nous offrons des services et obtenez les informations dont vous avez besoin pour vos démarches administratives."
+front.step.title: Notre processus simple 
+front.step.text1: Votre demande réglée en seulement 6 étapes ultra simples
+front.brand.title: Nos partenaires
+linkUtil: Liens utiles 
+entity.name_required: Le nom de l''entité est requis.
+entity.not_found: "%entity% n'a pas été trouvée."
+entity.createdSuccessfully: "%entity% a été créée avec succès."
+entity.updatedSuccessfully: "%entity% a été mise à jour avec succès."
+entity.deletedSuccessfully: "%entity% a été supprimée avec succès."
+transaction.createdSuccessfully: "La traduction a été créée avec succès."
+transaction.updatedSuccessfully: "La traduction a été mise à jour avec succès."
+transaction.deletedSuccessfully: "La traduction a été supprimée avec succès."
+faq.title: "Questions fréquentes"
+faq.tagline: "FAQ"
+faq.list: Liste des FAQ
+faq.add: Ajouter une FAQ
+faq.edit: Modifier la FAQ
+faq.delete: Supprimer
+faq.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+faq.question: Question
+tab.status: Status
+tab.actions: Actions
+status.enabled: Activé
+status.disabled: Désactivé
+translations: Traductions
+back_to_list: Retour à la liste
+slider.title: Slider
+slider.list: Liste des Sliders
+slider.add: Ajouter un Slider
+slider.edit: Modifier le Slider
+slider.delete: Supprimer
+slider.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+slider.title_field: Titre
+slider.subtitle: Sous-titre
+slider.description: Description
+slider.image: Image
+slider.btnText: Texte du bouton
+slider.btnUrl: URL du bouton
+slider.status: Statut
+slider.actions: Actions
+service.title: Service
+service.list: Liste des Services
+service.add: Ajouter un Service
+service.edit: Modifier le Service
+service.delete: Supprimer
+service.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+service.name: Nom
+service.resume: Résumé
+service.description: Description
+service.image: Image
+service.category: Catégorie
+service.status: Statut
+service.actions: Actions
+serviceCategory.title: Catégorie de Service
+serviceCategory.list: Liste des Catégories de Service
+serviceCategory.add: Ajouter une Catégorie de Service
+serviceCategory.edit: Modifier la Catégorie de Service
+serviceCategory.delete: Supprimer
+serviceCategory.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+serviceCategory.name: Nom
+serviceCategory.show: Voir la Catégorie de Service
+step.title: Étape
+step.list: Liste des Étapes
+step.add: Ajouter une Étape
+step.edit: Modifier l'Étape
+step.delete: Supprimer
+step.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+step.description: Description
+step.image: Image
+step.icon: Icône
+step.position: Position
+step.show: Voir l'Étape
+testimonial.title: Témoignage
+testimonial.list: Liste des Témoignages
+testimonial.add: Ajouter un Témoignage
+testimonial.edit: Modifier le Témoignage
+testimonial.delete: Supprimer
+testimonial.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+testimonial.author: Auteur
+testimonial.message: Message
+testimonial.avatar: Avatar
+testimonial.country: Pays
+testimonial.position: Position
+testimonial.rating: Note
+testimonial.show: Voir le Témoignage
+page.title: Page
+page.list: Liste des Pages
+page.add: Ajouter une Page
+page.edit: Modifier la Page
+page.delete: Supprimer
+page.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+page.content: Contenu
+page.image: Image
+page.slug: Slug
+page.resume: Résumé
+page.show: Voir la Page
+post.title: Article
+post.list: Liste des Articles
+post.add: Ajouter un article
+post.edit: Modifier un article
+post.delete: Supprimer
+post.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+post.content: Contenu
+post.image: Image
+post.slug: Slug
+post.resume: Résumé
+post.show: Voir l'article
+postCategory.title: Catégorie d'article
+postCategory.list: Liste des Catégories d'article
+postCategory.add: Ajouter une Catégorie d'article
+postCategory.edit: Modifier la Catégorie d'article
+postCategory.delete: Supprimer
+postCategory.delete_confirm: Êtes-vous sûr de vouloir supprimer cet élément ?
+postCategory.name: Nom
+postCategory.show: Voir la Catégorie d'article
+how_much_do_you_need: "De combien avez-vous besoin ?"
+pay_monthly: "Payer mensuellement"
+term_of_use: "Durée d'utilisation"
+total_pay_back_amount: "Montant total à rembourser"
+apply_for_loan: "Demander un prêt"
+months: Mois
+month: Mois
+about.title: "À propos de nous"
+about.welcome: "Bienvenue chez %site_name%"
+about.description: "Nos prêts réalisent vos rêves"
+about.quick_loan_process: "Processus de prêt rapide"
+about.very_low_rates: "Taux très bas"
+about.small_business_loan: "Prêt pour petite entreprise"
+about.studying_abroad_loan: "Prêt pour études à l'étranger"
+about.know_about_us: "En savoir plus sur nous"
+about.year_of_experience: "années d'expérience"
+about.text: "Chez %site_name%, nous croyons que chaque rêve mérite d'être réalisé. Avec nos solutions de financement flexibles et personnalisées, nous vous aidons à transformer vos projets en réalité. Que ce soit pour un prêt personnel, immobilier, étudiant, automobile, mariage, professionnel ou non remboursable, nous avons la solution qui vous convient."
+yourServices: Ce que nous offrons
+features.title: "Nos caractéristiques"
+features.tagline: "Nos caractéristiques"
+features.subtitle: "Rapide, Facile, Flexible"
+features.text: "Chez %site_name%, nous croyons que chaque rêve mérite d'être réalisé. Avec nos solutions de financement flexibles et personnalisées, nous vous aidons à transformer vos projets en réalité."
+features.lowerRatesTitle: "Taux plus bas"
+features.lowerRatesText: "Nous offrons des taux d'intérêt compétitifs pour vous aider à réaliser vos projets sans vous ruiner."
+features.quickAndEasyTitle: "Rapide et facile"
+features.quickAndEasyText: "Notre processus de demande de prêt est simple et rapide, vous permettant d'obtenir les fonds dont vous avez besoin en un rien de temps."
+workProcess.title: "Notre processus de travail"
+workProcess.tagline: "Comment ça marche"
+companyTransparency.title: "Transparence de l'entreprise"
+companyTransparency.tagline: "Transparence de l'entreprise"
+companyTransparency.subtitle: "Nos valeurs fondamentales"
+companyTransparency.innovativeTitle: "Innovation"
+companyTransparency.innovativeText: "Nous croyons en l'innovation pour offrir les meilleures solutions à nos clients. Notre approche avant-gardiste nous permet de répondre efficacement à vos besoins et de vous aider à atteindre vos objectifs."
+companyTransparency.talentTitle: "Talent"
+companyTransparency.talentText: "Nous sommes fiers de notre équipe talentueuse qui travaille sans relâche pour satisfaire nos clients. Chaque membre de notre équipe apporte une expertise unique, garantissant des résultats exceptionnels et une expérience client inégalée."
+companyTransparency.enablingTitle: "Habilitation"
+companyTransparency.enablingText: "Nous habilitons nos clients à réaliser leurs rêves. Grâce à nos solutions personnalisées et à notre soutien constant, nous vous aidons à surmonter les défis et à atteindre vos aspirations."
+companyTransparency.commerciallyResponsibleTitle: "Responsabilité commerciale"
+companyTransparency.commerciallyResponsibleText: "Nous sommes responsables commercialement et nous nous engageons à offrir des services de qualité. Notre approche éthique et transparente garantit que vous pouvez compter sur nous pour des solutions fiables et durables."
+companyTransparency.callUs: "Appelez-nous à tout moment"
+companyTransparency.phoneNumber: "+163-2654-3654"
+funfact.title: "Faits amusants"
+funfact.approveLoans: "Nous approuvons les prêts"
+funfact.happyCustomers: "Clients satisfaits"
+funfact.dailyPayments: "Paiements quotidiens"
+quickLoan.title: "Obtenez un prêt rapidement"
+quickLoan.tagline: "Obtenez un prêt rapidement"
+quickLoan.subtitle: "Obtenez un prêt commercial rapidement"
+quickLoan.applyButton: "Demander un prêt"
+serviceDetails.instantBusinessGrowth: "Croissance instantanée de l'entreprise"
+serviceDetails.qualityService: "Service de qualité 24/7"
+serviceDetails.easyCustomerService: "Service client facile"
+serviceDetails.qualityCostService: "Service de qualité à coût réduit"
+form.email: Email
+Copyright: Droits d'auteur
+AllRightsReserved: Tous droits réservés
+backTop: Retour en haut
+whyChooseUs.title: "Pourquoi nous choisir"
+whyChooseUs.tagline: "Nos avantages"
+whyChooseUs.text: "Chez %site_name%, nous croyons que chaque rêve mérite d'être réalisé. Avec nos solutions de financement flexibles et personnalisées, nous vous aidons à transformer vos projets en réalité."
+whyChooseUs.lowerRates: "Taux plus bas"
+whyChooseUs.quickAndEasy: "Rapide et facile"
+whyChooseUs.loanProcess: "Processus de prêt"
+whyChooseUs.businessConsultancy: "Conseil en affaires"
+whyChooseUs.paymentsBenefits: "Avantages des paiements"
+loanReasons.title: "Raisons populaires pour un prêt"
+loanReasons.tagline: "Raisons de prêt"
+loanReasons.newCarTitle: "Besoin d'une nouvelle voiture ?"
+loanReasons.newCarText: "Vous rêvez d'une nouvelle voiture ? Un prêt peut vous aider à financer l'achat de votre véhicule idéal. Que ce soit pour une voiture familiale, une voiture de sport ou un véhicule économique, nous avons des solutions adaptées à vos besoins."
+loanReasons.consolidateDebtTitle: "Consolider votre dette"
+loanReasons.consolidateDebtText: "Vous avez plusieurs dettes à rembourser ? Consolider vos dettes en un seul prêt peut simplifier votre gestion financière et potentiellement réduire vos taux d'intérêt. Découvrez comment un prêt de consolidation peut vous aider à reprendre le contrôle de vos finances."
+loanReasons.homeImprovementTitle: "Amélioration de la maison"
+loanReasons.homeImprovementText: "Vous souhaitez rénover votre maison ou entreprendre des projets d'amélioration ? Un prêt pour travaux peut vous fournir les fonds nécessaires pour transformer votre espace de vie. Que ce soit pour une nouvelle cuisine, une salle de bain moderne ou des améliorations énergétiques, nous sommes là pour vous aider."
+funfact.weApproveLoans: "Nous approuvons les prêts"
+funfact.staffMembers: "Membres du personnel"
+testimonials.title: "Témoignages"
+testimonials.tagline: "Ce que disent nos clients"
+testimonials.subtitle: "Ce que disent les gens à propos de nos services"
+contact.title: Formulaire de contact
+contact.fullname: 'Nom complet'
+contact.email: 'Adresse e-mail'
+contact.subject: 'Sujet'
+contact.message: 'Message'
+contact.successMessage: 'Votre message a été envoyé avec succès.'
+loan.amount: "Montant du prêt"
+loan.amountPlaceholder: "Entrez le montant du prêt"
+loan.duration: "Durée en mois"
+loan.durationPlaceholder: "Entrez la durée du prêt en mois"
+loan.interestRate: "Taux d'intérêt"
+loan.interestRatePlaceholder: "Entrez le taux d'intérêt"
+loan.startDate: "Date de début"
+loan.endDate: "Date de fin"
+loan.borrowerName: "Nom de l'emprunteur"
+loan.borrowerNamePlaceholder: "Entrez le nom de l'emprunteur"
+loan.borrowerEmail: "Email de l'emprunteur"
+loan.borrowerEmailPlaceholder: "Entrez l'email de l'emprunteur"
+loan.borrowerPhone: "Téléphone de l'emprunteur"
+loan.borrowerPhonePlaceholder: "Entrez le numéro de téléphone de l'emprunteur"
+loan.note: "Note"
+loan.notePlaceholder: "Ajoutez une note (facultatif)"
+loan.isApproved: "Prêt approuvé"
+loan.isPaidOff: "Prêt remboursé"
+admin.loan.myorder: Mes demandes
+app.submit: "Soumettre"
+app.cancel: "Annuler"
+kyc.verifLink: Vérifier mon compte
+kyc.pending: En attente
+kyc.rejected: Rejeté
+kyc.approved: Vérifié
+kyc.unverified: Non Vérifié
+kyc.verifMessage: cliquer pour valider votre compte
+kyc.title: "Vérification KYC"
+kyc.description: "Pour commencer votre demande de prêt, nous vous invitons tout d'abord à vérifier votre identité. Cette étape simple et rapide est obligatoire pour garantir la sécurité de vos transactions et vous proposer une offre personnalisée."
+kyc.breadcrumb.title: "Mon Compte"
+kyc.breadcrumb.current: "Vérification KYC"
+kyc.submittedSuccessfully: "Votre demande KYC a été soumise avec succès."
+kyc.submit: "Soumettre la vérification KYC"
+kyc.pro.title: "Vérification KYC Professionnelle"
+kyc.pro.description: "Pour commencer votre demande de prêt professionnel, nous vous invitons tout d'abord à vérifier l'identité de votre entreprise. Cette étape simple et rapide est obligatoire pour garantir la sécurité de vos transactions et vous proposer une offre personnalisée."
+kyc.pro.breadcrumb.title: "Mon Compte"
+kyc.pro.breadcrumb.current: "Vérification KYC Professionnelle"
+kyc.pro.submittedSuccessfully: "Votre demande KYC professionnelle a été soumise avec succès."
+kyc.pro.submit: "Soumettre la vérification KYC professionnelle"
+kyc.company_information: "Informations sur l'entreprise"
+kyc.personal_information: "Informations personnelles"
+form.idDocumentType.label: "Type de document d'identité"
+form.idDocumentType.idCard: "Carte d'identité"
+form.idDocumentType.passport: "Passeport"
+form.idDocumentType.driverLicense: "Permis de conduire"
+form.idDocument.label: "Document d'identité (PDF,JPG,PNG)"
+form.idDocumentFront.label: Document d'identification (recto)
+form.idDocumentBack.label: Document d'identification (verso)
+
+form.proofOfAddressType.label: "Type de justificatif de domicile"
+form.proofOfAddressType.electricityBill: "Facture d'électricité"
+form.proofOfAddressType.gasBill: "Facture de gaz"
+form.proofOfAddressType.phoneBill: "Facture de téléphone"
+form.proofOfAddressType.bankStatement: "Relevé bancaire"
+form.proofOfAddressType.leaseAgreement: "Contrat de location"
+form.proofOfAddress.label: "Justificatif de domicile (PDF,JPG,PNG)"
+
+form.integrityDocumentType.label: "Type de document d'intégrité"
+form.integrityDocumentType.goodConductCertificate: "Certificat de bonne conduite"
+form.integrityDocumentType.nonBankruptcyCertificate: "Certificat de non-faillite"
+form.integrityDocumentType.nonConvictionCertificate: "Certificat de non-condamnation"
+form.integrityDocumentType.professionalReferences: "Références professionnelles"
+form.integrityDocument.label: "Document d'intégrité (PDF,JPG,PNG)"
+form.accountType.label: Type de compte
+form.accountType.choice.individual: Particulier
+form.accountType.choice.professional: Professionnel
+form.user.password.mismatch: Les mots de passe ne correspondent pas
+form.businessLicense.label: Licence commerciale (PDF,JPG,PNG)
+form.businessRegistration.label: Enregistrement de l'entreprise (PDF,JPG,PNG)
+form.taxCertificate.label: Certificat fiscal (PDF,JPG,PNG)
+form.companyName.label: Nom de l'entreprise
+form.registrationNumber.label: Numéro d'enregistrement
+form.companyAddress.label: Adresse de l'entreprise
+form.companyCountry.label: Pays de l'entreprise
+form.companyCity.label: Ville de l'entreprise
+form.companyZipcode.label: Code postal de l'entreprise
+form.companyEmail.label: Email de l'entreprise
+form.companyTelephone.label: Téléphone de l'entreprise
+form.companyLegalStatus.label: Statut juridique de l'entreprise
+form.companyLegalStatus.soleProprietorship: Entreprise individuelle
+form.companyLegalStatus.limitedLiabilityCompany: Société à responsabilité limitée
+form.companyLegalStatus.corporation: Société anonyme
+form.companyLegalStatus.partnership: Société en nom collectif
+form.companyLegalStatus.nonProfit: Organisation à but non lucratif
+form.companyProfessionalExperience.label: Expérience professionnelle de l'entreprise
+
+form.validation.maxSize: "La taille du fichier ne doit pas dépasser 5 Mo."
+form.validation.mimeTypes: "Veuillez télécharger un fichier PDF, JPG ou PNG valide."
+themes: Thèmes
+createNewTheme: Créer un nouveau thème
+name: Nom
+image: Image
+primaryColor: Couleur principale
+secondaryColor: Couleur secondaire
+header: En-tête
+slider: Curseur
+footer: Pied de page
+actions: Actions
+edit: Éditer
+save: Enregistrer
+backToList: Retour à la liste
+themeDetails: Détails du thème
+delete: Supprimer
+create: Créer
+theme: Thème
+theme.name: Nom
+theme.image: Image
+theme.primaryColor: Couleur principale
+theme.secondaryColor: Couleur secondaire
+theme.header: En-tête
+theme.slider: Curseur
+theme.footer: Pied de page
+email.kyc_approved.title: "Votre compte a été validé"
+email.kyc_approved.greeting: "Bonjour %firstname%,"
+email.kyc_approved.message: "Votre compte a été validé avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités de notre plateforme."
+email.kyc_approved.thanks: "Merci de votre confiance."
+email.kyc_rejected.title: "Votre compte a été rejeté"
+email.kyc_rejected.greeting: "Bonjour %firstname%,"
+email.kyc_rejected.message: "Nous sommes désolés de vous informer que votre compte a été rejeté pour la raison suivante :"
+email.kyc_rejected.reason: "%message%"
+email.kyc_rejected.instructions: "Veuillez corriger les informations et soumettre à nouveau votre demande."
+email.kyc_rejected.thanks: "Merci de votre compréhension."
+email.admin.kyc_submitted.subject: "Nouvelle demande KYC soumise"
+email.admin.kyc_submitted.body: "Bonjour, une nouvelle demande KYC a été soumise par %firstname% %lastname%. Veuillez vérifier les informations et traiter la demande."
+email.client.kyc_submitted.subject: "Votre demande KYC a été soumise"
+email.client.kyc_submitted.body: "Bonjour, votre demande KYC a été soumise avec succès. Veuillez patienter pendant que nous traitons votre demande. Merci de votre patience."
+email.admin.loan_submitted.subject: 'Nouvelle demande de prêt soumise'
+email.admin.loan_submitted.body: 'Une nouvelle demande de prêt a été soumise par %firstname% %lastname%.'
+email.admin.loan_submitted.error: Erreur lors de l'envoi de l'email.
+email.client.loan_submitted.subject: Votre demande de prêt a été soumise
+email.client.loan_submitted.body: Votre demande de prêt a été soumise avec succès. Un email vous sera envoyé une fois que votre demande sera prise en compte. Veuillez rester à l'écoute dans les prochaines heures.
+email.client.loan_submitted.error: Erreur lors de l'envoi de l'email.
+loan.submit.success: 'Votre demande de prêt a été soumise avec succès.'
+loan.submit.title: 'Soumettre une demande de prêt'
+loan.submit.backToList: 'Retour à la liste des prêts'
+loan.form.loanNumber: 'Numéro de dossier'
+loan.form.loanNumberPlaceholder: 'Entrez le numéro de prêt'
+loan.form.startDate: 'Date de début'
+loan.form.endDate: 'Date de fin'
+loan.form.amount: 'Montant'
+loan.form.amountPlaceholder: 'Entrez le montant'
+loan.form.interestRate: Taux d'intérêt
+loan.form.interestRatePlaceholder: Entrez le taux d'intérêt
+loan.form.durationMonths: 'Durée en mois'
+loan.form.durationMonthsPlaceholder: 'Entrez la durée en mois'
+loan.form.notes: 'Notes'
+loan.form.notesPlaceholder: 'Entrez des notes'
+loan.form.saveButton: 'Soumettre'
+loan.form.loanType: 'Type de prêt'
+loan.form.type.personal: 'Prêt personnel'
+loan.form.type.mortgage: 'Prêt immobilier'
+loan.form.type.auto: 'Prêt automobile'
+loan.form.type.student: 'Prêt étudiant'
+loan.form.type.renovation: 'Prêt rénovation'
+loan.form.type.business: 'Prêt professionnel'
+loan.form.type.vacation: 'Prêt vacances'
+loan.form.type.debtConsolidation: 'Prêt consolidation de dettes'
+loan.form.type.medical: 'Prêt médical'
+loan.form.type.wedding: 'Prêt mariage'
+loan.form.loanTypePlaceholder: 'Sélectionnez un type de prêt'
+nav.brand: 'Mon Application'
+nav.submitLoan: 'Soumettre un prêt'
+loan.list.title: 'Liste des prêts pour particulier'
+loan.list.loanNumber: 'Numéro de dossier'
+loan.list.details: 'Détails'
+loan.list.startDate: 'Date de début'
+loan.list.endDate: 'Date de fin'
+loan.list.amount: 'Montant'
+loan.list.interestRate: Taux d'intérêt 
+loan.list.durationMonths: 'Durée en mois'
+loan.list.status: 'Statut'
+loan.list.actions: 'Actions'
+loan.list.view: 'Voir'
+loan.list.edit: 'Modifier'
+loan.show.title: 'Détails du prêt'
+loan.show.loanNumber: 'Numéro de dossier'
+loan.show.startDate: 'Date de début'
+loan.show.endDate: 'Date de fin'
+loan.show.amount: 'Montant'
+loan.show.interestRate:  Taux d'intérêt
+loan.show.durationMonths: 'Durée en mois'
+loan.show.status: 'Statut'
+loan.show.notes: 'Notes'
+loan.show.edit: 'Modifier'
+loan.show.backToList: 'Retour à la liste des prêts'
+loan.edit.title: 'Modifier le prêt'
+loan.calculator.monthlyPayment: "Paiement mensuel: "
+loan.calculator.totalPayment: "Montant total à rembourser: "
+loan.calculator.title: Simulateur de prêt
+flash.error_currentPassword: "Le mot de passe actuel est incorrect."
+flash.change_password: "Votre mot de passe a été changé avec succès."
+flash.loan.not_found: "Le prêt n'a pas été trouvé."
+flash.file.not_uploaded: "Aucun fichier n'a été téléchargé."
+flash.file.invalid_type: "Le type de fichier n'est pas autorisé."
+flash.file.too_large: "Le fichier est trop volumineux."
+flash.loan.pay: "Le paiement a été effectué avec succès."
+flash.loan.pay_success: "Le fichier de paiement a été téléchargé avec succès."
+email.subject.loan.pay: "Confirmation de paiement de prêt"
+email.body.loan.pay.greeting: "Bonjour %user%,"
+email.body.loan.pay.confirmation: "Nous avons bien reçu votre paiement pour le prêt numéro %loanNumber%."
+email.body.loan.pay.support: "Si vous avez des questions, n'hésitez pas à contacter notre support à l'adresse <a href='mailto:%email%'>%email%</a>."
+loan.list.reminder: Rappel
+loan.list.validatePayment: Valider le paiement
+loan.list.paymentNotReceived: Paiement non reçu
+loan.list.refuseLoan: Refuser le prêt
+loan.contract.preview: Aperçu du contrat
+Commande vérifier avec succèss: Commande vérifiée avec succès
+Commande rappelé avec succèss: Commande rappelée avec succès
+email.subject.payVerifNotreceived: Vérification de paiement non reçu
+email.subject.loanReminder: Rappel de paiement
+email.subject.payVerifSuccess: Vérification de paiement réussie
+email.body.payVerifNotreceived.greeting: Bonjour %user%,
+email.body.payVerifNotreceived.message: "Après vérification, nous constatons que le paiement relatif au demande de prêt numéro %loanNumber% n'a pas encore été réceptionné. Nous vous prions de bien vouloir régulariser la situation dans les plus brefs délais afin d'éviter toute conséquence indésirable. Merci de réessayer de procéder au paiement dès que possible."
+email.body.payVerifNotreceived.contact: Si vous avez des questions, n'hésitez pas à nous contacter à %email%.
+email.body.loanReminder.greeting: Bonjour %user%,
+email.body.loanReminder.message: "Nous vous rappelons que vous avez une paiement en attente pour la demande de prêt numéro %loanNumber%. Vous pouvez effectuer le paiement en suivant ce lien : <a href='%url%'> %url% </a>."
+email.body.loanReminder.contact: Si vous avez des questions, n'hésitez pas à nous contacter à %email%.
+email.body.payVerifSuccess.greeting: Bonjour %user%,
+email.body.payVerifSuccess.message: "Nous avons vérifié avec succès le paiement pour le prêt numéro %loanNumber%. Votre dossier sera traité dans les plus brefs détails. Vous recevrez un email dès que le traitement débutera."
+email.body.payVerifSuccess.contact: Si vous avez des questions, n'hésitez pas à nous contacter à %email%.
+loan.form.price: Frais de traitement de dossier
+email.subject.loanOrderPay: Paiement de la demande de prêt
+email.body.loanOrderPay.greeting: Bonjour %user%,
+email.body.loanOrderPay.message: "Votre demande de prêt numéro %loanNumber% a été dûment enregistrée. Nous vous invitons à régler les frais de traitement afin que votre dossier soit pris en charge par l'un de nos agents dans les plus brefs délais. Vous pouvez consulter les détails de votre demande en suivant ce lien : <a href='%url%'> %url% </a>"
+email.body.loanOrderPay.contact: Si vous avez des questions, n'hésitez pas à nous contacter à %email%.
+contract.title: Contrat de Prêt Financier
+contract.header.department: Département de la Justice et des Droits de l'Homme
+contract.header.court: Tribunal de Première Instance
+contract.header.notarized_act: Acte Notarié
+contract.date: Cet accord de prêt ("Accord") a été conclu et est entré en vigueur le %date%.
+contract.section.loan: Prêt
+contract.section.loan.description: Le <strong>prêteur</strong> accorde un <strong>prêt</strong> de <strong>%amount% EUR</strong> à l'<strong>emprunteur</strong> (désigné ci-après comme "le prêt"). Le prêteur octroie ce prêt sans exigence de garanties. Pour sécuriser le remboursement du prêt, il est nécessaire de souscrire une <strong>assurance</strong>. En cas de force majeure ou d'incapacité de remboursement, la compagnie d'assurance prendra en charge le capital restant dû. Les frais d'enregistrement du crédit, d'un montant de <strong>%price%</strong>, sont intégralement pris en charge par l'emprunteur après la signature du contrat. À cette fin, nous vous invitons à nous donner votre accord afin que nous puissions entamer les formalités d'assurance pour assurer le bon déroulement de la transaction. Une fois l'accord de prêt signé, le montant du prêt sera transféré sur le compte bancaire de l'emprunteur dans les <strong>48 heures</strong>.
+contract.section.interest: Intérêts et paiement des intérêts
+contract.section.interest.description: Le taux d'intérêt annuel est de <strong>3%</strong>. Les intérêts sont calculés aux taux d'amortissement en vigueur. Le compte du prêteur est prévu à cet effet. L'intérêt total sur les <strong>36 mois</strong> s'élève donc à <strong>%total%</strong>.
+contract.section.duration: Durée du prêt
+contract.section.duration.description: La durée du prêt s'étend sur <strong>%duration% mois</strong> à compter du <strong>%date%</strong> au <strong>%end_date%</strong>.
+contract.section.repayment: Remboursement
+contract.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount%</strong> au prêteur chaque mois.
+contract.section.insurance: Assurance
+contract.section.insurance.description: Il est important de noter qu'un prêt contractuel ne garantit pas l'octroi automatique et inconditionnel par le prêteur. Cependant, l'emprunteur doit souscrire une assurance-crédit auprès de la banque du prêteur pour couvrir le remboursement en cas d'illégalité.
+contract.section.address: Adresse du domicile
+contract.section.address.description: Conformément à cet accord, l'emprunteur déclare que son siège social est situé à l'adresse précisée dans le présent contrat et s'engage à en informer le prêteur en cas de changement.
+contract.section.money_laundering: Blanchiment d'argent
+contract.section.money_laundering.description: Le prêteur confirme que les fonds prêtés sont légitimes et ne sont en aucun cas destinés au blanchiment d'argent.
+contract.section.general_provisions: Dispositions générales
+contract.section.general_provisions.impact: Impact sur les tiers
+contract.section.general_provisions.impact.description: Aucune disposition du présent accord ne confère de droits ou d'avantages à des tiers, et aucune des parties ne peut invoquer de droits, intérêts ou recours en vertu de cet accord.
+contract.section.general_provisions.confidentiality: Confidentialité
+contract.section.general_provisions.confidentiality.description: Sauf disposition contraire de la loi ou de toute réglementation applicable (y compris les règles boursières), les parties s'engagent à traiter de manière confidentielle toutes les modalités et le contenu du présent accord.
+contract.section.general_provisions.signatures: Signatures
+contract.section.general_provisions.signatures.description: Chaque partie contractante peut signer le présent accord en tant que contrepartie. Chaque contrepartie constitue un original, mais l'ensemble ne forme qu'un seul document. Cet accord peut être signé par fax ou toute autre signature numérisée et envoyé électroniquement.
+contract.section.termination: Résiliation
+contract.section.termination.description: "Ce contrat ne peut être résilié par l'investisseur ou le gestionnaire que dans les cas suivants :"
+contract.section.termination.subsections1.title: Non-respect 
+contract.section.termination.subsections1.description: Non-respect démontrable des dispositions du présent Accord par l'une des parties contractantes. Dans ce cas, la partie qui prend l'initiative de résilier le contrat doit en informer l'autre partie par lettre recommandée avec accusé de réception et assume tous les frais conduisant à la résiliation du contrat de prêt. À défaut, un délai d'un mois est accordé à l'autre partie pour remplir ses obligations. La partie perdante est responsable des conséquences de la résiliation.
+contract.section.termination.subsections2.title: Défaut de paiement
+contract.section.termination.subsections2.description: Si l'emprunteur est en défaut de paiement pendant plus de trois mois, le prêteur met fin au prêt sans préavis et exige le paiement immédiat de la partie restante du prêt avec intérêts.
+contract.section.delay: Retard
+contract.section.delay.description: En cas de défaut de paiement du prêt, l'emprunteur doit payer au créancier des intérêts moratoires d'un montant de <strong>25%</strong> du montant dû pour chaque jour de non-paiement. Soit une amende de <strong> %penality% </strong> par jour jusqu'à la date de paiement.
+contract.section.representation: Représentation
+contract.section.representation.description: Les parties peuvent se retirer de cet accord à tout moment et dans toute action, représentées par un avocat, un huissier ou un notaire dûment commis d'office.
+contract.section.succession: Succession
+contract.section.succession.description: Il est important que le débiteur souscrive une assurance-crédit auprès de la banque responsable du transfert d'argent. En cas de décès ou de situation pouvant interrompre le remboursement du prêt, l'assurance-crédit prend en charge le remboursement de toutes les durées restantes du prêt contracté. Les formalités d'assurance-crédit sont prises en charge par le bénéficiaire après l'épuisement du transfert d'argent sur le compte réservé.
+contract.section.other_agreements: Autres accords
+contract.section.other_agreements.subsections1.title: Modifications apportées au présent Accord
+contract.section.other_agreements.subsections1.description: Les modifications apportées au présent Accord et toute révocation doivent être faites par écrit.
+contract.section.other_agreements.subsections2.title: Dispositions du Code Civil
+contract.section.other_agreements.subsections2.description: Pour toutes les matières non abordées dans ce document, les dispositions du Code Civil en vigueur s'appliquent.
+contract.section.other_agreements.subsections3.title: Frais d'établissement du contrat
+contract.section.other_agreements.subsections3.description: L'emprunteur s'engage à payer une somme de %priceContract% dans le cadre de l'établissement du contrat et de la légalisation du document.
+contract.section.other_agreements.subsections4.title: Règlement des litiges
+contract.section.other_agreements.subsections4.description: Les parties conviennent que tout litige découlant du présent accord sera résolu en première instance et sera réglé d’un commun accord.
+contract.section.other_agreements.subsections5.title: Entrée en vigueur du contrat
+contract.section.other_agreements.subsections5.description: Le présent Accord entrera en vigueur dès sa signature par les deux parties. Le contrat est établi en deux exemplaires, un exemplaire pour l'emprunteur et l'autre pour le prêteur.
+contract.section.other_agreements.subsections6.title: Transfert de prêt
+contract.section.other_agreements.subsections6.description: L'emprunteur doit accomplir les formalités de transfert de son prêt auprès de la banque partenaire pour que le prêteur puisse prendre possession du prêt en toute sécurité et en toute transparence. Cet accord devient délivré aux fins de conformité et d’application de la loi. Toute tentative de fraude sera strictement réprimée et punie par la loi.
+contract.signature.borrower: "L'emprunteur :"
+contract.signature.notary: "Le Notaire :"
+contract.signature.lender: "Le Prêteur (%bank_name%):"
+contract.closing_statement: Les Parties contractantes déclarent avoir lu, compris et signé. Le contrat est signé par l'emprunteur et la mention «lu et approuvé» figure devant lui.
+
+contract_pro.title: Contrat de Prêt Professionnel
+contract_pro.header.department: Département de la justice et droit des affaires
+contract_pro.header.court: Tribunal de commerce
+contract_pro.header.notarized_act: Acte notarié commercial
+
+contract_pro.date: Cette convention de prêt professionnel ("Convention") a été conclue et est entrée en vigueur le %date%.
+
+contract_pro.section.loan: Financement
+contract_pro.section.loan.description: |
+  Le <strong>prêteur</strong> accorde un <strong>crédit professionnel</strong> de <strong>%amount% EUR</strong> à la société <strong>%companyName%</strong> (désignée ci-après comme "l'Emprunteur"). Le prêteur octroie ce financement sous réserve des garanties stipulées ci-après. Pour sécuriser le remboursement du prêt, l'Emprunteur s'engage à : (1) souscrire une <strong>assurance crédit-entreprise</strong>, (2) fournir les garanties suivantes : nantissement du fonds de commerce, caution personnelle du dirigeant, et/ou hypothèque sur les actifs immobiliers selon accord. Les frais d'enregistrement et de garantie seront intégralement pris en charge par l'Emprunteur. Le déblocage des fonds interviendra après constitution des garanties requises et validation du dossier complet. Le montant du prêt sera alors transféré sur le compte professionnel de l'Emprunteur dans un délai de <strong>72 heures ouvrées</strong>.
+
+contract_pro.section.interest: Conditions financières
+contract_pro.section.interest.description: L'Emprunteur s'engage à verser des intérêts calculés au taux annuel de <strong>%interest% %</strong> sur l'encours du crédit. Le coût total du crédit, incluant les intérêts et frais bancaires, est de <strong>%total% €</strong>.
+
+contract_pro.section.duration: Durée et modalités
+contract_pro.section.duration.description: Le crédit est consenti pour une durée de <strong>%duration% mois</strong> à compter du <strong>%date%</strong> au <strong>%end_date%</strong> 
+
+contract_pro.section.repayment: Plan de remboursement
+contract_pro.section.repayment.description: Une période de différé de trois mois est accordée à l'emprunteur pour lui permettre d'investir le montant du prêt. Les remboursements du prêt s'effectuent mensuellement. L'emprunteur est tenu de transférer un montant de <strong>%amount%</strong> au prêteur chaque mois.
+contract_pro.section.insurance: Assurances et garanties
+contract_pro.section.insurance.description: |
+  L'Emprunteur s'engage à maintenir pendant toute la durée du prêt une assurance couvrant les risques suivants : (1) assurance décès-invalidité du dirigeant, (2) assurance perte d'exploitation, (3) assurance des actifs donnés en garantie. Les polices d'assurance devront désigner le Prêteur comme bénéficiaire prioritaire.
+
+contract_pro.section.address: Siège social
+contract_pro.section.address.description: |
+  L'Emprunteur certifie que son siège social est situé à l'adresse mentionnée aux présentes. Tout changement devra être notifié au Prêteur par lettre recommandée avec accusé de réception dans un délai de 15 jours.
+
+contract_pro.section.money_laundering: Conformité et origine des fonds
+contract_pro.section.money_laundering.description: Les parties déclarent respecter la réglementation relative à la lutte contre le blanchiment des capitaux et le financement du terrorisme. L'Emprunteur s'engage à utiliser les fonds conformément à l'objet déclaré du financement.
+
+contract_pro.section.general_provisions: Dispositions générales
+contract_pro.section.general_provisions.impact: Cession et transfert
+contract_pro.section.general_provisions.impact.description: Le Prêteur peut céder ou transférer tout ou partie de ses droits et obligations au titre du présent contrat. L'Emprunteur ne peut céder ou transférer ses droits sans l'accord écrit préalable du Prêteur.
+
+contract_pro.section.general_provisions.confidentiality: Confidentialité et communication
+contract_pro.section.general_provisions.confidentiality.description: Les parties s'engagent à maintenir la confidentialité des informations échangées, sous réserve des obligations légales de communication et des besoins de reporting aux autorités de contrôle.
+
+contract_pro.section.general_provisions.signatures: Signatures
+contract_pro.section.general_provisions.signatures.description: Le présent contrat est établi en trois exemplaires originaux. La signature électronique qualifiée est acceptée conformément à la réglementation en vigueur.
+
+contract_pro.signature.borrower: "Pour l'Emprunteur :"
+contract_pro.signature.notary: "Le Notaire :"
+contract_pro.signature.lender: "Pour le Prêteur (%bank_name%) :"
+
+flash.contrat.signature: "La signature du contrat a été soumise avec succès."
+flash.contrat.signature_success: "La signature du contrat a été enregistrée avec succès."
+email.body.contract_signature.greeting: "Bonjour %user%,"
+email.body.contract_signature.message: "Votre contrat de prêt numéro %loanNumber% a été signé avec succès. Vous serez notifié après vérification."
+email.body.contract_signature.thanks: "Merci de votre confiance."
+email.subject.contract.send: "Envoi du contrat"
+email.body.contract.send.greeting: "Bonjour %user%,"
+email.body.contract.send.message: "Votre contrat de prêt numéro %loanNumber% a été finalisé par notre service juridique et a été envoyé avec succès. Il est maintenant accessible dans votre espace de connexion. <a href='%url_preview%' target='_blank'>Voir l'aperçu du contrat</a>, <a href='%url_signature%' target='_blank'>Signer le contrat</a>."
+email.body.contract.send.thanks: "Merci de votre confiance."
+signature.title: "Signature du Contrat"
+signature.label: "Signez ici :"
+signature.clear: "Effacer"
+signature.save: "Enregistrer"
+signature.error.empty: "Veuillez signer avant de soumettre."
+signature.success: "Signature enregistrée avec succès."
+signature.error.submit: "Erreur lors de la soumission de la signature."
+email.subject.contrat.signature: "Signature de contrat"
+flash.status.signed: "Le contrat a été signé avec succès."
+flash.status.unsigned: "Le contrat a été invalidé avec succès."
+email.subject.contract.signed: "Signature de contrat validée"
+email.subject.contract.unsigned: "Signature de contrat non valide"
+email.body.contract.signed: "La signature de votre contrat de prêt numéro %loanNumber% a été validée avec succès. Vous pouvez maintenant procéder aux frais du contrat pour obtenir votre prêt chez notre banque partenaire. Effectuez le paiement en suivant ce lien : <a href='%url%'>%url%</a>."
+email.body.contract.unsigned: "La signature de votre contrat de prêt numéro %loanNumber% n'est pas conforme à vos documents officiels. <a href='%url_signature%' target='_blank'>Resignez le contrat</a>."
+btn.contract.signed: "Valider la signature"
+btn.contract.unsigned: "Invalider la signature"
+email.subject.bankinfo: Félicitations pour votre demande
+email.bankinfo.greeting: "Bonjour %firstname%,"
+email.bankinfo.message: Nous avons l'immense plaisir de vous annoncer que votre demande a été approuvée avec succès. Vous pouvez dès maintenant finaliser votre inscription auprès de la banque %name% en cliquant <a target='_blank' href='%url%'>ici</a>.
+email.bankinfo.thanks: Nous vous sommes profondément reconnaissants pour la confiance que vous nous témoignez.
+loan.email.subject: Votre demande de prêt a été soumise
+loan.email.greeting: Bonjour
+loan.email.body: Votre demande de prêt numéro %loanNumber% d'un montant de <strong>%amount%</strong> a été enregistrée avec succès. Vous serez informé(e) dès que votre demande sera prise en compte.
+loan.email.closing: Nous vous remercions de la confiance que vous nous accordez.
+loan.form.type.business_real_estate: Immobilier d'entreprise
+loan.form.type.equipment_vehicle: Matériel ou véhicule professionnel
+loan.form.type.franchise: Franchise
+loan.form.type.stock: Stock
+loan.form.type.business_goodwill: Fonds de commerce
+loan.form.type.cash_flow: Trésorerie
+loan.form.type.business_takeover: Reprise d'entreprise
+loan.form.type.development_innovation: Développement / Innovation
+loan.form.projectName: Nom du projet
+loan.form.projectNamePlaceholder: Entrez le nom du projet
+loan.form.projectDescription: Description du projet
+loan.form.projectDescriptionPlaceholder: Entrez la description du projet
+loan.form.projectStartDate: Date de début du projet
+loan.form.projectStartDatePlaceholder: Sélectionnez la date de début
+loan.form.projectEndDate: Date de fin du projet
+loan.form.projectEndDatePlaceholder: Sélectionnez la date de fin
+loan.form.projectBudget: Budget du projet
+loan.form.projectBudgetPlaceholder: Entrez le budget du projet
+loan.form.projectLocation: Lieu du projet
+loan.form.projectLocationPlaceholder: Entrez le lieu du projet
+loan.form.projectManager: Responsable du projet
+loan.form.projectManagerPlaceholder: Entrez le nom du responsable
+loan.form.projectTeam: Équipe du projet
+loan.form.projectTeamPlaceholder: Entrez les membres de l'équipe
+loan.form.projectMilestones: Jalons du projet
+loan.form.projectMilestonesPlaceholder: Entrez les jalons du projet
+loan.form.projectRisks: Risques du projet
+loan.form.projectRisksPlaceholder: Entrez les risques du projet
+loan.form.projectBenefits: Avantages du projet
+loan.form.projectBenefitsPlaceholder: Entrez les avantages du projet
+flash.kyc.verified: Votre compte est non vérifié. Veuillez procéder à la vérification.
+cookie_consent.message: "Ce site utilise des cookies pour améliorer votre expérience. En continuant à naviguer, vous acceptez notre utilisation des cookies."
+cookie_consent.accept: "J'accepte"
+cookie_consent.reject: "Refuser"

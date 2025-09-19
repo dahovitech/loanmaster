@@ -1,0 +1,16 @@
+# Routes pour l'administration des traductions - Système Oragon
+# Auteur: Prudence ASSOGBA
+
+admin_translations:
+    resource: 'App\Controller\Admin\TranslationController'
+    type: attribute
+    prefix: '/admin'
+    requirements:
+        _locale: '%app.supported_locales%'
+
+# Routes optionnelles pour les traductions publiques
+oragon_translations:
+    resource: 'App\Controller\TranslationController'
+    type: attribute
+    prefix: '/translations'
+    condition: "context.getMethod() in ['GET', 'POST']"

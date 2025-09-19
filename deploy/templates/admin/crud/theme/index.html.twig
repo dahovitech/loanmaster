@@ -1,0 +1,58 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}
+	{{ 'themes'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{ 'themes'|trans }}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_admin_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ 'themes'|trans }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card">
+				<div class="card-body">
+					<a class="btn btn-block btn-outline-primary mb-3" href="{{ path('app_crud_new', {'entityName': 'Theme'}) }}">{{ 'createNewTheme'|trans }}</a>
+					<div class="table-responsive">
+						<table id="tab2" class="table table-striped table-bordered" style="width:100%">
+							<thead>
+								<tr>
+									<th>{{ 'name'|trans }}</th>
+									<th>{{ 'image'|trans }}</th>
+									<th>{{ 'actions'|trans }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for theme in entities %}
+									<tr>
+										<td>{{ theme.name|trans }}</td>
+										<td><img src="{{ theme.image }}" alt="{{ theme.name|trans }}" width="50"></td>
+
+										<td>
+											<a class="btn btn-sm btn-primary" href="{{ path('app_crud_update', {'entityName': 'Theme', 'id': theme.id}) }}">{{ 'edit'|trans }}</a>
+											{{ include('@admin/crud/theme/_delete_form.html.twig') }}
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

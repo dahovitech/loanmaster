@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+	lang="{{ app.request.locale }}">
+	<!--<< Header Area >>-->
+	<head>
+		<!-- ========== Meta Tags ========== -->
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="{{setting('title')}}">
+		<meta name="robots" content="noindex, nofollow">
+		<title>
+			{% block title %}
+				{{setting('title')}}
+			{% endblock %}
+		</title>
+		<!--<< Favcion >>-->
+		<link
+		rel="shortcut icon" href="{{ asset(setting('favicon')?setting("favicon"):'theme/land/assets/img/favicon.svg') }}">
+
+		<!-- fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com/">
+		<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/bootstrap/css/bootstrap.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/bootstrap-select/bootstrap-select.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/animate/animate.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/fontawesome/css/all.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/jquery-ui/jquery-ui.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/jarallax/jarallax.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/nouislider/nouislider.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/nouislider/nouislider.pips.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/tiny-slider/tiny-slider.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/easilon-icons/style.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/owl-carousel/css/owl.carousel.min.css') }}"/>
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/owl-carousel/css/owl.theme.default.min.css') }}"/>
+		<link
+		rel="stylesheet" href="{{ asset('theme/loan/assets/vendors/slick/slick.css') }}"/>
+
+		<!-- template styles -->
+		<link rel="stylesheet" href="{{ asset('theme/loan/assets/css/easilon.css') }}"/>
+	</head>
+	<body class="custom-cursor">
+		<div class="custom-cursor__cursor"></div>
+		<div class="custom-cursor__cursor-two"></div>
+
+		<div class="preloader">
+			<div class="preloader__image" style="background-image: url({{asset(setting('favicon'))}});"></div>
+		</div>
+        <div class="page-wrapper">
+		{% block header %}
+			{{ render(controller('App\\Controller\\WidgetController::front_header')) }}
+		{% endblock %}
+		{% block body %}{% endblock %}
+		{% block footer %}
+			{{ render(controller('App\\Controller\\WidgetController::front_footer')) }}
+		{% endblock %}
+        </div>
+		<script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js') }}"></script>
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<script>
+					swal("{{ message }}", " ", "{{ label }}");
+				</script>
+			{% endfor %}
+		{% endfor %}
+
+		<script src="{{ asset('theme/loan/assets/vendors/jquery/jquery-3.7.0.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/bootstrap-select/bootstrap-select.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jarallax/jarallax.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-ui/jquery-ui.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-appear/jquery.appear.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-validate/jquery.validate.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/nouislider/nouislider.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/tiny-slider/tiny-slider.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/wnumb/wNumb.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/owl-carousel/js/owl.carousel.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/slick/slick.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/wow/wow.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/imagesloaded/imagesloaded.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/isotope/isotope.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/countdown/countdown.min.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-circleType/jquery.circleType.js') }}"></script>
+		<script src="{{ asset('theme/loan/assets/vendors/jquery-lettering/jquery.lettering.min.js') }}"></script>
+		<!-- template js -->
+		<script src="{{ asset('theme/loan/assets/js/easilon.js') }}"></script>
+		{{ include('@theme/'~setting('theme')~'/inc/cookie_consent.html.twig') }}
+	</body>
+</html>

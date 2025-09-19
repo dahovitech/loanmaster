@@ -1,0 +1,181 @@
+{% extends '@theme/base.html.twig' %}
+
+{% block body %}
+  <!-- Hero Start -->
+        <section  class="d-table w-100" style="padding-top: 100px;background: url({{asset('theme/docu/assets/images/digital/home-bg.png')}}) center center" id="home">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="title-heading mt-4">
+                            
+                            <h1 class=" mb-3">{{"front.page.home.h1"|trans({'%siteName%': setting('title')})|raw}}</h1>
+                            <p class="para-desc text-muted">{{"front.page.home.welcome"|trans|raw}}</p>
+                            <div class="mt-4 pt-2">
+                                <a href="{{ path('register') }}" class="btn btn-pills btn-primary m-1">{{"btn.fait"|trans}}</a>
+                                {# <a href="#!" data-type="youtube" data-id="yba7hPeTSjk" class="btn btn-icon btn-pills btn-primary m-1 lightbox"><i data-feather="video" class="icons"></i></a><span class="fw-bold text-uppercase small align-middle ms-1">{{"btn.watch_now"|trans}}</span> #}
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-lg-6 col-md-6 mt-4 pt-2 mt-sm-0 pt-sm-0">
+                        <img src="{{asset('img/bg3.png')}}" class="img-fluid" alt="">
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- Hero End -->
+
+        <!-- Partners start -->
+        <section class="py-4 border-bottom border-top">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-6 text-center py-4">
+                        <img src="{{asset('img/otan.png')}}" class="avatar avatar-ex-large" alt="">
+                    </div><!--end col-->
+
+                    <div class="col-md-3 col-6 text-center py-4">
+                        <img src="{{asset('img/un.png')}}" class="avatar avatar-ex-large" alt="">
+                    </div><!--end col-->
+                    
+                    <div class="col-md-3 col-6 text-center py-4">
+                        <img src="{{asset('img/euro.png')}}" class="avatar avatar-ex-large" alt="">
+                    </div><!--end col-->
+                    
+                    <div class="col-md-3 col-6 text-center py-4">
+                        <img src="{{asset('img/cedeao.png')}}" class="avatar avatar-ex-large" alt="">
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- Partners End -->
+
+        <!-- Start -->
+        <section class="section overflow-hidden">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="card border-0 text-center features feature-primary feature-clean rounded p-4">
+                            <div class="icons text-center mx-auto">
+                                <i class="uil uil-flip-v d-block rounded h3 mb-0"></i>
+                            </div>
+
+                            <div class="card-body p-0 mt-4">
+                                <a href="javascript:void(0)" class="title h5 text-dark">{{"front.page.home.step1.title"|trans|raw}}</a>
+                                <p class="text-muted mt-3 mb-0">{{"front.page.home.step1.text"|trans|raw}}</p>
+                                <div class="mt-2">
+                                    <a href="{{ path('register') }}" class="read-more">{{'btn.fait'|trans}} <i data-feather="arrow-right" class="fea icon-sm"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 mt-sm-0 pt-4 pt-sm-0">
+                        <div class="card border-0 text-center features feature-primary feature-clean rounded p-4">
+                            <div class="icons text-center mx-auto">
+                                <i class="uil uil-layer-group d-block rounded h3 mb-0"></i>
+                            </div>
+
+                            <div class="card-body p-0 mt-4">
+                                <a href="javascript:void(0)" class="title h5 text-dark">{{"front.page.home.step2.title"|trans|raw}}</a>
+                                <p class="text-muted mt-3 mb-0">{{"front.page.home.step2.text"|trans|raw}}</p>
+                                <div class="mt-2">
+                                    <a href="{{ path('register') }}" class="read-more">{{'btn.fait'|trans}} <i data-feather="arrow-right" class="fea icon-sm"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-lg-4 col-md-6 col-12 mt-4 mt-lg-0 pt-4 pt-lg-0">
+                        <div class="card border-0 text-center features feature-primary feature-clean rounded p-4">
+                            <div class="icons text-center mx-auto">
+                                <i class="uil uil-object-group d-block rounded h3 mb-0"></i>
+                            </div>
+
+                            <div class="card-body p-0 mt-4">
+                                <a href="javascript:void(0)" class="title h5 text-dark">{{"front.page.home.step3.title"|trans|raw}}</a>
+                                <p class="text-muted mt-3 mb-0">{{"front.page.home.step3.text"|trans|raw}}</p>
+                                <div class="mt-2">
+                                    <a href="{{ path('register') }}" class="read-more">{{'btn.fait'|trans}} <i data-feather="arrow-right" class="fea icon-sm"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+
+            <div class="container mt-100 mt-60">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img src="{{asset('img/about1.png')}}" class="img-fluid" alt="">
+                    </div><!--end col-->
+
+                    <div class="col-md-6 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                        <div class="section-title">
+                            <h4 class="title mb-4">{{"front.page.about.title"|trans|raw|upper}}</h4>
+                            <p class="text-muted">{{"front.page.home.about"|trans({'%siteName%': setting('title')})|raw}}</p>
+                            <ul class="list-unstyled text-muted">
+                                {{"front.page.home.aboutList"|trans({'%siteName%': setting('title')})|raw}}
+                            </ul>
+                            <div class="mt-4 pt-2">
+                                <a href="{{ path('about') }}" class="btn btn-primary m-1">{{'btn.readMore'|trans}} <i class="uil uil-angle-right-b"></i></a>
+                                {# <a href="#!" data-type="youtube" data-id="yba7hPeTSjk" class="btn btn-icon btn-pills btn-primary m-1 lightbox"><i data-feather="video" class="icons"></i></a><span class="fw-bold text-uppercase small align-middle ms-1">{{"btn.watch_now"|trans}}</span> #}
+                            </div>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- End -->
+
+        <!-- Testi Start -->
+        <section class="section bg-light" style="background: url({{asset('theme/docu/assets/images/digital/testi.png')}}) center center;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9">
+                        <div class="tiny-single-item">
+                            {% for i in range(1, 6) %}
+                                 <div class="tiny-slide">
+                                    <div class="client-testi text-center">
+                                        <p class="h5 text-muted fst-italic fw-normal">
+                                        {% set comment = "front.page.testimonial.user"~i~".comment" %}
+                                        {{comment|trans|raw}}
+                                        </p>
+                                        <div class="commenter mt-5">
+                                            <img src="{{ asset('img/user.png') }}" class="avatar avatar-medium rounded-circle d-block mx-auto shadow-lg" alt="">
+                                            <div class="content mt-4">
+                                                <ul class="list-unstyled h6 text-warning mb-0">
+                                                    <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star"></i></li>
+                                                </ul>
+                                                {% set name = "front.page.testimonial.user"~i~".name" %}
+                                                <h5 class="text-primary mb-0">{{name|trans|raw}}</h5>
+                                                <small class="text-muted">{{"front.page.testimonial.client"|trans}}</small>
+                                            </div>
+                                        </div>
+                                    </div><!--end review content-->
+                                </div>
+                            {% endfor %}
+                           
+                        </div><!--end owl carousel-->
+                    </div><!--end col-->
+                </div><!--end row-->
+            </div><!--end container-->
+        </section><!--end section-->
+        <!-- Testi End -->
+
+       
+        <div class="position-relative">
+            <div class="shape overflow-hidden text-light">
+                <svg viewBox="0 0 2880 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M720 125L2160 0H2880V250H0V125H720Z" fill="currentColor"></path>
+                </svg>
+            </div>
+        </div>
+        <!-- End -->
+
+       
+
+{% endblock %}

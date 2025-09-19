@@ -1,0 +1,34 @@
+<section class="services-page section-space">
+	<div class="container">
+		<div class="row gutter-y-30">
+			{% for service in services() %}
+				<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+					<div class="service-card">
+						<a href="{{path('service_show',{slug: service.slug})}}" class="service-card__image">
+							<img src="{{asset(service.image)}}" alt="{{service.name}}">
+						</a>
+						<!-- /.service-card__image -->
+						<div class="service-card__content">
+							<h3 class="service-card__title">
+								<a href="{{path('service_show',{slug: service.slug})}}">{{service.name}}</a>
+							</h3>
+							<!-- /.service-card__title -->
+							<a href="{{path('service_show',{slug: service.slug})}}" class="service-card__btn easilon-btn">
+								<span class="easilon-btn__icon">
+									<i class="icon-right-arrow"></i>
+								</span>
+							</a>
+							<!-- /.service-card__btn -->
+						</div>
+						<!-- /.service-card__content -->
+					</div>
+					<!-- /.service-card -->
+				</div>
+				<!-- /.col-lg-4 col-md-6 -->
+			{% endfor %}
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container -->
+</section>
+<!-- /.services-page section-space -->

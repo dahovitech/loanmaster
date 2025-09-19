@@ -1,0 +1,15 @@
+{# templates/emails/confirmation_email.html.twig #}
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'registration.email.subject'|trans }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'registration.email.greeting'|trans }}</p>
+    <p>{{ 'registration.email.message'|trans }}</p>
+    <a target="_bank" href="{{ url }}" class="button">
+        {{ 'registration.email.confirm_link'|trans }}
+    </a>
+    <p>{{ 'registration.email.thanks'|trans }}</p>
+{% endblock %}

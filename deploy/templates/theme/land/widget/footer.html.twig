@@ -1,0 +1,82 @@
+<!--<< Footer Section Start >>-->
+<footer class="footer-section section-bg-3">
+	<div class="container">
+		<div class="footer-top">
+			<div class="footer-logo wow fadeInUp" data-wow-delay=".3s">
+				<a href="index.html">
+					<img width="200" src="{{setting('logoLight')}}" alt="img">
+				</a>
+			</div>
+
+		</div>
+		<div class="footer-widgets-wrapper">
+			<div class="row">
+				<div class="col-xl-6 col-sm-12 col-md-8 col-lg-6 wow fadeInUp" data-wow-delay=".3s">
+					<div class="single-footer-widget me-4">
+						<div class="widget-head">
+							<h3>{{"front.menu.newsletter"|trans}}</h3>
+						</div>
+						<div class="footer-content">
+							<p>
+								{{"front.page.newsletter"|trans}}
+							</p>
+							<form method="POST" action="{{path("newletter")}}" class="newsletter-items">
+								<div class="form-clt">
+									<input type="text" name="email" id="email2" placeholder="{{"form.newsletter"|trans}}">
+								</div>
+								<button class="theme-btn hover-white" type="submit">
+									<span>{{'btn.subscribe'|trans}}
+										<i class="fas fa-chevron-right"></i>
+									</span>
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 ps-lg-5 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".5s">
+					<div class="single-footer-widget">
+						<div class="widget-head">
+							<h5>{{"linkUtil"|trans}}</h5>
+						</div>
+						<ul class="list-items">
+							{% for page in pages() %}
+								<li>
+									<a href="service-details.html">
+										{{page.title}}
+									</a>
+								</li>
+							{% endfor %}
+
+						</ul>
+					</div>
+				</div>
+				<div class="col-xl-3 ps-lg-5 col-sm-6 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".7s">
+					<div class="single-footer-widget">
+
+						<div class="footer-address-text">
+
+							<h5>{{"phone"|trans}}</h5>
+							<a href="mailto:{{setting('email')}}" class="link-mail">{{setting('email')}}</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-bottom style-2">
+		<div class="container">
+			<div class="footer-wrapper d-flex align-items-center justify-content-between">
+				<p class="wow fadeInUp color-2" data-wow-delay=".4s">
+					{{"Copyright"|trans}}
+					©
+					<script>
+						document.write(new Date().getFullYear())
+					</script>
+					{{setting('title')}}.
+					{{"AllRightsReserved"|trans}}.
+				</p>
+			</div>
+		</div>
+	</div>
+</footer>

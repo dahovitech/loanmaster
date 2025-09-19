@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ country_name(country.code) }}</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				line-height: 1.6;
+				color: #333;
+			}
+			h1,
+			h2 {
+				color: #2c3e50;
+			}
+			.container {
+				width: 90%;
+				margin: 0 auto;
+			}
+			.country-image {
+				width: 100%;
+				max-width: 600px;
+				margin-bottom: 20px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 20px;
+			}
+			th,
+			td {
+				border: 1px solid #ddd;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+
+			.steps li {
+				margin-bottom: 10px;
+			}
+			.steps i {
+				margin-right: 10px;
+				color: #3498db;
+			}
+
+			.theme-btn {
+				background-color: red;
+				font-weight: 700;
+				color: white;
+				transition: all 0.4s ease-in-out;
+				text-transform: capitalize;
+				position: relative;
+				overflow: hidden;
+				font-size: 16px;
+				padding: 24px 45px;
+				border-radius: 0;
+				z-index: 9;
+				display: inline-block;
+				line-height: 1;
+			}
+			.text-center {
+				text-align: center !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<img style="width: 200" src="{{ absolute_url(asset(setting('logoDark'))) }}" alt="{{ country_name(country.code) }}" class="country-image">
+		</div>
+		<div class="container">
+			<h1 style="text-align: center">{{ country_name(country.code) }}</h1>
+
+			<img src="{{ absolute_url(asset(country.image)) }}" alt="{{ country_name(country.code) }}" class="country-image">
+
+			<div class="country-content">
+				{{ country.description|raw }}
+			</div>
+
+			<h2>{{ 'front.menu.service'|trans }}</h2>
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th>{{ 'tab.label'|trans }}</th>
+						<th>{{ 'tab.price'|trans }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if country.ordinaryPassportPrice %}
+						<tr>
+							<td>{{ 'ordinaryPassport'|trans }}</td>
+							<td>{{ country.ordinaryPassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.diplomaticPassportPrice %}
+						<tr>
+							<td>{{ 'diplomaticPassport'|trans }}</td>
+							<td>{{ country.diplomaticPassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.servicePassportPrice %}
+						<tr>
+							<td>{{ 'servicePassport'|trans }}</td>
+							<td>{{ country.servicePassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.businessTravelPassportPrice %}
+						<tr>
+							<td>{{ 'businessTravelPassport'|trans }}</td>
+							<td>{{ country.businessTravelPassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.emergencyPassportPrice %}
+						<tr>
+							<td>{{ 'emergencyPassport'|trans }}</td>
+							<td>{{ country.emergencyPassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.collectivePassportPrice %}
+						<tr>
+							<td>{{ 'collectivePassport'|trans }}</td>
+							<td>{{ country.collectivePassportPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaTouristiquePrice %}
+						<tr>
+							<td>{{ 'touristVisa'|trans }}</td>
+							<td>{{ country.visaTouristiquePrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaAffairesPrice %}
+						<tr>
+							<td>{{ 'businessVisa'|trans }}</td>
+							<td>{{ country.visaAffairesPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaEtudiantPrice %}
+						<tr>
+							<td>{{ 'studentVisa'|trans }}</td>
+							<td>{{ country.visaEtudiantPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaTravailPrice %}
+						<tr>
+							<td>{{ 'workVisa'|trans }}</td>
+							<td>{{ country.visaTravailPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaTransitPrice %}
+						<tr>
+							<td>{{ 'transitVisa'|trans }}</td>
+							<td>{{ country.visaTransitPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.visaResidentPrice %}
+						<tr>
+							<td>{{ 'residentVisa'|trans }}</td>
+							<td>{{ country.visaResidentPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.permisMotoPrice %}
+						<tr>
+							<td>{{ 'motorcycleLicense'|trans }}</td>
+							<td>{{ country.permisMotoPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.permisVoiturePrice %}
+						<tr>
+							<td>{{ 'carLicense'|trans }}</td>
+							<td>{{ country.permisVoiturePrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.permisPoidsLourdPrice %}
+						<tr>
+							<td>{{ 'heavyTruckLicense'|trans }}</td>
+							<td>{{ country.permisPoidsLourdPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.permisAutocarPrice %}
+						<tr>
+							<td>{{ 'busLicense'|trans }}</td>
+							<td>{{ country.permisAutocarPrice }}
+								€</td>
+						</tr>
+					{% endif %}
+					{% if country.permisRemorquePrice %}
+						<tr>
+							<td>{{ 'trailerLicense'|trans }}</td>
+							<td>{{ country.permisRemorquePrice }}
+								€</td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
+
+			<h2>{{ 'yourProcess'|trans }}</h2>
+			<ol class="steps">
+				{% for step in steps() %}
+					<li>
+						<i class="{{step.icon}}"></i>
+						{{ step.title }}
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+		<a target="_blank"  href="{{url('register')}}" class="theme-btn w-100 text-center">
+			<span>
+				<i class="fas fa-file-pdf me-3"></i>
+				{{"btn.register"|trans}}</span>
+		</a>
+	</body>
+</html>

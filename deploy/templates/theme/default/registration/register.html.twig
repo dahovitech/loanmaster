@@ -1,0 +1,50 @@
+{% extends '@theme/auth_base.html.twig' %}
+
+{% block title %}{{"front.page.register.h1"|trans}}
+{% endblock %}
+
+{% block body %}
+
+
+	<!-- Hero Start -->
+	<section class="bg-home">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7 col-md-6">
+					<div class="me-lg-5">
+						<img src="{{ asset('theme/docu/assets/images/user/signup.svg')}}" class="img-fluid d-block mx-auto" alt="">
+					</div>
+				</div>
+				<div class="col-lg-5 col-md-6">
+					<div class="card login-page shadow rounded border-0">
+						<div class="card-header  text-center">
+							<a class="logo" href="{{ path("home") }}">
+								<img src="{{ asset(setting("logoDark").getWebPath()|default('lol')) }}" height="40" class="logo-light-mode" alt="">
+							</a>
+							<h4 class="card-title">{{"front.page.register.h1"|trans}}</h4>
+
+						</div>
+						<div class="card-body">
+
+							{% for flash_error in app.flashes('verify_email_error') %}
+								<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+							{% endfor %}
+
+
+							{{ form_start(registrationForm) }}
+							{{ form_widget(registrationForm) }}
+							{{ form_end(registrationForm) }}
+						</div>
+					</div>
+					<!---->
+				</div>
+				<!--end col-->
+			</div>
+			<!--end row-->
+		</div>
+		<!--end container-->
+	</section>
+	<!--end section-->
+	<!-- Hero End -->
+
+{% endblock %}

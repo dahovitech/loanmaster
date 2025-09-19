@@ -1,0 +1,7 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %} Justificatif de paiement {% endblock %}
+
+{% block body %}
+	<a href="{{ absolute_url(asset(fil)) }}" target="_blank">Voir le justificatif de paiement</a>
+{% endblock %}

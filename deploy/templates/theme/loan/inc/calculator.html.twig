@@ -1,0 +1,57 @@
+<form action="{{path('register')}}" id="loan-calculator-01" data-form-direction="ltr" data-interest-rate="3" class="loan-calculator-form wow fadeInUp" data-wow-duration="1500ms" data-devise="{{setting('devise')}}" data-month="{{"months"|trans}}">
+	<h3 class="loan-calculator-form__title">{{ 'how_much_do_you_need'|trans }}</h3>
+	<div class="loan-calculator-form__content">
+		<div class="input-box__top">
+			<span>{{setting('devise')}}
+				5000
+			</span>
+			<span>{{setting('devise')}}
+				1500000
+			</span>
+		</div>
+		<!-- /.input-box__top -->
+		<div class="input-box">
+			<div class="range-slider-count" id="loan-calculator-01-count"></div>
+			<input type="hidden" value="" class="min-count" id="loan-calculator-01-min-count">
+			<input type="hidden" value="" class="max-count" id="loan-calculator-01-max-count">
+		</div>
+		<!-- /.input-box -->
+		<div class="input-box__top input-box__top-border">
+			<span>1
+				{{"month"|trans}}</span>
+			<span>12
+				{{"months"|trans}}</span>
+		</div>
+		<!-- /.input-box__top -->
+		<div class="input-box">
+			<div class="range-slider-month" id="loan-calculator-01-month"></div>
+			<input type="hidden" value="" class="min-month" id="loan-calculator-01-min-month">
+			<input type="hidden" value="" class="max-month" id="loan-calculator-01-max-month">
+		</div>
+		<!-- /.input-box -->
+		<p>
+			<span>{{ 'pay_monthly'|trans }}</span>
+			<b>{{setting('devise')}}<i class="loan-monthly-pay"></i>
+			</b>
+		</p>
+		<p>
+			<span>{{ 'term_of_use'|trans }}</span>
+			<b>
+				<i class="loan-month"></i>
+				{{"months"|trans}}</b>
+		</p>
+		<p>
+			<span>{{ 'total_pay_back_amount'|trans }}</span>
+			<b>{{setting('devise')}}<i class="loan-total"></i>
+			</b>
+		</p>
+		<button type="submit" class="easilon-btn loan-calculator-form__btn">
+			<span>{{ 'apply_for_loan'|trans }}</span>
+			<span class="easilon-btn__icon">
+				<i class="icon-right-arrow"></i>
+			</span>
+		</button>
+		<!-- /.easilon-btn -->
+	</div>
+	<!-- /.loan-calculator-form__content -->
+</form>

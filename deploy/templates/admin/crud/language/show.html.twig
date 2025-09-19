@@ -1,0 +1,92 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}language
+{% endblock %}
+
+{% block body %}
+	<h1>language</h1>
+
+	<table class="table">
+		<tbody>
+
+			<tr>
+				<th>Code</th>
+				<td>{{ entity.code }}</td>
+			</tr>
+			<tr>
+				<th>Ordinary Passport Price</th>
+				<td>{{ entity.ordinaryPassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Diplomatic Passport Price</th>
+				<td>{{ entity.diplomaticPassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Service Passport Price</th>
+				<td>{{ entity.servicePassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Business Travel Passport Price</th>
+				<td>{{ entity.businessTravelPassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Emergency Passport Price</th>
+				<td>{{ entity.emergencyPassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Collective Passport Price</th>
+				<td>{{ entity.collectivePassportPrice }}</td>
+			</tr>
+			<tr>
+				<th>Tourist Visa Price</th>
+				<td>{{ entity.visaTouristiquePrice }}</td>
+			</tr>
+			<tr>
+				<th>Business Visa Price</th>
+				<td>{{ entity.visaAffairesPrice }}</td>
+			</tr>
+			<tr>
+				<th>Student Visa Price</th>
+				<td>{{ entity.visaEtudiantPrice }}</td>
+			</tr>
+			<tr>
+				<th>Work Visa Price</th>
+				<td>{{ entity.visaTravailPrice }}</td>
+			</tr>
+			<tr>
+				<th>Transit Visa Price</th>
+				<td>{{ entity.visaTransitPrice }}</td>
+			</tr>
+			<tr>
+				<th>Resident Visa Price</th>
+				<td>{{ entity.visaResidentPrice }}</td>
+			</tr>
+			<tr>
+				<th>Motorcycle License Price</th>
+				<td>{{ entity.permisMotoPrice }}</td>
+			</tr>
+			<tr>
+				<th>Car License Price</th>
+				<td>{{ entity.permisVoiturePrice }}</td>
+			</tr>
+			<tr>
+				<th>Heavy Vehicle License Price</th>
+				<td>{{ entity.permisPoidsLourdPrice }}</td>
+			</tr>
+			<tr>
+				<th>Bus License Price</th>
+				<td>{{ entity.permisAutocarPrice }}</td>
+			</tr>
+			<tr>
+				<th>Trailer License Price</th>
+				<td>{{ entity.permisRemorquePrice }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a class="btn btn-block btn-outline-primary" href="{{ path('app_crud_index',{entityName: 'language'}) }}">back to list</a>
+
+	<a class="btn btn-block btn-primary" href="{{ path('app_crud_update', {'id': entity.id,entityName: 'language'}) }}">edit</a>
+
+	{{ include('@admin/crud/language/_delete_form.html.twig') }}
+{% endblock %}

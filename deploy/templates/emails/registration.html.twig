@@ -1,0 +1,29 @@
+
+{% extends 'emails/layout.html.twig' %}
+
+
+{% block subject %}
+    {{ 'registration.email.subject' | trans }}
+{% endblock %}
+
+{% block body %}
+    <p>
+        {{ 'registration.email.greeting' | trans({'%nom%': user.nom,'%prenom%': user.prenom}) }}
+    </p>
+
+    <p>
+        {{ 'registration.email.message' | trans }}
+    </p>
+
+    <p>
+        {{ 'registration.email.activationLink'|trans({'%url%': signedUrl})|raw }}
+    </p>
+
+    <p>
+        {{'registration.email.expire'|trans}} {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+    </p>
+
+    <p>
+        {{ 'registration.email.salutation' | trans }}
+    </p>
+{% endblock %}

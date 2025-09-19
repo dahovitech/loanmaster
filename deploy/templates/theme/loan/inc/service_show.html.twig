@@ -1,0 +1,113 @@
+<section class="service-details section-space">
+	<div class="container">
+		<div class="row gutter-y-50">
+			<div class="col-md-12 col-lg-4">
+				<div class="service-sidebar">
+					<div class="service-sidebar__info service-sidebar__single wow fadeInLeft" data-wow-duration="1500ms">
+						<ul class="list-unstyled service-sidebar__nav">
+							{% for serviceList in services() %}
+								<li class="{{(serviceList.id == service.id) ? 'current': ' '}}">
+									<a href="{{path('service_show',{slug: serviceList.slug})}}">{{serviceList.name|raw}}
+										<span class="service-sidebar__nav__icon">
+											<i class="icon-double-right-arrow"></i>
+										</span>
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+						<!-- /.list-unstyled service-sidebar__nav -->
+					</div>
+					<!-- /.service-sidebar__info service-sidebar__single -->
+					<div class="service-sidebar__single">
+						<div class="service-sidebar__contact wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="100ms" style="background-image: url({{ asset('theme/loan/assets/images/services/service-sidebar-contact-bg.jpg') }});">
+							<div class="service-sidebar__contact__bg">
+								<div class="service-sidebar__contact__bg__inner" style="background-image: url({{ asset('theme/loan/assets/images/shapes/service-sidebar-contact-bg-2.png') }});"></div>
+								<!-- /.service-sidebar__contact__bg__inner -->
+							</div>
+							<!-- /.service-sidebar__contact__bg -->
+							<div class="service-sidebar__contact__inner">
+								<div class="service-sidebar__contact__icon">
+									<i class="icon-mail"></i>
+								</div>
+								<!-- /.service-sidebar__contact__icon -->
+								<div
+									class="service-sidebar__contact__content">
+									<!-- /.service-sidebar__contact__time -->
+									<h6 class="service-sidebar__contact__number">
+										<a href="mailto:{{setting('email')}}">{{setting('email')}}</a>
+									</h6>
+									<!-- /.service-sidebar__contact__number -->
+								</div>
+								<!-- /.service-sidebar__contact__content -->
+							</div>
+							<!-- /.service-sidebar__contact__inner -->
+						</div>
+						<!-- /.service-sidebar__contact -->
+					</div>
+					<!-- /.service-sidebar__single -->
+
+					<!-- /.service-sidebar__single -->
+				</div>
+				<!-- /.sidebar -->
+			</div>
+			<!-- /.col-md-12 col-lg-4 -->
+			<div class="col-md-12 col-lg-8">
+				<div class="service-details__content">
+					<div class="service-details__inner">
+						<div class="service-details__thumbnail wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+							<img src="{{service.image}}" alt="{{service.name|raw}}">
+						</div>
+						<!-- /.service-details__thumbnail -->
+						<h3 class="service-details__title">{{service.name|raw}}</h3>
+						<!-- /.service-details__title -->
+						<p class="service-details__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">{{service.description|raw}}</p>
+						<!-- /.service-details__text -->
+					</div>
+					<!-- /.service-details__inner -->
+					<div class="service-details__inner-two">
+						<h3 class="service-details__title service-details__inner-two__title">{{"companyTransparency.subtitle"|trans}}</h3>
+						<!-- /.service-details__title -->
+
+					</div>
+					<!-- /.service-details__inner-two -->
+					<div class="service-details__info wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+						<ul class="list-unstyled service-details__list">
+							<li>
+								<span class="service-details__list__icon">
+									<i class="icon-check"></i>
+								</span>
+								{{ 'serviceDetails.instantBusinessGrowth'|trans }}
+							</li>
+							<li>
+								<span class="service-details__list__icon">
+									<i class="icon-check"></i>
+								</span>
+								{{ 'serviceDetails.qualityService'|trans }}
+							</li>
+							<li>
+								<span class="service-details__list__icon">
+									<i class="icon-check"></i>
+								</span>
+								{{ 'serviceDetails.easyCustomerService'|trans }}
+							</li>
+							<li>
+								<span class="service-details__list__icon">
+									<i class="icon-check"></i>
+								</span>
+								{{ 'serviceDetails.qualityCostService'|trans }}
+							</li>
+						</ul>
+						<!-- /.list-unstyled team-details__list -->
+						<img src="{{ asset('theme/loan/assets/images/services/service-d-list-1.jpg') }}" alt="service-d-list" class="service-details__info__image">
+					</div>
+
+				</div>
+				<!-- /.service-details__content -->
+			</div>
+			<!-- /.col-md-12 col-lg-8 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container -->
+</section>
+

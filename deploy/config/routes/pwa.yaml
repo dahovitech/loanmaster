@@ -1,0 +1,29 @@
+# PWA Routes Configuration
+pwa_manifest:
+    path: /manifest.json
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'pwa/manifest.json.twig'
+    methods: [GET]
+
+pwa_service_worker:
+    path: /sw.js
+    controller: App\Controller\PWAController::serviceWorker
+    methods: [GET]
+
+pwa_offline:
+    path: /offline
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template: 'pwa/offline.html.twig'
+    methods: [GET]
+
+pwa_share_target:
+    path: /share-target
+    controller: App\Controller\PWAController::shareTarget
+    methods: [POST]
+
+pwa_install_prompt:
+    path: /pwa/install-prompt
+    controller: App\Controller\PWAController::installPrompt
+    methods: [GET]

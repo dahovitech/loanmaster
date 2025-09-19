@@ -1,0 +1,23 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}Nouvelle demande{% endblock %}
+
+{% block body %}
+     <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Nom et prénoms</th>
+                <td>{{ user.firstname }} {{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ type_demande }}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+{% endblock %}

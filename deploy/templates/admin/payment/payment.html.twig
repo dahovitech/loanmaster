@@ -1,0 +1,111 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block javascripts %}
+	<!-- END: Page JS-->
+	<script src="{{ asset('jquery.inputmask.min.js') }}"></script>
+	<script>
+		$(".ccnumber").inputmask("9999-9999-9999-9999");
+$(".cvv").inputmask("999");
+	</script>
+{% endblock %}
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{"admin.page.payment.title1"|trans}}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="javascript:;">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{"admin.page.payment.title1"|trans}}</li>
+				</ol>
+			</nav>
+		</div>
+
+	</div>
+	<!--end breadcrumb-->
+
+	<div class="card">
+		<div class="card-body p-4">
+			<h5 class="card-title">{{"admin.page.payment.title2"|trans}}</h5>
+			<p class="card-text text-muted mt-25">
+				{{"admin.page.payment.text1"|trans}}
+			</p>
+			<hr/>
+			<div class="form-body mt-4">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="border border-3 p-4 rounded">
+							<div class="row">
+
+								<div
+									class="col-md-6 mt-3">
+									<!-- Button trigger modal -->
+									<button style="width: 100%" type="button" class="btn btn-lg btn-block btn-outline-dark rounded-0" data-bs-toggle="modal" data-bs-target="#bank_transfert">
+										<img src="{{ asset('virement-bancaire.png') }}" width="30"/>
+										{{"btn.bankTransfert"|trans}}</button>
+									<!-- Modal -->
+									<div class="modal fade" id="bank_transfert" tabindex="-1" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">
+														<img src="{{ asset('virement-bancaire.png') }}" width="30"/>
+														{{"btn.bankTransfert"|trans}}
+													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card border mb-3">
+														<div
+															class="card-body">
+																{{loan.bankInfo|raw}}
+														</div>
+													</div>
+													<p>
+														{{"admin.page.payment.text2"|trans}}
+													</p>
+													<hr>
+													<form method="POST" action="{{path('app_user_pay_file',{type: type,loanNumber: loan.loanNumber})}}" enctype="multipart/form-data">
+														<div class="form-group">
+															<input type="file" class="form-control-file" name="file" id="file">
+														</div>
+														<br>
+														<button type="submit" class="btn btn-outline-primary">{{"btn.paySubmit"|trans}}</button>
+													</form>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="border border-3 p-4 rounded">
+							{% set typePaye = "pay." ~ type %}
+							<p class="">{{typePaye|trans}}</p>
+							<h6>N°{{loan.loanNumber}}</h6>
+							<hr>
+							<p style="font-size: 20px">
+								<b>{{"btn.total"|trans}}</b>:
+								{{loan_price(loanNumber,type)}}
+								{{setting("devise")}}
+							</p>
+						</div>
+					</div>
+				</div>
+				<!--end row-->
+			</div>
+		</div>
+	</div>
+	<!-- BEGIN: Content-->
+	<!-- END: Content-->
+{% endblock %}

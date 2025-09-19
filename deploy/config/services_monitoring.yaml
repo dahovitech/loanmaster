@@ -1,0 +1,63 @@
+# Configuration des services de monitoring
+services:
+    # Service principal de monitoring
+    App\Infrastructure\Service\MonitoringService:
+        arguments:
+            $performanceLogger: '@monolog.logger.performance'
+            $businessLogger: '@monolog.logger.business'
+            $auditLogger: '@monolog.logger.audit'
+            $requestStack: '@request_stack'
+            $stopwatch: '@debug.stopwatch'
+        tags: ['controller.service_arguments']
+
+    # Service d'audit spécialisé pour les prêts
+    App\Infrastructure\Service\LoanAuditService:
+        arguments:
+            $loanLogger: '@monolog.logger.loan'
+            $auditLogger: '@monolog.logger.audit'
+            $monitoringService: '@App\Infrastructure\Service\MonitoringService'
+            $security: '@security.helper'
+
+    # Event Subscribers pour le monitoring automatique
+    App\Infrastructure\EventSubscriber\MonitoringEventSubscriber:
+        arguments:
+            $monitoringService: '@App\Infrastructure\Service\MonitoringService'
+            $securityLogger: '@monolog.logger.security'
+            $performanceLogger: '@monolog.logger.performance'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    App\Infrastructure\EventSubscriber\DatabaseMonitoringSubscriber:
+        arguments:
+            $monitoringService: '@App\Infrastructure\Service\MonitoringService'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    # Alias pour faciliter l'injection
+    monitoring.service:
+        alias: 'App\Infrastructure\Service\MonitoringService'
+        public: true
+
+    loan.audit.service:
+        alias: 'App\Infrastructure\Service\LoanAuditService'
+        public: true
+
+when@dev:
+    services:
+        # Configuration spécifique pour le développement
+        App\Infrastructure\Service\MonitoringService:
+            calls:
+                - setDebugMode: [true]
+
+when@prod:
+    services:
+        # Configuration spécifique pour la production
+        App\Infrastructure\Service\MonitoringService:
+            calls:
+                - setDebugMode: [false]
+
+        # Service de monitoring des performances en production
+        App\Infrastructure\Service\ProductionMonitoringService:
+            parent: App\Infrastructure\Service\MonitoringService
+            calls:
+                - enableProductionOptimizations: []

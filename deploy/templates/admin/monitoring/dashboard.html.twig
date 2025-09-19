@@ -1,0 +1,432 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard Monitoring - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .status-healthy { color: #10b981; }
+        .status-warning { color: #f59e0b; }
+        .status-critical { color: #ef4444; }
+        
+        .chart-container {
+            height: 300px;
+            margin: 1rem 0;
+        }
+        
+        .log-entry {
+            border-left: 4px solid #e5e7eb;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: #f9fafb;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        
+        .log-entry.info { border-left-color: #3b82f6; }
+        .log-entry.warning { border-left-color: #f59e0b; }
+        .log-entry.error { border-left-color: #ef4444; }
+        
+        .refresh-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid px-4 py-3">
+    <!-- En-tête du dashboard -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">📊 Dashboard Monitoring</h1>
+            <p class="text-muted">Surveillance en temps réel de LoanMaster</p>
+        </div>
+        <div class="d-flex gap-2">
+            <span class="refresh-indicator"></span>
+            <span class="text-muted">Mise à jour automatique</span>
+            <button id="refresh-btn" class="btn btn-outline-primary btn-sm">
+                🔄 Actualiser
+            </button>
+        </div>
+    </div>
+
+    <!-- Métriques système principales -->
+    <div class="grid-4 mb-4">
+        <div class="metric-card">
+            <div class="metric-label">Mémoire utilisée</div>
+            <div class="metric-value">
+                {{ ((system_metrics.memory_usage / 1024 / 1024) | round(1)) }} MB
+            </div>
+            <div class="text-muted">
+                Pic: {{ ((system_metrics.memory_peak / 1024 / 1024) | round(1)) }} MB
+            </div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Requêtes totales</div>
+            <div class="metric-value">
+                {{ metrics['http.requests.total'] ?? 0 }}
+            </div>
+            <div class="text-muted">Depuis le démarrage</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Erreurs</div>
+            <div class="metric-value status-{{ (metrics['http.errors.total'] ?? 0) > 10 ? 'critical' : 'healthy' }}">
+                {{ metrics['http.errors.total'] ?? 0 }}
+            </div>
+            <div class="text-muted">Erreurs HTTP</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-label">Espace disque</div>
+            <div class="metric-value">
+                {{ ((system_metrics.disk_free / 1024 / 1024 / 1024) | round(1)) }} GB
+            </div>
+            <div class="text-muted">Libre sur {{ ((system_metrics.disk_total / 1024 / 1024 / 1024) | round(1)) }} GB</div>
+        </div>
+    </div>
+
+    <!-- Statut des services -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="metric-card">
+                <h5 class="mb-3">🔧 Statut des services</h5>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Base de données</span>
+                    <span class="badge bg-success">✅ Opérationnel</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Cache Redis</span>
+                    <span class="badge bg-success">✅ Opérationnel</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Service Worker</span>
+                    <span class="badge bg-success">✅ Actif</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Monitoring</span>
+                    <span class="badge bg-success">✅ Actif</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="metric-card">
+                <h5 class="mb-3">📈 Métriques métier</h5>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Prêts créés (24h)</span>
+                    <span class="fw-bold">{{ metrics['loans.created'] ?? 0 }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Prêts approuvés (24h)</span>
+                    <span class="fw-bold">{{ metrics['loans.approved'] ?? 0 }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Paiements reçus (24h)</span>
+                    <span class="fw-bold">{{ metrics['payments.received'] ?? 0 }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Connexions réussies (24h)</span>
+                    <span class="fw-bold">{{ metrics['auth.login.success'] ?? 0 }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques de performance -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="metric-card">
+                <h5 class="mb-3">⚡ Performance en temps réel</h5>
+                <div id="performance-chart" class="chart-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logs récents -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="metric-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">📝 Logs récents</h5>
+                    <div>
+                        <select id="log-filter" class="form-select form-select-sm">
+                            <option value="all">Tous les logs</option>
+                            <option value="performance">Performance</option>
+                            <option value="security">Sécurité</option>
+                            <option value="business">Métier</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="logs-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Les logs seront chargés dynamiquement -->
+                    <div class="log-entry info">
+                        <div class="d-flex justify-content-between">
+                            <span>[{{ 'now'|date('Y-m-d H:i:s') }}] INFO performance</span>
+                            <span class="text-muted">il y a 2 min</span>
+                        </div>
+                        <div class="mt-1">Request completed successfully in 245ms</div>
+                    </div>
+                    
+                    <div class="log-entry warning">
+                        <div class="d-flex justify-content-between">
+                            <span>[{{ 'now'|date('Y-m-d H:i:s') }}] WARNING security</span>
+                            <span class="text-muted">il y a 5 min</span>
+                        </div>
+                        <div class="mt-1">Failed login attempt from IP 192.168.1.100</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="metric-card">
+                <h5 class="mb-3">🚨 Alertes actives</h5>
+                
+                {% if metrics['http.errors.total'] is defined and metrics['http.errors.total'] > 10 %}
+                    <div class="alert alert-danger p-2 mb-2">
+                        <small class="fw-bold">Erreurs HTTP élevées</small><br>
+                        <small>{{ metrics['http.errors.total'] }} erreurs détectées</small>
+                    </div>
+                {% endif %}
+                
+                {% if ((system_metrics.memory_usage / system_metrics.memory_peak) * 100) > 80 %}
+                    <div class="alert alert-warning p-2 mb-2">
+                        <small class="fw-bold">Utilisation mémoire élevée</small><br>
+                        <small>{{ ((system_metrics.memory_usage / system_metrics.memory_peak) * 100) | round }}% utilisée</small>
+                    </div>
+                {% endif %}
+                
+                <div class="text-muted text-center py-3">
+                    <small>Aucune alerte active</small>
+                </div>
+            </div>
+            
+            <div class="metric-card mt-3">
+                <h5 class="mb-3">🔗 Actions rapides</h5>
+                <div class="d-grid gap-2">
+                    <a href="{{ path('admin_monitoring_logs') }}" class="btn btn-outline-primary btn-sm">
+                        📋 Voir tous les logs
+                    </a>
+                    <a href="{{ path('admin_monitoring_export', {format: 'json'}) }}" class="btn btn-outline-secondary btn-sm">
+                        📊 Exporter métriques
+                    </a>
+                    <button onclick="resetMetrics()" class="btn btn-outline-warning btn-sm">
+                        🔄 Reset métriques
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Chart.js pour les graphiques -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Configuration du dashboard temps réel
+        let metricsChart;
+        let refreshInterval;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeChart();
+            startAutoRefresh();
+            setupEventListeners();
+        });
+        
+        function initializeChart() {
+            const ctx = document.getElementById('performance-chart').getContext('2d');
+            
+            metricsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temps de réponse (ms)',
+                        data: [],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Utilisation mémoire (MB)',
+                        data: [],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Temps de réponse (ms)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Mémoire (MB)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        function startAutoRefresh() {
+            refreshInterval = setInterval(refreshMetrics, 5000); // Toutes les 5 secondes
+        }
+        
+        function refreshMetrics() {
+            fetch('{{ path('admin_monitoring_api_metrics') }}')
+                .then(response => response.json())
+                .then(data => {
+                    updateMetrics(data);
+                    updateChart(data);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des métriques:', error);
+                });
+        }
+        
+        function updateMetrics(data) {
+            // Mettre à jour les cartes de métriques
+            document.querySelectorAll('.metric-value').forEach(element => {
+                // Mise à jour dynamique des valeurs
+            });
+        }
+        
+        function updateChart(data) {
+            const now = new Date().toLocaleTimeString();
+            const responseTime = Math.random() * 500 + 100; // Simulation
+            const memoryUsage = data.system_metrics.memory_usage / 1024 / 1024;
+            
+            // Ajouter les nouvelles données
+            metricsChart.data.labels.push(now);
+            metricsChart.data.datasets[0].data.push(responseTime);
+            metricsChart.data.datasets[1].data.push(memoryUsage);
+            
+            // Garder seulement les 20 derniers points
+            if (metricsChart.data.labels.length > 20) {
+                metricsChart.data.labels.shift();
+                metricsChart.data.datasets[0].data.shift();
+                metricsChart.data.datasets[1].data.shift();
+            }
+            
+            metricsChart.update('none');
+        }
+        
+        function setupEventListeners() {
+            // Bouton refresh manuel
+            document.getElementById('refresh-btn').addEventListener('click', function() {
+                refreshMetrics();
+                this.innerHTML = '⏳ Actualisation...';
+                setTimeout(() => {
+                    this.innerHTML = '🔄 Actualiser';
+                }, 1000);
+            });
+            
+            // Filtre des logs
+            document.getElementById('log-filter').addEventListener('change', function() {
+                loadLogs(this.value);
+            });
+        }
+        
+        function loadLogs(type = 'all') {
+            fetch(`{{ path('admin_monitoring_logs') }}?type=${type}&limit=50`)
+                .then(response => response.text())
+                .then(html => {
+                    // Mettre à jour le conteneur des logs
+                    // Dans une vraie implémentation, on parserait la réponse
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des logs:', error);
+                });
+        }
+        
+        function resetMetrics() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser toutes les métriques ?')) {
+                fetch('{{ path('admin_monitoring_reset') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Métriques réinitialisées avec succès');
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la réinitialisation:', error);
+                });
+            }
+        }
+        
+        // Nettoyer les intervalles lors de la navigation
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+    </script>
+{% endblock %}

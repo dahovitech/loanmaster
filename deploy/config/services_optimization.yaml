@@ -1,0 +1,39 @@
+# config/services_optimization.yaml
+services:
+    # Repository optimisés avec injection des caches
+    App\Infrastructure\Repository\LoanRepositoryOptimized:
+        arguments:
+            $loanCalculationsCache: '@cache.loan_calculations'
+            $statisticsCache: '@cache.statistics'
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    App\Infrastructure\Repository\UserRepositoryOptimized:
+        arguments:
+            $userDataCache: '@cache.user_data'
+            $userKycCache: '@cache.user_kyc'
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    # Service d'optimisation de base de données
+    App\Infrastructure\Service\DatabaseOptimizationService:
+        arguments:
+            $loanCalculationsCache: '@cache.loan_calculations'
+            $userDataCache: '@cache.user_data'
+            $statisticsCache: '@cache.statistics'
+
+    # Alias pour faciliter l'injection
+    app.cache.loan_calculations: '@cache.loan_calculations'
+    app.cache.user_data: '@cache.user_data'
+    app.cache.user_kyc: '@cache.user_kyc'
+    app.cache.statistics: '@cache.statistics'
+    app.cache.security: '@cache.security'
+    app.cache.api: '@cache.api'
+
+    # Service de warming des caches
+    app.cache_warmer:
+        class: App\Infrastructure\Service\CacheWarmerService
+        arguments:
+            $databaseOptimization: '@App\Infrastructure\Service\DatabaseOptimizationService'
+            $loanRepository: '@App\Infrastructure\Repository\LoanRepositoryOptimized'
+            $userRepository: '@App\Infrastructure\Repository\UserRepositoryOptimized'

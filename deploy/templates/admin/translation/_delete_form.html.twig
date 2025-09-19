@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_translation_crud_delete', { entityName: entityName|lower,id: translation.id, entityId: entityId}) }}" style="display:inline-block">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ translation.id) }}">
+	<button class="btn btn-danger btn-sm">Delete</button>
+</form>

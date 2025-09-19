@@ -1,0 +1,420 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard IA/ML - Scoring Automatique{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .ai-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 4px solid var(--primary-color); }
+        .stat-value { font-size: 2rem; font-weight: bold; color: var(--primary-color); }
+        .stat-label { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+        .model-card { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .model-status { padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 500; }
+        .status-deployed { background: #d4edda; color: #155724; }
+        .status-trained { background: #cce5ff; color: #004085; }
+        .status-training { background: #fff3cd; color: #856404; }
+        .status-retired { background: #f8d7da; color: #721c24; }
+        .ml-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .ml-active { background: #28a745; animation: pulse 2s infinite; }
+        .ml-warning { background: #ffc107; }
+        .ml-error { background: #dc3545; }
+        .drift-alert { background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        .chart-container { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+        .feature-importance { max-height: 300px; overflow-y: auto; }
+        .prediction-timeline { max-height: 400px; overflow-y: auto; }
+        .performance-meter { width: 100%; height: 20px; background: #f0f0f0; border-radius: 10px; overflow: hidden; margin: 0.5rem 0; }
+        .performance-fill { height: 100%; transition: width 0.3s ease; }
+        .perf-excellent { background: linear-gradient(90deg, #28a745, #20c997); }
+        .perf-good { background: linear-gradient(90deg, #17a2b8, #28a745); }
+        .perf-fair { background: linear-gradient(90deg, #ffc107, #fd7e14); }
+        .perf-poor { background: linear-gradient(90deg, #dc3545, #e74c3c); }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-brain me-2"></i>Intelligence Artificielle & Machine Learning</h1>
+        <p class="text-muted">Scoring automatique et modèles prédictifs</p>
+    </div>
+    <div class="admin-actions">
+        <span class="ml-indicator ml-active"></span>
+        <span class="text-success me-3">Modèles actifs</span>
+        <a href="{{ path('admin_ai_ml_test_prediction') }}" class="btn btn-outline-primary me-2">
+            <i class="fas fa-calculator me-1"></i>Test Prédiction
+        </a>
+        <a href="{{ path('admin_ai_ml_train_model') }}" class="btn btn-primary">
+            <i class="fas fa-cogs me-1"></i>Entraîner Modèle
+        </a>
+    </div>
+</div>
+
+<!-- Alerte de dérive si nécessaire -->
+{% if drift_status.drift_detected %}
+<div class="drift-alert">
+    <div class="d-flex align-items-center">
+        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+        <div>
+            <h5 class="mb-1">Dérive de Modèle Détectée</h5>
+            <p class="mb-0">Score de dérive: {{ (drift_status.drift_score * 100)|round(1) }}% - Action recommandée: {{ drift_status.recommendation }}</p>
+        </div>
+        <a href="{{ path('admin_ai_ml_drift_analysis') }}" class="btn btn-light ms-auto">Analyser</a>
+    </div>
+</div>
+{% endif %}
+
+<!-- Statistiques principales -->
+<div class="ai-stats">
+    <div class="stat-card">
+        <div class="stat-value">{{ active_models|length }}</div>
+        <div class="stat-label">Modèles Déployés</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ (performance_stats.average_accuracy * 100)|round(1) }}%</div>
+        <div class="stat-label">Précision Moyenne</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ dev_models|length }}</div>
+        <div class="stat-label">Modèles en Développement</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ recent_predictions|length }}</div>
+        <div class="stat-label">Prédictions Récentes</div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Modèles Actifs -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-rocket me-2"></i>Modèles en Production</h5>
+            </div>
+            <div class="card-body">
+                {% for model in active_models %}
+                <div class="model-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h6 class="mb-1">{{ model.version }}</h6>
+                            <small class="text-muted">{{ model.algorithm|upper }}</small>
+                        </div>
+                        <span class="model-status status-{{ model.status }}">{{ model.status|upper }}</span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <small class="text-muted">Précision</small>
+                        <div class="performance-meter">
+                            {% set accuracy = (model.accuracy * 100)|round %}
+                            <div class="performance-fill {% if accuracy >= 85 %}perf-excellent{% elseif accuracy >= 75 %}perf-good{% elseif accuracy >= 65 %}perf-fair{% else %}perf-poor{% endif %}" 
+                                 style="width: {{ accuracy }}%"></div>
+                        </div>
+                        <small>{{ accuracy }}%</small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between text-muted">
+                        <small>{{ model.usageCount }} prédictions</small>
+                        <small>{{ model.daysInProduction ?: 0 }}j en prod</small>
+                    </div>
+                    
+                    <div class="mt-2">
+                        <a href="{{ path('admin_ai_ml_model_details', {id: model.id}) }}" class="btn btn-sm btn-outline-primary me-1">
+                            <i class="fas fa-eye"></i> Détails
+                        </a>
+                        {% if model.needsRetraining %}
+                        <span class="badge bg-warning">Réentraînement requis</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-robot fa-3x mb-3"></i>
+                    <p>Aucun modèle déployé</p>
+                    <a href="{{ path('admin_ai_ml_train_model') }}" class="btn btn-primary">Entraîner le premier modèle</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modèles en Développement -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-flask me-2"></i>Modèles en Développement</h5>
+            </div>
+            <div class="card-body">
+                {% for model in dev_models %}
+                <div class="model-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h6 class="mb-1">{{ model.version }}</h6>
+                            <small class="text-muted">{{ model.algorithm|upper }}</small>
+                        </div>
+                        <span class="model-status status-{{ model.status }}">{{ model.status|upper }}</span>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <small class="text-muted">Performance</small>
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <strong>{{ (model.accuracy * 100)|round(1) }}%</strong>
+                                <br><small>Précision</small>
+                            </div>
+                            <div class="col-4">
+                                <strong>{{ (model.precision * 100)|round(1) }}%</strong>
+                                <br><small>Exactitude</small>
+                            </div>
+                            <div class="col-4">
+                                <strong>{{ (model.recall * 100)|round(1) }}%</strong>
+                                <br><small>Rappel</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ model.trainingSamples ?: 'N/A' }} échantillons</small>
+                        <div>
+                            <a href="{{ path('admin_ai_ml_model_details', {id: model.id}) }}" class="btn btn-sm btn-outline-primary me-1">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <button class="btn btn-sm btn-success" onclick="deployModel({{ model.id }})">
+                                <i class="fas fa-rocket"></i> Déployer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-code-branch fa-3x mb-3"></i>
+                    <p>Aucun modèle en développement</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <!-- Performance en Temps Réel -->
+    <div class="col-md-8">
+        <div class="chart-container">
+            <h5>Performance en Temps Réel</h5>
+            <canvas id="performanceChart" height="100"></canvas>
+        </div>
+    </div>
+
+    <!-- Importance des Features -->
+    <div class="col-md-4">
+        <div class="chart-container">
+            <h5>Importance des Caractéristiques</h5>
+            {% if active_models|length > 0 %}
+            <div class="feature-importance">
+                {% for feature, importance in active_models[0].topFeatures %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small>{{ feature|replace('_', ' ')|title }}</small>
+                    <div style="width: 60px;">
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-primary" style="width: {{ (importance * 100)|round }}%"></div>
+                        </div>
+                    </div>
+                    <small class="text-muted">{{ (importance * 100)|round }}%</small>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted">Aucun modèle actif</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Prédictions Récentes -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Prédictions Récentes</h5>
+    </div>
+    <div class="card-body">
+        <div class="prediction-timeline">
+            {% for prediction in recent_predictions %}
+            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div>
+                    <strong>{{ prediction.customer_id }}</strong>
+                    <span class="badge bg-{{ prediction.risk_level == 'low' ? 'success' : (prediction.risk_level == 'medium' ? 'warning' : 'danger') }} ms-2">
+                        {{ prediction.risk_level|upper }}
+                    </span>
+                </div>
+                <div class="text-center">
+                    <strong>{{ prediction.score }}</strong>
+                    <br><small>Score</small>
+                </div>
+                <div class="text-center">
+                    <strong>{{ prediction.amount|number_format(0, ',', ' ') }}€</strong>
+                    <br><small>Montant</small>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted">{{ prediction.predicted_at|date('H:i') }}</small>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-chart-bar fa-3x mb-3"></i>
+                <p>Aucune prédiction récente</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Actions Rapides -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Actions Rapides</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="{{ path('admin_ai_ml_test_prediction') }}" class="btn btn-outline-primary w-100 mb-2">
+                            <i class="fas fa-calculator fa-2x d-block mb-2"></i>
+                            Tester une Prédiction
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('admin_ai_ml_compare_models') }}" class="btn btn-outline-info w-100 mb-2">
+                            <i class="fas fa-balance-scale fa-2x d-block mb-2"></i>
+                            Comparer les Modèles
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('admin_ai_ml_drift_analysis') }}" class="btn btn-outline-warning w-100 mb-2">
+                            <i class="fas fa-chart-area fa-2x d-block mb-2"></i>
+                            Analyse de Dérive
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="{{ path('admin_ai_ml_models') }}" class="btn btn-outline-secondary w-100 mb-2">
+                            <i class="fas fa-database fa-2x d-block mb-2"></i>
+                            Gérer les Modèles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Graphique de performance en temps réel
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+                datasets: [{
+                    label: 'Prédictions/heure',
+                    data: [12, 19, 3, 5, 8, 15, 20, 10],
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Précision (%)',
+                    data: [85, 87, 85, 88, 86, 89, 87, 88],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Nombre de prédictions'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Précision (%)'
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        },
+                        min: 80,
+                        max: 95
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Déploiement de modèle
+        async function deployModel(modelId) {
+            if (!confirm('Êtes-vous sûr de vouloir déployer ce modèle en production ?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/admin/ai-ml/models/${modelId}/deploy`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert('Erreur: ' + result.error);
+                }
+            } catch (error) {
+                alert('Erreur de communication: ' + error.message);
+            }
+        }
+
+        // Mise à jour automatique des statistiques
+        setInterval(async () => {
+            try {
+                const response = await fetch('/admin/ai-ml/api/performance');
+                const data = await response.json();
+                
+                // Mise à jour des indicateurs en temps réel
+                updateRealtimeIndicators(data);
+            } catch (error) {
+                console.error('Erreur de mise à jour:', error);
+            }
+        }, 30000); // Toutes les 30 secondes
+
+        function updateRealtimeIndicators(data) {
+            // Mise à jour des métriques temps réel
+            console.log('Données mises à jour:', data);
+        }
+    </script>
+{% endblock %}

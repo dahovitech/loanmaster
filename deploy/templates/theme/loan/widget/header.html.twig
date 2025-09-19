@@ -1,0 +1,171 @@
+<div class="topbar">
+	<div class="container-fluid">
+		<div class="topbar__inner">
+			<ul class="list-unstyled topbar__info">
+				{% if setting('email') is not empty %}
+					<li>
+						<span class="topbar__info__icon">
+							<i class="icon-mail-1"></i>
+						</span>
+						<a href="mailto:{{setting('email')}}">{{setting('email')}}</a>
+					</li>
+				{% endif %}
+
+				{% if setting('telephone') is not empty %}
+
+					<li>
+						<span class="topbar__info__icon topbar__info__icon--phone">
+							<i class="icon-headset"></i>
+						</span>
+						<a href="tel:{{setting('telephone')|replace({'  ': ''})|trim}}">{{setting('telephone')}}</a>
+					</li>
+				{% endif %}
+
+			</ul>
+			<!-- /.list-unstyled topbar__info -->
+			<div class="topbar__right">
+				<ul class="list-unstyled topbar__pages">
+					{% for page in pages() %}
+						<li>
+							<a href="{{path('page_show',{slug: page.slug})}}">{{page.title}}</a>
+						</li>
+					{% endfor %}
+
+				</ul>
+				<!-- /.topbar__pages -->
+				{{ include('@theme/'~setting('theme')~'/inc/social.html.twig') }}
+				<!-- /.topbar__social -->
+			</div>
+			<!-- /.list-unstyled topbar__right -->
+		</div>
+		<!-- /.topbar__inner -->
+	</div>
+	<!-- /.container-fluid -->
+</div>
+<!-- /.topbar -->
+
+<header class="main-header sticky-header sticky-header--normal">
+	<div class="container-fluid">
+		<div class="main-header__inner">
+			<div class="main-header__logo logo-retina">
+				<a href="{{path('home')}}">
+					<img src="{{ asset(setting("logoDark")|default('#')) }}" alt="{{setting('title')}}" width="150">
+				</a>
+			</div>
+			<!-- /.main-header__logo -->
+			{% set currentLanguage = app.session.get('language')|default(app.request.locale) %}
+
+			<div class="main-header__right">
+				<nav class="main-header__nav main-menu">
+					<ul class="main-menu__list">
+
+						<li>
+							<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
+						</li>
+						<li>
+							<a href="{{path('about')}}">{{"front.menu.about"|trans}}</a>
+						</li>
+						<li>
+											<a href="{{path('service_index')}}">{{"front.menu.service"|trans}}
+												<i class="fas fa-angle-down"></i>
+											</a>
+											<ul class="submenu">
+												{% for category in serviceCategories() %}
+													<li>
+														<a href="#">{{category.name}}</a>
+														<ul class="submenu">
+															{% for service in category.services %}
+																<li>
+																	<a href="{{path('service_show',{slug: service.slug})}}">{{service.name}}</a>
+																</li>
+															{% endfor %}
+														</ul>
+													</li>
+												{% endfor %}
+											</ul>
+
+										</li>
+						<li>
+							<a href="{{path('contact')}}">{{"front.menu.contact"|trans}}</a>
+						</li>
+						<li class="dropdown">
+							<a href="#">{{"front.menu.account"|trans}}</a>
+							<ul>
+								{% if app.user %}
+									{% if is_granted('ROLE_ADMIN') == false and is_granted('ROLE_SUPER_ADMIN') == false %}
+										<li>
+											<a href="{{ path("app_user_dashboard") }}" class="theme-btn text-center">
+												<span>
+													{{"admin.menu.dashboad"|trans}}
+													<i class="fas fa-home"></i>
+												</span>
+											</a>
+										</li>
+									{% endif %}
+									{% if is_granted('ROLE_ADMIN') == true or is_granted('ROLE_SUPER_ADMIN') == true %}
+										<li>
+											<a href="{{ path("app_admin_dashboard") }}" class="theme-btn text-center">
+												<span>
+													{{"admin.menu.dashboad"|trans}}
+													<i class="fas fa-home"></i>
+												</span>
+											</a>
+										</li>
+									{% endif %}
+								{% else %}
+									<li>
+										<a href="{{ path("login") }}" class="theme-btn text-center">
+											<span>
+												{{"btn.login"|trans}}
+												<i class="fas fa-user"></i>
+											</span>
+										</a>
+									</li>
+									<li>
+										<a href="{{ path("register") }}" class="theme-btn text-center">
+											<span>
+												{{"btn.register"|trans}}
+												<i class="fas fa-edit"></i>
+											</span>
+										</a>
+									</li>
+								{% endif %}
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a href="javascript:void(0)">
+								<img class="rounded-circle" style="margin-right: 4px" width="20" src="{{ asset('flags/1x1/' ~ currentLanguage ~ '.svg') }}" alt="">
+								{{language_name(currentLanguage)}}
+							</a>
+							<span class="menu-arrow"></span>
+							<ul>
+								{{ include('@theme/'~setting('theme')~'/inc/language.html.twig') }}
+							</ul>
+						</li>
+
+					</ul>
+				</nav>
+				<!-- /.main-header__nav -->
+				<div class="mobile-nav__btn mobile-nav__toggler">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<!-- /.mobile-nav__toggler -->
+
+				<a href="{{path('register')}}" class="easilon-btn main-header__btn">
+					<span>{{ 'apply_for_loan'|trans }}</span>
+					<span class="easilon-btn__icon">
+						<i class="icon-right-arrow"></i>
+					</span>
+				</a>
+				<!-- /.easilon-btn main-header__btn -->
+			</div>
+			<!-- /.main-header__right -->
+		</div>
+		<!-- /.main-header__inner -->
+	</div>
+	<!-- /.container-fluid -->
+</header>
+<!-- /.main-header -->

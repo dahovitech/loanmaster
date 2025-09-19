@@ -1,0 +1,49 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}Add {{entityName|capitalize}} Translation {% endblock %}
+
+{% block body %}
+
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">Add {{entityName|capitalize}} Translation</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_admin_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_crud_update', { entityName: entityName, id: entityId}) }}">
+							<i class="bx bx-globe"></i> Edit {{ entityName }}
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_translation_crud_index', {entityName: entityName|lower, entityId: entityId}) }}">
+							<i class="bx bx-list-ol"></i>
+							List {{entityName|capitalize}} Translation
+						</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Add {{entityName|capitalize}} Translation</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+		<div class="col-md-9">
+			<div class="card">
+				<div class="card-body">
+					<h1>Add {{entityName|capitalize}} Translation</h1>
+
+					{{ include('@admin/translation/_form.html.twig') }}
+				</div>
+			</div>
+			<a class="btn  btn-block btn-outline-primary" href="{{ path('app_translation_crud_index', {entityName: entityName|lower, entityId: entityId}) }}">back to list</a>
+
+		</div>
+	</div>
+{% endblock %}
+

@@ -1,0 +1,254 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event Sourcing - Time Travel{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .time-travel-form {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+        }
+        .result-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .json-viewer {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>
+                    <i class="fas fa-history"></i> Time Travel - Reconstruction d'État
+                </h1>
+                <a href="{{ path('admin_event_sourcing_dashboard') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour au Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="time-travel-form">
+                <h3 class="mb-4">
+                    <i class="fas fa-search"></i> Recherche Temporelle
+                </h3>
+                
+                <form method="post">
+                    <div class="form-group">
+                        <label for="entityType">Type d'Entité</label>
+                        <select class="form-control" id="entityType" name="entityType" required>
+                            <option value="loan">Prêt (Loan)</option>
+                            <option value="customer">Client (Customer)</option>
+                            <option value="payment">Paiement (Payment)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="entityId">ID de l'Entité</label>
+                        <input type="text" class="form-control" id="entityId" name="entityId" 
+                               placeholder="UUID de l'entité" required>
+                        <small class="form-text text-light">
+                            Saisissez l'UUID complet de l'entité
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pointInTime">Point dans le Temps</label>
+                        <input type="datetime-local" class="form-control" id="pointInTime" name="pointInTime" 
+                               value="{{ 'now'|date('Y-m-d\\TH:i') }}" required>
+                        <small class="form-text text-light">
+                            Date et heure pour reconstruire l'état
+                        </small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-light btn-lg btn-block">
+                        <i class="fas fa-magic"></i> Reconstruire l'État
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Guide d'utilisation -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-info-circle"></i> Guide d'Utilisation</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Comment utiliser le Time Travel :</h6>
+                    <ol>
+                        <li><strong>Sélectionner le type d'entité</strong> : Choisissez le type d'objet à reconstruire</li>
+                        <li><strong>Saisir l'ID</strong> : UUID de l'entité spécifique</li>
+                        <li><strong>Définir le moment</strong> : Date et heure exactes</li>
+                        <li><strong>Reconstruire</strong> : Le système rejouera tous les événements jusqu'à ce point</li>
+                    </ol>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-lightbulb"></i>
+                        <strong>Astuce :</strong> Utilisez l'explorateur d'événements pour trouver des IDs d'entités valides.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            {% if error %}
+                <div class="alert alert-danger">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Erreur</h5>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            
+            {% if result %}
+                <div class="result-card">
+                    <h4 class="mb-3">
+                        <i class="fas fa-check-circle text-success"></i> 
+                        État Reconstitué
+                    </h4>
+                    
+                    <div class="mb-3">
+                        <strong>Entité :</strong> {{ result.id|default('N/A') }}<br>
+                        <strong>Version :</strong> {{ result.version|default('N/A') }}<br>
+                        <strong>Nombre d'événements :</strong> {{ result.events|length|default(0) }}
+                    </div>
+                    
+                    <h5>Détail de l'État :</h5>
+                    <div class="json-viewer">
+{{ result|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+                    </div>
+                    
+                    {% if result.events is defined and result.events is not empty %}
+                        <h5 class="mt-4">Événements Appliqués :</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Date</th>
+                                        <th>Données</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for event in result.events %}
+                                        <tr>
+                                            <td><span class="badge badge-primary">{{ event.type }}</span></td>
+                                            <td>{{ event.occurred_at|date('d/m/Y H:i:s') }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-info" 
+                                                        onclick="showEventDetails({{ loop.index0 }})">
+                                                    Voir détails
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="card">
+                    <div class="card-body text-center text-muted">
+                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <h5>Aucun Résultat</h5>
+                        <p>Utilisez le formulaire pour reconstruire l'état d'une entité à un moment donné.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Actions rapides -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-rocket"></i> Actions Rapides</h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group">
+                        <a href="{{ path('admin_event_sourcing_events') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-list"></i> Explorateur d'Événements
+                        </a>
+                        <a href="{{ path('admin_event_sourcing_audit') }}" class="btn btn-outline-info">
+                            <i class="fas fa-shield-alt"></i> Audit Trail
+                        </a>
+                        <button class="btn btn-outline-success" onclick="fillSampleData()">
+                            <i class="fas fa-flask"></i> Données d'Exemple
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les détails des événements -->
+<div class="modal fade" id="eventDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Détails de l'Événement</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="json-viewer" id="eventDetailsContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const eventData = {{ result.events|default([])|json_encode|raw }};
+        
+        function showEventDetails(index) {
+            if (eventData[index]) {
+                document.getElementById('eventDetailsContent').textContent = 
+                    JSON.stringify(eventData[index], null, 2);
+                $('#eventDetailsModal').modal('show');
+            }
+        }
+        
+        function fillSampleData() {
+            // Remplit le formulaire avec des données d'exemple
+            document.getElementById('entityType').value = 'loan';
+            document.getElementById('entityId').value = '00000000-0000-0000-0000-000000000001';
+            
+            // Date d'hier
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const formatted = yesterday.toISOString().slice(0, 16);
+            document.getElementById('pointInTime').value = formatted;
+        }
+        
+        // Auto-completion pour les IDs d'entités (si disponible)
+        $('#entityId').on('input', function() {
+            const value = $(this).val();
+            if (value.length >= 8) {
+                // Recherche d'IDs similaires (implémentation future)
+            }
+        });
+    </script>
+{% endblock %}

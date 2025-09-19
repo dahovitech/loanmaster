@@ -1,0 +1,114 @@
+# Configuration des services de notification temps réel
+services:
+    # Service principal de notification Mercure
+    App\Service\Notification\MercureNotificationService:
+        arguments:
+            $hub: '@mercure.hub.default'
+            $serializer: '@serializer'
+            $logger: '@monolog.logger.notification'
+            $topicConfiguration: '%notification_topics%'
+
+    # Canaux de notification
+    App\Service\Notification\Channel\MercureNotificationChannel:
+        arguments:
+            $mercureService: '@App\Service\Notification\MercureNotificationService'
+            $logger: '@monolog.logger.notification'
+            $configuration: '%notification_channels.mercure%'
+
+    App\Service\Notification\Channel\EmailNotificationChannel:
+        arguments:
+            $mailer: '@mailer'
+            $logger: '@monolog.logger.notification'
+            $twig: '@twig'
+            $configuration: '%notification_channels.email%'
+
+    App\Service\Notification\Channel\SmsNotificationChannel:
+        arguments:
+            $httpClient: '@http_client'
+            $logger: '@monolog.logger.notification'
+            $configuration: '%notification_channels.sms%'
+
+    App\Service\Notification\Channel\PushNotificationChannel:
+        arguments:
+            $httpClient: '@http_client'
+            $logger: '@monolog.logger.notification'
+            $configuration: '%notification_channels.push%'
+
+    # Orchestrateur de notifications
+    App\Service\Notification\NotificationOrchestrator:
+        arguments:
+            $emailChannel: '@App\Service\Notification\Channel\EmailNotificationChannel'
+            $smsChannel: '@App\Service\Notification\Channel\SmsNotificationChannel'
+            $pushChannel: '@App\Service\Notification\Channel\PushNotificationChannel'
+            $mercureChannel: '@App\Service\Notification\Channel\MercureNotificationChannel'
+            $logger: '@monolog.logger.notification'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $configuration: '%notification_templates%'
+
+    # Event Subscriber pour les notifications
+    App\EventSubscriber\NotificationEventSubscriber:
+        arguments:
+            $notificationOrchestrator: '@App\Service\Notification\NotificationOrchestrator'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $logger: '@monolog.logger.notification'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Service de gestion des abonnements Mercure
+    App\Service\Notification\SubscriptionManager:
+        arguments:
+            $mercureService: '@App\Service\Notification\MercureNotificationService'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $logger: '@monolog.logger.notification'
+
+    # Service de performance et statistiques des notifications
+    App\Service\Notification\NotificationMetricsService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $logger: '@monolog.logger.notification'
+            $cache: '@cache.app'
+
+    # Logger spécialisé pour les notifications
+    monolog.logger.notification:
+        class: Monolog\Logger
+        arguments: ['notification']
+        calls:
+            - method: pushHandler
+              arguments:
+                  - '@monolog.handler.notification_file'
+
+    monolog.handler.notification_file:
+        class: Monolog\Handler\StreamHandler
+        arguments:
+            - '%kernel.logs_dir%/notification.log'
+            - !php/const Monolog\Logger::INFO
+
+    # Service de nettoyage des notifications expirées
+    App\Service\Notification\NotificationCleanupService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $logger: '@monolog.logger.notification'
+            $retentionPeriod: '%env(int:NOTIFICATION_RETENTION_DAYS)%'
+
+    # Service de file d'attente pour les notifications différées
+    App\Service\Notification\NotificationQueueService:
+        arguments:
+            $notificationOrchestrator: '@App\Service\Notification\NotificationOrchestrator'
+            $logger: '@monolog.logger.notification'
+            $cache: '@cache.app'
+
+    # Service de webhook pour notifications externes
+    App\Service\Notification\WebhookNotificationService:
+        arguments:
+            $httpClient: '@http_client'
+            $logger: '@monolog.logger.notification'
+            $entityManager: '@doctrine.orm.entity_manager'
+
+# Paramètres par défaut pour les notifications
+parameters:
+    env(NOTIFICATION_RETENTION_DAYS): 30
+    env(MAIL_PROVIDER): 'symfony_mailer'
+    env(SMS_PROVIDER): 'twilio'
+    env(PUSH_PROVIDER): 'firebase'
+    env(SMS_ENABLED): false
+    env(PUSH_NOTIFICATIONS_ENABLED): false

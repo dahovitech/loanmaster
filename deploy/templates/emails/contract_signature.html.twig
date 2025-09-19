@@ -1,0 +1,11 @@
+{% extends '@emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ subject }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.body.contract_signature.greeting'|trans({'%user%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.contract_signature.message'|trans({'%loanNumber%': loanNumber}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.body.contract_signature.thanks'|trans({}, 'messages', user.locale) }}</p>
+{% endblock %}

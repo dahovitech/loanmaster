@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>{{ 'contract_pro.title'|trans }}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+		<style>
+			body {
+				background: url('{{ absolute_url(asset('images/bg.png')) }}') no-repeat center center fixed;
+				background-repeat: repeat;
+				background-size: cover;
+				position: relative;
+			}
+
+			.subheading {
+				font-family: 'Bungee Tint', sans-serif;
+				font-size: 14px;
+				font-weight: normal;
+				text-transform: uppercase;
+			}
+
+			.blue {
+				color: blue;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body style="font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 400; margin: 0 auto; padding:5mm; color:#000000;">
+
+		<table cellpadding="0" cellspacing="0" style="font-family: 'Roboto', sans-serif; font-size: 15px; font-weight: 400; max-width: 600px; border: none; margin: 0 auto; overflow: hidden;">
+
+			<tr>
+				<td style="text-align: center;">
+					<table cellpadding="0" cellspacing="0" style="width: 100%; border: none;">
+						<tbody>
+							<tr>
+								<td style="text-align: center;">
+									<img src="{{ absolute_url(asset('images/logo.svg')) }}" style="width: 120px;" alt="Logo">
+								</td>
+								<td style="width: 20px;"></td>
+								<td style="text-align: center;">
+									<div style="margin-top: 85px;">
+										<h3 class="subheading">{{ 'contract_pro.header.department'|trans }}<br>
+											{{ 'contract_pro.header.court'|trans }}
+										</h3>
+										<h3 class="blue">
+											{{ 'contract_pro.header.notarized_act'|trans }}<br>N ° {{ loan.loanNumber }}<br>{{ bank.address }}
+										</h3>
+									</div>
+								</td>
+								<td style="width: 20px;"></td>
+								<td style="text-align: center;">
+									<img src="{{ absolute_url(asset('images/scale.png')) }}" style="width: 120px;" alt="Scale">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td style="font-family: 'Bungee Tint', sans-serif; text-align: center; font-size: 24px;">
+					{{ 'contract_pro.title'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="text-align: center; font-size: 12px; color: red; padding: 10px 0;">
+					{{ 'contract_pro.date'|trans({'%date%': loan.startDate|date('d.m.Y')})|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					1. {{ 'contract_pro.section.loan'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+{{ 'contract_pro.section.loan.description'|trans({'%companyName%': user.companyName,'%amount%': loan.amount, '%interest%': loan.interestRate, '%date%': loan.startDate|date('d.m.Y')|format_datetime()})|raw }}				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					2. {{ 'contract_pro.section.interest'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.interest.description'|trans({'%interest%': loan.interestRate, '%total%': '52 583,28'})|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					3. {{ 'contract_pro.section.duration'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.duration.description'|trans({'%duration%': loan.durationMonths, '%date%': loan.startDate|date('d.m.Y'), '%end_date%': loan.endDate|date('d.m.Y')})|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					4. {{ 'contract_pro.section.repayment'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.repayment.description'|trans({'%amount%': '876,39', '%date%': '3 mai 2020'})|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					5. {{ 'contract_pro.section.insurance'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.insurance.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					6. {{ 'contract_pro.section.address'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.address.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					7. {{ 'contract_pro.section.money_laundering'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.money_laundering.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					8. {{ 'contract_pro.section.general_provisions'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					8.1{{ 'contract_pro.section.general_provisions.impact'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.general_provisions.impact.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					8.2 {{ 'contract_pro.section.general_provisions.confidentiality'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.general_provisions.confidentiality.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="color: blue; text-transform: uppercase; text-decoration: underline; padding: 20px 0;">
+					8.3 {{ 'contract_pro.section.general_provisions.signatures'|trans }}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					{{ 'contract_pro.section.general_provisions.signatures.description'|trans|raw }}
+				</td>
+			</tr>
+
+			<tr>
+				<td style="text-align: center; padding: 30px 0;">
+					<table cellpadding="0" cellspacing="0" style="width: 100%; border: none;">
+						<tbody>
+							<tr>
+								<td style="text-align: center;">
+									<strong style="text-decoration: underline;">{{ 'contract_pro.signature.borrower'|trans }} ({{user.companyName}})</strong>
+									<div style="margin-top: 40px;">
+										<img style="width: 100px;" src="{{ absolute_url(asset(loan.contractSignFile.getWebPath()|default(""))) }}" alt="">
+									</div>
+									<div style="margin-top: 30px;">
+										<h4 style="font-size:14px; font-weight:normal; margin: 0 auto;">{{ user.firstname }} {{ user.lastname }}</h4>
+									</div>
+								</td>
+								<td style="width: 20px;"></td>
+								<td style="text-align: center;">
+									<strong style="text-decoration: underline;">{{ 'contract_pro.signature.notary'|trans }}</strong>
+									<div style="margin-top: 40px;">
+									<img style="width: 100px;" src="{{ absolute_url(asset(bank.signNotary)) }}" alt="">
+									</div>
+									<div style="margin-top: 30px;">
+										<h4 style="font-size:14px; font-weight:normal; margin: 0 auto;">{{ bank.notary }}</h4>
+									</div>
+								</td>
+								<td style="width: 20px;"></td>
+								<td style="text-align: center;">
+									<strong style="text-decoration: underline;">{{ 'contract_pro.signature.lender'|trans({'%bank_name%': bank.name}) }}</strong>
+									<div style="margin-top: 40px;">
+										<img style="width: 70px;" src="{{ absolute_url(asset(bank.signBank)) }}" alt="">
+									</div>
+									<div style="margin-top: 30px;">
+										<h4 style="font-size:14px; font-weight:normal; margin: 0 auto;">{{ bank.managerName }}</h4>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

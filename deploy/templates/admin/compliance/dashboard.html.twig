@@ -1,0 +1,537 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard de Conformité - RGPD & Audit Trail{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.min.css" rel="stylesheet">
+    <style>
+        .compliance-card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: all 0.15s ease-in-out;
+        }
+        .compliance-card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .metric-card.success {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .metric-card.warning {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+        .metric-card.danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+        .activity-item {
+            border-left: 3px solid #dee2e6;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        .activity-item.high-severity {
+            border-left-color: #dc3545;
+        }
+        .activity-item.medium-severity {
+            border-left-color: #ffc107;
+        }
+        .activity-item.info-severity {
+            border-left-color: #17a2b8;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 mb-0">Dashboard de Conformité</h1>
+                    <p class="text-muted">RGPD & Audit Trail - Tableau de bord</p>
+                </div>
+                <div>
+                    <button class="btn btn-outline-secondary" onclick="refreshStats()">
+                        <i class="fas fa-sync-alt"></i> Actualiser
+                    </button>
+                    <div class="btn-group ms-2">
+                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ path('admin_compliance_export', {type: 'audit_logs', format: 'csv'}) }}">
+                                <i class="fas fa-file-csv"></i> Logs d'audit (CSV)
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ path('admin_compliance_export', {type: 'consents', format: 'csv'}) }}">
+                                <i class="fas fa-file-csv"></i> Consentements (CSV)
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métriques principales -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card compliance-card metric-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-1">Logs d'audit</h6>
+                            <h3 class="mb-0" id="totalAuditLogs">{{ stats.audit.totalLogs | number_format }}</h3>
+                            <small class="text-light">Total des entrées</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-clipboard-list fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card compliance-card metric-card {% if stats.audit.highSeverityLogs > 10 %}danger{% else %}success{% endif %}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-1">Alertes critiques</h6>
+                            <h3 class="mb-0" id="highSeverityLogs">{{ stats.audit.highSeverityLogs }}</h3>
+                            <small class="text-light">Dernières 24h</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card compliance-card metric-card warning">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-1">Activité récente</h6>
+                            <h3 class="mb-0" id="recentLogs">{{ stats.audit.recentLogs }}</h3>
+                            <small class="text-light">7 derniers jours</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-chart-line fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card compliance-card metric-card {% if stats.gdpr.complianceRate > 80 %}success{% elif stats.gdpr.complianceRate > 60 %}warning{% else %}danger{% endif %}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 class="card-title text-uppercase mb-1">Conformité RGPD</h6>
+                            <h3 class="mb-0" id="complianceRate">{{ stats.gdpr.complianceRate | number_format(1) }}%</h3>
+                            <small class="text-light">Taux global</small>
+                        </div>
+                        <div class="text-end">
+                            <i class="fas fa-shield-alt fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques et statistiques -->
+    <div class="row mb-4">
+        <div class="col-xl-8 mb-4">
+            <div class="card compliance-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Activité d'audit - 30 derniers jours</h6>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-primary active" onclick="changeChartPeriod('30')">30j</button>
+                        <button class="btn btn-outline-primary" onclick="changeChartPeriod('7')">7j</button>
+                        <button class="btn btn-outline-primary" onclick="changeChartPeriod('1')">24h</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="auditActivityChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 mb-4">
+            <div class="card compliance-card">
+                <div class="card-header">
+                    <h6 class="mb-0">Répartition des consentements</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="consentDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation rapide -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card compliance-card">
+                <div class="card-header">
+                    <h6 class="mb-0">Accès rapide</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ path('admin_compliance_audit_logs') }}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-clipboard-list mb-2"></i><br>
+                                Logs d'audit
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ path('admin_compliance_consent_management') }}" class="btn btn-outline-success w-100">
+                                <i class="fas fa-check-circle mb-2"></i><br>
+                                Consentements
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ path('admin_compliance_gdpr_requests') }}" class="btn btn-outline-info w-100">
+                                <i class="fas fa-user-shield mb-2"></i><br>
+                                Demandes RGPD
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ path('admin_compliance_statistics') }}" class="btn btn-outline-warning w-100">
+                                <i class="fas fa-chart-bar mb-2"></i><br>
+                                Statistiques
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activité récente -->
+    <div class="row">
+        <div class="col-xl-8 mb-4">
+            <div class="card compliance-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Activité récente</h6>
+                    <a href="{{ path('admin_compliance_audit_logs') }}" class="btn btn-sm btn-outline-primary">
+                        Voir tout <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div id="recentActivity" class="p-3">
+                        <!-- Sera rempli par JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 mb-4">
+            <div class="card compliance-card">
+                <div class="card-header">
+                    <h6 class="mb-0">Alertes et notifications</h6>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-clock"></i>
+                        <strong>{{ stats.gdpr.expiredConsents ?? 0 }}</strong> consentements expirés nécessitent une action
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>{{ stats.gdpr.recentWithdrawals ?? 0 }}</strong> retraits de consentement ce mois
+                    </div>
+                    {% if stats.audit.highSeverityLogs > 0 %}
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>{{ stats.audit.highSeverityLogs }}</strong> événements critiques détectés
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nettoyage automatique -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card compliance-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Maintenance et nettoyage</h6>
+                    <button class="btn btn-sm btn-outline-danger" onclick="performCleanup()">
+                        <i class="fas fa-broom"></i> Nettoyer les anciens logs
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="text-muted">Rétention des données</h6>
+                            <p class="mb-0">Logs d'audit : <strong>365 jours</strong></p>
+                            <p class="mb-0">Consentements : <strong>7 ans</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-muted">Dernier nettoyage</h6>
+                            <p class="mb-0" id="lastCleanup">Non disponible</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-muted">Statut</h6>
+                            <span class="badge bg-success">Conforme RGPD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.min.js"></script>
+    <script>
+        // Configuration des graphiques
+        let auditActivityChart;
+        let consentDistributionChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            loadRecentActivity();
+            
+            // Actualisation automatique toutes les 5 minutes
+            setInterval(function() {
+                refreshStats();
+                loadRecentActivity();
+            }, 300000);
+        });
+
+        function initializeCharts() {
+            // Graphique d'activité d'audit
+            const auditCtx = document.getElementById('auditActivityChart').getContext('2d');
+            auditActivityChart = new Chart(auditCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Événements d\'audit',
+                        data: [],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Graphique de répartition des consentements
+            const consentCtx = document.getElementById('consentDistributionChart').getContext('2d');
+            consentDistributionChart = new Chart(consentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Accordés', 'Refusés', 'Retirés', 'En attente'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: [
+                            '#4CAF50',
+                            '#f44336',
+                            '#ff9800',
+                            '#2196F3'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Charger les données initiales
+            loadChartData();
+        }
+
+        function loadChartData() {
+            // Simuler des données pour la démonstration
+            // Dans une vraie application, ces données viendraient d'API
+            
+            // Données d'activité d'audit
+            const auditData = {
+                labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                data: [65, 59, 80, 81, 56, 55, 40]
+            };
+            
+            auditActivityChart.data.labels = auditData.labels;
+            auditActivityChart.data.datasets[0].data = auditData.data;
+            auditActivityChart.update();
+
+            // Données de consentement
+            const consentData = [
+                {% if stats.gdpr.consentRates is defined %}
+                    {% for type, rates in stats.gdpr.consentRates %}
+                        {{ rates.granted ?? 0 }},
+                    {% endfor %}
+                {% endif %}
+                75, 15, 8, 2
+            ];
+            
+            consentDistributionChart.data.datasets[0].data = consentData;
+            consentDistributionChart.update();
+        }
+
+        function loadRecentActivity() {
+            fetch('{{ path('admin_compliance_api_recent_activity') }}')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('recentActivity');
+                    container.innerHTML = '';
+                    
+                    data.forEach(activity => {
+                        const severityClass = getSeverityClass(activity.severity);
+                        const item = document.createElement('div');
+                        item.className = `activity-item ${severityClass}`;
+                        item.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">${activity.action}</h6>
+                                    <p class="mb-1 text-muted">${activity.description}</p>
+                                    <small class="text-muted">
+                                        <i class="fas fa-user"></i> ${activity.userName || 'Système'}
+                                        <i class="fas fa-clock ms-2"></i> ${formatDate(activity.createdAt)}
+                                    </small>
+                                </div>
+                                <span class="badge bg-${getSeverityBadgeClass(activity.severity)}">${activity.severity}</span>
+                            </div>
+                        `;
+                        container.appendChild(item);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement de l\'activité récente:', error);
+                });
+        }
+
+        function refreshStats() {
+            fetch('{{ path('admin_compliance_api_stats') }}')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalAuditLogs').textContent = data.audit.total.toLocaleString();
+                    document.getElementById('highSeverityLogs').textContent = data.audit.highSeverity;
+                    document.getElementById('recentLogs').textContent = data.audit.today;
+                })
+                .catch(error => {
+                    console.error('Erreur lors de l\'actualisation des statistiques:', error);
+                });
+        }
+
+        function changeChartPeriod(days) {
+            // Mettre à jour les boutons actifs
+            document.querySelectorAll('.btn-group button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Recharger les données du graphique pour la nouvelle période
+            loadChartData();
+        }
+
+        function performCleanup() {
+            if (!confirm('Êtes-vous sûr de vouloir nettoyer les anciens logs ? Cette action est irréversible.')) {
+                return;
+            }
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+            
+            fetch('{{ path('admin_compliance_cleanup') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    _token: csrfToken
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Nettoyage terminé : ${data.deletedLogs} logs supprimés`);
+                    document.getElementById('lastCleanup').textContent = new Date().toLocaleString();
+                    refreshStats();
+                } else {
+                    alert('Erreur lors du nettoyage : ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors du nettoyage:', error);
+                alert('Erreur lors du nettoyage');
+            });
+        }
+
+        function getSeverityClass(severity) {
+            const map = {
+                'critical': 'high-severity',
+                'high': 'high-severity',
+                'error': 'high-severity',
+                'medium': 'medium-severity',
+                'warning': 'medium-severity',
+                'info': 'info-severity',
+                'low': 'info-severity'
+            };
+            return map[severity] || 'info-severity';
+        }
+
+        function getSeverityBadgeClass(severity) {
+            const map = {
+                'critical': 'danger',
+                'high': 'danger',
+                'error': 'danger',
+                'medium': 'warning',
+                'warning': 'warning',
+                'info': 'info',
+                'low': 'secondary'
+            };
+            return map[severity] || 'secondary';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            
+            if (diff < 60000) { // moins d'1 minute
+                return 'À l\'instant';
+            } else if (diff < 3600000) { // moins d'1 heure
+                return Math.floor(diff / 60000) + ' min';
+            } else if (diff < 86400000) { // moins d'1 jour
+                return Math.floor(diff / 3600000) + ' h';
+            } else {
+                return date.toLocaleDateString('fr-FR');
+            }
+        }
+    </script>
+{% endblock %}

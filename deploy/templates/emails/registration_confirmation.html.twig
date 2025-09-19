@@ -1,0 +1,19 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'registration.email.confirmation.subject' | trans }}
+{% endblock %}
+
+{% block body %}
+    <p>
+        {{ 'registration.email.greeting' | trans({'%nom%': user.nom,'%prenom%': user.prenom}) }}
+    </p>
+
+    <p>
+        {{ 'registration.email.confirmation.message' | trans }}
+    </p>
+
+    <p>
+        {{ 'registration.email.salutation' | trans }}
+    </p>
+{% endblock %}

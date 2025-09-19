@@ -1,0 +1,54 @@
+services:
+    # Configuration des services d'audit et RGPD
+    
+    # Service principal d'audit logger
+    App\Service\Audit\AuditLoggerService:
+        arguments:
+            $auditEnabled: '%env(bool:AUDIT_ENABLED)%'
+        tags:
+            - { name: 'monolog.logger', channel: 'audit' }
+
+    # Service RGPD
+    App\Service\GDPR\GDPRService:
+        arguments:
+            $requiredConsents: '%env(json:GDPR_REQUIRED_CONSENTS)%'
+        tags:
+            - { name: 'monolog.logger', channel: 'gdpr' }
+
+    # Event Subscriber pour l'audit trail automatique
+    App\EventSubscriber\AuditTrailSubscriber:
+        arguments:
+            $auditDoctrine: '%env(bool:AUDIT_DOCTRINE_ENABLED)%'
+            $auditRequests: '%env(bool:AUDIT_REQUESTS_ENABLED)%'
+            $auditableEntities: '%env(json:AUDIT_ENTITIES)%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+            - { name: 'doctrine.event_subscriber' }
+            - { name: 'monolog.logger', channel: 'audit' }
+
+    # Alias pour faciliter l'injection
+    audit_logger:
+        alias: 'App\Service\Audit\AuditLoggerService'
+        public: true
+
+    gdpr_service:
+        alias: 'App\Service\GDPR\GDPRService'
+        public: true
+
+    # Command pour le nettoyage automatique (optionnel)
+    app.audit.cleanup_command:
+        class: App\Command\Audit\CleanupAuditLogsCommand
+        arguments:
+            - '@App\Service\Audit\AuditLoggerService'
+            - '@App\Service\GDPR\GDPRService'
+        tags:
+            - { name: 'console.command' }
+
+    # Command pour traiter les consentements expirés (optionnel)
+    app.gdpr.process_expired_consents_command:
+        class: App\Command\GDPR\ProcessExpiredConsentsCommand
+        arguments:
+            - '@App\Service\GDPR\GDPRService'
+            - '@App\Service\Audit\AuditLoggerService'
+        tags:
+            - { name: 'console.command' }

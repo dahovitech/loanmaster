@@ -1,0 +1,82 @@
+{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
+{% block title %}
+	{{ seo('seoAboutTitle')|raw|trim }}
+{% endblock %}
+{% block description %}
+	{{ seo('seoAboutDescription')|raw|trim }}
+{% endblock %}
+{% block keywords %}
+	{{ seo('seoAboutKeywords')|raw|trim }}
+{% endblock %}
+{% block canonical %}
+	{{ url('about')|raw|trim }}
+{% endblock %}
+
+{% block ogTitle %}
+	{{ seo('seoAboutTitle')|raw|trim }}
+{% endblock %}
+{% block ogDescription %}
+	{{ seo('seoAboutDescription')|raw|trim }}
+{% endblock %}
+{% block ogImage %}
+	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
+{% endblock %}
+{% block ogUrl %}
+	{{ url('about') |raw|trim}}
+{% endblock %}
+
+{% block twitterTitle %}
+	{{ seo('seoAboutTitle')|raw|trim }}
+{% endblock %}
+{% block twitterDescription %}
+	{{ seo('seoAboutDescription')|raw|trim }}
+{% endblock %}
+{% block twitterImage %}
+	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
+{% endblock %}
+{% block twitterUrl %}
+	{{ url('about')|raw|trim }}
+{% endblock %}
+{% block body %}
+	<section class="page-header">
+		<div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+		<!-- /.page-header__bg -->
+		<div class="container">
+			<div class="page-header__content">
+				<h2 class="page-header__title">{{"front.menu.about"|trans}}</h2>
+				<ul class="easilon-breadcrumb list-unstyled">
+					<li>
+						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
+					</li>
+					<li>
+						<span>{{"front.menu.about"|trans}}</span>
+					</li>
+				</ul>
+				<!-- /.thm-breadcrumb list-unstyled -->
+			</div>
+			<!-- /.page-header__content -->
+		</div>
+		<!-- /.container -->
+		<div class="page-header__border-box">
+			<div class="page-header__border page-header__border--1"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--2"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--3"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--4"></div>
+			<!-- /.page-header__border -->
+			<div class="page-header__border page-header__border--5"></div>
+			<!-- /.page-header__border -->
+		</div>
+		<!-- /.page-header__border-box -->
+	</section>
+	<!-- /.page-header -->
+    	{{ include('@theme/'~setting('theme')~'/inc/about1.html.twig') }}
+    	{{ include('@theme/'~setting('theme')~'/inc/why_choose_us.html.twig') }}
+    	{{ include('@theme/'~setting('theme')~'/inc/reasons.html.twig') }}
+    	{{ include('@theme/'~setting('theme')~'/inc/funfact.html.twig') }}
+    	{{ include('@theme/'~setting('theme')~'/inc/testimonial2.html.twig') }}
+    	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+
+{% endblock %}

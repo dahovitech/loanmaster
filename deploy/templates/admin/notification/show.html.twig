@@ -1,0 +1,44 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{"admin.page.notification.show.title"|trans}}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="javascript:;">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_user_notification_index') }}">{{"admin.page.notification.index.title"|trans}}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{"admin.page.notification.show.title"|trans}}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+
+		<div class="col-md-8">
+			<hr/>
+
+			<div class="card card-bordered ">
+				<h5 class="card-header">
+					{{notification.subject|raw}}
+				</h5>
+				<div class="card-body">
+					{{notification.content|raw}}
+				</div>
+				<div class="card-footer">
+					<a class="btn btn-outline-primary " href="{{ path('app_user_notification_index') }}">{{"btn.back"|trans}}</a>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+{% endblock %}

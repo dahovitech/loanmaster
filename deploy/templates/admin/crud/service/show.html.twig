@@ -1,0 +1,71 @@
+{% extends '@admin/base.html.twig' %}
+
+{% block title %}{{ 'service.title'|trans }}
+{% endblock %}
+
+{% block body %}
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+        <div class="breadcrumb-title pe-3">{{ 'service.title'|trans }}</div>
+        <div class="ps-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_admin_dashboard') }}">
+                            <i class="bx bx-home-alt"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_crud_index',{entityName: entityName}) }}">
+                            <i class="bx bx-list-alt"></i>
+                            {{ 'service.list'|trans }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ 'service.title'|trans }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!--end breadcrumb-->
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h1>{{ 'service.title'|trans }}</h1>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>{{ 'service.name'|trans }}</th>
+                                <td>{{ entity.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'service.resume'|trans }}</th>
+                                <td>{{ entity.resume }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'service.description'|trans }}</th>
+                                <td>{{ entity.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'service.image'|trans }}</th>
+								<td><img src="{{ entity.image }}"  style="max-width: 400px;"></td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'service.category'|trans }}</th>
+                                <td>{{ entity.category ? entity.category.name : 'No category' }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'service.status'|trans }}</th>
+                                <td>{{ entity.isEnabled ? 'status.enabled'|trans : 'status.disabled'|trans }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="btn btn-block btn-outline-primary" href="{{ path('app_crud_index',{entityName: entityName}) }}">{{ 'back_to_list'|trans }}</a>
+
+                {{ include('@admin/crud/service/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

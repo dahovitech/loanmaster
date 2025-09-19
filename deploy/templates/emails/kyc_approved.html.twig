@@ -1,0 +1,13 @@
+{# templates/emails/kyc_approved.html.twig #}
+
+{% extends 'emails/layout.html.twig' %}
+
+{% block subject %}
+    {{ 'email.kyc_approved.title'|trans({}, 'messages', user.locale) }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ 'email.kyc_approved.greeting'|trans({'%firstname%': user.firstname}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.kyc_approved.message'|trans({}, 'messages', user.locale) }}</p>
+    <p>{{ 'email.kyc_approved.thanks'|trans({}, 'messages', user.locale) }}</p>
+{% endblock %}

@@ -1,0 +1,264 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Logs Monitoring - {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid px-4 py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">📝 Logs de Monitoring</h1>
+            <p class="text-muted">Consultation des journaux système</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ path('admin_monitoring_dashboard') }}" class="btn btn-outline-secondary">
+                ← Retour au dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" class="row g-3">
+                <div class="col-md-3">
+                    <label for="type" class="form-label">Type de log</label>
+                    <select name="type" id="type" class="form-select">
+                        <option value="all" {{ log_type == 'all' ? 'selected' : '' }}>Tous</option>
+                        <option value="performance" {{ log_type == 'performance' ? 'selected' : '' }}>Performance</option>
+                        <option value="security" {{ log_type == 'security' ? 'selected' : '' }}>Sécurité</option>
+                        <option value="business" {{ log_type == 'business' ? 'selected' : '' }}>Métier</option>
+                        <option value="audit" {{ log_type == 'audit' ? 'selected' : '' }}>Audit</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="limit" class="form-label">Limite</label>
+                    <select name="limit" id="limit" class="form-select">
+                        <option value="50" {{ limit == 50 ? 'selected' : '' }}>50</option>
+                        <option value="100" {{ limit == 100 ? 'selected' : '' }}>100</option>
+                        <option value="200" {{ limit == 200 ? 'selected' : '' }}>200</option>
+                        <option value="500" {{ limit == 500 ? 'selected' : '' }}>500</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="level" class="form-label">Niveau</label>
+                    <select name="level" id="level" class="form-select">
+                        <option value="">Tous les niveaux</option>
+                        <option value="debug">DEBUG</option>
+                        <option value="info">INFO</option>
+                        <option value="warning">WARNING</option>
+                        <option value="error">ERROR</option>
+                        <option value="critical">CRITICAL</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Filtrer</button>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <div>
+                        <button type="button" id="refresh-logs" class="btn btn-outline-primary">
+                            🔄 Actualiser
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logs -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Entrées de logs ({{ logs|length }})</h5>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="auto-refresh">
+                <label class="form-check-label" for="auto-refresh">
+                    Actualisation automatique
+                </label>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div id="logs-container" style="max-height: 70vh; overflow-y: auto;">
+                {% for log in logs %}
+                    <div class="log-entry border-bottom p-3" data-level="{{ log.level|lower }}">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <small class="text-muted">{{ log.timestamp|date('Y-m-d H:i:s') }}</small>
+                            </div>
+                            <div class="col-md-1">
+                                <span class="badge badge-{{ log.level|lower }}">{{ log.level }}</span>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="text-primary">{{ log.channel }}</span>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="log-message">{{ log.message }}</div>
+                                {% if log.context is defined and log.context is not empty %}
+                                    <details class="mt-2">
+                                        <summary class="text-muted small cursor-pointer">Contexte</summary>
+                                        <pre class="small mt-2 bg-light p-2 rounded">{{ log.context|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                                    </details>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <i class="fas fa-inbox fa-3x mb-3"></i>
+                        <p>Aucun log trouvé pour les critères sélectionnés</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.badge-debug { background-color: #6c757d; }
+.badge-info { background-color: #0dcaf0; }
+.badge-warning { background-color: #ffc107; color: #000; }
+.badge-error { background-color: #dc3545; }
+.badge-critical { background-color: #6f42c1; }
+
+.log-entry:hover {
+    background-color: #f8f9fa;
+}
+
+.log-message {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+details summary {
+    list-style: none;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details summary::before {
+    content: '▶';
+    margin-right: 5px;
+    transition: transform 0.2s;
+}
+
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+</style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let autoRefreshInterval;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAutoRefresh();
+            setupLogFiltering();
+        });
+        
+        function setupAutoRefresh() {
+            const autoRefreshCheckbox = document.getElementById('auto-refresh');
+            const refreshButton = document.getElementById('refresh-logs');
+            
+            autoRefreshCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    startAutoRefresh();
+                } else {
+                    stopAutoRefresh();
+                }
+            });
+            
+            refreshButton.addEventListener('click', function() {
+                refreshLogs();
+            });
+        }
+        
+        function startAutoRefresh() {
+            stopAutoRefresh(); // S'assurer qu'il n'y a pas déjà un interval
+            autoRefreshInterval = setInterval(refreshLogs, 10000); // Toutes les 10 secondes
+        }
+        
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+        
+        function refreshLogs() {
+            const currentUrl = new URL(window.location);
+            
+            fetch(currentUrl.toString(), {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Parser la réponse pour extraire seulement les logs
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newLogsContainer = doc.getElementById('logs-container');
+                
+                if (newLogsContainer) {
+                    document.getElementById('logs-container').innerHTML = newLogsContainer.innerHTML;
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'actualisation des logs:', error);
+            });
+        }
+        
+        function setupLogFiltering() {
+            // Filtrage côté client par niveau
+            const levelFilter = document.getElementById('level');
+            if (levelFilter) {
+                levelFilter.addEventListener('change', function() {
+                    filterLogsByLevel(this.value);
+                });
+            }
+        }
+        
+        function filterLogsByLevel(level) {
+            const logEntries = document.querySelectorAll('.log-entry');
+            
+            logEntries.forEach(entry => {
+                if (!level || entry.dataset.level === level) {
+                    entry.style.display = '';
+                } else {
+                    entry.style.display = 'none';
+                }
+            });
+        }
+        
+        // Nettoyer l'interval lors de la navigation
+        window.addEventListener('beforeunload', function() {
+            stopAutoRefresh();
+        });
+        
+        // Ajout d'un indicateur de mise à jour
+        function showRefreshIndicator() {
+            const refreshButton = document.getElementById('refresh-logs');
+            const originalText = refreshButton.innerHTML;
+            refreshButton.innerHTML = '⏳ Actualisation...';
+            refreshButton.disabled = true;
+            
+            setTimeout(() => {
+                refreshButton.innerHTML = originalText;
+                refreshButton.disabled = false;
+            }, 1000);
+        }
+        
+        // Mettre à jour l'indicateur lors du refresh
+        document.getElementById('refresh-logs').addEventListener('click', showRefreshIndicator);
+    </script>
+{% endblock %}

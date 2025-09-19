@@ -1,0 +1,78 @@
+{% extends "@admin/base.html.twig" %}
+
+{% block title %}
+	{{ 'loan.edit.title'|trans }}
+{% endblock %}
+
+{% block body %}
+	<!--breadcrumb-->
+	<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+		<div class="breadcrumb-title pe-3">{{ 'loan.edit.title'|trans }}</div>
+		<div class="ps-3">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0 p-0">
+					<li class="breadcrumb-item">
+						<a href="{{ path('app_user_dashboard') }}">
+							<i class="bx bx-home-alt"></i>
+						</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="{{path('app_user_loan_list')}}">
+							<i class="bx bx-list"></i>
+							{{ 'loan.list.title'|trans }}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">{{ 'loan.edit.title'|trans }}</li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+	<!--end breadcrumb-->
+	<div class="row">
+		<div class="col-md-8">
+			<h6 class="mb-0 text-uppercase">{{ 'loan.edit.title'|trans }}</h6>
+			<hr/>
+			<div class="card">
+				<div class="card-body">
+					{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+					<div class="form-group">
+						{{ form_label(form.loanNumber, 'loan.form.loanNumber'|trans) }}
+						{{ form_widget(form.loanNumber, {'attr': {'class': 'form-control', 'placeholder': 'loan.form.loanNumberPlaceholder'|trans}}) }}
+						{{ form_errors(form.loanNumber) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.startDate, 'loan.form.startDate'|trans) }}
+						{{ form_widget(form.startDate, {'attr': {'class': 'form-control'}}) }}
+						{{ form_errors(form.startDate) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.endDate, 'loan.form.endDate'|trans) }}
+						{{ form_widget(form.endDate, {'attr': {'class': 'form-control'}}) }}
+						{{ form_errors(form.endDate) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.amount, 'loan.form.amount'|trans) }}
+						{{ form_widget(form.amount, {'attr': {'class': 'form-control', 'placeholder': 'loan.form.amountPlaceholder'|trans}}) }}
+						{{ form_errors(form.amount) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.interestRate, 'loan.form.interestRate'|trans) }}
+						{{ form_widget(form.interestRate, {'attr': {'class': 'form-control', 'placeholder': 'loan.form.interestRatePlaceholder'|trans}}) }}
+						{{ form_errors(form.interestRate) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.durationMonths, 'loan.form.durationMonths'|trans) }}
+						{{ form_widget(form.durationMonths, {'attr': {'class': 'form-control', 'placeholder': 'loan.form.durationMonthsPlaceholder'|trans}}) }}
+						{{ form_errors(form.durationMonths) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.notes, 'loan.form.notes'|trans) }}
+						{{ form_widget(form.notes, {'attr': {'class': 'form-control', 'placeholder': 'loan.form.notesPlaceholder'|trans}}) }}
+						{{ form_errors(form.notes) }}
+					</div>
+					<button type="submit" class="btn btn-primary">{{ 'loan.form.saveButton'|trans }}</button>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

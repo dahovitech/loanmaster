@@ -1,0 +1,379 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logs d'Audit - Dashboard de Conformité{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .audit-table {
+            font-size: 0.9rem;
+        }
+        .severity-badge {
+            font-size: 0.75rem;
+        }
+        .filter-card {
+            background-color: #f8f9fa;
+        }
+        .audit-row:hover {
+            background-color: #f8f9fa;
+        }
+        .severity-critical { background-color: #dc3545; }
+        .severity-high { background-color: #fd7e14; }
+        .severity-medium { background-color: #ffc107; color: #000; }
+        .severity-error { background-color: #dc3545; }
+        .severity-warning { background-color: #ffc107; color: #000; }
+        .severity-info { background-color: #17a2b8; }
+        .severity-low { background-color: #6c757d; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    <!-- En-tête -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ path('admin_compliance_dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Logs d'audit</li>
+                        </ol>
+                    </nav>
+                    <h1 class="h3 mb-0">Logs d'Audit</h1>
+                    <p class="text-muted">{{ totalLogs }} entrées trouvées</p>
+                </div>
+                <div>
+                    <a href="{{ path('admin_compliance_export', {type: 'audit_logs', format: 'csv'}) }}" class="btn btn-outline-primary">
+                        <i class="fas fa-download"></i> Export CSV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card filter-card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter"></i> Filtres
+                        <button class="btn btn-sm btn-outline-secondary float-end" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </h6>
+                </div>
+                <div class="collapse {% if filters is not empty %}show{% endif %}" id="filtersCollapse">
+                    <div class="card-body">
+                        <form method="GET" class="row g-3">
+                            <div class="col-md-2">
+                                <label class="form-label">Action</label>
+                                <select name="action" class="form-select">
+                                    <option value="">Toutes</option>
+                                    {% for action in availableActions %}
+                                        <option value="{{ action }}" {% if filters.action == action %}selected{% endif %}>
+                                            {{ action | replace({'_': ' '}) | title }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Type d'entité</label>
+                                <select name="entityType" class="form-select">
+                                    <option value="">Tous</option>
+                                    {% for entityType in availableEntityTypes %}
+                                        <option value="{{ entityType }}" {% if filters.entityType == entityType %}selected{% endif %}>
+                                            {{ entityType }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Sévérité</label>
+                                <select name="severity" class="form-select">
+                                    <option value="">Toutes</option>
+                                    <option value="critical" {% if filters.severity == 'critical' %}selected{% endif %}>Critique</option>
+                                    <option value="high" {% if filters.severity == 'high' %}selected{% endif %}>Haute</option>
+                                    <option value="error" {% if filters.severity == 'error' %}selected{% endif %}>Erreur</option>
+                                    <option value="medium" {% if filters.severity == 'medium' %}selected{% endif %}>Moyenne</option>
+                                    <option value="warning" {% if filters.severity == 'warning' %}selected{% endif %}>Attention</option>
+                                    <option value="info" {% if filters.severity == 'info' %}selected{% endif %}>Info</option>
+                                    <option value="low" {% if filters.severity == 'low' %}selected{% endif %}>Faible</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">ID Utilisateur</label>
+                                <input type="number" name="userId" class="form-control" value="{{ filters.userId ?? '' }}" placeholder="ID">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Date début</label>
+                                <input type="date" name="startDate" class="form-control" value="{{ filters.startDate ? filters.startDate | date('Y-m-d') : '' }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Date fin</label>
+                                <input type="date" name="endDate" class="form-control" value="{{ filters.endDate ? filters.endDate | date('Y-m-d') : '' }}">
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label">Recherche</label>
+                                <input type="text" name="search" class="form-control" value="{{ filters.search ?? '' }}" placeholder="Rechercher dans les descriptions, actions, types...">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Filtrer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if filters is not empty %}
+                            <div class="mt-3">
+                                <a href="{{ path('admin_compliance_audit_logs') }}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-times"></i> Effacer les filtres
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des logs -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    {% if auditLogs is empty %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">Aucun log d'audit trouvé</h5>
+                            <p class="text-muted">Essayez de modifier vos critères de recherche.</p>
+                        </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover audit-table mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Action</th>
+                                        <th>Entité</th>
+                                        <th>Utilisateur</th>
+                                        <th>IP</th>
+                                        <th>Sévérité</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for log in auditLogs %}
+                                        <tr class="audit-row">
+                                            <td class="text-muted">{{ log.id }}</td>
+                                            <td>
+                                                <span class="badge bg-secondary">{{ log.action }}</span>
+                                            </td>
+                                            <td>
+                                                {% if log.entityType %}
+                                                    {{ log.entityType }}
+                                                    {% if log.entityId %}
+                                                        <small class="text-muted">#{{ log.entityId }}</small>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if log.userName %}
+                                                    {{ log.userName }}
+                                                    {% if log.userId %}
+                                                        <small class="text-muted">({{ log.userId }})</small>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <span class="text-muted">Système</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if log.ipAddress %}
+                                                    <code>{{ log.ipAddress }}</code>
+                                                {% else %}
+                                                    <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <span class="badge severity-badge severity-{{ log.severity }}">
+                                                    {{ log.severity | upper }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if log.description %}
+                                                    <span title="{{ log.description }}">
+                                                        {{ log.description | length > 50 ? (log.description | slice(0, 50) ~ '...') : log.description }}
+                                                    </span>
+                                                {% else %}
+                                                    <span class="text-muted">-</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <span title="{{ log.createdAt | date('Y-m-d H:i:s') }}">
+                                                    {{ log.createdAt | date('d/m H:i') }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('admin_compliance_audit_log_detail', {id: log.id}) }}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if totalPages > 1 %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <nav aria-label="Navigation des pages">
+                    <ul class="pagination justify-content-center">
+                        {% if currentPage > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('admin_compliance_audit_logs', filters | merge({page: currentPage - 1})) }}">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page in range(max(1, currentPage - 2), min(totalPages, currentPage + 2)) %}
+                            <li class="page-item {% if page == currentPage %}active{% endif %}">
+                                <a class="page-link" href="{{ path('admin_compliance_audit_logs', filters | merge({page: page})) }}">
+                                    {{ page }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        {% if currentPage < totalPages %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ path('admin_compliance_audit_logs', filters | merge({page: currentPage + 1})) }}">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+                <div class="text-center text-muted">
+                    Page {{ currentPage }} sur {{ totalPages }} ({{ totalLogs }} entrées au total)
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Statistiques rapides -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h6 class="text-muted">Actions les plus fréquentes</h6>
+                            <p class="mb-0">
+                                {% set topActions = auditLogs | map(log => log.action) | slice(0, 3) | unique %}
+                                {% for action in topActions %}
+                                    <span class="badge bg-primary me-1">{{ action }}</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-muted">Utilisateurs actifs</h6>
+                            <p class="mb-0">
+                                {% set activeUsers = auditLogs | map(log => log.userName) | filter(name => name is not null) | unique | length %}
+                                <strong>{{ activeUsers }}</strong> utilisateurs
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-muted">Événements critiques</h6>
+                            <p class="mb-0">
+                                {% set criticalLogs = auditLogs | filter(log => log.severity in ['critical', 'high', 'error']) | length %}
+                                <strong class="text-danger">{{ criticalLogs }}</strong> événements
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="text-muted">Période affichée</h6>
+                            <p class="mb-0">
+                                {% if filters.startDate or filters.endDate %}
+                                    {{ filters.startDate ? filters.startDate | date('d/m/Y') : 'Début' }} - 
+                                    {{ filters.endDate ? filters.endDate | date('d/m/Y') : 'Fin' }}
+                                {% else %}
+                                    Toutes les données
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-soumission du formulaire de filtre après un délai
+            const searchInput = document.querySelector('input[name="search"]');
+            let searchTimeout;
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(function() {
+                        // Optionnel : soumission automatique après 2 secondes de pause
+                        // document.querySelector('form').submit();
+                    }, 2000);
+                });
+            }
+
+            // Raccourcis clavier
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+F pour focus sur la recherche
+                if (e.ctrlKey && e.key === 'f') {
+                    e.preventDefault();
+                    searchInput?.focus();
+                }
+                
+                // Échap pour effacer les filtres
+                if (e.key === 'Escape') {
+                    const clearButton = document.querySelector('a[href*="audit_logs"]:not([href*="?"])');
+                    if (clearButton) {
+                        window.location.href = clearButton.href;
+                    }
+                }
+            });
+
+            // Tooltips pour les descriptions tronquées
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+            tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+
+        function exportLogs(format) {
+            const params = new URLSearchParams(window.location.search);
+            params.set('format', format);
+            params.set('export', '1');
+            
+            window.location.href = '{{ path('admin_compliance_export', {type: 'audit_logs'}) }}?' + params.toString();
+        }
+    </script>
+{% endblock %}

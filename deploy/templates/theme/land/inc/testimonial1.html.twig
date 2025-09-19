@@ -1,0 +1,44 @@
+
+	<!--<< Testimonial Section Start >>-->
+	<section class="testimonial-section-3 fix section-padding pt-0">
+		<div class="container-fluid">
+			<div class="testimonial-wrapper-3">
+				<div class="testimonial-carousel-active-3">
+					{% for testimonial in testimonials() %}
+						<div class="testimonial-items">
+							<div class="testimonial-image-area">
+								<div class="testimonial-image bg-cover" style="background-image: url({{asset(testimonial.avatar|default('img/user.png'))}});">
+									<div class="icon">
+										<i class="fas fa-quote-left"></i>
+									</div>
+								</div>
+								<div class="star">
+									{% for i in 0..testimonial.rating %}
+										<span class="fas fa-star"></span>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="testimonial-content">
+								<h3>
+									{{testimonial.message|raw}}
+								</h3>
+								<div class="athor-name">
+									<h4>{{testimonial.author}}/</h4>
+									<p>{{testimonial.country}}</p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+
+				</div>
+				<div class="slider-button">
+					<div class="testimonial-nav-prev">
+						<i class="fas fa-long-arrow-left"></i>
+					</div>
+					<div class="testimonial-nav-next">
+						<i class="fas fa-long-arrow-right"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>

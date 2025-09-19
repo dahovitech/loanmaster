@@ -1,0 +1,30 @@
+{% extends '@theme/base.html.twig' %}
+
+{% block body %}
+    <!--<< Breadcrumb Section Start >>-->
+        <div class="breadcrumb-wrapper section-padding bg-cover" style="background-image: url({{ asset('theme/land/assets/img/breadcrumb.jpg') }});">
+            <div class="container">
+                <div class="page-heading">
+                    <h1 class="wow fadeInUp" data-wow-delay=".3s">{{"front.menu.service"|trans}}</h1>
+                    <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s">
+                        <li>
+                            <a href="{{path('home')}}">
+                                {{"front.menu.home"|trans}}
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fal fa-minus"></i>
+                        </li>
+                        <li>
+                            {{"front.menu.service"|trans}}
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+       {{ include('@theme/inc/service2.html.twig') }}
+       {{ include('@theme/inc/counter1.html.twig') }}
+       {{ include('@theme/inc/testimonial1.html.twig') }}
+{% endblock %}
