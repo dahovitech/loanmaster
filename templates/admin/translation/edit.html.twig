@@ -1,0 +1,541 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page_title }} - Administration{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .translation-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .translation-editor {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .translation-row {
+            border-bottom: 1px solid #f1f3f4;
+            padding: 15px;
+            transition: background-color 0.2s;
+        }
+        
+        .translation-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .translation-row:last-child {
+            border-bottom: none;
+        }
+        
+        .translation-key {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #495057;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .reference-text {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #1565c0;
+        }
+        
+        .translation-input {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 12px;
+            width: 100%;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            resize: vertical;
+            min-height: 40px;
+        }
+        
+        .translation-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            outline: none;
+        }
+        
+        .translation-input.empty {
+            border-color: #ffc107;
+            background-color: #fff3cd;
+        }
+        
+        .translation-input.modified {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+        
+        .search-box {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            padding: 15px;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 0;
+        }
+        
+        .toolbar {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .save-button {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(40,167,69,0.3);
+        }
+        
+        .save-button:disabled {
+            background: #6c757d;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .back-link {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        
+        .back-link:hover {
+            opacity: 1;
+            color: white;
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+            z-index: 9999;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="progress-indicator" id="saveProgress"></div>
+
+<div class="container-fluid py-4">
+    <!-- En-tête -->
+    <div class="translation-header">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <a href="{{ path('admin_translation_index') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Retour aux traductions
+                </a>
+                <h1 class="mt-2 mb-1">{{ page_title }}</h1>
+                <p class="mb-0 opacity-75">
+                    Domaine: <strong>{{ domain }}</strong> • 
+                    Langue: <strong>{{ language.name }} ({{ language.code|upper }})</strong>
+                    {% if language.isDefault %}
+                        <span class="badge bg-light text-dark ms-2">Langue par défaut</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalCount">{{ translations|length }}</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="translatedCount">0</div>
+                        <div class="stat-label">Traduites</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="emptyCount">0</div>
+                        <div class="stat-label">Vides</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Éditeur de traductions -->
+    <div class="translation-editor">
+        <!-- Barre d'outils -->
+        <div class="toolbar">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-primary" onclick="showOnlyEmpty()">
+                    <i class="fas fa-filter"></i> Afficher seulement les vides
+                </button>
+                <button class="btn btn-outline-success" onclick="showOnlyTranslated()">
+                    <i class="fas fa-check"></i> Afficher seulement les traduites
+                </button>
+                <button class="btn btn-outline-secondary" onclick="showAll()">
+                    <i class="fas fa-list"></i> Tout afficher
+                </button>
+            </div>
+            
+            <div class="d-flex align-items-center gap-2">
+                <span id="modifiedIndicator" class="badge bg-warning" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i> Modifications non sauvegardées
+                </span>
+                <button id="saveButton" class="save-button" onclick="saveTranslations()">
+                    <i class="fas fa-save"></i> Sauvegarder
+                </button>
+            </div>
+        </div>
+
+        <!-- Recherche -->
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input type="text" class="form-control" id="searchInput" 
+                       placeholder="Rechercher une clé ou une traduction...">
+                <button class="btn btn-outline-secondary" onclick="clearSearch()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Liste des traductions -->
+        <div id="translationList">
+            {% set hasReference = reference_translations|length > 0 %}
+            
+            {% if translations is empty %}
+                <div class="no-results">
+                    <i class="fas fa-language fa-3x mb-3 text-muted"></i>
+                    <h4>Aucune traduction trouvée</h4>
+                    <p>Utilisez la synchronisation pour créer les clés de traduction.</p>
+                </div>
+            {% else %}
+                {% for key, value in translations %}
+                    <div class="translation-row" data-key="{{ key }}">
+                        <div class="translation-key">
+                            <i class="fas fa-key me-1"></i>
+                            {{ key }}
+                        </div>
+                        
+                        {% if hasReference and reference_translations[key] is defined %}
+                            <div class="reference-text">
+                                <small><strong>Référence ({{ reference_translations[key] is defined ? 'FR' : 'Défaut' }}) :</strong></small><br>
+                                {{ reference_translations[key] }}
+                            </div>
+                        {% endif %}
+                        
+                        <textarea class="translation-input" 
+                                  data-key="{{ key }}" 
+                                  data-original="{{ value }}"
+                                  placeholder="Saisir la traduction..."
+                                  rows="{{ (value|length / 80)|round(0, 'ceil')|default(1) }}">{{ value }}</textarea>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Notifications -->
+<div id="notifications" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let translations = {{ translations|json_encode|raw }};
+        let hasUnsavedChanges = false;
+        let filteredRows = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEditor();
+            updateStats();
+            setupAutoSave();
+        });
+        
+        // Initialisation de l'éditeur
+        function initializeEditor() {
+            const inputs = document.querySelectorAll('.translation-input');
+            
+            inputs.forEach(input => {
+                // Marquer les champs vides
+                if (!input.value.trim()) {
+                    input.classList.add('empty');
+                }
+                
+                // Écouter les modifications
+                input.addEventListener('input', function() {
+                    handleInputChange(this);
+                });
+                
+                // Auto-resize des textarea
+                input.addEventListener('input', autoResize);
+                autoResize.call(input);
+            });
+            
+            // Recherche en temps réel
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            
+            // Alerte avant de quitter avec des modifications non sauvegardées
+            window.addEventListener('beforeunload', function(e) {
+                if (hasUnsavedChanges) {
+                    e.preventDefault();
+                    e.returnValue = 'Vous avez des modifications non sauvegardées. Êtes-vous sûr de vouloir quitter ?';
+                }
+            });
+        }
+        
+        // Gestion des modifications
+        function handleInputChange(input) {
+            const key = input.dataset.key;
+            const originalValue = input.dataset.original || '';
+            const currentValue = input.value;
+            
+            // Mise à jour de l'état visuel
+            input.classList.remove('empty', 'modified');
+            
+            if (!currentValue.trim()) {
+                input.classList.add('empty');
+            } else if (currentValue !== originalValue) {
+                input.classList.add('modified');
+            }
+            
+            // Mise à jour des données
+            translations[key] = currentValue;
+            hasUnsavedChanges = true;
+            
+            // Mise à jour de l'interface
+            updateModifiedIndicator();
+            updateStats();
+        }
+        
+        // Auto-resize des textarea
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = Math.max(40, this.scrollHeight) + 'px';
+        }
+        
+        // Recherche
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('.translation-row');
+            
+            rows.forEach(row => {
+                const key = row.dataset.key.toLowerCase();
+                const value = row.querySelector('.translation-input').value.toLowerCase();
+                const reference = row.querySelector('.reference-text');
+                const referenceText = reference ? reference.textContent.toLowerCase() : '';
+                
+                const matches = key.includes(query) || 
+                               value.includes(query) || 
+                               referenceText.includes(query);
+                
+                row.style.display = matches ? 'block' : 'none';
+            });
+            
+            updateVisibleStats();
+        }
+        
+        // Effacer la recherche
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            handleSearch();
+        }
+        
+        // Filtres
+        function showOnlyEmpty() {
+            const rows = document.querySelectorAll('.translation-row');
+            rows.forEach(row => {
+                const input = row.querySelector('.translation-input');
+                row.style.display = !input.value.trim() ? 'block' : 'none';
+            });
+            updateVisibleStats();
+        }
+        
+        function showOnlyTranslated() {
+            const rows = document.querySelectorAll('.translation-row');
+            rows.forEach(row => {
+                const input = row.querySelector('.translation-input');
+                row.style.display = input.value.trim() ? 'block' : 'none';
+            });
+            updateVisibleStats();
+        }
+        
+        function showAll() {
+            const rows = document.querySelectorAll('.translation-row');
+            rows.forEach(row => {
+                row.style.display = 'block';
+            });
+            updateVisibleStats();
+        }
+        
+        // Sauvegarde des traductions
+        function saveTranslations() {
+            const button = document.getElementById('saveButton');
+            const progress = document.getElementById('saveProgress');
+            
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sauvegarde...';
+            progress.style.transform = 'scaleX(0.5)';
+            
+            fetch('{{ path('admin_translation_update', {domain: domain, locale: language.code}) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(translations)
+            })
+            .then(response => response.json())
+            .then(data => {
+                progress.style.transform = 'scaleX(1)';
+                
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    hasUnsavedChanges = false;
+                    updateModifiedIndicator();
+                    
+                    // Mettre à jour les valeurs originales
+                    document.querySelectorAll('.translation-input').forEach(input => {
+                        input.dataset.original = input.value;
+                        input.classList.remove('modified');
+                        
+                        if (!input.value.trim()) {
+                            input.classList.add('empty');
+                        }
+                    });
+                } else {
+                    showNotification(data.message + (data.errors ? '\n' + data.errors.join('\n') : ''), 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('Erreur lors de la sauvegarde', 'error');
+                console.error('Erreur:', error);
+            })
+            .finally(() => {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-save"></i> Sauvegarder';
+                
+                setTimeout(() => {
+                    progress.style.transform = 'scaleX(0)';
+                }, 1000);
+            });
+        }
+        
+        // Sauvegarde automatique
+        function setupAutoSave() {
+            setInterval(() => {
+                if (hasUnsavedChanges) {
+                    saveTranslations();
+                }
+            }, 300000); // Toutes les 5 minutes
+        }
+        
+        // Mise à jour de l'indicateur de modifications
+        function updateModifiedIndicator() {
+            const indicator = document.getElementById('modifiedIndicator');
+            indicator.style.display = hasUnsavedChanges ? 'inline-block' : 'none';
+        }
+        
+        // Mise à jour des statistiques
+        function updateStats() {
+            let translatedCount = 0;
+            let emptyCount = 0;
+            
+            Object.values(translations).forEach(value => {
+                if (value && value.trim()) {
+                    translatedCount++;
+                } else {
+                    emptyCount++;
+                }
+            });
+            
+            document.getElementById('translatedCount').textContent = translatedCount;
+            document.getElementById('emptyCount').textContent = emptyCount;
+        }
+        
+        // Mise à jour des statistiques pour les éléments visibles
+        function updateVisibleStats() {
+            const visibleRows = document.querySelectorAll('.translation-row[style*="display: block"], .translation-row:not([style*="display: none"])');
+            document.getElementById('totalCount').textContent = visibleRows.length;
+        }
+        
+        // Système de notifications
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.getElementById('notifications').appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+        
+        // Raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveTranslations();
+            }
+        });
+    </script>
+{% endblock %}

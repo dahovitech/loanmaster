@@ -20,9 +20,10 @@ class Loan
     #[Assert\NotBlank]
     private ?string $loanNumber = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\ManyToOne(targetEntity: LoanType::class, inversedBy: 'loans')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
-    private ?string $loanType = null;
+    private ?LoanType $loanType = null;
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime',nullable: true)]
@@ -498,20 +499,12 @@ class Loan
         return $this;
     }
 
-    /**
-     * Get the value of loanType
-     */ 
-    public function getLoanType()
+    public function getLoanType(): ?LoanType
     {
         return $this->loanType;
     }
 
-    /**
-     * Set the value of loanType
-     *
-     * @return  self
-     */ 
-    public function setLoanType($loanType)
+    public function setLoanType(?LoanType $loanType): static
     {
         $this->loanType = $loanType;
 

@@ -2,45 +2,45 @@
 
 namespace App\Entity;
 
-use App\Repository\FaqTranslationRepository;
+use App\Repository\NotificationTranslationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FaqTranslationRepository::class)]
-#[ORM\Table(name: 'faq_translations')]
-#[ORM\UniqueConstraint(name: 'faq_language_unique', columns: ['translatable_id', 'language_id'])]
-class FaqTranslation
+#[ORM\Entity(repositoryClass: NotificationTranslationRepository::class)]
+#[ORM\Table(name: 'notification_translations')]
+#[ORM\UniqueConstraint(name: 'notification_language_unique', columns: ['translatable_id', 'language_id'])]
+class NotificationTranslation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Faq::class, inversedBy: 'translations')]
+    #[ORM\ManyToOne(targetEntity: Notification::class, inversedBy: 'translations')]
     #[ORM\JoinColumn(name: 'translatable_id', nullable: false)]
-    private ?Faq $translatable = null;
+    private ?Notification $translatable = null;
 
     #[ORM\ManyToOne(targetEntity: Language::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Language $language = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $question = null;
+    private ?string $subject = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $answer = null;
+    private ?string $content = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTranslatable(): ?Faq
+    public function getTranslatable(): ?Notification
     {
         return $this->translatable;
     }
 
-    public function setTranslatable(?Faq $translatable): static
+    public function setTranslatable(?Notification $translatable): static
     {
         $this->translatable = $translatable;
 
@@ -59,26 +59,26 @@ class FaqTranslation
         return $this;
     }
 
-    public function getQuestion(): ?string
+    public function getSubject(): ?string
     {
-        return $this->question;
+        return $this->subject;
     }
 
-    public function setQuestion(string $question): static
+    public function setSubject(string $subject): static
     {
-        $this->question = $question;
+        $this->subject = $subject;
 
         return $this;
     }
 
-    public function getAnswer(): ?string
+    public function getContent(): ?string
     {
-        return $this->answer;
+        return $this->content;
     }
 
-    public function setAnswer(string $answer): static
+    public function setContent(string $content): static
     {
-        $this->answer = $answer;
+        $this->content = $content;
 
         return $this;
     }

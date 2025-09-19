@@ -7,11 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 
 #[ORM\Entity(repositoryClass: FaqRepository::class)]
-#[Gedmo\TranslationEntity(class: FaqTranslation::class)]
 class Faq
 {
     #[ORM\Id]
@@ -19,16 +16,17 @@ class Faq
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $answer = null;
 
-    #[ORM\OneToMany(targetEntity: FaqTranslation::class, mappedBy: 'object', cascade: ['persist', 'remove'])]
-    private $translations;
+    /**
+     * @var Collection<int, FaqTranslation>
+     */
+    #[ORM\OneToMany(targetEntity: FaqTranslation::class, mappedBy: 'translatable', cascade: ['persist', 'remove'])]
+    private Collection $translations;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isEnabled = true;
@@ -91,7 +89,7 @@ class Faq
     {
         if (!$this->translations->contains($translation)) {
             $this->translations->add($translation);
-            $translation->setObject($this);
+            $translation->setTranslatable($this);
         }
 
         return $this;
@@ -101,8 +99,8 @@ class Faq
     {
         if ($this->translations->removeElement($translation)) {
             // set the owning side to null (unless already changed)
-            if ($translation->getObject() === $this) {
-                $translation->setObject(null);
+            if ($translation->getTranslatable() === $this) {
+                $translation->setTranslatable(null);
             }
         }
 

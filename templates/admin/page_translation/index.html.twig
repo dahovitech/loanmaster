@@ -1,0 +1,201 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Traductions des Pages{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="h3 mb-0">Traductions des Pages</h1>
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                Actions en masse
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" onclick="bulkAction('delete_empty')">Supprimer les traductions vides</a></li>
+                <li><a class="dropdown-item" href="#" onclick="bulkAction('copy_from_default')">Copier depuis la langue par défaut</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h6 class="card-title mb-0">Pages et Statut des Traductions</h6>
+                </div>
+                <div class="col-auto">
+                    <span class="text-muted">{{ pages|length }} page(s) au total</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th width="40">
+                            <input type="checkbox" id="select-all" class="form-check-input">
+                        </th>
+                        <th>Page</th>
+                        <th>Slug</th>
+                        <th class="text-center">Progression</th>
+                        {% for language in languages %}
+                            <th class="text-center" title="{{ language.name }}">
+                                <span class="badge bg-secondary">{{ language.code|upper }}</span>
+                            </th>
+                        {% endfor %}
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for page in pages %}
+                        {% set stat = stats[page.id] %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="pages[]" value="{{ page.id }}" class="form-check-input page-checkbox">
+                            </td>
+                            <td>
+                                <div class="fw-medium">{{ page.title ?? 'Page #' ~ page.id }}</div>
+                                {% if page.isActive %}
+                                    <span class="badge bg-success-subtle text-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <code class="small">{{ page.slug }}</code>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="progress me-2" style="width: 80px; height: 8px;">
+                                        <div class="progress-bar {% if stat.percentage == 100 %}bg-success{% elseif stat.percentage >= 50 %}bg-warning{% else %}bg-danger{% endif %}" 
+                                             style="width: {{ stat.percentage }}%"></div>
+                                    </div>
+                                    <small class="text-muted">{{ stat.translated }}/{{ stat.total }}</small>
+                                </div>
+                            </td>
+                            {% for language in languages %}
+                                {% set hasTranslation = false %}
+                                {% for translation in page.translations %}
+                                    {% if translation.language.code == language.code %}
+                                        {% set hasTranslation = true %}
+                                        {% break %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td class="text-center">
+                                    {% if hasTranslation %}
+                                        <i class="bi bi-check-circle-fill text-success" title="Traduit"></i>
+                                    {% else %}
+                                        <i class="bi bi-x-circle text-muted" title="Non traduit"></i>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ path('admin_page_translations_edit', {id: page.id}) }}" 
+                                       class="btn btn-outline-primary" title="Éditer les traductions">
+                                        <i class="bi bi-translate"></i>
+                                    </a>
+                                    <a href="{{ path('admin_page_translations_export', {id: page.id}) }}" 
+                                       class="btn btn-outline-secondary" title="Exporter">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="{{ 5 + languages|length }}" class="text-center text-muted py-4">
+                                Aucune page trouvée
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% if pages|length > 0 %}
+            <div class="card-footer">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <small class="text-muted">
+                            Total des traductions: 
+                            {% set totalTranslated = 0 %}
+                            {% set totalPossible = 0 %}
+                            {% for page in pages %}
+                                {% set totalTranslated = totalTranslated + stats[page.id].translated %}
+                                {% set totalPossible = totalPossible + stats[page.id].total %}
+                            {% endfor %}
+                            {{ totalTranslated }}/{{ totalPossible }} 
+                            ({{ totalPossible > 0 ? ((totalTranslated / totalPossible) * 100)|round : 0 }}%)
+                        </small>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="selectAllPages()">
+                            Tout sélectionner
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Sélection multiple
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.page-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+
+        function selectAllPages() {
+            const checkboxes = document.querySelectorAll('.page-checkbox');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+            document.getElementById('select-all').checked = !allChecked;
+        }
+
+        // Actions en masse
+        function bulkAction(action) {
+            const selectedPages = Array.from(document.querySelectorAll('.page-checkbox:checked'))
+                .map(cb => cb.value);
+            
+            if (selectedPages.length === 0) {
+                alert('Veuillez sélectionner au moins une page.');
+                return;
+            }
+
+            if (!confirm(`Êtes-vous sûr de vouloir exécuter cette action sur ${selectedPages.length} page(s) ?`)) {
+                return;
+            }
+
+            fetch('{{ path('admin_page_translations_bulk') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: new URLSearchParams({
+                    action: action,
+                    pages: selectedPages
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert('Erreur: ' + (data.error || 'Action échouée'));
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Une erreur est survenue');
+            });
+        }
+    </script>
+{% endblock %}

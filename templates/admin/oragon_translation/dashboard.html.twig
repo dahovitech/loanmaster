@@ -1,0 +1,261 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Tableau de bord Oragon - Système de traductions{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h3 mb-0">
+                <i class="bi bi-translate text-primary"></i>
+                Système de traductions Oragon
+            </h1>
+            <p class="text-muted mb-0">Gestion centralisée des traductions multilingues</p>
+        </div>
+        <div class="btn-group">
+            <a href="{{ path('admin_languages_index') }}" class="btn btn-outline-primary">
+                <i class="bi bi-gear"></i> Gérer les langues
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!-- Statistiques globales -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Entités totales</h6>
+                            <h3 class="mb-0">{{ globalStats.totalEntities }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-collection fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Traductions</h6>
+                            <h3 class="mb-0">{{ globalStats.totalTranslations }}</h3>
+                            <small>sur {{ globalStats.totalPossible }} possibles</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-check-circle fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Progression globale</h6>
+                            <h3 class="mb-0">{{ globalStats.globalPercentage }}%</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-graph-up fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Langues actives</h6>
+                            <h3 class="mb-0">{{ globalStats.languageCount }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-flag fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progression globale -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Progression générale</h5>
+        </div>
+        <div class="card-body">
+            <div class="progress mb-2" style="height: 20px;">
+                <div class="progress-bar bg-success" style="width: {{ globalStats.globalPercentage }}%">
+                    {{ globalStats.globalPercentage }}%
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <small class="text-muted">{{ globalStats.totalTranslations }} traductions complétées sur {{ globalStats.totalPossible }} possibles</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entités et leurs statistiques -->
+    <div class="row">
+        {% for key, stat in stats %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-{{ stat.color }} text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="card-title mb-0">
+                                <i class="{{ stat.icon }}"></i>
+                                {{ stat.title }}
+                            </h6>
+                            <span class="badge bg-white text-{{ stat.color }}">{{ stat.count }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="text-center">
+                                    <div class="fs-1 fw-bold text-{{ stat.color }}">{{ stat.percentage }}%</div>
+                                    <small class="text-muted">Traductions complètes</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress mb-3" style="height: 10px;">
+                            <div class="progress-bar bg-{{ stat.color }}" style="width: {{ stat.percentage }}%"></div>
+                        </div>
+                        
+                        <div class="row text-center small">
+                            <div class="col">
+                                <div class="text-muted">Complétées</div>
+                                <div class="fw-bold">{{ stat.translations }}</div>
+                            </div>
+                            <div class="col">
+                                <div class="text-muted">Possibles</div>
+                                <div class="fw-bold">{{ stat.possible }}</div>
+                            </div>
+                            <div class="col">
+                                <div class="text-muted">Restantes</div>
+                                <div class="fw-bold">{{ stat.possible - stat.translations }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="d-grid">
+                            <a href="{{ path(stat.editRoute) }}" class="btn btn-{{ stat.color }}">
+                                <i class="bi bi-pencil"></i>
+                                Gérer les traductions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Langues disponibles -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Langues disponibles</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for language in languages %}
+                    <div class="col-md-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-flag me-2 text-{{ language.isDefault ? 'primary' : 'secondary' }}"></i>
+                            <div>
+                                <div class="fw-medium">{{ language.name }}</div>
+                                <small class="text-muted">{{ language.nativeName }} ({{ language.code|upper }})</small>
+                                {% if language.isDefault %}
+                                    <span class="badge bg-primary-subtle text-primary ms-1">Défaut</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Actions rapides</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Synchronisation</h6>
+                    <p class="text-muted small">Synchroniser les traductions avec les langues actives</p>
+                    <button class="btn btn-outline-primary" onclick="syncTranslations()">
+                        <i class="bi bi-arrow-repeat"></i> Synchroniser tout
+                    </button>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6>Export global</h6>
+                    <p class="text-muted small">Exporter toutes les traductions au format JSON</p>
+                    <button class="btn btn-outline-secondary" onclick="exportAll()">
+                        <i class="bi bi-download"></i> Exporter tout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .progress {
+            border-radius: 0.5rem;
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .fs-1 {
+            font-size: 2.5rem !important;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function syncTranslations() {
+            if (!confirm('Synchroniser toutes les traductions ? Cette opération peut prendre du temps.')) {
+                return;
+            }
+            
+            // Simuler la synchronisation (vous devrez implémenter l'endpoint)
+            alert('Fonctionnalité de synchronisation à implémenter');
+        }
+        
+        function exportAll() {
+            // Simuler l'export global (vous devrez implémenter l'endpoint)
+            alert('Fonctionnalité d\'export global à implémenter');
+        }
+        
+        // Mise à jour périodique des statistiques
+        setInterval(function() {
+            // Vous pouvez implémenter une mise à jour AJAX des statistiques ici
+        }, 30000); // Toutes les 30 secondes
+    </script>
+{% endblock %}
