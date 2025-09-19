@@ -23,10 +23,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-#[Route(
+/*#[Route(
     path: '/{_locale}',
 
-)]
+)]*/
 class FrontController extends AbstractController
 {
 
@@ -58,14 +58,14 @@ class FrontController extends AbstractController
         // // Output the generated PDF to Browser
         // $dompdf->stream("contrat.pdf", ["Attachment" => true]);
         // return $dompdf;
-        return $this->render('@theme/' . $this->theme . '/home.html.twig', []);
+        return $this->render('theme/' . $this->theme . '/home.html.twig', []);
     }
 
     #[Route(path: '/about', name: 'about')]
     public function about(): Response
     {
 
-        return $this->render('@theme/' . $this->theme . '/about.html.twig');
+        return $this->render('theme/' . $this->theme . '/about.html.twig');
     }
 
     #[Route('/contact', name: 'contact')]
@@ -95,7 +95,7 @@ class FrontController extends AbstractController
             $this->addFlash('success', $this->translator->trans("contact.successMessage"));
         }
 
-        return $this->render('@theme/' . $this->theme . '/contact.html.twig', [
+        return $this->render('theme/' . $this->theme . '/contact.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -140,7 +140,7 @@ class FrontController extends AbstractController
             $translation = $this->entityManager->getRepository(PageTranslation::class)->findOneBy(["field" => "slug", "content" => trim(strip_tags($slug))]);
             $page= $translation->getObject();
         }
-        return $this->render('@theme/' . $this->theme . '/page/show.html.twig', [
+        return $this->render('theme/' . $this->theme . '/page/show.html.twig', [
             "page" => $page
         ]);
     }
@@ -148,7 +148,7 @@ class FrontController extends AbstractController
     #[Route(path: '/services', name: 'service_index')]
     public function service_index(): Response
     {
-        return $this->render('@theme/' . $this->theme . '/service/index.html.twig', []);
+        return $this->render('theme/' . $this->theme . '/service/index.html.twig', []);
     }
 
     #[Route(path: '/service/{slug}', name: 'service_show')]
@@ -162,7 +162,7 @@ class FrontController extends AbstractController
 
             $service= $translation->getObject();
         }
-        return $this->render('@theme/' . $this->theme . '/service/show.html.twig', [
+        return $this->render('theme/' . $this->theme . '/service/show.html.twig', [
             "service" => $service
         ]);
     }

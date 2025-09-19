@@ -1,38 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Accueil'|trans }} - LoanMaster{% endblock %}
+{% block title %}LoanMaster - Solutions de Financement{% endblock %}
 
 {% block body %}
-<section class="hero-section text-center py-5">
+<section class="hero-section">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row">
             <div class="col-lg-6">
-                <h1 class="display-4 mb-4">{{ 'Solutions financières intelligentes'|trans }}</h1>
-                <p class="lead mb-4">{{ 'LoanMaster vous accompagne dans tous vos projets avec des solutions de crédit adaptées à vos besoins.'|trans }}</p>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="{{ path('app_services') }}" class="btn btn-primary btn-lg">{{ 'Nos Services'|trans }}</a>
-                    <a href="{{ path('app_contact') }}" class="btn btn-outline-light btn-lg">{{ 'Nous Contacter'|trans }}</a>
+                <h1 class="display-4 fw-bold mb-4">Solutions de Financement sur Mesure</h1>
+                <p class="lead mb-4">Découvrez nos offres de prêts adaptées à vos besoins. Financement rapide, taux compétitifs, accompagnement personnalisé.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ path('service_index') }}" class="btn btn-warning btn-lg">Nos Services</a>
+                    <a href="{{ path('contact') }}" class="btn btn-outline-light btn-lg">Demander un Devis</a>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="bg-white p-4 rounded shadow">
-                    <h3>{{ 'Simulateur de crédit'|trans }}</h3>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">{{ 'Montant souhaité'|trans }}</label>
-                            <input type="number" class="form-control" placeholder="50 000 €">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">{{ 'Durée (mois)'|trans }}</label>
-                            <select class="form-select">
-                                <option>12 mois</option>
-                                <option>24 mois</option>
-                                <option>36 mois</option>
-                                <option>60 mois</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">{{ 'Calculer ma mensualité'|trans }}</button>
-                    </form>
+                <div class="text-center">
+                    <i class="fas fa-chart-line fa-10x opacity-75"></i>
                 </div>
             </div>
         </div>
@@ -41,40 +25,35 @@
 
 <section class="py-5">
     <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col">
-                <h2>{{ 'Nos Services de Financement'|trans }}</h2>
-                <p class="text-muted">{{ 'Des solutions adaptées à tous vos besoins'|trans }}</p>
-            </div>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Pourquoi Choisir LoanMaster ?</h2>
+            <p class="text-muted">Des solutions adaptées à chaque situation</p>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card h-100 feature-card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-home fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">{{ 'Crédit Immobilier'|trans }}</h5>
-                        <p class="card-text">{{ 'Financez votre projet immobilier avec des taux préférentiels'|trans }}</p>
-                        <a href="{{ path('app_services') }}" class="btn btn-outline-primary">{{ 'En savoir plus'|trans }}</a>
+                <div class="card feature-card h-100 text-center p-4 border-0 shadow">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Réponse Rapide</h5>
+                        <p class="card-text">Obtenez une réponse de principe en moins de 24h pour votre demande de financement.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 feature-card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-car fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">{{ 'Crédit Auto'|trans }}</h5>
-                        <p class="card-text">{{ 'Achetez votre véhicule avec des conditions avantageuses'|trans }}</p>
-                        <a href="{{ path('app_services') }}" class="btn btn-outline-primary">{{ 'En savoir plus'|trans }}</a>
+                <div class="card feature-card h-100 text-center p-4 border-0 shadow">
+                    <div class="card-body">
+                        <i class="fas fa-percentage fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Taux Compétitifs</h5>
+                        <p class="card-text">Bénéficiez des meilleurs taux du marché grâce à notre réseau de partenaires financiers.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 feature-card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
-                        <h5 class="card-title">{{ 'Crédit Professionnel'|trans }}</h5>
-                        <p class="card-text">{{ 'Développez votre activité avec nos solutions entreprise'|trans }}</p>
-                        <a href="{{ path('app_services') }}" class="btn btn-outline-primary">{{ 'En savoir plus'|trans }}</a>
+                <div class="card feature-card h-100 text-center p-4 border-0 shadow">
+                    <div class="card-body">
+                        <i class="fas fa-handshake fa-3x text-info mb-3"></i>
+                        <h5 class="card-title">Accompagnement</h5>
+                        <p class="card-text">Un conseiller dédié vous accompagne tout au long de votre projet de financement.</p>
                     </div>
                 </div>
             </div>
@@ -82,81 +61,57 @@
     </div>
 </section>
 
-<section class="py-5 bg-light">
+<section class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h2>{{ 'Pourquoi choisir LoanMaster ?'|trans }}</h2>
+                <h3 class="fw-bold mb-4">Prêt à Concrétiser Votre Projet ?</h3>
+                <p class="mb-4">Que ce soit pour un achat immobilier, un véhicule, des travaux ou un projet personnel, nous avons la solution qu'il vous faut.</p>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{ 'Plus de 50 000 clients satisfaits'|trans }}</li>
-                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{ 'Réponse en moins de 24h'|trans }}</li>
-                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{ 'Taux compétitifs du marché'|trans }}</li>
-                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>{{ 'Accompagnement personnalisé'|trans }}</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Prêts immobiliers</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Crédits auto/moto</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Prêts travaux</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Crédits personnels</li>
                 </ul>
-                <a href="{{ path('app_about') }}" class="btn btn-primary">{{ 'Découvrir notre histoire'|trans }}</a>
             </div>
             <div class="col-lg-6">
-                <div class="row text-center">
-                    <div class="col-6 mb-4">
-                        <h3 class="text-primary">50k+</h3>
-                        <p>{{ 'Prêts accordés'|trans }}</p>
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Demandez Votre Simulation</h5>
                     </div>
-                    <div class="col-6 mb-4">
-                        <h3 class="text-primary">98%</h3>
-                        <p>{{ 'Satisfaction client'|trans }}</p>
-                    </div>
-                    <div class="col-6">
-                        <h3 class="text-primary">10+</h3>
-                        <p>{{ 'Années d\'expérience'|trans }}</p>
-                    </div>
-                    <div class="col-6">
-                        <h3 class="text-primary">25</h3>
-                        <p>{{ 'Agences en France'|trans }}</p>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Montant souhaité</label>
+                                <input type="number" class="form-control" id="amount" placeholder="Ex: 250000">
+                            </div>
+                            <div class="mb-3">
+                                <label for="duration" class="form-label">Durée (en mois)</label>
+                                <select class="form-select" id="duration">
+                                    <option value="">Choisissez une durée</option>
+                                    <option value="12">12 mois</option>
+                                    <option value="24">24 mois</option>
+                                    <option value="60">60 mois</option>
+                                    <option value="120">120 mois</option>
+                                    <option value="240">240 mois</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="project" class="form-label">Type de projet</label>
+                                <select class="form-select" id="project">
+                                    <option value="">Sélectionnez votre projet</option>
+                                    <option value="immobilier">Immobilier</option>
+                                    <option value="auto">Automobile</option>
+                                    <option value="travaux">Travaux</option>
+                                    <option value="personnel">Personnel</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Simuler mon prêt</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<section class="py-5 bg-primary text-white">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>{{ 'Prêt à concrétiser votre projet ?'|trans }}</h2>
-                <p class="lead">{{ 'Contactez nos experts pour une étude personnalisée gratuite'|trans }}</p>
-                <div class="d-flex gap-3 justify-content-center mt-4">
-                    <a href="tel:+33123456789" class="btn btn-light btn-lg">
-                        <i class="fas fa-phone me-2"></i>{{ 'Appelez-nous'|trans }}
-                    </a>
-                    <a href="{{ path('app_contact') }}" class="btn btn-outline-light btn-lg">{{ 'Demande en ligne'|trans }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
-
-{% block stylesheets %}
-<style>
-.hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-.feature-card {
-    transition: transform 0.3s ease;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-.card-body i {
-    transition: color 0.3s ease;
-}
-.feature-card:hover .card-body i {
-    color: #667eea !important;
-}
-</style>
 {% endblock %}

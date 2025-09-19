@@ -1,54 +1,260 @@
-{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
-{% block title %}
-	{{ seo('seoServiceTitle')|raw|trim }}
-{% endblock %}
-{% block description %}
-	{{ seo('seoServiceDescription')|raw|trim }}
-{% endblock %}
-{% block keywords %}
-	{{ seo('seoServiceKeywords')|raw|trim }}
-{% endblock %}
-{% block canonical %}
-	{{ url('service_index')|raw|trim }}
-{% endblock %}
+{% extends 'base.html.twig' %}
 
-{% block ogTitle %}
-	{{ seo('seoServiceTitle')|raw|trim }}
-{% endblock %}
-{% block ogDescription %}
-	{{ seo('seoServiceDescription')|raw|trim }}
-{% endblock %}
-{% block ogImage %}
-	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
-{% endblock %}
-{% block ogUrl %}
-	{{ url('service_index')|raw|trim }}
-{% endblock %}
-
-{% block twitterTitle %}
-	{{ seo('seoServiceTitle')|raw|trim }}
-{% endblock %}
-{% block twitterDescription %}
-	{{ seo('seoServiceDescription')|raw|trim }}
-{% endblock %}
-{% block twitterImage %}
-	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
-{% endblock %}
-{% block twitterUrl %}
-	{{ url('service_index')|raw|trim }}
-{% endblock %}
+{% block title %}{{ 'Nos Services'|trans }} - LoanMaster{% endblock %}
 
 {% block body %}
-	{{ include('@theme/'~setting('theme')~'/inc/service2.html.twig') }}
+<section class="page-header">
+    <div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+    <div class="page-header__overlay"></div>
+    <div class="container">
+        <h2 class="page-header__title">{{ 'Nos Services'|trans }}</h2>
+        <ul class="easilon-breadcrumb list-unstyled">
+            <li><a href="{{ path('home') }}">{{ 'Accueil'|trans }}</a></li>
+            <li><span>{{ 'Services'|trans }}</span></li>
+        </ul>
+    </div>
+</section>
 
-	{{ include('@theme/'~setting('theme')~'/inc/step.html.twig') }}
-	{{ include('@theme/'~setting('theme')~'/inc/company_transparency.html.twig') }}
+<section class="service-two section-space">
+    <div class="container">
+        <div class="sec-title text-center">
+            <div class="sec-title__top">
+                <div class="sec-title__shape">
+                    <div class="sec-title__shape__one"></div>
+                    <div class="sec-title__shape__two"></div>
+                </div>
+                <h6 class="sec-title__tagline">{{ 'nos services'|trans }}</h6>
+            </div>
+            <h3 class="sec-title__title">{{ 'Des solutions financières complètes pour tous vos besoins'|trans }}</h3>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-loan"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Prêt Personnel'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Financez vos projets personnels (vacances, travaux, mariage) avec des conditions avantageuses et un processus d\'approbation rapide.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-house"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Immobilier'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Réalisez votre projet immobilier avec nos prêts hypothécaires à taux préférentiels. Accompagnement personnalisé garanti.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-car"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Auto'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Financez l\'achat de votre véhicule neuf ou d\'occasion avec des taux compétitifs et une réponse immédiate.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-briefcase"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Entreprise'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Développez votre activité professionnelle avec nos solutions de financement adaptées aux entrepreneurs et PME.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-graduation"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Prêt Étudiant'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Financez vos études supérieures avec des conditions préférentielles et un remboursement différé jusqu\'à l\'obtention du diplôme.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="service-card service-card--two">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-renovation"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Travaux'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Rénovez et améliorez votre habitat avec nos prêts travaux adaptés à tous vos projets d\'amélioration.'|trans }}</div>
+                        <a href="#" class="service-card__link">
+                            <i class="icon-right-arrow"></i>
+                            <span class="sr-only">{{ 'En savoir plus'|trans }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-	{{ include('@theme/'~setting('theme')~'/inc/faq.html.twig') }}
-	{{ include('@theme/'~setting('theme')~'/inc/testimonial.html.twig') }}
+<section class="loan-calculator section-space-bottom">
+    <div class="loan-calculator__bg" style="background-image: url({{ asset('theme/loan/assets/images/shapes/loan-calculator-bg-1-1.png') }});"></div>
+    <div class="container">
+        <div class="row gutter-y-60">
+            <div class="col-xl-6">
+                <div class="loan-calculator__content">
+                    <div class="sec-title">
+                        <div class="sec-title__top">
+                            <div class="sec-title__shape">
+                                <div class="sec-title__shape__one"></div>
+                                <div class="sec-title__shape__two"></div>
+                            </div>
+                            <h6 class="sec-title__tagline">{{ 'calculateur de prêt'|trans }}</h6>
+                        </div>
+                        <h3 class="sec-title__title">{{ 'Simulez votre crédit en quelques clics'|trans }}</h3>
+                    </div>
+                    <div class="loan-calculator__text">{{ 'Utilisez notre calculateur pour estimer vos mensualités et trouver la solution de financement qui vous convient le mieux.'|trans }}</div>
+                    <ul class="list-unstyled loan-calculator__list">
+                        <li>
+                            <span class="loan-calculator__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Simulation gratuite et sans engagement'|trans }}
+                        </li>
+                        <li>
+                            <span class="loan-calculator__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Résultat instantané'|trans }}
+                        </li>
+                        <li>
+                            <span class="loan-calculator__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Conseils personnalisés'|trans }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <form class="loan-calculator__form">
+                    <h3 class="loan-calculator__form__title">{{ 'Calculez votre mensualité'|trans }}</h3>
+                    <div class="loan-calculator__form__group">
+                        <label for="loanAmount">{{ 'Montant du prêt'|trans }}</label>
+                        <div class="loan-calculator__form__input">
+                            <input type="text" id="loanAmount" name="loanAmount" placeholder="50 000">
+                            <span class="loan-calculator__form__currency">€</span>
+                        </div>
+                    </div>
+                    <div class="loan-calculator__form__group">
+                        <label for="loanTerm">{{ 'Durée (mois)'|trans }}</label>
+                        <div class="loan-calculator__form__input">
+                            <input type="text" id="loanTerm" name="loanTerm" placeholder="120">
+                        </div>
+                    </div>
+                    <div class="loan-calculator__form__group">
+                        <label for="interestRate">{{ 'Taux d\'intérêt (%)'|trans }}</label>
+                        <div class="loan-calculator__form__input">
+                            <input type="text" id="interestRate" name="interestRate" placeholder="3.5">
+                            <span class="loan-calculator__form__currency">%</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="easilon-btn loan-calculator__form__btn">
+                        <span>{{ 'calculer'|trans }}</span>
+                        <span class="easilon-btn__icon">
+                            <i class="icon-double-right-arrow"></i>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
-	{{ include('@theme/'~setting('theme')~'/inc/brand.html.twig') }}
-	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
-
-
+<section class="why-choose-us section-space-bottom">
+    <div class="container">
+        <div class="sec-title text-center">
+            <div class="sec-title__top">
+                <div class="sec-title__shape">
+                    <div class="sec-title__shape__one"></div>
+                    <div class="sec-title__shape__two"></div>
+                </div>
+                <h6 class="sec-title__tagline">{{ 'pourquoi nous choisir'|trans }}</h6>
+            </div>
+            <h3 class="sec-title__title">{{ 'Les avantages LoanMaster'|trans }}</h3>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="why-choose-us__item">
+                    <div class="why-choose-us__icon">
+                        <i class="icon-stopwatch"></i>
+                    </div>
+                    <div class="why-choose-us__content">
+                        <h3 class="why-choose-us__title">{{ 'Réponse rapide'|trans }}</h3>
+                        <div class="why-choose-us__text">{{ 'Obtenez une réponse de principe en moins de 24h pour votre demande de crédit.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="why-choose-us__item">
+                    <div class="why-choose-us__icon">
+                        <i class="icon-percentage"></i>
+                    </div>
+                    <div class="why-choose-us__content">
+                        <h3 class="why-choose-us__title">{{ 'Taux compétitifs'|trans }}</h3>
+                        <div class="why-choose-us__text">{{ 'Bénéficiez des meilleurs taux du marché grâce à nos partenaires bancaires privilégiés.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="why-choose-us__item">
+                    <div class="why-choose-us__icon">
+                        <i class="icon-customer-service"></i>
+                    </div>
+                    <div class="why-choose-us__content">
+                        <h3 class="why-choose-us__title">{{ 'Accompagnement expert'|trans }}</h3>
+                        <div class="why-choose-us__text">{{ 'Nos conseillers vous accompagnent tout au long de votre projet de financement.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
