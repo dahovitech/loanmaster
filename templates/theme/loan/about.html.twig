@@ -1,82 +1,210 @@
-{% extends '@theme/'~setting('theme')~'/base.html.twig' %}
-{% block title %}
-	{{ seo('seoAboutTitle')|raw|trim }}
-{% endblock %}
-{% block description %}
-	{{ seo('seoAboutDescription')|raw|trim }}
-{% endblock %}
-{% block keywords %}
-	{{ seo('seoAboutKeywords')|raw|trim }}
-{% endblock %}
-{% block canonical %}
-	{{ url('about')|raw|trim }}
-{% endblock %}
+{% extends 'base.html.twig' %}
 
-{% block ogTitle %}
-	{{ seo('seoAboutTitle')|raw|trim }}
-{% endblock %}
-{% block ogDescription %}
-	{{ seo('seoAboutDescription')|raw|trim }}
-{% endblock %}
-{% block ogImage %}
-	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
-{% endblock %}
-{% block ogUrl %}
-	{{ url('about') |raw|trim}}
-{% endblock %}
+{% block title %}{{ 'À propos'|trans }} - LoanMaster{% endblock %}
 
-{% block twitterTitle %}
-	{{ seo('seoAboutTitle')|raw|trim }}
-{% endblock %}
-{% block twitterDescription %}
-	{{ seo('seoAboutDescription')|raw|trim }}
-{% endblock %}
-{% block twitterImage %}
-	{{ absolute_url(seo('seoImage')|default('#'))|raw|trim }}
-{% endblock %}
-{% block twitterUrl %}
-	{{ url('about')|raw|trim }}
-{% endblock %}
 {% block body %}
-	<section class="page-header">
-		<div class="page-header__bg" style="background-image: url({{ asset('theme/loan/assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
-		<!-- /.page-header__bg -->
-		<div class="container">
-			<div class="page-header__content">
-				<h2 class="page-header__title">{{"front.menu.about"|trans}}</h2>
-				<ul class="easilon-breadcrumb list-unstyled">
-					<li>
-						<a href="{{path('home')}}">{{"front.menu.home"|trans}}</a>
-					</li>
-					<li>
-						<span>{{"front.menu.about"|trans}}</span>
-					</li>
-				</ul>
-				<!-- /.thm-breadcrumb list-unstyled -->
-			</div>
-			<!-- /.page-header__content -->
-		</div>
-		<!-- /.container -->
-		<div class="page-header__border-box">
-			<div class="page-header__border page-header__border--1"></div>
-			<!-- /.page-header__border -->
-			<div class="page-header__border page-header__border--2"></div>
-			<!-- /.page-header__border -->
-			<div class="page-header__border page-header__border--3"></div>
-			<!-- /.page-header__border -->
-			<div class="page-header__border page-header__border--4"></div>
-			<!-- /.page-header__border -->
-			<div class="page-header__border page-header__border--5"></div>
-			<!-- /.page-header__border -->
-		</div>
-		<!-- /.page-header__border-box -->
-	</section>
-	<!-- /.page-header -->
-    	{{ include('@theme/'~setting('theme')~'/inc/about1.html.twig') }}
-    	{{ include('@theme/'~setting('theme')~'/inc/why_choose_us.html.twig') }}
-    	{{ include('@theme/'~setting('theme')~'/inc/reasons.html.twig') }}
-    	{{ include('@theme/'~setting('theme')~'/inc/funfact.html.twig') }}
-    	{{ include('@theme/'~setting('theme')~'/inc/testimonial2.html.twig') }}
-    	{{ include('@theme/'~setting('theme')~'/inc/action.html.twig') }}
+<section class="page-header">
+    <div class="page-header__bg" style="background-image: url({{ asset('assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+    <div class="page-header__overlay"></div>
+    <div class="container">
+        <h2 class="page-header__title">{{ 'À propos de nous'|trans }}</h2>
+        <ul class="easilon-breadcrumb list-unstyled">
+            <li><a href="{{ path('app_home') }}">{{ 'Accueil'|trans }}</a></li>
+            <li><span>{{ 'À propos'|trans }}</span></li>
+        </ul>
+    </div>
+</section>
 
+<section class="about-two section-space">
+    <div class="container">
+        <div class="row gutter-y-60 align-items-center">
+            <div class="col-xl-6">
+                <div class="about-two__content">
+                    <div class="sec-title">
+                        <div class="sec-title__top">
+                            <div class="sec-title__shape">
+                                <div class="sec-title__shape__one"></div>
+                                <div class="sec-title__shape__two"></div>
+                            </div>
+                            <h6 class="sec-title__tagline">{{ 'notre histoire'|trans }}</h6>
+                        </div>
+                        <h3 class="sec-title__title">{{ 'Plus de 10 ans d\'excellence dans le secteur financier'|trans }}</h3>
+                    </div>
+                    <div class="about-two__text">
+                        {{ 'Depuis notre création, LoanMaster s\'est imposé comme un leader dans le domaine du crédit et du financement. Nous accompagnons nos clients dans la réalisation de leurs projets avec des solutions personnalisées et des taux compétitifs.'|trans }}
+                    </div>
+                    <div class="about-two__text">
+                        {{ 'Notre expertise et notre engagement envers nos clients nous ont permis de financer plus de 50 000 projets et de bâtir une relation de confiance durable avec nos partenaires.'|trans }}
+                    </div>
+                    <ul class="list-unstyled about-two__list">
+                        <li>
+                            <span class="about-two__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Plus de 50 000 clients satisfaits'|trans }}
+                        </li>
+                        <li>
+                            <span class="about-two__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Processus d\'approbation rapide (24h)'|trans }}
+                        </li>
+                        <li>
+                            <span class="about-two__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Équipe d\'experts certifiés'|trans }}
+                        </li>
+                        <li>
+                            <span class="about-two__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Solutions 100% personnalisées'|trans }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="about-two__image">
+                    <div class="about-two__image__bg"></div>
+                    <img src="{{ asset('assets/images/about/about-2-1.jpg') }}" alt="{{ 'À propos LoanMaster'|trans }}" class="about-two__image__one">
+                    <img src="{{ asset('assets/images/about/about-2-2.jpg') }}" alt="" class="about-two__image__two">
+                    <div class="about-two__video">
+                        <a href="https://www.youtube.com/watch?v=h9MbznbxlLc" class="video-btn video-popup">
+                            <span class="video-btn__inner">
+                                <i class="fa fa-play"></i>
+                                <span class="video-btn__ripple"></span>
+                                <span class="video-btn__ripple-two"></span>
+                                <span class="video-btn__ripple-three"></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="funfact-one">
+    <div class="funfact-one__bg" style="background-image: url({{ asset('assets/images/shapes/funfact-bg-1-1.png') }});"></div>
+    <div class="container">
+        <div class="row gutter-y-30">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="funfact-one__item text-center">
+                    <div class="funfact-one__icon"><i class="icon-loan-1"></i></div>
+                    <div class="funfact-one__content">
+                        <h3 class="funfact-one__number">
+                            <span class="count-box">
+                                <span class="count-text" data-stop="50000" data-speed="1500">0</span>
+                            </span>+
+                        </h3>
+                        <p class="funfact-one__text">{{ 'Prêts accordés'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="funfact-one__item text-center">
+                    <div class="funfact-one__icon"><i class="icon-customer-service"></i></div>
+                    <div class="funfact-one__content">
+                        <h3 class="funfact-one__number">
+                            <span class="count-box">
+                                <span class="count-text" data-stop="98" data-speed="1500">0</span>
+                            </span>%
+                        </h3>
+                        <p class="funfact-one__text">{{ 'Satisfaction client'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="funfact-one__item text-center">
+                    <div class="funfact-one__icon"><i class="icon-team"></i></div>
+                    <div class="funfact-one__content">
+                        <h3 class="funfact-one__number">
+                            <span class="count-box">
+                                <span class="count-text" data-stop="150" data-speed="1500">0</span>
+                            </span>+
+                        </h3>
+                        <p class="funfact-one__text">{{ 'Conseillers experts'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                <div class="funfact-one__item text-center">
+                    <div class="funfact-one__icon"><i class="icon-location"></i></div>
+                    <div class="funfact-one__content">
+                        <h3 class="funfact-one__number">
+                            <span class="count-box">
+                                <span class="count-text" data-stop="25" data-speed="1500">0</span>
+                            </span>+
+                        </h3>
+                        <p class="funfact-one__text">{{ 'Agences en France'|trans }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-one section-space">
+    <div class="container">
+        <div class="sec-title text-center">
+            <div class="sec-title__top">
+                <div class="sec-title__shape">
+                    <div class="sec-title__shape__one"></div>
+                    <div class="sec-title__shape__two"></div>
+                </div>
+                <h6 class="sec-title__tagline">{{ 'notre équipe'|trans }}</h6>
+            </div>
+            <h3 class="sec-title__title">{{ 'Rencontrez nos experts financiers'|trans }}</h3>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="team-card">
+                    <div class="team-card__image">
+                        <img src="{{ asset('assets/images/team/team-1-1.jpg') }}" alt="Marie Dubois">
+                    </div>
+                    <div class="team-card__content">
+                        <h3 class="team-card__name">
+                            <a href="#">Marie Dubois</a>
+                        </h3>
+                        <p class="team-card__designation">{{ 'Directrice Générale'|trans }}</p>
+                    </div>
+                    <div class="team-card__social">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="team-card">
+                    <div class="team-card__image">
+                        <img src="{{ asset('assets/images/team/team-1-2.jpg') }}" alt="Pierre Martin">
+                    </div>
+                    <div class="team-card__content">
+                        <h3 class="team-card__name">
+                            <a href="#">Pierre Martin</a>
+                        </h3>
+                        <p class="team-card__designation">{{ 'Responsable Crédits'|trans }}</p>
+                    </div>
+                    <div class="team-card__social">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="team-card">
+                    <div class="team-card__image">
+                        <img src="{{ asset('assets/images/team/team-1-3.jpg') }}" alt="Sophie Bernard">
+                    </div>
+                    <div class="team-card__content">
+                        <h3 class="team-card__name">
+                            <a href="#">Sophie Bernard</a>
+                        </h3>
+                        <p class="team-card__designation">{{ 'Conseillère Senior'|trans }}</p>
+                    </div>
+                    <div class="team-card__social">
+                        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

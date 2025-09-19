@@ -1,333 +1,302 @@
-{# templates/base.html.twig - Base template with PWA integration #}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{% block title %}LoanMaster{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}LoanMaster - {{ 'Votre partenaire financier de confiance'|trans }}{% endblock %}</title>
     
-    {# PWA Meta Tags #}
-    <meta name="application-name" content="LoanMaster">
-    <meta name="apple-mobile-web-app-title" content="LoanMaster">
-    <meta name="description" content="{% block meta_description %}Plateforme de gestion de prêts professionnelle{% endblock %}">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="msapplication-TileColor" content="#2563eb">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="mobile-web-app-capable" content="yes">
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-16x16.png') }}" />
+    <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}" />
+    <meta name="description" content="{% block description %}LoanMaster - Votre partenaire financier de confiance pour tous vos besoins de crédit et de financement{% endblock %}" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    {# Manifest Link #}
-    <link rel="manifest" href="{{ url('pwa_manifest') }}">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="{{ asset('easilon.css') }}" />
     
-    {# Icons for different platforms #}
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/icons/icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/icons/icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/icons/icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="/icons/icon-57x57.png">
-    
-    {# Microsoft Tiles #}
-    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    
-    {# Preload critical resources #}
-    <link rel="preload" href="/css/app.css" as="style">
-    <link rel="preload" href="/js/app.js" as="script">
-    <link rel="preload" href="/fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    
-    {# DNS Prefetch for external resources #}
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//api.example.com">
-    
-    {% block stylesheets %}
-        <link rel="stylesheet" href="/css/app.css">
-    {% endblock %}
-    
-    {# Critical CSS inline for better performance #}
-    <style>
-        /* Critical CSS for above-the-fold content */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8fafc;
-            color: #1f2937;
-        }
-        
-        .loading-spinner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* PWA specific styles */
-        @media (display-mode: standalone) {
-            body {
-                -webkit-user-select: none;
-                -webkit-touch-callout: none;
-            }
-            
-            .header {
-                padding-top: env(safe-area-inset-top);
-            }
-            
-            .footer {
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-        }
-        
-        /* iOS specific adjustments */
-        @supports (-webkit-appearance: none) {
-            .ios-safe-area {
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: env(safe-area-inset-bottom);
-                padding-left: env(safe-area-inset-left);
-                padding-right: env(safe-area-inset-right);
-            }
-        }
-    </style>
+    {% block stylesheets %}{% endblock %}
 </head>
-<body class="{% if app.request.get('standalone') %}standalone{% endif %}">
-    {# Loading screen for PWA #}
-    <div id="app-loading" class="loading-spinner" style="display: none;">
-        <div class="spinner"></div>
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image" style="background-image: url({{ asset('assets/images/loader.png') }});"></div>
     </div>
-    
-    {# PWA Update Banner (hidden by default) #}
-    <div id="pwa-update-banner" style="display: none;"></div>
-    
-    {# Connection Status Indicator #}
-    <div id="connection-status" class="connection-indicator" style="display: none;"></div>
-    
-    {# Main App Content #}
-    <div id="app-content">
-        {% block header %}
-            <header class="header ios-safe-area">
-                <nav class="navbar">
-                    <div class="nav-container">
-                        <a href="{{ path('app_home') }}" class="nav-brand">
-                            <img src="/icons/icon-72x72.png" alt="LoanMaster" width="32" height="32">
-                            LoanMaster
-                        </a>
-                        
-                        <div class="nav-menu">
-                            {% if app.user %}
-                                <a href="{{ path('loan_list') }}" class="nav-link">Mes prêts</a>
-                                <a href="{{ path('user_profile') }}" class="nav-link">Profil</a>
-                                <a href="{{ path('app_logout') }}" class="nav-link">Déconnexion</a>
-                            {% else %}
-                                <a href="{{ path('app_login') }}" class="nav-link">Connexion</a>
-                                <a href="{{ path('app_register') }}" class="nav-link">Inscription</a>
-                            {% endif %}
+
+    <div class="page-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="container-fluid">
+                <div class="topbar__inner">
+                    <ul class="list-unstyled topbar__info">
+                        <li>
+                            <span class="topbar__info__icon">
+                                <i class="icon-mail-1"></i>
+                            </span>
+                            <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                        </li>
+                        <li>
+                            <span class="topbar__info__icon topbar__info__icon--phone">
+                                <i class="icon-headset"></i>
+                            </span>
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                        </li>
+                    </ul>
+                    <div class="topbar__right">
+                        <ul class="list-unstyled topbar__pages">
+                            <li><a href="#">{{ 'Connexion'|trans }}</a></li>
+                            <li><a href="{{ path('app_about') }}">{{ 'Carrière'|trans }}</a></li>
+                            <li><a href="#">{{ 'Médias'|trans }}</a></li>
+                            <li><a href="#">{{ 'FAQ'|trans }}</a></li>
+                        </ul>
+                        <div class="topbar__social">
+                            <a href="https://facebook.com">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook</span>
+                            </a>
+                            <a href="https://twitter.com">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                <span class="sr-only">Linkedin</span>
+                            </a>
                         </div>
-                        
-                        {# Mobile menu toggle #}
-                        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                    </div>
-                </nav>
-            </header>
-        {% endblock %}
-        
-        <main class="main-content ios-safe-area">
-            {% block flash_messages %}
-                {% for type, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ type }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-            {% endblock %}
-            
-            {% block body %}{% endblock %}
-        </main>
-        
-        {% block footer %}
-            <footer class="footer ios-safe-area">
-                <div class="footer-content">
-                    <div class="footer-links">
-                        <a href="{{ path('app_about') }}">À propos</a>
-                        <a href="{{ path('app_contact') }}">Contact</a>
-                        <a href="{{ path('app_privacy') }}">Confidentialité</a>
-                        <a href="{{ path('app_terms') }}">CGU</a>
-                    </div>
-                    <div class="footer-copyright">
-                        © {{ 'now'|date('Y') }} LoanMaster. Tous droits réservés.
                     </div>
                 </div>
-            </footer>
-        {% endblock %}
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <header class="main-header sticky-header sticky-header--normal">
+            <div class="container-fluid">
+                <div class="main-header__inner">
+                    <div class="main-header__logo logo-retina">
+                        <a href="{{ path('app_home') }}">
+                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="LoanMaster" width="150">
+                        </a>
+                    </div>
+                    <div class="main-header__right">
+                        <nav class="main-header__nav main-menu">
+                            <ul class="main-menu__list">
+                                <li>
+                                    <a href="{{ path('app_home') }}">{{ 'Accueil'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_about') }}">{{ 'À propos'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_services') }}">{{ 'Nos Services'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_contact') }}">{{ 'Contact'|trans }}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="mobile-nav__btn mobile-nav__toggler">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <a href="#" class="search-toggler main-header__search">
+                            <i class="icon-search" aria-hidden="true"></i>
+                            <span class="sr-only">Rechercher</span>
+                        </a>
+                        <a href="#" class="easilon-btn main-header__btn">
+                            <span>{{ 'Demande de prêt'|trans }}</span>
+                            <span class="easilon-btn__icon"><i class="icon-right-arrow"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% block body %}{% endblock %}
+
+        <!-- Footer -->
+        <footer class="main-footer main-footer--home">
+            <div class="main-footer__bg" style="background-image: url({{ asset('assets/images/shapes/footer-bg-1-1.png') }});"></div>
+            <div class="main-footer__top">
+                <div class="container">
+                    <div class="row gutter-y-40">
+                        <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                            <div class="footer-widget footer-widget--about">
+                                <a href="{{ path('app_home') }}" class="footer-widget__logo">
+                                    <img src="{{ asset('assets/images/logo-light.png') }}" width="150" alt="LoanMaster">
+                                </a>
+                                <p class="footer-widget__about-text">{{ 'LoanMaster est votre partenaire financier de confiance, offrant des solutions de crédit adaptées à tous vos besoins.'|trans }}</p>
+                                <form action="#" class="footer-widget__newsletter mc-form">
+                                    <input type="text" name="EMAIL" placeholder="{{ 'Votre email'|trans }}">
+                                    <button type="submit">
+                                        <span class="sr-only">{{ 'S\'abonner'|trans }}</span>
+                                        <i class="icon-right-arrow"></i>
+                                    </button>
+                                </form>
+                                <div class="mc-form__response"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                            <div class="footer-widget footer-widget--links footer-widget--links-one">
+                                <h2 class="footer-widget__title">{{ 'Explorer'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__links">
+                                    <li><a href="{{ path('app_about') }}">{{ 'À propos'|trans }}</a></li>
+                                    <li><a href="{{ path('app_services') }}">{{ 'Nos Services'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Notre Équipe'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Actualités'|trans }}</a></li>
+                                    <li><a href="{{ path('app_contact') }}">{{ 'Contact'|trans }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                            <div class="footer-widget footer-widget--links footer-widget--links-two">
+                                <h2 class="footer-widget__title">{{ 'Services de Crédit'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__links">
+                                    <li><a href="#">{{ 'Prêt Auto'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Immobilier'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Étudiant'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Crédit Entreprise'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Personnel'|trans }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                            <div class="footer-widget footer-widget--contact">
+                                <h2 class="footer-widget__title">{{ 'Nous Contacter'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__info">
+                                    <li><a href="https://www.google.com/maps">123 Rue de la Finance, 75001 Paris</a></li>
+                                    <li>
+                                        <span class="footer-widget__info__icon"><i class="icon-paper-plane"></i></span>
+                                        <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                                    </li>
+                                    <li>
+                                        <span class="footer-widget__info__icon"><i class="icon-telephone"></i></span>
+                                        <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-footer__bottom">
+                <div class="container">
+                    <div class="main-footer__bottom__inner">
+                        <div class="row gutter-y-40 align-items-center">
+                            <div class="col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+                                <div class="main-footer__social social-links-two">
+                                    <a href="https://facebook.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Facebook</span>
+                                    </a>
+                                    <a href="https://twitter.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Twitter</span>
+                                    </a>
+                                    <a href="https://linkedin.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Linkedin</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-7 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                                <div class="main-footer__bottom__copyright">
+                                    <p class="main-footer__copyright">
+                                        &copy; Copyright <span class="dynamic-year"></span> par LoanMaster. Tous droits réservés.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="icon-close"></i></span>
+            <div class="logo-box logo-retina">
+                <a href="{{ path('app_home') }}" aria-label="logo image">
+                    <img src="{{ asset('assets/images/logo-light.png') }}" width="155" alt="LoanMaster" />
+                </a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <span class="mobile-nav__contact__icon"><i class="fa fa-envelope"></i></span>
+                    <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                </li>
+                <li>
+                    <span class="mobile-nav__contact__icon"><i class="fa fa-phone-alt"></i></span>
+                    <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://twitter.com">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://linkedin.com">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <span class="sr-only">Linkedin</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Popup -->
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="{{ 'Rechercher...'|trans }}" />
+                <button type="submit" aria-label="search submit" class="easilon-btn">
+                    <span class="easilon-btn__icon"><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">{{ 'retour haut'|trans }}</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+
+    <!-- JavaScript CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('easilon.js') }}"></script>
     
-    {# PWA Install Prompt (will be shown dynamically) #}
-    <div id="pwa-install-prompt" style="display: none;"></div>
-    
-    {% block javascripts %}
-        {# Core JavaScript #}
-        <script src="/js/app.js"></script>
-        
-        {# PWA JavaScript - loaded asynchronously #}
-        <script>
-            // Load PWA functionality asynchronously
-            const pwaScript = document.createElement('script');
-            pwaScript.src = '/js/pwa.js';
-            pwaScript.async = true;
-            document.head.appendChild(pwaScript);
-            
-            // App initialization
-            document.addEventListener('DOMContentLoaded', function() {
-                // Hide loading screen
-                const loading = document.getElementById('app-loading');
-                if (loading) {
-                    loading.style.display = 'none';
-                }
-                
-                // Show app content
-                const content = document.getElementById('app-content');
-                if (content) {
-                    content.style.opacity = '1';
-                }
-                
-                // Initialize app features
-                initializeApp();
-            });
-            
-            function initializeApp() {
-                // App-specific initialization
-                console.log('🚀 LoanMaster PWA initialized');
-                
-                // Check if running as PWA
-                if (window.matchMedia('(display-mode: standalone)').matches || 
-                    window.navigator.standalone === true) {
-                    document.body.classList.add('pwa-mode');
-                    console.log('📱 Running as PWA');
-                }
-                
-                // Initialize offline support with Service Worker registration
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', function() {
-                        navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                            .then(function(registration) {
-                                console.log('✅ Service Worker registered:', registration.scope);
-                                return navigator.serviceWorker.ready;
-                            })
-                            .then(function(registration) {
-                                console.log('✅ Service Worker ready');
-                            })
-                            .catch(function(error) {
-                                console.error('❌ Service Worker registration failed:', error);
-                            });
-                    });
-                }
-            }
-            
-            function toggleMobileMenu() {
-                const menu = document.querySelector('.nav-menu');
-                menu.classList.toggle('active');
-            }
-            
-            // Handle PWA events
-            window.addEventListener('beforeinstallprompt', function(e) {
-                console.log('📱 PWA install prompt available');
-            });
-            
-            window.addEventListener('appinstalled', function(e) {
-                console.log('✅ PWA installed');
-                // Track installation
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'pwa_installed', {
-                        event_category: 'PWA',
-                        event_label: 'Installation'
-                    });
-                }
-            });
-            
-            // Handle network status
-            window.addEventListener('online', function() {
-                console.log('🌐 App is online');
-                document.body.classList.remove('offline');
-            });
-            
-            window.addEventListener('offline', function() {
-                console.log('📴 App is offline');
-                document.body.classList.add('offline');
-            });
-            
-            // Performance monitoring
-            window.addEventListener('load', function() {
-                // Measure and report performance metrics
-                if ('performance' in window) {
-                    const perfData = performance.getEntriesByType('navigation')[0];
-                    console.log('⚡ Page load time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
-                }
-            });
-        </script>
-    {% endblock %}
-    
-    {# Structured Data for better SEO #}
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "LoanMaster",
-        "url": "{{ app.request.schemeAndHttpHost }}",
-        "description": "Plateforme de gestion de prêts professionnelle",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-        },
-        "author": {
-            "@type": "Organization",
-            "name": "LoanMaster"
-        }
-    }
-    </script>
-    
-    {# Additional meta for better PWA integration #}
-    <script>
-        // Set theme color dynamically based on user preferences
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1e293b');
-        }
-        
-        // Handle keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + K for search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                // Open search modal
-                console.log('🔍 Search shortcut activated');
-            }
-        });
-    </script>
+    {% block javascripts %}{% endblock %}
 </body>
 </html>
