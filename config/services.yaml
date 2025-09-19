@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     locale: '%env(LOCALE)%'
+    app.supported_locales: 'fr|en|es|de|it|pt|nl|pl|da|zh|ja|ar|he'
+    app.default_locale: 'fr'
 
 imports:
     - { resource: services_monitoring.yaml }
@@ -27,8 +29,54 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
     App\Service\ApiService:
         arguments:
             $apiUrl: '%env(API_URL)%'
+
+    # Configuration des services Oragon
+    App\Service\TranslationManagerService:
+        arguments:
+            $kernel: '@kernel'
+            $languageRepository: '@App\Repository\LanguageRepository'
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'oragon.translation.manager' }
+
+    # Extension Twig pour les traductions Oragon
+    App\Twig\TranslationExtension:
+        arguments:
+            $translationManager: '@App\Service\TranslationManagerService'
+            $languageRepository: '@App\Repository\LanguageRepository'
+            $requestStack: '@request_stack'
+        tags:
+            - { name: 'twig.extension' }
+
+    # Commandes CLI Oragon
+    App\Command\SyncTranslationsCommand:
+        arguments:
+            $translationManager: '@App\Service\TranslationManagerService'
+            $languageRepository: '@App\Repository\LanguageRepository'
+        tags:
+            - { name: 'console.command' }
+
+    App\Command\MigrateGedmoToOragonCommand:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $pageRepository: '@App\Repository\PageRepository'
+            $seoRepository: '@App\Repository\SeoRepository'
+            $languageRepository: '@App\Repository\LanguageRepository'
+            $translatableListener: '@stof_doctrine_extensions.listener.translatable'
+        tags:
+            - { name: 'console.command' }
+
+    # Contrôleur d'administration des traductions
+    App\Controller\Admin\TranslationController:
+        arguments:
+            $translationManager: '@App\Service\TranslationManagerService'
+            $languageRepository: '@App\Repository\LanguageRepository'
+        calls:
+            - [setContainer, ['@service_container']]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

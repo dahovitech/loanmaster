@@ -45,9 +45,16 @@ class Bank
     #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'bank')]
     private Collection $loans;
 
+    /**
+     * @var Collection<int, BankTranslation>
+     */
+    #[ORM\OneToMany(targetEntity: BankTranslation::class, mappedBy: 'translatable', cascade: ['persist', 'remove'])]
+    private Collection $translations;
+
     public function __construct()
     {
         $this->loans = new ArrayCollection();
+        $this->translations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +201,36 @@ class Bank
     public function setAddress($address)
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BankTranslation>
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(BankTranslation $translation): static
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations->add($translation);
+            $translation->setTranslatable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(BankTranslation $translation): static
+    {
+        if ($this->translations->removeElement($translation)) {
+            // set the owning side to null (unless already changed)
+            if ($translation->getTranslatable() === $this) {
+                $translation->setTranslatable(null);
+            }
+        }
 
         return $this;
     }

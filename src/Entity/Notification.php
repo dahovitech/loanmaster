@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\NotificationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
 
@@ -63,9 +66,16 @@ class Notification
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?DateTimeImmutable $sentAt = null;
 
+    /**
+     * @var Collection<int, NotificationTranslation>
+     */
+    #[ORM\OneToMany(targetEntity: NotificationTranslation::class, mappedBy: 'translatable', cascade: ['persist', 'remove'])]
+    private Collection $translations;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->translations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,6 +264,36 @@ class Notification
     {
         $this->status = 'failed';
         $this->errors = $errors;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NotificationTranslation>
+     */
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(NotificationTranslation $translation): static
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations->add($translation);
+            $translation->setTranslatable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(NotificationTranslation $translation): static
+    {
+        if ($this->translations->removeElement($translation)) {
+            // set the owning side to null (unless already changed)
+            if ($translation->getTranslatable() === $this) {
+                $translation->setTranslatable(null);
+            }
+        }
+
         return $this;
     }
 }
