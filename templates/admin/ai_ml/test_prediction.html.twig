@@ -1,0 +1,506 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Test de Prédiction IA/ML{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .prediction-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+        }
+        .score-display {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .risk-very-low { background: linear-gradient(135deg, #d4edda, #c3e6cb); color: #155724; }
+        .risk-low { background: linear-gradient(135deg, #d1ecf1, #bee5eb); color: #0c5460; }
+        .risk-medium { background: linear-gradient(135deg, #fff3cd, #ffeaa7); color: #856404; }
+        .risk-high { background: linear-gradient(135deg, #f8d7da, #f1b0b7); color: #721c24; }
+        .risk-very-high { background: linear-gradient(135deg, #d1ecf1, #f8d7da); color: #721c24; }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .metric-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .recommendations {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+        .feature-importance {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .customer-selector {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .quick-presets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .preset-btn {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            z-index: 10;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-calculator me-2"></i>Test de Prédiction IA/ML</h1>
+        <p class="text-muted">Testez le modèle de scoring sur différents profils</p>
+    </div>
+    <div class="admin-actions">
+        <a href="{{ path('admin_ai_ml_dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Retour au Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Formulaire de test -->
+    <div class="col-lg-6">
+        <div class="prediction-form position-relative" id="predictionForm">
+            <h4 class="mb-3"><i class="fas fa-user-edit me-2"></i>Paramètres de Test</h4>
+            
+            <!-- Sélection de client existant -->
+            <div class="customer-selector">
+                <h6>Sélectionner un client existant</h6>
+                <form method="POST" id="quickTestForm">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-md-8">
+                            <select name="customer_id" class="form-select" id="customerSelect">
+                                <option value="">Choisir un client...</option>
+                                {% for customer in customers %}
+                                <option value="{{ customer.id }}" 
+                                        data-income="{{ customer.monthlyIncome }}"
+                                        data-expenses="{{ customer.monthlyExpenses }}"
+                                        data-employment="{{ customer.employmentStatus }}">
+                                    {{ customer.firstName }} {{ customer.lastName }} - 
+                                    {{ customer.monthlyIncome|number_format(0, ',', ' ') }}€/mois
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" onclick="loadCustomer()" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-upload"></i> Charger
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Formulaire de prédiction -->
+            <form method="POST" id="predictionTestForm">
+                <div class="row g-3">
+                    <!-- Informations du prêt -->
+                    <div class="col-12">
+                        <h6 class="border-bottom pb-2">Informations du Prêt</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Montant demandé (€)</label>
+                        <input type="number" name="loan_amount" class="form-control" 
+                               value="{{ app.request.request.get('loan_amount', 10000) }}" 
+                               min="1000" max="100000" step="100" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Durée (mois)</label>
+                        <select name="loan_term" class="form-select" required>
+                            <option value="12" {{ app.request.request.get('loan_term') == '12' ? 'selected' : '' }}>12 mois</option>
+                            <option value="24" {{ app.request.request.get('loan_term') == '24' ? 'selected' : '' }}>24 mois</option>
+                            <option value="36" {{ app.request.request.get('loan_term') == '36' ? 'selected' : '' }}>36 mois</option>
+                            <option value="48" {{ app.request.request.get('loan_term') == '48' ? 'selected' : '' }}>48 mois</option>
+                            <option value="60" {{ app.request.request.get('loan_term') == '60' ? 'selected' : '' }}>60 mois</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Objet du prêt</label>
+                        <select name="loan_purpose" class="form-select" required>
+                            <option value="personal">Personnel</option>
+                            <option value="auto">Automobile</option>
+                            <option value="home_improvement">Travaux</option>
+                            <option value="consolidation">Regroupement de crédits</option>
+                            <option value="business">Professionnel</option>
+                        </select>
+                    </div>
+
+                    <!-- Informations financières -->
+                    <div class="col-12 mt-4">
+                        <h6 class="border-bottom pb-2">Informations Financières</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Revenus mensuels (€)</label>
+                        <input type="number" name="monthly_income" class="form-control" 
+                               value="{{ app.request.request.get('monthly_income', 3000) }}" 
+                               min="0" step="100" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Charges mensuelles (€)</label>
+                        <input type="number" name="monthly_expenses" class="form-control" 
+                               value="{{ app.request.request.get('monthly_expenses', 1500) }}" 
+                               min="0" step="100" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Épargne (€)</label>
+                        <input type="number" name="savings_amount" class="form-control" 
+                               value="{{ app.request.request.get('savings_amount', 5000) }}" 
+                               min="0" step="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Dettes existantes (€)</label>
+                        <input type="number" name="existing_debt_amount" class="form-control" 
+                               value="{{ app.request.request.get('existing_debt_amount', 0) }}" 
+                               min="0" step="100">
+                    </div>
+
+                    <!-- Informations personnelles -->
+                    <div class="col-12 mt-4">
+                        <h6 class="border-bottom pb-2">Informations Personnelles</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Âge</label>
+                        <input type="number" name="age" class="form-control" 
+                               value="{{ app.request.request.get('age', 35) }}" 
+                               min="18" max="80" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Statut d'emploi</label>
+                        <select name="employment_status" class="form-select" required>
+                            <option value="CDI">CDI</option>
+                            <option value="CDD">CDD</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="fonctionnaire">Fonctionnaire</option>
+                            <option value="retired">Retraité</option>
+                            <option value="unemployed">Sans emploi</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Durée d'emploi (mois)</label>
+                        <input type="number" name="employment_duration_months" class="form-control" 
+                               value="{{ app.request.request.get('employment_duration_months', 36) }}" 
+                               min="0">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre de personnes à charge</label>
+                        <input type="number" name="number_of_dependents" class="form-control" 
+                               value="{{ app.request.request.get('number_of_dependents', 0) }}" 
+                               min="0" max="10">
+                    </div>
+                </div>
+
+                <!-- Presets rapides -->
+                <div class="mt-4">
+                    <h6>Profils pré-configurés</h6>
+                    <div class="quick-presets">
+                        <div class="preset-btn" onclick="loadPreset('excellent')">
+                            <i class="fas fa-star text-success"></i><br>
+                            <small>Excellent</small>
+                        </div>
+                        <div class="preset-btn" onclick="loadPreset('good')">
+                            <i class="fas fa-thumbs-up text-primary"></i><br>
+                            <small>Bon</small>
+                        </div>
+                        <div class="preset-btn" onclick="loadPreset('average')">
+                            <i class="fas fa-minus text-warning"></i><br>
+                            <small>Moyen</small>
+                        </div>
+                        <div class="preset-btn" onclick="loadPreset('risky')">
+                            <i class="fas fa-exclamation-triangle text-danger"></i><br>
+                            <small>Risqué</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-calculator me-2"></i>Calculer le Score
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Résultats -->
+    <div class="col-lg-6">
+        {% if prediction_result %}
+        <div class="result-card">
+            <h4 class="mb-3"><i class="fas fa-chart-line me-2"></i>Résultat de la Prédiction</h4>
+            
+            <!-- Score principal -->
+            <div class="score-display risk-{{ prediction_result.risk_level|replace('_', '-') }}">
+                <div class="score-value">{{ prediction_result.credit_score }}</div>
+                <div class="h5">{{ prediction_result.risk_level|replace('_', ' ')|title }}</div>
+                <div>Confiance: {{ (prediction_result.confidence * 100)|round(1) }}%</div>
+            </div>
+
+            <!-- Métriques de risque -->
+            {% if prediction_result.risk_metrics %}
+            <div class="metric-grid">
+                <div class="metric-item">
+                    <div class="metric-value">{{ (prediction_result.risk_metrics.default_probability * 100)|round(2) }}%</div>
+                    <div class="metric-label">Probabilité de défaut</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ prediction_result.risk_metrics.expected_loss|number_format(0, ',', ' ') }}€</div>
+                    <div class="metric-label">Perte attendue</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ prediction_result.risk_metrics.expected_profit|number_format(0, ',', ' ') }}€</div>
+                    <div class="metric-label">Profit attendu</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ (prediction_result.risk_metrics.profit_margin)|round(1) }}%</div>
+                    <div class="metric-label">Marge bénéficiaire</div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Recommandations -->
+            {% if prediction_result.recommendations %}
+            <div class="recommendations">
+                <h6><i class="fas fa-lightbulb me-2"></i>Recommandations</h6>
+                <ul class="mb-0">
+                    <li><strong>Décision:</strong> {{ prediction_result.recommendations.decision|replace('_', ' ')|title }}</li>
+                    {% if prediction_result.recommendations.max_amount %}
+                    <li><strong>Montant max:</strong> {{ prediction_result.recommendations.max_amount|number_format(0, ',', ' ') }}€</li>
+                    {% endif %}
+                    {% if prediction_result.recommendations.interest_rate_adjustment %}
+                    <li><strong>Ajustement taux:</strong> {{ prediction_result.recommendations.interest_rate_adjustment > 0 ? '+' : '' }}{{ prediction_result.recommendations.interest_rate_adjustment }}%</li>
+                    {% endif %}
+                    {% if prediction_result.recommendations.conditions %}
+                    <li><strong>Conditions:</strong> {{ prediction_result.recommendations.conditions|join(', ')|replace('_', ' ') }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Détails techniques -->
+            <div class="mt-3">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <small class="text-muted">Méthode</small>
+                        <br><strong>{{ prediction_result.calculation_method|replace('_', ' ')|title }}</strong>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">Temps d'exécution</small>
+                        <br><strong>{{ (prediction_result.execution_time * 1000)|round(2) }}ms</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="mt-4 d-flex gap-2">
+                <button onclick="exportResult()" class="btn btn-outline-primary flex-fill">
+                    <i class="fas fa-download"></i> Exporter
+                </button>
+                <button onclick="shareResult()" class="btn btn-outline-secondary flex-fill">
+                    <i class="fas fa-share"></i> Partager
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="result-card text-center">
+            <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
+            <h5 class="text-muted">Aucun test effectué</h5>
+            <p class="text-muted">Remplissez le formulaire et cliquez sur "Calculer le Score" pour voir les résultats</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const presets = {
+            excellent: {
+                monthly_income: 5000,
+                monthly_expenses: 2000,
+                savings_amount: 15000,
+                existing_debt_amount: 0,
+                age: 35,
+                employment_status: 'CDI',
+                employment_duration_months: 60,
+                number_of_dependents: 1,
+                loan_amount: 15000
+            },
+            good: {
+                monthly_income: 3500,
+                monthly_expenses: 2000,
+                savings_amount: 8000,
+                existing_debt_amount: 2000,
+                age: 30,
+                employment_status: 'CDI',
+                employment_duration_months: 36,
+                number_of_dependents: 0,
+                loan_amount: 12000
+            },
+            average: {
+                monthly_income: 2500,
+                monthly_expenses: 1800,
+                savings_amount: 3000,
+                existing_debt_amount: 5000,
+                age: 28,
+                employment_status: 'CDD',
+                employment_duration_months: 18,
+                number_of_dependents: 2,
+                loan_amount: 8000
+            },
+            risky: {
+                monthly_income: 1800,
+                monthly_expenses: 1600,
+                savings_amount: 500,
+                existing_debt_amount: 8000,
+                age: 22,
+                employment_status: 'CDD',
+                employment_duration_months: 6,
+                number_of_dependents: 0,
+                loan_amount: 10000
+            }
+        };
+
+        function loadPreset(type) {
+            const preset = presets[type];
+            if (!preset) return;
+
+            Object.keys(preset).forEach(key => {
+                const input = document.querySelector(`[name="${key}"]`);
+                if (input) {
+                    input.value = preset[key];
+                }
+            });
+        }
+
+        function loadCustomer() {
+            const select = document.getElementById('customerSelect');
+            const option = select.selectedOptions[0];
+            
+            if (!option || !option.value) {
+                alert('Veuillez sélectionner un client');
+                return;
+            }
+
+            // Charger les données du client
+            document.querySelector('[name="monthly_income"]').value = option.dataset.income || 0;
+            document.querySelector('[name="monthly_expenses"]').value = option.dataset.expenses || 0;
+            document.querySelector('[name="employment_status"]').value = option.dataset.employment || 'CDI';
+            
+            // Remplir l'ID du client pour utilisation dans le formulaire
+            const form = document.getElementById('predictionTestForm');
+            let customerIdInput = form.querySelector('[name="customer_id"]');
+            if (!customerIdInput) {
+                customerIdInput = document.createElement('input');
+                customerIdInput.type = 'hidden';
+                customerIdInput.name = 'customer_id';
+                form.appendChild(customerIdInput);
+            }
+            customerIdInput.value = option.value;
+        }
+
+        // Gestion du formulaire avec loading
+        document.getElementById('predictionTestForm').addEventListener('submit', function(e) {
+            const form = e.target;
+            const overlay = document.createElement('div');
+            overlay.className = 'loading-overlay';
+            overlay.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Chargement...</span></div>';
+            
+            document.getElementById('predictionForm').appendChild(overlay);
+            
+            // Le formulaire sera soumis normalement, mais avec indicateur de chargement
+        });
+
+        function exportResult() {
+            {% if prediction_result %}
+            const result = {{ prediction_result|json_encode|raw }};
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `prediction_result_${Date.now()}.json`);
+            downloadAnchor.click();
+            {% endif %}
+        }
+
+        function shareResult() {
+            {% if prediction_result %}
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Résultat de prédiction IA/ML',
+                    text: `Score de crédit: {{ prediction_result.credit_score }} ({{ prediction_result.risk_level }})`,
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Lien copié dans le presse-papiers');
+                });
+            }
+            {% endif %}
+        }
+    </script>
+{% endblock %}

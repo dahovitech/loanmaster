@@ -1,0 +1,323 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des Modèles IA/ML{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .model-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .model-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .model-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status-deployed { background: #d4edda; color: #155724; }
+        .status-trained { background: #cce5ff; color: #004085; }
+        .status-training { background: #fff3cd; color: #856404; }
+        .status-retired { background: #f8d7da; color: #721c24; }
+        .performance-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+        .perf-excellent { background: #d4edda; color: #155724; }
+        .perf-good { background: #d1ecf1; color: #0c5460; }
+        .perf-fair { background: #fff3cd; color: #856404; }
+        .perf-poor { background: #f8d7da; color: #721c24; }
+        .model-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .metric-item {
+            text-align: center;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .filter-section {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-database me-2"></i>Gestion des Modèles IA/ML</h1>
+        <p class="text-muted">{{ total_models }} modèles enregistrés</p>
+    </div>
+    <div class="admin-actions">
+        <a href="{{ path('admin_ai_ml_dashboard') }}" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left me-1"></i>Retour
+        </a>
+        <a href="{{ path('admin_ai_ml_train_model') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Nouveau Modèle
+        </a>
+    </div>
+</div>
+
+<!-- Filtres -->
+<div class="filter-section">
+    <form method="GET" class="row g-3">
+        <div class="col-md-3">
+            <label class="form-label">Statut</label>
+            <select name="status" class="form-select" onchange="this.form.submit()">
+                <option value="">Tous les statuts</option>
+                <option value="deployed" {{ app.request.query.get('status') == 'deployed' ? 'selected' : '' }}>Déployé</option>
+                <option value="trained" {{ app.request.query.get('status') == 'trained' ? 'selected' : '' }}>Entraîné</option>
+                <option value="training" {{ app.request.query.get('status') == 'training' ? 'selected' : '' }}>En cours</option>
+                <option value="retired" {{ app.request.query.get('status') == 'retired' ? 'selected' : '' }}>Archivé</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Algorithme</label>
+            <select name="algorithm" class="form-select" onchange="this.form.submit()">
+                <option value="">Tous les algorithmes</option>
+                <option value="gradient_boosting" {{ app.request.query.get('algorithm') == 'gradient_boosting' ? 'selected' : '' }}>Gradient Boosting</option>
+                <option value="random_forest" {{ app.request.query.get('algorithm') == 'random_forest' ? 'selected' : '' }}>Random Forest</option>
+                <option value="neural_network" {{ app.request.query.get('algorithm') == 'neural_network' ? 'selected' : '' }}>Réseau Neural</option>
+                <option value="logistic_regression" {{ app.request.query.get('algorithm') == 'logistic_regression' ? 'selected' : '' }}>Régression Logistique</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Performance min.</label>
+            <select name="min_accuracy" class="form-select" onchange="this.form.submit()">
+                <option value="">Toutes performances</option>
+                <option value="0.9" {{ app.request.query.get('min_accuracy') == '0.9' ? 'selected' : '' }}>≥ 90%</option>
+                <option value="0.8" {{ app.request.query.get('min_accuracy') == '0.8' ? 'selected' : '' }}>≥ 80%</option>
+                <option value="0.7" {{ app.request.query.get('min_accuracy') == '0.7' ? 'selected' : '' }}>≥ 70%</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">&nbsp;</label>
+            <div>
+                <a href="{{ path('admin_ai_ml_models') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-times"></i> Réinitialiser
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Liste des modèles -->
+<div class="row">
+    {% for model in models %}
+    <div class="col-md-6 col-xl-4">
+        <div class="model-card">
+            <!-- En-tête du modèle -->
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h5 class="mb-1">{{ model.version }}</h5>
+                    <small class="text-muted">{{ model.algorithm|replace('_', ' ')|title }}</small>
+                </div>
+                <span class="model-status status-{{ model.status }}">
+                    {{ model.status|upper }}
+                </span>
+            </div>
+
+            <!-- Badges de performance -->
+            <div class="mb-3">
+                {% set accuracy = (model.accuracy * 100)|round %}
+                <span class="performance-badge {% if accuracy >= 85 %}perf-excellent{% elseif accuracy >= 75 %}perf-good{% elseif accuracy >= 65 %}perf-fair{% else %}perf-poor{% endif %}">
+                    {{ accuracy }}% précision
+                </span>
+                {% if model.status == 'deployed' %}
+                <span class="badge bg-success">
+                    <i class="fas fa-rocket"></i> Production
+                </span>
+                {% endif %}
+            </div>
+
+            <!-- Métriques principales -->
+            <div class="model-metrics">
+                <div class="metric-item">
+                    <div class="metric-value">{{ (model.accuracy * 100)|round(1) }}%</div>
+                    <div class="metric-label">Précision</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ (model.precision * 100)|round(1) }}%</div>
+                    <div class="metric-label">Exactitude</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ (model.recall * 100)|round(1) }}%</div>
+                    <div class="metric-label">Rappel</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">{{ (model.f1Score * 100)|round(1) }}%</div>
+                    <div class="metric-label">F1-Score</div>
+                </div>
+            </div>
+
+            <!-- Informations détaillées -->
+            <div class="mb-3">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <small class="text-muted">Échantillons</small>
+                        <br><strong>{{ model.trainingSamples ?: 'N/A' }}</strong>
+                    </div>
+                    <div class="col-6">
+                        <small class="text-muted">Utilisation</small>
+                        <br><strong>{{ model.usageCount }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dates importantes -->
+            <div class="mb-3">
+                <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i>
+                    Créé: {{ model.createdAt|date('d/m/Y H:i') }}
+                </small>
+                {% if model.deployedAt %}
+                <br><small class="text-muted">
+                    <i class="fas fa-rocket me-1"></i>
+                    Déployé: {{ model.deployedAt|date('d/m/Y H:i') }}
+                </small>
+                {% endif %}
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex gap-2">
+                <a href="{{ path('admin_ai_ml_model_details', {id: model.id}) }}" 
+                   class="btn btn-outline-primary btn-sm flex-fill">
+                    <i class="fas fa-eye"></i> Détails
+                </a>
+                
+                {% if model.status == 'trained' %}
+                <button class="btn btn-success btn-sm" 
+                        onclick="deployModel({{ model.id }}, '{{ model.version }}')">
+                    <i class="fas fa-rocket"></i> Déployer
+                </button>
+                {% endif %}
+                
+                {% if model.status == 'deployed' %}
+                <button class="btn btn-warning btn-sm" 
+                        onclick="retireModel({{ model.id }}, '{{ model.version }}')">
+                    <i class="fas fa-archive"></i> Archiver
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="fas fa-robot fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">Aucun modèle trouvé</h4>
+            <p class="text-muted">Les modèles apparaîtront ici une fois entraînés</p>
+            <a href="{{ path('admin_ai_ml_train_model') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Entraîner le premier modèle
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if total_pages > 1 %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% for page in 1..total_pages %}
+        <li class="page-item {% if page == current_page %}active{% endif %}">
+            <a class="page-link" href="{{ path('admin_ai_ml_models', {page: page}) }}">{{ page }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function deployModel(modelId, version) {
+            if (confirm(`Êtes-vous sûr de vouloir déployer le modèle ${version} en production ?`)) {
+                fetch(`{{ path('admin_ai_ml_deploy_model', {id: '__ID__'}) }}`.replace('__ID__', modelId), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('success', data.message);
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        showAlert('error', data.error);
+                    }
+                })
+                .catch(error => {
+                    showAlert('error', 'Erreur lors du déploiement');
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        function retireModel(modelId, version) {
+            if (confirm(`Êtes-vous sûr de vouloir archiver le modèle ${version} ?`)) {
+                fetch(`{{ path('admin_ai_ml_retire_model', {id: '__ID__'}) }}`.replace('__ID__', modelId), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('success', data.message);
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        showAlert('error', data.error);
+                    }
+                })
+                .catch(error => {
+                    showAlert('error', 'Erreur lors de l\'archivage');
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.admin-header').after(alertDiv);
+        }
+    </script>
+{% endblock %}

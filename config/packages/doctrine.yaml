@@ -1,34 +1,82 @@
+# config/packages/doctrine.yaml
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '16'
-
+        driver: 'pdo_pgsql'
+        server_version: '15'
+        charset: utf8
+        
+        # Optimisations de performance
+        options:
+            # Connection pooling
+            1002: false  # ATTR_PERSISTENT
+            
+        # Configuration des types personnalisés
+        types:
+            uuid: Ramsey\Uuid\Doctrine\UuidType
+            json: Doctrine\DBAL\Types\JsonType
+            
+        mapping_types:
+            uuid: uuid
+            
+        # Options de performance
         profiling_collect_backtrace: '%kernel.debug%'
-        use_savepoints: true
+        profiling_collect_schema_errors: '%kernel.debug%'
+        
     orm:
-        auto_generate_proxy_classes: true
+        auto_generate_proxy_classes: '%kernel.debug%'
         enable_lazy_ghost_objects: true
-        report_fields_where_declared: true
-        validate_xml_mapping: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
+        
+        # Configuration du cache de métadonnées
+        metadata_cache_driver:
+            type: pool
+            pool: doctrine.system_cache_pool
+            
+        # Configuration du cache de requêtes
+        query_cache_driver:
+            type: pool
+            pool: doctrine.query_cache_pool
+            
+        # Configuration du cache de résultats
+        result_cache_driver:
+            type: pool
+            pool: doctrine.result_cache_pool
+            
+        # Configuration des entités
         mappings:
             App:
-                type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
+                dir: '%kernel.project_dir%/src/Domain/Entity'
+                prefix: 'App\Domain\Entity'
                 alias: App
-
-when@test:
-    doctrine:
-        dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
-
+                
+        # Configuration DQL personnalisée
+        dql:
+            string_functions:
+                # Fonctions PostgreSQL pour la recherche full-text
+                TSQUERY: App\Infrastructure\Doctrine\Query\TsQuery
+                TSVECTOR: App\Infrastructure\Doctrine\Query\TsVector
+                SIMILARITY: App\Infrastructure\Doctrine\Query\Similarity
+                
+            numeric_functions:
+                EXTRACT: Oro\ORM\Query\AST\Functions\Extract
+                
+        # Configuration des filtres
+        filters:
+            soft_deleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
+                
+        # Optimisations diverses
+        proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
+        proxy_namespace: Proxies
+        
+        # Configuration des listeners
+        entity_listeners:
+            enabled: true
+            
 when@prod:
     doctrine:
         orm:
@@ -36,15 +84,23 @@ when@prod:
             proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
                 type: pool
-                pool: doctrine.system_cache_pool
+                pool: doctrine.query_cache_pool
             result_cache_driver:
                 type: pool
                 pool: doctrine.result_cache_pool
-
-    framework:
-        cache:
-            pools:
-                doctrine.result_cache_pool:
-                    adapter: cache.app
-                doctrine.system_cache_pool:
-                    adapter: cache.system
+                
+when@test:
+    doctrine:
+        dbal:
+            # Use an in-memory database for tests
+            driver: pdo_sqlite
+            url: sqlite:///:memory:
+            charset: utf8mb4
+        orm:
+            # Disable caching for tests
+            metadata_cache_driver:
+                type: array
+            query_cache_driver:
+                type: array
+            result_cache_driver:
+                type: array

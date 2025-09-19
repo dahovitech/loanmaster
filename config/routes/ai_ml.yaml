@@ -1,0 +1,86 @@
+# Configuration des routes pour l'API IA/ML de scoring automatique
+
+# API de scoring pour les applications externes
+scoring_api:
+    resource: App\Controller\Api\ScoringApiController
+    type: attribute
+    prefix: /api/v1/scoring
+    defaults:
+        _format: json
+    requirements:
+        _format: json
+
+# Administration IA/ML pour le dashboard
+ai_ml_admin:
+    resource: App\Controller\Admin\AiMlAdminController
+    type: attribute
+    prefix: /admin/ai-ml
+    
+# Routes spécifiques pour l'API de scoring avec rate limiting
+scoring_calculate:
+    path: /api/v1/scoring/calculate
+    controller: App\Controller\Api\ScoringApiController::calculateCreditScore
+    methods: [POST]
+    defaults:
+        _format: json
+    options:
+        rate_limit:
+            policy: fixed_window
+            limit: 100
+            interval: '1 hour'
+            
+scoring_batch:
+    path: /api/v1/scoring/batch
+    controller: App\Controller\Api\ScoringApiController::batchCreditScoring
+    methods: [POST]
+    defaults:
+        _format: json
+    options:
+        rate_limit:
+            policy: fixed_window
+            limit: 10
+            interval: '1 hour'
+
+scoring_models_status:
+    path: /api/v1/scoring/models/status
+    controller: App\Controller\Api\ScoringApiController::modelsStatus
+    methods: [GET]
+    defaults:
+        _format: json
+
+# Routes pour le monitoring et les webhooks
+scoring_health:
+    path: /api/v1/scoring/health
+    controller: App\Controller\Api\ScoringApiController::healthCheck
+    methods: [GET]
+    defaults:
+        _format: json
+
+scoring_metrics:
+    path: /api/v1/scoring/metrics
+    controller: App\Controller\Api\ScoringApiController::metrics
+    methods: [GET]
+    defaults:
+        _format: json
+
+# Routes protégées pour l'administration des modèles
+admin_ai_ml_deploy_model:
+    path: /admin/ai-ml/models/{id}/deploy
+    controller: App\Controller\Admin\AiMlAdminController::deployModel
+    methods: [POST]
+    requirements:
+        id: '\d+'
+
+admin_ai_ml_retire_model:
+    path: /admin/ai-ml/models/{id}/retire
+    controller: App\Controller\Admin\AiMlAdminController::retireModel
+    methods: [POST]
+    requirements:
+        id: '\d+'
+
+admin_ai_ml_api_performance:
+    path: /admin/ai-ml/api/performance
+    controller: App\Controller\Admin\AiMlAdminController::apiPerformance
+    methods: [GET]
+    defaults:
+        _format: json

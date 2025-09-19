@@ -1,0 +1,204 @@
+# Configuration des services IA/ML et Machine Learning
+
+services:
+    # Service principal de scoring par IA
+    App\Service\AI\LoanScoringService:
+        arguments:
+            $configuration:
+                ml_api_endpoint: '%env(ML_API_ENDPOINT)%'
+                ml_api_key: '%env(ML_API_KEY)%'
+                scoring_model_version: '%env(SCORING_MODEL_VERSION)%'
+                min_data_points: 10
+                confidence_threshold: 0.75
+                enable_ml_api: '%env(bool:ENABLE_ML_API)%'
+                fallback_to_rules: true
+        tags:
+            - { name: 'app.ai_service' }
+
+    # Service de gestion des modèles ML
+    App\Service\AI\MLModelService:
+        arguments:
+            $configuration:
+                ml_training_endpoint: '%env(ML_TRAINING_ENDPOINT)%'
+                ml_api_key: '%env(ML_API_KEY)%'
+                model_storage_path: '%env(MODEL_STORAGE_PATH)%'
+                training_data_min_samples: 1000
+                validation_split_ratio: 0.2
+                performance_threshold: 0.85
+                retrain_threshold_days: 30
+                feature_drift_threshold: 0.1
+        tags:
+            - { name: 'app.ai_service' }
+
+    # Client HTTP configuré pour les appels ML externes
+    App\Service\AI\MLHttpClient:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+        arguments:
+            $defaultOptions:
+                timeout: 30
+                max_redirects: 3
+                headers:
+                    'User-Agent': 'LoanMaster-AI/1.0'
+                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
+
+    # Service de monitoring des modèles
+    App\Service\AI\ModelMonitoringService:
+        arguments:
+            $configuration:
+                drift_detection_enabled: true
+                performance_alert_threshold: 0.05
+                retraining_recommendation_threshold: 0.1
+                monitoring_interval: 'daily'
+        tags:
+            - { name: 'app.monitoring_service' }
+
+    # Service de feature engineering
+    App\Service\AI\FeatureEngineeringService:
+        arguments:
+            $configuration:
+                feature_selection_enabled: true
+                auto_feature_scaling: true
+                categorical_encoding_method: 'one_hot'
+                numerical_imputation_strategy: 'median'
+        tags:
+            - { name: 'app.ai_service' }
+
+    # Repository personnalisé pour les modèles de scoring
+    App\Repository\LoanScoringModelRepository:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'doctrine.repository_service' }
+
+    # Event listener pour l'audit des prédictions
+    App\EventListener\AI\ScoringAuditListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'app.scoring.prediction_made', method: 'onPredictionMade' }
+            - { name: 'kernel.event_listener', event: 'app.scoring.model_deployed', method: 'onModelDeployed' }
+            - { name: 'kernel.event_listener', event: 'app.scoring.model_retired', method: 'onModelRetired' }
+
+    # Command pour l'entraînement automatique des modèles
+    App\Command\AI\TrainModelCommand:
+        tags:
+            - { name: 'console.command', command: 'app:ai:train-model' }
+
+    # Command pour le monitoring des modèles
+    App\Command\AI\MonitorModelsCommand:
+        tags:
+            - { name: 'console.command', command: 'app:ai:monitor-models' }
+
+    # Command pour la migration des modèles
+    App\Command\AI\MigrateModelCommand:
+        tags:
+            - { name: 'console.command', command: 'app:ai:migrate-model' }
+
+    # Validator personnalisé pour les données de scoring
+    App\Validator\AI\ScoringDataValidator:
+        tags:
+            - { name: 'validator.constraint_validator' }
+
+    # Cache pour les prédictions
+    app.ai.prediction_cache:
+        class: Symfony\Component\Cache\Adapter\RedisAdapter
+        arguments:
+            - '@cache.redis'
+            - 'ai_predictions'
+            - 3600  # TTL: 1 heure
+        tags:
+            - { name: 'cache.pool' }
+
+    # Rate limiter pour l'API de scoring
+    app.ai.scoring_rate_limiter:
+        class: Symfony\Component\RateLimiter\RateLimiterFactory
+        arguments:
+            - 'scoring_api'
+            - '@cache.app'
+            - 'fixed_window'
+            - 100  # 100 requêtes
+            - 3600 # par heure
+        tags:
+            - { name: 'rate_limiter.factory' }
+
+    # Décorateur pour la sécurité des prédictions
+    App\Service\AI\SecureLoanScoringService:
+        decorates: App\Service\AI\LoanScoringService
+        arguments:
+            - '@App\Service\AI\SecureLoanScoringService.inner'
+            - '@security.token_storage'
+            - '@logger'
+        tags:
+            - { name: 'app.security_wrapper' }
+
+# Configuration des paramètres IA/ML
+parameters:
+    app.ai.algorithms:
+        gradient_boosting:
+            name: 'Gradient Boosting'
+            description: 'Algorithme optimisé pour la précision maximale'
+            training_time_estimate: 900  # 15 minutes
+            memory_usage_mb: 512
+            hyperparameters:
+                learning_rate: [0.01, 0.1, 0.3]
+                max_depth: [3, 6, 9, 15]
+                n_estimators: [50, 100, 200, 500]
+                subsample: [0.5, 0.8, 1.0]
+        
+        random_forest:
+            name: 'Random Forest'
+            description: 'Bon équilibre entre performance et rapidité'
+            training_time_estimate: 300  # 5 minutes
+            memory_usage_mb: 256
+            hyperparameters:
+                n_estimators: [10, 50, 100, 200]
+                max_depth: [3, 5, 10, 20]
+                min_samples_split: [2, 5, 10]
+                min_samples_leaf: [1, 2, 4]
+        
+        neural_network:
+            name: 'Réseau de Neurones'
+            description: 'Puissant pour les patterns complexes'
+            training_time_estimate: 1800  # 30 minutes
+            memory_usage_mb: 1024
+            hyperparameters:
+                hidden_layers: ['50', '100', '100,50', '100,50,25']
+                learning_rate: [0.0001, 0.001, 0.01]
+                batch_size: [16, 32, 64, 128]
+                epochs: [50, 100, 200, 300]
+        
+        logistic_regression:
+            name: 'Régression Logistique'
+            description: 'Simple et interprétable'
+            training_time_estimate: 120  # 2 minutes
+            memory_usage_mb: 128
+            hyperparameters:
+                C: [0.1, 1.0, 10.0]
+                penalty: ['l1', 'l2', 'elasticnet']
+                solver: ['lbfgs', 'liblinear', 'saga']
+
+    app.ai.feature_groups:
+        demographic: ['age', 'employment_status', 'employment_duration_months', 'marital_status', 'education_level']
+        financial: ['monthly_income', 'monthly_expenses', 'savings_amount', 'existing_debt_amount', 'credit_card_utilization']
+        credit_history: ['total_previous_loans', 'loan_completion_rate', 'loan_default_rate', 'average_payment_delay_days']
+        behavioral: ['digital_engagement_score', 'response_time_to_requests', 'auto_payment_opted']
+        external: ['economic_indicator_regional', 'unemployment_rate_regional', 'industry_risk_score']
+
+    app.ai.risk_levels:
+        very_low: { min_score: 750, color: '#28a745', description: 'Risque très faible' }
+        low: { min_score: 650, color: '#17a2b8', description: 'Risque faible' }
+        medium: { min_score: 550, color: '#ffc107', description: 'Risque modéré' }
+        high: { min_score: 450, color: '#fd7e14', description: 'Risque élevé' }
+        very_high: { min_score: 0, color: '#dc3545', description: 'Risque très élevé' }
+
+    app.ai.performance_thresholds:
+        excellent: 0.90
+        good: 0.80
+        acceptable: 0.70
+        poor: 0.60
+
+    app.ai.model_lifecycle:
+        max_age_days: 180           # Durée de vie max d'un modèle
+        retraining_threshold: 0.05  # Seuil de dégradation pour réentraînement
+        deployment_cooldown: 86400  # 24h entre déploiements
+        backup_retention_days: 365  # Conservation des sauvegardes

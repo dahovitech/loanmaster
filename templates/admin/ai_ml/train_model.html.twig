@@ -1,0 +1,588 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Entraînement de Modèle IA/ML{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .training-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .algorithm-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .algorithm-card {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        .algorithm-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .algorithm-card.selected {
+            border-color: var(--primary-color);
+            background: #e3f2fd;
+        }
+        .algorithm-card h6 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .algorithm-card .description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .algorithm-card .features {
+            font-size: 0.8rem;
+        }
+        .features .badge {
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .hyperparams-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        .progress-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 1rem;
+            display: none;
+        }
+        .training-progress {
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f0f0f0;
+            margin: 1rem 0;
+        }
+        .progress-bar-animated {
+            animation: progress-animation 2s linear infinite;
+        }
+        @keyframes progress-animation {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 0; }
+        }
+        .log-output {
+            background: #263238;
+            color: #66bb6a;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .data-quality-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        .quality-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .quality-excellent { background: #28a745; }
+        .quality-good { background: #17a2b8; }
+        .quality-fair { background: #ffc107; }
+        .quality-poor { background: #dc3545; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1><i class="fas fa-cogs me-2"></i>Entraînement de Modèle IA/ML</h1>
+        <p class="text-muted">Créer et entraîner de nouveaux modèles de scoring</p>
+    </div>
+    <div class="admin-actions">
+        <a href="{{ path('admin_ai_ml_dashboard') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i>Retour au Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- Statistiques des données d'entraînement -->
+{% if training_stats %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ training_stats.total_samples|number_format(0, ',', ' ') }}</div>
+        <div class="stat-label">Échantillons disponibles</div>
+        <div class="data-quality-indicator">
+            <div class="quality-dot {% if training_stats.total_samples > 5000 %}quality-excellent{% elseif training_stats.total_samples > 2000 %}quality-good{% elseif training_stats.total_samples > 500 %}quality-fair{% else %}quality-poor{% endif %}"></div>
+            <small class="text-muted">
+                {% if training_stats.total_samples > 5000 %}Excellent{% elseif training_stats.total_samples > 2000 %}Bon{% elseif training_stats.total_samples > 500 %}Suffisant{% else %}Insuffisant{% endif %}
+            </small>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-value">{{ (training_stats.success_rate * 100)|round(1) }}%</div>
+        <div class="stat-label">Taux de remboursement</div>
+        <div class="data-quality-indicator">
+            <div class="quality-dot {% if training_stats.success_rate > 0.8 %}quality-excellent{% elseif training_stats.success_rate > 0.7 %}quality-good{% elseif training_stats.success_rate > 0.6 %}quality-fair{% else %}quality-poor{% endif %}"></div>
+            <small class="text-muted">
+                {% if training_stats.success_rate > 0.8 %}Très bon{% elseif training_stats.success_rate > 0.7 %}Bon{% elseif training_stats.success_rate > 0.6 %}Correct{% else %}Problématique{% endif %}
+            </small>
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-value">{{ training_stats.feature_count }}</div>
+        <div class="stat-label">Caractéristiques</div>
+        <small class="text-muted">Variables d'entrée</small>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-value">{{ training_stats.data_quality_score|round(1) }}/10</div>
+        <div class="stat-label">Qualité des données</div>
+        <div class="data-quality-indicator">
+            <div class="quality-dot {% if training_stats.data_quality_score > 8 %}quality-excellent{% elseif training_stats.data_quality_score > 6 %}quality-good{% elseif training_stats.data_quality_score > 4 %}quality-fair{% else %}quality-poor{% endif %}"></div>
+            <small class="text-muted">
+                {% if training_stats.data_quality_score > 8 %}Excellente{% elseif training_stats.data_quality_score > 6 %}Bonne{% elseif training_stats.data_quality_score > 4 %}Correcte{% else %}À améliorer{% endif %}
+            </small>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <!-- Formulaire d'entraînement -->
+    <div class="col-lg-8">
+        <div class="training-form">
+            <h4 class="mb-3"><i class="fas fa-brain me-2"></i>Configuration de l'Entraînement</h4>
+            
+            <form method="POST" id="trainingForm">
+                <!-- Sélection de l'algorithme -->
+                <div class="mb-4">
+                    <h6>Algorithme de Machine Learning</h6>
+                    <div class="algorithm-cards">
+                        <div class="algorithm-card" data-algorithm="gradient_boosting" onclick="selectAlgorithm('gradient_boosting')">
+                            <h6><i class="fas fa-chart-line me-2"></i>Gradient Boosting</h6>
+                            <div class="description">
+                                Excellent pour la précision, gère bien les données complexes et non-linéaires.
+                            </div>
+                            <div class="features">
+                                <span class="badge bg-success">Très précis</span>
+                                <span class="badge bg-primary">Robuste</span>
+                                <span class="badge bg-info">Polyvalent</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="random_forest" onclick="selectAlgorithm('random_forest')">
+                            <h6><i class="fas fa-tree me-2"></i>Random Forest</h6>
+                            <div class="description">
+                                Bon équilibre entre précision et rapidité, moins sensible au sur-apprentissage.
+                            </div>
+                            <div class="features">
+                                <span class="badge bg-primary">Équilibré</span>
+                                <span class="badge bg-success">Rapide</span>
+                                <span class="badge bg-warning">Interprétable</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="neural_network" onclick="selectAlgorithm('neural_network')">
+                            <h6><i class="fas fa-project-diagram me-2"></i>Réseau de Neurones</h6>
+                            <div class="description">
+                                Très puissant pour les patterns complexes, nécessite plus de données.
+                            </div>
+                            <div class="features">
+                                <span class="badge bg-danger">Puissant</span>
+                                <span class="badge bg-warning">Complexe</span>
+                                <span class="badge bg-info">Moderne</span>
+                            </div>
+                        </div>
+                        
+                        <div class="algorithm-card" data-algorithm="logistic_regression" onclick="selectAlgorithm('logistic_regression')">
+                            <h6><i class="fas fa-calculator me-2"></i>Régression Logistique</h6>
+                            <div class="description">
+                                Simple et rapide, excellent pour comprendre l'importance des variables.
+                            </div>
+                            <div class="features">
+                                <span class="badge bg-success">Simple</span>
+                                <span class="badge bg-primary">Rapide</span>
+                                <span class="badge bg-warning">Explicable</span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="algorithm" id="selectedAlgorithm" value="gradient_boosting" required>
+                </div>
+
+                <!-- Configuration des données -->
+                <div class="mb-4">
+                    <h6>Configuration des Données</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre maximum d'échantillons</label>
+                            <input type="number" name="max_samples" class="form-control" 
+                                   value="10000" min="500" max="50000" step="100">
+                            <small class="text-muted">Laissez vide pour utiliser toutes les données</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ratio validation (%)</label>
+                            <input type="number" name="validation_ratio" class="form-control" 
+                                   value="20" min="10" max="40" step="5">
+                            <small class="text-muted">Pourcentage des données réservé à la validation</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date de début</label>
+                            <input type="date" name="start_date" class="form-control" 
+                                   value="{{ 'now'|date_modify('-2 years')|date('Y-m-d') }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date de fin</label>
+                            <input type="date" name="end_date" class="form-control" 
+                                   value="{{ 'now'|date('Y-m-d') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hyperparamètres -->
+                <div class="hyperparams-section" id="hyperparameters">
+                    <h6>Hyperparamètres</h6>
+                    <div id="hyperparamFields">
+                        <!-- Les champs seront remplis dynamiquement selon l'algorithme -->
+                    </div>
+                </div>
+
+                <!-- Bouton d'entraînement -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg" id="trainButton">
+                        <i class="fas fa-play me-2"></i>Démarrer l'Entraînement
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg ms-2" 
+                            onclick="validateData()">
+                        <i class="fas fa-check me-2"></i>Valider les Données
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Informations et aide -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Guide d'Entraînement</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>Recommandations :</strong>
+                    <ul class="small mt-2">
+                        <li>Utilisez au moins 1000 échantillons</li>
+                        <li>Équilibrez les données positives/négatives</li>
+                        <li>Gradient Boosting pour la précision maximale</li>
+                        <li>Random Forest pour un bon compromis</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Temps d'entraînement estimé :</strong>
+                    <div class="mt-2">
+                        <div class="d-flex justify-content-between">
+                            <small>Régression Logistique</small>
+                            <small>~2 min</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>Random Forest</small>
+                            <small>~5 min</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>Gradient Boosting</small>
+                            <small>~15 min</small>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <small>Réseau de Neurones</small>
+                            <small>~30 min</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <small>
+                        <i class="fas fa-lightbulb me-1"></i>
+                        <strong>Astuce :</strong> Commencez avec Gradient Boosting pour obtenir une ligne de base solide.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historique des modèles récents -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0"><i class="fas fa-history me-2"></i>Modèles Récents</h6>
+            </div>
+            <div class="card-body">
+                <div class="small">
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>v2.3.1 - GB</span>
+                        <span class="text-success">87.2%</span>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>v2.3.0 - RF</span>
+                        <span class="text-primary">84.1%</span>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>v2.2.9 - NN</span>
+                        <span class="text-warning">82.8%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section de progression (masquée au début) -->
+<div class="progress-section" id="progressSection">
+    <h4><i class="fas fa-cogs me-2"></i>Entraînement en Cours</h4>
+    
+    <div class="training-progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+             role="progressbar" style="width: 0%" id="progressBar">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-center">
+                <h6>Étape Actuelle</h6>
+                <div id="currentStep">Initialisation...</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-center">
+                <h6>Temps Écoulé</h6>
+                <div id="elapsedTime">00:00</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <h6>Journaux d'Entraînement</h6>
+        <div class="log-output" id="trainingLogs">
+Initialisation de l'entraînement...
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-danger" onclick="cancelTraining()">
+            <i class="fas fa-stop me-2"></i>Arrêter l'Entraînement
+        </button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const hyperparameters = {
+            gradient_boosting: {
+                learning_rate: { type: 'number', value: 0.1, min: 0.01, max: 0.3, step: 0.01, label: 'Taux d\'apprentissage' },
+                max_depth: { type: 'number', value: 6, min: 3, max: 15, step: 1, label: 'Profondeur maximale' },
+                n_estimators: { type: 'number', value: 100, min: 50, max: 500, step: 10, label: 'Nombre d\'estimateurs' },
+                subsample: { type: 'number', value: 1.0, min: 0.5, max: 1.0, step: 0.1, label: 'Échantillonnage' }
+            },
+            random_forest: {
+                n_estimators: { type: 'number', value: 100, min: 10, max: 300, step: 10, label: 'Nombre d\'arbres' },
+                max_depth: { type: 'number', value: 10, min: 3, max: 20, step: 1, label: 'Profondeur maximale' },
+                min_samples_split: { type: 'number', value: 2, min: 2, max: 10, step: 1, label: 'Échantillons min. pour division' },
+                min_samples_leaf: { type: 'number', value: 1, min: 1, max: 5, step: 1, label: 'Échantillons min. par feuille' }
+            },
+            neural_network: {
+                hidden_layers: { type: 'select', value: '100,50', options: ['50', '100', '100,50', '100,50,25'], label: 'Couches cachées' },
+                learning_rate: { type: 'number', value: 0.001, min: 0.0001, max: 0.01, step: 0.0001, label: 'Taux d\'apprentissage' },
+                batch_size: { type: 'number', value: 32, min: 16, max: 128, step: 16, label: 'Taille de lot' },
+                epochs: { type: 'number', value: 100, min: 50, max: 300, step: 10, label: 'Époques' }
+            },
+            logistic_regression: {
+                C: { type: 'number', value: 1.0, min: 0.1, max: 10.0, step: 0.1, label: 'Régularisation (C)' },
+                penalty: { type: 'select', value: 'l2', options: ['l1', 'l2', 'elasticnet'], label: 'Type de pénalité' },
+                solver: { type: 'select', value: 'lbfgs', options: ['lbfgs', 'liblinear', 'saga'], label: 'Solveur' }
+            }
+        };
+
+        function selectAlgorithm(algorithm) {
+            // Désélectionner tous les autres
+            document.querySelectorAll('.algorithm-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Sélectionner le choisi
+            document.querySelector(`[data-algorithm="${algorithm}"]`).classList.add('selected');
+            document.getElementById('selectedAlgorithm').value = algorithm;
+            
+            // Mettre à jour les hyperparamètres
+            updateHyperparameters(algorithm);
+        }
+
+        function updateHyperparameters(algorithm) {
+            const container = document.getElementById('hyperparamFields');
+            const params = hyperparameters[algorithm];
+            
+            container.innerHTML = '';
+            
+            Object.keys(params).forEach(key => {
+                const param = params[key];
+                const div = document.createElement('div');
+                div.className = 'mb-3';
+                
+                if (param.type === 'select') {
+                    div.innerHTML = `
+                        <label class="form-label">${param.label}</label>
+                        <select name="${key}" class="form-select">
+                            ${param.options.map(opt => 
+                                `<option value="${opt}" ${opt === param.value ? 'selected' : ''}>${opt}</option>`
+                            ).join('')}
+                        </select>
+                    `;
+                } else {
+                    div.innerHTML = `
+                        <label class="form-label">${param.label}</label>
+                        <input type="${param.type}" name="${key}" class="form-control" 
+                               value="${param.value}" 
+                               ${param.min ? `min="${param.min}"` : ''}
+                               ${param.max ? `max="${param.max}"` : ''}
+                               ${param.step ? `step="${param.step}"` : ''}>
+                    `;
+                }
+                
+                container.appendChild(div);
+            });
+        }
+
+        function validateData() {
+            // Simuler la validation des données
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success mt-3';
+            alertDiv.innerHTML = `
+                <i class="fas fa-check-circle me-2"></i>
+                Validation réussie : {{ training_stats.total_samples|default(0) }} échantillons disponibles, 
+                qualité des données : {{ training_stats.data_quality_score|default(8) }}/10
+            `;
+            document.querySelector('.training-form').appendChild(alertDiv);
+            
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function cancelTraining() {
+            if (confirm('Êtes-vous sûr de vouloir arrêter l\'entraînement en cours ?')) {
+                document.getElementById('progressSection').style.display = 'none';
+                document.querySelector('.training-form').style.display = 'block';
+                // Ici, on ferait un appel AJAX pour arrêter l'entraînement côté serveur
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            selectAlgorithm('gradient_boosting');
+            
+            // Gestion du formulaire d'entraînement
+            document.getElementById('trainingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Masquer le formulaire et afficher la progression
+                document.querySelector('.training-form').style.display = 'none';
+                document.getElementById('progressSection').style.display = 'block';
+                
+                // Simuler le processus d'entraînement
+                simulateTraining();
+                
+                // Soumettre le formulaire réel (en vrai, ce serait via AJAX)
+                setTimeout(() => {
+                    this.submit();
+                }, 2000);
+            });
+        });
+
+        function simulateTraining() {
+            const steps = [
+                'Extraction des données...',
+                'Préparation des features...',
+                'Division train/validation...',
+                'Initialisation du modèle...',
+                'Entraînement en cours...',
+                'Validation du modèle...',
+                'Évaluation des performances...',
+                'Sauvegarde du modèle...'
+            ];
+            
+            let currentStepIndex = 0;
+            let progress = 0;
+            let startTime = Date.now();
+            
+            const progressBar = document.getElementById('progressBar');
+            const currentStepDiv = document.getElementById('currentStep');
+            const elapsedTimeDiv = document.getElementById('elapsedTime');
+            const logsDiv = document.getElementById('trainingLogs');
+            
+            const interval = setInterval(() => {
+                // Mise à jour du temps
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                elapsedTimeDiv.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Mise à jour de la progression
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = `${progress}%`;
+                
+                // Mise à jour de l'étape
+                if (currentStepIndex < steps.length && progress > (currentStepIndex + 1) * (100 / steps.length)) {
+                    currentStepDiv.textContent = steps[currentStepIndex];
+                    logsDiv.textContent += `\n[${new Date().toLocaleTimeString()}] ${steps[currentStepIndex]}`;
+                    logsDiv.scrollTop = logsDiv.scrollHeight;
+                    currentStepIndex++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    currentStepDiv.textContent = 'Entraînement terminé !';
+                    logsDiv.textContent += `\n[${new Date().toLocaleTimeString()}] Entraînement terminé avec succès !`;
+                }
+            }, 500);
+        }
+    </script>
+{% endblock %}

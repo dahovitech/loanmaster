@@ -1,6 +1,12 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - loan       # Canal dédié pour les opérations de prêts
+        - security   # Canal dédié pour la sécurité et l'authentification
+        - payment    # Canal dédié pour les paiements
+        - performance # Canal dédié pour les métriques de performance
+        - audit      # Canal dédié pour l'audit trail
+        - business   # Canal dédié pour les événements métier
 
 when@dev:
     monolog:
@@ -9,15 +15,57 @@ when@dev:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event"]
-            # uncomment to get logging in your browser
-            # you may have to allow bigger header sizes in your Web server configuration
-            #firephp:
-            #    type: firephp
-            #    level: info
-            #chromephp:
-            #    type: chromephp
-            #    level: info
+                channels: ["!event", "!doctrine"]
+                formatter: monolog.formatter.line
+            
+            # Canal dédié pour les prêts
+            loan:
+                type: stream
+                path: "%kernel.logs_dir%/loan.log"
+                level: info
+                channels: [loan]
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour la sécurité
+            security:
+                type: stream
+                path: "%kernel.logs_dir%/security.log"
+                level: info
+                channels: [security]
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les paiements
+            payment:
+                type: stream
+                path: "%kernel.logs_dir%/payment.log"
+                level: info
+                channels: [payment]
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les performances
+            performance:
+                type: stream
+                path: "%kernel.logs_dir%/performance.log"
+                level: info
+                channels: [performance]
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour l'audit
+            audit:
+                type: stream
+                path: "%kernel.logs_dir%/audit.log"
+                level: info
+                channels: [audit]
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les événements métier
+            business:
+                type: stream
+                path: "%kernel.logs_dir%/business.log"
+                level: info
+                channels: [business]
+                formatter: monolog.formatter.json
+            
             console:
                 type: console
                 process_psr_3_messages: false
@@ -31,11 +79,27 @@ when@test:
                 action_level: error
                 handler: nested
                 excluded_http_codes: [404, 405]
-                channels: ["!event"]
+                channels: ["!event", "!doctrine"]
             nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
+                formatter: monolog.formatter.json
+            
+            # Logs dédiés même en test pour le débogage
+            loan:
+                type: stream
+                path: "%kernel.logs_dir%/loan_test.log"
+                level: info
+                channels: [loan]
+                formatter: monolog.formatter.json
+            
+            security:
+                type: stream
+                path: "%kernel.logs_dir%/security_test.log"
+                level: warning
+                channels: [security]
+                formatter: monolog.formatter.json
 
 when@prod:
     monolog:
@@ -46,17 +110,84 @@ when@prod:
                 handler: nested
                 excluded_http_codes: [404, 405]
                 buffer_size: 50 # How many messages should be saved? Prevent memory leaks
+                channels: ["!event", "!doctrine"]
             nested:
                 type: stream
                 path: php://stderr
                 level: debug
                 formatter: monolog.formatter.json
+            
+            # Canal dédié pour les prêts (production)
+            loan:
+                type: rotating_file
+                path: "%kernel.logs_dir%/loan.log"
+                level: info
+                channels: [loan]
+                max_files: 30
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour la sécurité (production)
+            security:
+                type: rotating_file
+                path: "%kernel.logs_dir%/security.log"
+                level: warning
+                channels: [security]
+                max_files: 60  # Garder plus longtemps pour la sécurité
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les paiements (production)
+            payment:
+                type: rotating_file
+                path: "%kernel.logs_dir%/payment.log"
+                level: info
+                channels: [payment]
+                max_files: 30
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les performances (production)
+            performance:
+                type: rotating_file
+                path: "%kernel.logs_dir%/performance.log"
+                level: info
+                channels: [performance]
+                max_files: 7  # Une semaine de données de performance
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour l'audit (production)
+            audit:
+                type: rotating_file
+                path: "%kernel.logs_dir%/audit.log"
+                level: info
+                channels: [audit]
+                max_files: 365  # Audit trail doit être conservé longtemps
+                formatter: monolog.formatter.json
+            
+            # Canal dédié pour les événements métier (production)
+            business:
+                type: rotating_file
+                path: "%kernel.logs_dir%/business.log"
+                level: info
+                channels: [business]
+                max_files: 30
+                formatter: monolog.formatter.json
+            
+            # Handler pour les erreurs critiques (alerts Slack/email)
+            critical:
+                type: slack
+                token: '%env(SLACK_TOKEN)%'
+                channel: '#alerts'
+                bot_name: 'LoanMaster Bot'
+                level: critical
+                formatter: monolog.formatter.slack
+            
             console:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine"]
+            
             deprecation:
-                type: stream
+                type: rotating_file
                 channels: [deprecation]
-                path: php://stderr
+                path: "%kernel.logs_dir%/deprecation.log"
+                max_files: 7
                 formatter: monolog.formatter.json

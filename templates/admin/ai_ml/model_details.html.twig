@@ -1,0 +1,541 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails du Modèle {{ model.version }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .model-header {
+            background: linear-gradient(135deg, var(--primary-color), #6f42c1);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .model-status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .status-deployed { background: rgba(40, 167, 69, 0.2); border: 2px solid rgba(40, 167, 69, 0.5); }
+        .status-trained { background: rgba(23, 162, 184, 0.2); border: 2px solid rgba(23, 162, 184, 0.5); }
+        .status-training { background: rgba(255, 193, 7, 0.2); border: 2px solid rgba(255, 193, 7, 0.5); }
+        .status-retired { background: rgba(220, 53, 69, 0.2); border: 2px solid rgba(220, 53, 69, 0.5); }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .metric-improvement {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        .improvement-positive { color: #28a745; }
+        .improvement-negative { color: #dc3545; }
+        
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        .feature-importance-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .feature-importance-item:last-child {
+            border-bottom: none;
+        }
+        .feature-name {
+            font-weight: 500;
+            flex: 1;
+        }
+        .feature-bar {
+            width: 120px;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+        .feature-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), #6f42c1);
+            transition: width 0.3s ease;
+        }
+        .feature-value {
+            font-size: 0.9rem;
+            color: #666;
+            min-width: 40px;
+            text-align: right;
+        }
+        
+        .confusion-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            max-width: 300px;
+            margin: 1rem auto;
+        }
+        .confusion-cell {
+            padding: 1rem;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+        }
+        .true-positive { background: #28a745; }
+        .false-positive { background: #ffc107; color: #212529; }
+        .false-negative { background: #fd7e14; }
+        .true-negative { background: #6c757d; }
+        
+        .model-actions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        .usage-timeline {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .model-comparison {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        .version-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<!-- En-tête du modèle -->
+<div class="model-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <div class="d-flex align-items-center mb-2">
+                <h1 class="mb-0 me-3">{{ model.version }}</h1>
+                <span class="model-status-badge status-{{ model.status }}">
+                    {{ model.status|upper }}
+                </span>
+            </div>
+            <p class="mb-1">{{ model.algorithm|replace('_', ' ')|title }}</p>
+            <div class="version-info">
+                Créé le {{ model.createdAt|date('d/m/Y à H:i') }}
+                {% if model.deployedAt %}
+                • Déployé le {{ model.deployedAt|date('d/m/Y à H:i') }}
+                {% endif %}
+                • {{ model.usageCount }} prédictions effectuées
+            </div>
+        </div>
+        <div class="text-end">
+            <a href="{{ path('admin_ai_ml_models') }}" class="btn btn-light me-2">
+                <i class="fas fa-arrow-left"></i> Retour
+            </a>
+            {% if model.status == 'trained' %}
+            <button class="btn btn-success" onclick="deployModel({{ model.id }})">
+                <i class="fas fa-rocket"></i> Déployer
+            </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Métriques principales -->
+<div class="metrics-grid">
+    <div class="metric-card">
+        <div class="metric-value">{{ (model.accuracy * 100)|round(2) }}%</div>
+        <div class="metric-label">Précision</div>
+        {% if performance_analysis.accuracy_improvement %}
+        <div class="metric-improvement improvement-{{ performance_analysis.accuracy_improvement > 0 ? 'positive' : 'negative' }}">
+            {{ performance_analysis.accuracy_improvement > 0 ? '+' : '' }}{{ (performance_analysis.accuracy_improvement * 100)|round(2) }}% vs précédent
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="metric-card">
+        <div class="metric-value">{{ (model.precision * 100)|round(2) }}%</div>
+        <div class="metric-label">Exactitude</div>
+        {% if performance_analysis.precision_improvement %}
+        <div class="metric-improvement improvement-{{ performance_analysis.precision_improvement > 0 ? 'positive' : 'negative' }}">
+            {{ performance_analysis.precision_improvement > 0 ? '+' : '' }}{{ (performance_analysis.precision_improvement * 100)|round(2) }}%
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="metric-card">
+        <div class="metric-value">{{ (model.recall * 100)|round(2) }}%</div>
+        <div class="metric-label">Rappel</div>
+        {% if performance_analysis.recall_improvement %}
+        <div class="metric-improvement improvement-{{ performance_analysis.recall_improvement > 0 ? 'positive' : 'negative' }}">
+            {{ performance_analysis.recall_improvement > 0 ? '+' : '' }}{{ (performance_analysis.recall_improvement * 100)|round(2) }}%
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="metric-card">
+        <div class="metric-value">{{ (model.f1Score * 100)|round(2) }}%</div>
+        <div class="metric-label">F1-Score</div>
+        {% if performance_analysis.f1_improvement %}
+        <div class="metric-improvement improvement-{{ performance_analysis.f1_improvement > 0 ? 'positive' : 'negative' }}">
+            {{ performance_analysis.f1_improvement > 0 ? '+' : '' }}{{ (performance_analysis.f1_improvement * 100)|round(2) }}%
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="metric-card">
+        <div class="metric-value">{{ (model.auc * 100)|round(2) }}%</div>
+        <div class="metric-label">AUC-ROC</div>
+    </div>
+    
+    <div class="metric-card">
+        <div class="metric-value">{{ model.trainingSamples|number_format(0, ',', ' ') }}</div>
+        <div class="metric-label">Échantillons d'entraînement</div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Performance et graphiques -->
+    <div class="col-lg-8">
+        <!-- Matrice de confusion -->
+        <div class="chart-container">
+            <h5><i class="fas fa-table me-2"></i>Matrice de Confusion</h5>
+            {% if performance_analysis.confusion_matrix %}
+            <div class="confusion-matrix">
+                <div class="confusion-cell true-positive">
+                    <div>{{ performance_analysis.confusion_matrix.true_positive }}</div>
+                    <small>Vrais Positifs</small>
+                </div>
+                <div class="confusion-cell false-positive">
+                    <div>{{ performance_analysis.confusion_matrix.false_positive }}</div>
+                    <small>Faux Positifs</small>
+                </div>
+                <div class="confusion-cell false-negative">
+                    <div>{{ performance_analysis.confusion_matrix.false_negative }}</div>
+                    <small>Faux Négatifs</small>
+                </div>
+                <div class="confusion-cell true-negative">
+                    <div>{{ performance_analysis.confusion_matrix.true_negative }}</div>
+                    <small>Vrais Négatifs</small>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Courbe de performance -->
+        <div class="chart-container">
+            <h5><i class="fas fa-chart-line me-2"></i>Évolution des Performances</h5>
+            <canvas id="performanceChart" height="100"></canvas>
+        </div>
+        
+        <!-- Importance des features -->
+        <div class="chart-container">
+            <h5><i class="fas fa-chart-bar me-2"></i>Importance des Caractéristiques</h5>
+            {% if feature_analysis.top_features %}
+            <div>
+                {% for feature in feature_analysis.top_features %}
+                <div class="feature-importance-item">
+                    <div class="feature-name">{{ feature.name|replace('_', ' ')|title }}</div>
+                    <div class="feature-bar">
+                        <div class="feature-bar-fill" style="width: {{ (feature.importance * 100)|round }}%"></div>
+                    </div>
+                    <div class="feature-value">{{ (feature.importance * 100)|round(1) }}%</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Informations détaillées -->
+    <div class="col-lg-4">
+        <!-- Actions sur le modèle -->
+        <div class="model-actions">
+            <h6><i class="fas fa-cogs me-2"></i>Actions</h6>
+            <div class="d-grid gap-2">
+                <a href="{{ path('admin_ai_ml_test_prediction') }}?model={{ model.id }}" class="btn btn-outline-primary">
+                    <i class="fas fa-calculator me-2"></i>Tester une Prédiction
+                </a>
+                
+                {% if model.status == 'trained' %}
+                <button class="btn btn-success" onclick="deployModel({{ model.id }})">
+                    <i class="fas fa-rocket me-2"></i>Déployer en Production
+                </button>
+                {% endif %}
+                
+                {% if model.status == 'deployed' %}
+                <button class="btn btn-warning" onclick="retireModel({{ model.id }})">
+                    <i class="fas fa-archive me-2"></i>Archiver le Modèle
+                </button>
+                {% endif %}
+                
+                <button class="btn btn-outline-secondary" onclick="exportModel({{ model.id }})">
+                    <i class="fas fa-download me-2"></i>Exporter les Données
+                </button>
+                
+                <button class="btn btn-outline-info" onclick="compareModels({{ model.id }})">
+                    <i class="fas fa-balance-scale me-2"></i>Comparer aux Autres
+                </button>
+            </div>
+        </div>
+        
+        <!-- Informations techniques -->
+        <div class="chart-container">
+            <h6><i class="fas fa-info-circle me-2"></i>Informations Techniques</h6>
+            <table class="table table-sm">
+                <tr>
+                    <td>ID Modèle</td>
+                    <td><code>{{ model.modelId }}</code></td>
+                </tr>
+                <tr>
+                    <td>Algorithme</td>
+                    <td>{{ model.algorithm|replace('_', ' ')|title }}</td>
+                </tr>
+                <tr>
+                    <td>Version</td>
+                    <td>{{ model.version }}</td>
+                </tr>
+                <tr>
+                    <td>Taille</td>
+                    <td>{{ (model.modelData|length / 1024)|round(2) }} KB</td>
+                </tr>
+                <tr>
+                    <td>Créé par</td>
+                    <td>{{ model.createdBy ?: 'Système' }}</td>
+                </tr>
+                {% if model.description %}
+                <tr>
+                    <td colspan="2">
+                        <strong>Description :</strong><br>
+                        <small>{{ model.description }}</small>
+                    </td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+        
+        <!-- Comparaison avec modèles précédents -->
+        {% if performance_analysis.previous_models %}
+        <div class="chart-container">
+            <h6><i class="fas fa-history me-2"></i>Comparaison Historique</h6>
+            <div class="model-comparison">
+                {% for prev_model in performance_analysis.previous_models %}
+                <div class="comparison-item">
+                    <div>
+                        <strong>{{ prev_model.version }}</strong>
+                        <br><small>{{ prev_model.algorithm }}</small>
+                    </div>
+                    <div class="text-end">
+                        <strong>{{ (prev_model.accuracy * 100)|round(1) }}%</strong>
+                        <br><small class="text-muted">{{ prev_model.samples }} échant.</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Historique d'utilisation -->
+        {% if usage_history %}
+        <div class="chart-container">
+            <h6><i class="fas fa-chart-area me-2"></i>Historique d'Utilisation</h6>
+            <div class="usage-timeline">
+                {% for usage in usage_history %}
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: {{ usage.type == 'prediction' ? '#28a745' : '#17a2b8' }}"></div>
+                    <div class="timeline-content">
+                        <div>{{ usage.description }}</div>
+                        <div class="timeline-time">{{ usage.timestamp|date('d/m/Y H:i') }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Graphique de performance
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ performance_analysis.training_history.epochs|default([])|json_encode|raw }},
+                datasets: [{
+                    label: 'Précision d\'entraînement',
+                    data: {{ performance_analysis.training_history.train_accuracy|default([])|json_encode|raw }},
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    tension: 0.3
+                }, {
+                    label: 'Précision de validation',
+                    data: {{ performance_analysis.training_history.val_accuracy|default([])|json_encode|raw }},
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            callback: function(value) {
+                                return (value * 100).toFixed(1) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        function deployModel(modelId) {
+            if (confirm('Êtes-vous sûr de vouloir déployer ce modèle en production ?')) {
+                fetch(`{{ path('admin_ai_ml_deploy_model', {id: '__ID__'}) }}`.replace('__ID__', modelId), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('success', data.message);
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        showAlert('error', data.error);
+                    }
+                })
+                .catch(error => {
+                    showAlert('error', 'Erreur lors du déploiement');
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        function retireModel(modelId) {
+            if (confirm('Êtes-vous sûr de vouloir archiver ce modèle ?')) {
+                fetch(`{{ path('admin_ai_ml_retire_model', {id: '__ID__'}) }}`.replace('__ID__', modelId), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showAlert('success', data.message);
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        showAlert('error', data.error);
+                    }
+                })
+                .catch(error => {
+                    showAlert('error', 'Erreur lors de l\'archivage');
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        function exportModel(modelId) {
+            const data = {
+                model: {{ model|json_encode|raw }},
+                performance: {{ performance_analysis|default({})|json_encode|raw }},
+                features: {{ feature_analysis|default({})|json_encode|raw }}
+            };
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `model_${modelId}_export_${Date.now()}.json`);
+            downloadAnchor.click();
+        }
+
+        function compareModels(modelId) {
+            window.location.href = `{{ path('admin_ai_ml_compare_models') }}?models[]=${modelId}`;
+        }
+
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.model-header').after(alertDiv);
+        }
+    </script>
+{% endblock %}
