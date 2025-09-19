@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}LoanMaster - {{ 'Votre partenaire financier de confiance'|trans }}{% endblock %}</title>
+    
+    <!-- favicons Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-16x16.png') }}" />
+    <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}" />
+    <meta name="description" content="{% block description %}LoanMaster - Votre partenaire financier de confiance pour tous vos besoins de crédit et de financement{% endblock %}" />
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-select/bootstrap-select.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/animate/animate.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-ui/jquery-ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jarallax/jarallax.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/nouislider/nouislider.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/nouislider/nouislider.pips.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/tiny-slider/tiny-slider.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/easilon-icons/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/owl-carousel/css/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/owl-carousel/css/owl.theme.default.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendors/slick/slick.css') }}" />
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/easilon.css') }}" />
+    
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="preloader">
+        <div class="preloader__image" style="background-image: url({{ asset('assets/images/loader.png') }});"></div>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="container-fluid">
+                <div class="topbar__inner">
+                    <ul class="list-unstyled topbar__info">
+                        <li>
+                            <span class="topbar__info__icon">
+                                <i class="icon-mail-1"></i>
+                            </span>
+                            <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                        </li>
+                        <li>
+                            <span class="topbar__info__icon topbar__info__icon--phone">
+                                <i class="icon-headset"></i>
+                            </span>
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                        </li>
+                    </ul>
+                    <div class="topbar__right">
+                        <ul class="list-unstyled topbar__pages">
+                            <li><a href="#">{{ 'Connexion'|trans }}</a></li>
+                            <li><a href="{{ path('app_about') }}">{{ 'Carrière'|trans }}</a></li>
+                            <li><a href="#">{{ 'Médias'|trans }}</a></li>
+                            <li><a href="#">{{ 'FAQ'|trans }}</a></li>
+                        </ul>
+                        <div class="topbar__social">
+                            <a href="https://facebook.com">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook</span>
+                            </a>
+                            <a href="https://twitter.com">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">Twitter</span>
+                            </a>
+                            <a href="https://linkedin.com">
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                <span class="sr-only">Linkedin</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <header class="main-header sticky-header sticky-header--normal">
+            <div class="container-fluid">
+                <div class="main-header__inner">
+                    <div class="main-header__logo logo-retina">
+                        <a href="{{ path('app_home') }}">
+                            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="LoanMaster" width="150">
+                        </a>
+                    </div>
+                    <div class="main-header__right">
+                        <nav class="main-header__nav main-menu">
+                            <ul class="main-menu__list">
+                                <li>
+                                    <a href="{{ path('app_home') }}">{{ 'Accueil'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_about') }}">{{ 'À propos'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_services') }}">{{ 'Nos Services'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_contact') }}">{{ 'Contact'|trans }}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="mobile-nav__btn mobile-nav__toggler">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <a href="#" class="search-toggler main-header__search">
+                            <i class="icon-search" aria-hidden="true"></i>
+                            <span class="sr-only">Rechercher</span>
+                        </a>
+                        <a href="#" class="easilon-btn main-header__btn">
+                            <span>{{ 'Demande de prêt'|trans }}</span>
+                            <span class="easilon-btn__icon"><i class="icon-right-arrow"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {% block body %}{% endblock %}
+
+        <!-- Footer -->
+        <footer class="main-footer main-footer--home">
+            <div class="main-footer__bg" style="background-image: url({{ asset('assets/images/shapes/footer-bg-1-1.png') }});"></div>
+            <div class="main-footer__top">
+                <div class="container">
+                    <div class="row gutter-y-40">
+                        <div class="col-xl-4 col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                            <div class="footer-widget footer-widget--about">
+                                <a href="{{ path('app_home') }}" class="footer-widget__logo">
+                                    <img src="{{ asset('assets/images/logo-light.png') }}" width="150" alt="LoanMaster">
+                                </a>
+                                <p class="footer-widget__about-text">{{ 'LoanMaster est votre partenaire financier de confiance, offrant des solutions de crédit adaptées à tous vos besoins.'|trans }}</p>
+                                <form action="#" class="footer-widget__newsletter mc-form">
+                                    <input type="text" name="EMAIL" placeholder="{{ 'Votre email'|trans }}">
+                                    <button type="submit">
+                                        <span class="sr-only">{{ 'S\'abonner'|trans }}</span>
+                                        <i class="icon-right-arrow"></i>
+                                    </button>
+                                </form>
+                                <div class="mc-form__response"></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                            <div class="footer-widget footer-widget--links footer-widget--links-one">
+                                <h2 class="footer-widget__title">{{ 'Explorer'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__links">
+                                    <li><a href="{{ path('app_about') }}">{{ 'À propos'|trans }}</a></li>
+                                    <li><a href="{{ path('app_services') }}">{{ 'Nos Services'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Notre Équipe'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Actualités'|trans }}</a></li>
+                                    <li><a href="{{ path('app_contact') }}">{{ 'Contact'|trans }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                            <div class="footer-widget footer-widget--links footer-widget--links-two">
+                                <h2 class="footer-widget__title">{{ 'Services de Crédit'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__links">
+                                    <li><a href="#">{{ 'Prêt Auto'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Immobilier'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Étudiant'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Crédit Entreprise'|trans }}</a></li>
+                                    <li><a href="#">{{ 'Prêt Personnel'|trans }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                            <div class="footer-widget footer-widget--contact">
+                                <h2 class="footer-widget__title">{{ 'Nous Contacter'|trans }}</h2>
+                                <ul class="list-unstyled footer-widget__info">
+                                    <li><a href="https://www.google.com/maps">123 Rue de la Finance, 75001 Paris</a></li>
+                                    <li>
+                                        <span class="footer-widget__info__icon"><i class="icon-paper-plane"></i></span>
+                                        <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                                    </li>
+                                    <li>
+                                        <span class="footer-widget__info__icon"><i class="icon-telephone"></i></span>
+                                        <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-footer__bottom">
+                <div class="container">
+                    <div class="main-footer__bottom__inner">
+                        <div class="row gutter-y-40 align-items-center">
+                            <div class="col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+                                <div class="main-footer__social social-links-two">
+                                    <a href="https://facebook.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Facebook</span>
+                                    </a>
+                                    <a href="https://twitter.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Twitter</span>
+                                    </a>
+                                    <a href="https://linkedin.com">
+                                        <span class="social-links-two__icon">
+                                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="sr-only">Linkedin</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-7 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                                <div class="main-footer__bottom__copyright">
+                                    <p class="main-footer__copyright">
+                                        &copy; Copyright <span class="dynamic-year"></span> par LoanMaster. Tous droits réservés.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="icon-close"></i></span>
+            <div class="logo-box logo-retina">
+                <a href="{{ path('app_home') }}" aria-label="logo image">
+                    <img src="{{ asset('assets/images/logo-light.png') }}" width="155" alt="LoanMaster" />
+                </a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <span class="mobile-nav__contact__icon"><i class="fa fa-envelope"></i></span>
+                    <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a>
+                </li>
+                <li>
+                    <span class="mobile-nav__contact__icon"><i class="fa fa-phone-alt"></i></span>
+                    <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://twitter.com">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://linkedin.com">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <span class="sr-only">Linkedin</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Popup -->
+    <div class="search-popup">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="{{ 'Rechercher...'|trans }}" />
+                <button type="submit" aria-label="search submit" class="easilon-btn">
+                    <span class="easilon-btn__icon"><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">{{ 'retour haut'|trans }}</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+
+    <!-- JavaScript -->
+    <script src="{{ asset('assets/vendors/jquery/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jarallax/jarallax.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-ui/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-ajaxchimp/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-appear/jquery.appear.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-validate/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/nouislider/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/tiny-slider/tiny-slider.js') }}"></script>
+    <script src="{{ asset('assets/vendors/wnumb/wNumb.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/owl-carousel/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/slick/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/wow/wow.js') }}"></script>
+    <script src="{{ asset('assets/vendors/imagesloaded/imagesloaded.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/isotope/isotope.js') }}"></script>
+    <script src="{{ asset('assets/vendors/countdown/countdown.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-circleType/jquery.circleType.js') }}"></script>
+    <script src="{{ asset('assets/vendors/jquery-lettering/jquery.lettering.min.js') }}"></script>
+    <script src="{{ asset('assets/js/easilon.js') }}"></script>
+    
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

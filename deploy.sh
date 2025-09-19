@@ -1,85 +1,95 @@
 #!/bin/bash
 
-# Script de déploiement automatique pour LoanMaster
-# Auteur: Prudence ASSOGBA
+echo "=== SCRIPT DE DÉPLOIEMENT LOANMASTER ==="
+echo "Date: $(date)"
+echo ""
 
-set -e
-
-# Configuration
-SERVER="46.202.129.197"
+# Informations de connexion
+HOST="loanmaster.achatrembourse.online"
+PORT="60827"
 USER="mrjoker"
-PASS="j20U5HrazAo|0F9dwmAUY"
-REMOTE_PATH="/home/mrjoker/web/loanmaster.achatrembourse.online/public_html"
-LOCAL_PATH="/workspace/loanmaster"
-BRANCH="dev"
+PASSWORD="j20U5HrazAo|0F9dwmAUY"
+REMOTE_PATH="public_html"
 
-echo "🚀 Début du déploiement automatique de LoanMaster"
-echo "==============================================="
+echo "=== 1. Vérification de la connectivité ==="
+if curl -s --connect-timeout 10 https://loanmaster.achatrembourse.online/ > /dev/null; then
+    echo "✓ Site web accessible"
+else
+    echo "✗ Site web inaccessible"
+    exit 1
+fi
 
-# Configuration pour l'environnement de production
-echo "⚙️  Configuration de l'environnement de production..."
-cp .env .env.backup
-cat > .env.prod << 'EOF'
-# Configuration de production pour LoanMaster
-APP_ENV=prod
-APP_SECRET=2f9f0b36f34f83e20c61d5e877a3c273
-DATABASE_URL="mysql://mrjoker_loanmaster:eAaGl6vpl|c7Gv5P9@localhost:3306/mrjoker_loanmaster?serverVersion=8.0.32&charset=utf8mb4"
-MAILER_DSN=smtp://localhost:587
-LOCALE=fr
-API_URL="http://45.93.137.66:5000"
-MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
-EOF
+echo ""
+echo "=== 2. Test de connexion SSH ==="
+if timeout 20 sshpass -p "$PASSWORD" ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "echo 'SSH OK'"; then
+    echo "✓ Connexion SSH établie"
+else
+    echo "✗ Connexion SSH échouée - Veuillez réessayer plus tard"
+    exit 1
+fi
 
-echo "📦 Installation des dépendances..."
-php composer.phar install --optimize-autoloader --no-dev
+echo ""
+echo "=== 3. Nettoyage du cache Symfony ==="
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cd $REMOTE_PATH && php bin/console cache:clear --env=prod"
 
-echo "🗃️  Création du répertoire de déploiement..."
-mkdir -p deploy
+echo ""
+echo "=== 4. Copie du template de base ==="
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cat > $REMOTE_PATH/templates/base.html.twig" < deployment_package/templates/base.html.twig
+echo "✓ base.html.twig copié"
 
-echo "📂 Préparation des fichiers pour le déploiement..."
-# Copier tous les fichiers nécessaires
-rsync -av --exclude='.git' --exclude='node_modules' --exclude='var/cache' --exclude='var/log' --exclude='deploy' --exclude='.env.backup' . deploy/
+echo ""
+echo "=== 5. Copie des templates de pages ==="
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cat > $REMOTE_PATH/templates/front/index.html.twig" < deployment_package/templates/front/index.html.twig
+echo "✓ index.html.twig copié"
 
-# Utiliser la configuration de production
-cp .env.prod deploy/.env
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cat > $REMOTE_PATH/templates/front/about.html.twig" < deployment_package/templates/front/about.html.twig
+echo "✓ about.html.twig copié"
 
-echo "🔧 Configuration des permissions..."
-chmod -R 755 deploy/
-chmod -R 777 deploy/var/
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cat > $REMOTE_PATH/templates/front/services.html.twig" < deployment_package/templates/front/services.html.twig
+echo "✓ services.html.twig copié"
 
-echo "📤 Déploiement vers le serveur..."
-# Créer un script de synchronisation
-cat > sync_to_server.sh << 'EOF'
-#!/bin/bash
-# Script de synchronisation FTP sécurisé
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "cat > $REMOTE_PATH/templates/front/contact.html.twig" < deployment_package/templates/front/contact.html.twig
+echo "✓ contact.html.twig copié"
 
-# Utilisation d'lftp pour un transfert robuste
-lftp -c "
-set ftp:ssl-allow no
-set sftp:auto-confirm yes
-open -u mrjoker_loanmaster,eAaGl6vpl|c7Gv5P9 ftp://46.202.129.197
-mirror -R --delete --verbose deploy/ /home/mrjoker/web/loanmaster.achatrembourse.online/public_html/
-quit
-"
-EOF
+echo ""
+echo "=== 6. Création du dossier assets ==="
+sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p $PORT $USER@$HOST "mkdir -p $REMOTE_PATH/public/assets/{css,js,images,vendors}"
 
-chmod +x sync_to_server.sh
-./sync_to_server.sh
+echo ""
+echo "=== 7. Copie des assets critiques ==="
+# CSS principal
+echo "Copie des fichiers CSS..."
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT deployment_package/public/assets/css/easilon.css $USER@$HOST:$REMOTE_PATH/public/assets/css/
 
-echo "🎯 Configuration finale sur le serveur..."
-# Exécuter les commandes finales via SSH
-sshpass -p "j20U5HrazAo|0F9dwmAUY" ssh -o StrictHostKeyChecking=no mrjoker@46.202.129.197 << 'EOF'
-cd /home/mrjoker/web/loanmaster.achatrembourse.online/public_html
-php bin/console cache:clear --env=prod
-php bin/console cache:warmup --env=prod
-php bin/console doctrine:migrations:migrate --no-interaction
-chmod -R 755 .
-chmod -R 777 var/
-EOF
+# JS principal
+echo "Copie des fichiers JavaScript..."  
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT deployment_package/public/assets/js/easilon.js $USER@$HOST:$REMOTE_PATH/public/assets/js/
 
-echo "✅ Déploiement terminé avec succès!"
-echo "🌐 Site accessible à: https://loanmaster.achatrembourse.online"
-echo "==============================================="
+# Images critiques
+echo "Copie des images essentielles..."
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT -r deployment_package/public/assets/images/logo* $USER@$HOST:$REMOTE_PATH/public/assets/images/ 2>/dev/null || echo "Logos non trouvés"
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT -r deployment_package/public/assets/images/favicons $USER@$HOST:$REMOTE_PATH/public/assets/images/ 2>/dev/null || echo "Favicons non trouvés"
 
-# Restaurer l'environnement local
-mv .env.backup .env
+# Vendors essentiels
+echo "Copie des vendors essentiels..."
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT -r deployment_package/public/assets/vendors/bootstrap $USER@$HOST:$REMOTE_PATH/public/assets/vendors/ 2>/dev/null || echo "Bootstrap non copié"
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT -r deployment_package/public/assets/vendors/jquery $USER@$HOST:$REMOTE_PATH/public/assets/vendors/ 2>/dev/null || echo "jQuery non copié"
+sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P $PORT -r deployment_package/public/assets/vendors/fontawesome $USER@$HOST:$REMOTE_PATH/public/assets/vendors/ 2>/dev/null || echo "FontAwesome non copié"
+
+echo ""
+echo "=== 8. Vérification du déploiement ==="
+echo "Test des pages déployées..."
+
+for page in "" "about" "services" "contact"; do
+    url="https://loanmaster.achatrembourse.online/$page"
+    if curl -s --connect-timeout 10 "$url" > /dev/null; then
+        echo "✓ Page /$page accessible"
+    else
+        echo "✗ Page /$page inaccessible"
+    fi
+done
+
+echo ""
+echo "=== DÉPLOIEMENT TERMINÉ ==="
+echo "Le nouveau design a été appliqué avec succès !"
+echo "Site: https://loanmaster.achatrembourse.online/"

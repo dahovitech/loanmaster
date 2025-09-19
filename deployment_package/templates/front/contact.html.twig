@@ -1,0 +1,229 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Contact'|trans }} - LoanMaster{% endblock %}
+
+{% block body %}
+<section class="page-header">
+    <div class="page-header__bg" style="background-image: url({{ asset('assets/images/backgrounds/page-header-bg-1-1.jpg') }});"></div>
+    <div class="page-header__overlay"></div>
+    <div class="container">
+        <h2 class="page-header__title">{{ 'Nous Contacter'|trans }}</h2>
+        <ul class="easilon-breadcrumb list-unstyled">
+            <li><a href="{{ path('app_home') }}">{{ 'Accueil'|trans }}</a></li>
+            <li><span>{{ 'Contact'|trans }}</span></li>
+        </ul>
+    </div>
+</section>
+
+<section class="contact-info-one section-space">
+    <div class="container">
+        <div class="sec-title text-center">
+            <div class="sec-title__top">
+                <div class="sec-title__shape">
+                    <div class="sec-title__shape__one"></div>
+                    <div class="sec-title__shape__two"></div>
+                </div>
+                <h6 class="sec-title__tagline">{{ 'contactez-nous'|trans }}</h6>
+            </div>
+            <h3 class="sec-title__title">{{ 'Nous sommes là pour vous aider'|trans }}</h3>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="contact-info-card">
+                    <div class="contact-info-card__icon">
+                        <i class="icon-location"></i>
+                    </div>
+                    <div class="contact-info-card__content">
+                        <h3 class="contact-info-card__title">{{ 'Adresse'|trans }}</h3>
+                        <p class="contact-info-card__text">123 Rue de la Finance<br>75001 Paris, France</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="contact-info-card">
+                    <div class="contact-info-card__icon">
+                        <i class="icon-telephone"></i>
+                    </div>
+                    <div class="contact-info-card__content">
+                        <h3 class="contact-info-card__title">{{ 'Téléphone'|trans }}</h3>
+                        <p class="contact-info-card__text">
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a><br>
+                            <a href="tel:+33123456790">+33 1 23 45 67 90</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="contact-info-card">
+                    <div class="contact-info-card__icon">
+                        <i class="icon-paper-plane"></i>
+                    </div>
+                    <div class="contact-info-card__content">
+                        <h3 class="contact-info-card__title">{{ 'Email'|trans }}</h3>
+                        <p class="contact-info-card__text">
+                            <a href="mailto:contact@loanmaster.com">contact@loanmaster.com</a><br>
+                            <a href="mailto:support@loanmaster.com">support@loanmaster.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-form-one">
+    <div class="contact-form-one__bg" style="background-image: url({{ asset('assets/images/shapes/contact-bg-1-1.png') }});"></div>
+    <div class="container">
+        <div class="row gutter-y-60">
+            <div class="col-xl-6">
+                <div class="contact-form-one__content">
+                    <div class="sec-title">
+                        <div class="sec-title__top">
+                            <div class="sec-title__shape">
+                                <div class="sec-title__shape__one"></div>
+                                <div class="sec-title__shape__two"></div>
+                            </div>
+                            <h6 class="sec-title__tagline">{{ 'formulaire de contact'|trans }}</h6>
+                        </div>
+                        <h3 class="sec-title__title">{{ 'Envoyez-nous un message'|trans }}</h3>
+                    </div>
+                    <div class="contact-form-one__text">{{ 'Vous avez une question ou souhaitez obtenir des informations sur nos services ? N\'hésitez pas à nous contacter. Notre équipe vous répondra dans les plus brefs délais.'|trans }}</div>
+                    <ul class="list-unstyled contact-form-one__list">
+                        <li>
+                            <span class="contact-form-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Réponse garantie sous 2h en semaine'|trans }}
+                        </li>
+                        <li>
+                            <span class="contact-form-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Conseils gratuits et sans engagement'|trans }}
+                        </li>
+                        <li>
+                            <span class="contact-form-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Étude personnalisée de votre dossier'|trans }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <form class="contact-form-one__form contact-form-validated" action="#" method="POST">
+                    <div class="contact-form-one__form__group">
+                        <div class="contact-form-one__form__input-box">
+                            <input type="text" name="name" placeholder="{{ 'Votre nom complet'|trans }}" required>
+                        </div>
+                        <div class="contact-form-one__form__input-box">
+                            <input type="email" name="email" placeholder="{{ 'Votre adresse email'|trans }}" required>
+                        </div>
+                        <div class="contact-form-one__form__input-box">
+                            <input type="text" name="phone" placeholder="{{ 'Votre numéro de téléphone'|trans }}" required>
+                        </div>
+                        <div class="contact-form-one__form__input-box">
+                            <select name="subject" class="selectpicker" required>
+                                <option value="">{{ 'Sujet de votre demande'|trans }}</option>
+                                <option value="credit_personnel">{{ 'Crédit personnel'|trans }}</option>
+                                <option value="credit_immobilier">{{ 'Crédit immobilier'|trans }}</option>
+                                <option value="credit_auto">{{ 'Crédit auto'|trans }}</option>
+                                <option value="credit_entreprise">{{ 'Crédit entreprise'|trans }}</option>
+                                <option value="information">{{ 'Demande d\'information'|trans }}</option>
+                                <option value="autre">{{ 'Autre'|trans }}</option>
+                            </select>
+                        </div>
+                        <div class="contact-form-one__form__input-box text-message-box">
+                            <textarea name="message" placeholder="{{ 'Votre message...'|trans }}" required></textarea>
+                        </div>
+                        <div class="contact-form-one__form__btn-box">
+                            <button type="submit" class="easilon-btn contact-form-one__form__btn">
+                                <span>{{ 'envoyer le message'|trans }}</span>
+                                <span class="easilon-btn__icon">
+                                    <i class="icon-double-right-arrow"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="result"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-map">
+    <div class="container-fluid">
+        <div class="google-map google-map__contact">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.2712374687735!2d2.335070915674297!3d48.86066647928776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sLe%20Louvre!5e0!3m2!1sfr!2sfr!4v1577090495555!5m2!1sfr!2sfr" 
+                    class="google-map__one" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Localisation LoanMaster">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+<section class="contact-cta section-space">
+    <div class="container">
+        <div class="contact-cta__inner" style="background-image: url({{ asset('assets/images/shapes/cta-bg-1-1.png') }});">
+            <div class="row align-items-center">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="contact-cta__content">
+                        <h3 class="contact-cta__title">{{ 'Besoin d\'un financement rapidement ?'|trans }}</h3>
+                        <p class="contact-cta__text">{{ 'Contactez nos experts pour une étude personnalisée de votre dossier en moins de 24h.'|trans }}</p>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="contact-cta__button">
+                        <a href="tel:+33123456789" class="easilon-btn easilon-btn--white">
+                            <span>{{ 'appelez maintenant'|trans }}</span>
+                            <span class="easilon-btn__icon">
+                                <i class="icon-double-right-arrow"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="office-hours section-space-bottom">
+    <div class="container">
+        <div class="row gutter-y-40">
+            <div class="col-xl-6 col-lg-6">
+                <div class="office-hours__content">
+                    <h3 class="office-hours__title">{{ 'Horaires d\'ouverture'|trans }}</h3>
+                    <ul class="list-unstyled office-hours__list">
+                        <li>
+                            <span class="office-hours__day">{{ 'Lundi - Vendredi'|trans }}</span>
+                            <span class="office-hours__time">09h00 - 18h00</span>
+                        </li>
+                        <li>
+                            <span class="office-hours__day">{{ 'Samedi'|trans }}</span>
+                            <span class="office-hours__time">09h00 - 12h00</span>
+                        </li>
+                        <li>
+                            <span class="office-hours__day">{{ 'Dimanche'|trans }}</span>
+                            <span class="office-hours__time">{{ 'Fermé'|trans }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="office-hours__content">
+                    <h3 class="office-hours__title">{{ 'Service client'|trans }}</h3>
+                    <div class="office-hours__text">{{ 'Notre service client est disponible du lundi au vendredi pour répondre à toutes vos questions concernant vos demandes de crédit et le suivi de vos dossiers.'|trans }}</div>
+                    <div class="office-hours__contact">
+                        <p>
+                            <i class="icon-telephone"></i>
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                        </p>
+                        <p>
+                            <i class="icon-paper-plane"></i>
+                            <a href="mailto:support@loanmaster.com">support@loanmaster.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

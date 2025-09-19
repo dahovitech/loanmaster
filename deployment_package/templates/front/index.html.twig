@@ -1,0 +1,227 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Accueil'|trans }} - LoanMaster{% endblock %}
+
+{% block body %}
+<section class="main-slider-one" id="home">
+    <div class="main-slider-one__carousel easilon-owl__carousel owl-carousel" data-owl-options='{
+        "margin": 0,
+        "loop": true,
+        "animateIn": "fadeIn",
+        "animateOut": "fadeOut",
+        "items": 1,
+        "autoplay": true,
+        "smartSpeed": 1000,
+        "nav": true,
+        "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+        "dots": true
+    }'>
+        <div class="item">
+            <div class="main-slider-one__item">
+                <div class="main-slider-one__bg" style="background-image: url({{ asset('assets/images/backgrounds/main-slider-bg-1-1.jpg') }});">
+                </div>
+                <div class="main-slider-one__container container">
+                    <div class="row gutter-y-60 align-items-center">
+                        <div class="col-lg-7">
+                            <div class="main-slider-one__content">
+                                <div class="main-slider-one__top">
+                                    <div class="main-slider-one__top__inner">
+                                        <div class="main-slider-one__sub-title-shape">
+                                            <div class="main-slider-one__sub-title-shape__one"></div>
+                                            <div class="main-slider-one__sub-title-shape__two"></div>
+                                        </div>
+                                        <h5 class="main-slider-one__sub-title">{{ 'Crédit intelligent pour'|trans }} <span>{{ 'un avenir brillant'|trans }}</span></h5>
+                                    </div>
+                                </div>
+                                <h2 class="main-slider-one__title">
+                                    <span class="main-slider-one__title__inner">
+                                        <span class="main-slider-one__title__text main-slider-one__title__text--1">{{ 'Solutions'|trans }}</span>
+                                    </span>
+                                    <span class="main-slider-one__title__inner">
+                                        <span class="main-slider-one__title__text main-slider-one__title__text--2">{{ 'financières'|trans }}</span>
+                                    </span>
+                                    <span class="main-slider-one__title__inner">
+                                        <span class="main-slider-one__title__text main-slider-one__title__text--3">{{ 'intelligentes'|trans }}</span>
+                                    </span>
+                                </h2>
+                                <div class="main-slider-one__button-group">
+                                    <div class="main-slider-one__button-group__inner">
+                                        <div class="main-slider-one__button main-slider-one__button--1">
+                                            <a href="{{ path('app_services') }}" class="main-slider-one__btn-1 easilon-btn">
+                                                <span>{{ 'nos services'|trans }}</span>
+                                                <span class="easilon-btn__icon">
+                                                    <i class="icon-double-right-arrow"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="main-slider-one__button__inner">
+                                        <div class="main-slider-one__button main-slider-one__button--2">
+                                            <a href="#" class="easilon-btn easilon-btn--border">
+                                                <span>{{ 'demande de prêt'|trans }}</span>
+                                                <span class="easilon-btn__icon">
+                                                    <i class="icon-double-right-arrow"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="main-slider-one__image">
+                                <img src="{{ asset('assets/images/resources/main-slider-1-1.png') }}" alt="{{ 'LoanMaster Services'|trans }}" class="main-slider-one__image__one">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-one section-space" id="about">
+    <div class="container">
+        <div class="row gutter-y-60">
+            <div class="col-xl-6 wow fadeInLeft" data-wow-duration="1500ms">
+                <div class="about-one__content">
+                    <div class="sec-title">
+                        <div class="sec-title__top">
+                            <div class="sec-title__shape">
+                                <div class="sec-title__shape__one"></div>
+                                <div class="sec-title__shape__two"></div>
+                            </div>
+                            <h6 class="sec-title__tagline">{{ 'à propos de loanmaster'|trans }}</h6>
+                        </div>
+                        <h3 class="sec-title__title">{{ 'Nous sommes les meilleurs dans le secteur financier'|trans }}</h3>
+                    </div>
+                    <div class="about-one__text">{{ 'LoanMaster est votre partenaire financier de confiance depuis plus de 10 ans. Nous offrons des solutions de crédit adaptées à tous vos besoins personnels et professionnels.'|trans }}</div>
+                    <ul class="list-unstyled about-one__list">
+                        <li>
+                            <span class="about-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Processus rapide et sécurisé'|trans }}
+                        </li>
+                        <li>
+                            <span class="about-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Taux compétitifs du marché'|trans }}
+                        </li>
+                        <li>
+                            <span class="about-one__list__icon"><i class="icon-draw-check"></i></span>
+                            {{ 'Service client disponible 24h/7j'|trans }}
+                        </li>
+                    </ul>
+                    <div class="about-one__btn">
+                        <a href="{{ path('app_about') }}" class="easilon-btn">
+                            <span>{{ 'en savoir plus'|trans }}</span>
+                            <span class="easilon-btn__icon">
+                                <i class="icon-double-right-arrow"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="about-one__image wow fadeInRight" data-wow-duration="1500ms">
+                    <img src="{{ asset('assets/images/about/about-1-1.jpg') }}" alt="{{ 'À propos LoanMaster'|trans }}" class="about-one__image__one">
+                    <img src="{{ asset('assets/images/about/about-1-2.jpg') }}" alt="" class="about-one__image__two">
+                    <div class="about-one__experience">
+                        <div class="about-one__experience__inner">
+                            <h3 class="about-one__experience__year">10+</h3>
+                            <p class="about-one__experience__text">{{ 'Années d\'expérience'|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="service-one section-space-bottom" id="service">
+    <div class="service-one__bg" style="background-image: url({{ asset('assets/images/shapes/service-bg-1-1.png') }});"></div>
+    <div class="container">
+        <div class="sec-title text-center">
+            <div class="sec-title__top">
+                <div class="sec-title__shape">
+                    <div class="sec-title__shape__one"></div>
+                    <div class="sec-title__shape__two"></div>
+                </div>
+                <h6 class="sec-title__tagline">{{ 'nos services'|trans }}</h6>
+            </div>
+            <h3 class="sec-title__title">{{ 'Nous offrons les meilleurs services financiers'|trans }}</h3>
+        </div>
+        <div class="row gutter-y-30">
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                <div class="service-card">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-loan"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Prêt Personnel'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Financez vos projets personnels avec nos solutions de crédit flexibles et adaptées.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                <div class="service-card">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-house"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Immobilier'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Réalisez votre rêve immobilier avec nos prêts immobiliers à taux avantageux.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                <div class="service-card">
+                    <div class="service-card__hover"></div>
+                    <div class="service-card__icon">
+                        <i class="icon-briefcase"></i>
+                    </div>
+                    <div class="service-card__content">
+                        <h3 class="service-card__title">
+                            <a href="#">{{ 'Crédit Entreprise'|trans }}</a>
+                        </h3>
+                        <div class="service-card__text">{{ 'Développez votre entreprise avec nos solutions de financement professionnel.'|trans }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="quick-loan-one">
+    <div class="container">
+        <div class="quick-loan-one__inner wow fadeInUp" data-wow-duration="1500ms">
+            <div class="quick-loan-one__bg">
+                <div class="quick-loan-one__bg__inner" style="background-image: url({{ asset('assets/images/resources/quick-loan-1-1-.jpg') }});"></div>
+            </div>
+            <div class="quick-loan-one__content">
+                <div class="sec-title">
+                    <div class="sec-title__top">
+                        <div class="sec-title__shape">
+                            <div class="sec-title__shape__one"></div>
+                            <div class="sec-title__shape__two"></div>
+                        </div>
+                        <h6 class="sec-title__tagline">{{ 'obtenez un prêt rapide'|trans }}</h6>
+                    </div>
+                    <h3 class="sec-title__title">{{ 'Obtenez rapidement un crédit professionnel'|trans }}</h3>
+                </div>
+                <a href="#" class="easilon-btn easilon-btn--white">
+                    <span>{{ 'demander un prêt'|trans }}</span>
+                    <span class="easilon-btn__icon">
+                        <i class="icon-double-right-arrow"></i>
+                    </span>
+                </a>
+                <img src="{{ asset('assets/images/shapes/quick-loan-money-1-1.png') }}" alt="money" class="quick-loan-one__money">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
