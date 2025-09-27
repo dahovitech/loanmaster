@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Seo;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use FM\ElfinderBundle\Form\Type\ElFinderType;
@@ -18,7 +18,7 @@ class SeoFormType extends AbstractType
 {
 
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private TranslatorInterface $translator,
         private EntityManagerInterface $entityManager
     ) {}

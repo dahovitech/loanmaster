@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,14 +14,14 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class LocaleController extends AbstractController
 {
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private TokenStorageInterface $tokenStorage
     ) {}
 
     #[Route(path: '/switch-language/{language}', name: 'switch_language')]
     public function switchLanguage(string $language, Request $request, SessionInterface $session): Response
     {
-        if (!in_array($language, $this->util->getLocales(), true)) {
+        if (!in_array($language, $this->emailService->getLocales(), true)) {
             throw $this->createNotFoundException('Language not supported.');
         }
 
@@ -31,7 +31,7 @@ class LocaleController extends AbstractController
         // Force the default language if the referer URL starts with /admin
         if ($referer && str_starts_with($referer, $request->getSchemeAndHttpHost() . '/admin')) {
             if ($user && (method_exists($user, 'hasRole') && ($user->hasRole('ROLE_ADMIN') || $user->hasRole('ROLE_SUPER_ADMIN')))) {
-                $language = $this->util->getDefaultLanguage();
+                $language = $this->emailService->getDefaultLanguage();
             }
         }
 

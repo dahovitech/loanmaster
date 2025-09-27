@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\SecurityEvents;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class LanguageSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private TokenStorageInterface $tokenStorage,
         private EntityManagerInterface $entityManager
     ) {}
@@ -41,10 +41,10 @@ class LanguageSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $defaultLocale = $this->util->getDefaultLanguage();
+        $defaultLocale = $this->emailService->getDefaultLanguage();
         $locale = $request->attributes->get('_locale', $defaultLocale);
        
-        if (!in_array($locale, $this->util->getLocales())) {
+        if (!in_array($locale, $this->emailService->getLocales())) {
             $request->getSession()->set('_locale', $defaultLocale);
         }
 

@@ -2,7 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Service\Util;
+use App\Service\Mail\EmailService;
+use App\Service\Localization\LocalizationService;
 use App\Entity\Language;
 use App\Service\ApiService;
 use InvalidArgumentException;
@@ -35,7 +36,7 @@ class TranslateFilController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -60,7 +61,7 @@ class TranslateFilController extends AbstractController
         // Créer le formulaire
         $form = $this->createFormBuilder()
             ->add('base_language', ChoiceType::class, [
-                'choices' => $this->util->getLocalesName(),
+                'choices' => $this->emailService->getLocalesName(),
                 'label' => 'Choose base language:',
             ])
             ->add('local_language', ChoiceType::class, [

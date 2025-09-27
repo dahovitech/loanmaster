@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ResetPasswordRequestType;
 use App\Form\ResetPasswordType;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,15 +21,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 )]
 class ResetPasswordController extends AbstractController
 {
-    private Util $util;
+    private EmailService $emailService;
     private TranslatorInterface $translator;
     private $theme;
 
-    public function __construct(Util $util, TranslatorInterface $translator)
+    public function __construct(EmailService $emailService, TranslatorInterface $translator)
     {
-        $this->util = $util;
+        $this->emailService = $emailService;
         $this->translator = $translator;
-        $this->theme = $this->util->getSetting()->getTheme();
+        $this->theme = $this->emailService->getSetting()->getTheme();
     }
 
     #[Route('/reset-password', name: 'reset_password_request')]
@@ -95,8 +95,8 @@ class ResetPasswordController extends AbstractController
 
     private function sendResetPasswordEmail(User $user): void
     {
-        $setting = $this->util->getSetting();
-        $this->util->sender(
+        $setting = $this->emailService->getSetting();
+        $this->emailService->sender(
             $setting->getEmailSender(),
             $setting->getTitle() . ' - ' . $this->translator->trans('resetpassword.email.subject'),
             '@emails/reset_password.html.twig',

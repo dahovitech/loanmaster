@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 
 use App\Entity\PostCategory;
 use Symfony\Component\Form\AbstractType;
@@ -25,13 +25,13 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class PostFormType extends AbstractType
 {
     private $translator;
-    private $util;
+    private $emailService;
 
 
-    public function __construct(TranslatorInterface $translator, Util $util)
+    public function __construct(TranslatorInterface $translator, EmailService $emailService)
     {
         $this->translator = $translator;
-        $this->util = $util;
+        $this->util = $emailService;
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

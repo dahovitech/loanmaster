@@ -3,7 +3,7 @@
 namespace App\Controller\User;
 
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use App\Form\UserKycFormType;
 use App\Form\UserProKycFormType;
@@ -24,13 +24,13 @@ class KycController extends AbstractController
 {
     private $entityManager;
     private $translator;
-    private $util;
+    private $emailService;
 
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, Util $util)
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, EmailService $emailService)
     {
         $this->entityManager = $entityManager;
         $this->translator = $translator;
-        $this->util = $util;
+        $this->util = $emailService;
     }
 
     #[Route('/user/kyc', name: 'kyc')]
@@ -38,7 +38,7 @@ class KycController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $setting = $this->util->getSetting();
+        $setting = $this->emailService->getSetting();
 
         // Create the KYC form for individuals
         $form = $this->createForm(UserKycFormType::class, $user);
@@ -55,7 +55,7 @@ class KycController extends AbstractController
             $adminSubject = $this->translator->trans('email.admin.kyc_submitted.subject');
             $adminBody = $this->translator->trans('email.admin.kyc_submitted.body', ['%firstname%' => $user->getFirstname(), '%lastname%' => $user->getLastname()]);
 
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $adminSubject,
                 '@emails/kyc_admin.html.twig',
@@ -67,7 +67,7 @@ class KycController extends AbstractController
             $clientSubject = $this->translator->trans('email.client.kyc_submitted.subject');
             $clientBody = $this->translator->trans('email.client.kyc_submitted.body');
 
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $clientSubject,
                 '@emails/kyc_client.html.twig',
@@ -109,7 +109,7 @@ class KycController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $setting = $this->util->getSetting();
+        $setting = $this->emailService->getSetting();
 
         // Create the KYC form for professionals
         $form = $this->createForm(UserProKycFormType::class, $user);
@@ -126,7 +126,7 @@ class KycController extends AbstractController
             $adminSubject = $this->translator->trans('email.admin.kyc_submitted.subject');
             $adminBody = $this->translator->trans('email.admin.kyc_submitted.body', ['%firstname%' => $user->getFirstname(), '%lastname%' => $user->getLastname()]);
 
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $adminSubject,
                 '@emails/kyc_admin.html.twig',
@@ -138,7 +138,7 @@ class KycController extends AbstractController
             $clientSubject = $this->translator->trans('email.client.kyc_submitted.subject');
             $clientBody = $this->translator->trans('email.client.kyc_submitted.body');
 
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $clientSubject,
                 '@emails/kyc_client.html.twig',

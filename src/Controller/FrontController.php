@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Dompdf\Dompdf;
 use App\Entity\Page;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Contact;
 use App\Entity\Country;
 use App\Entity\Service;
@@ -34,7 +34,7 @@ class FrontController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -43,7 +43,7 @@ class FrontController extends AbstractController
 
     ) {
 
-        $this->theme = $this->util->getSetting()->getTheme();
+        $this->theme = $this->emailService->getSetting()->getTheme();
     }
 
     #[Route(path: '/', name: 'home')]
@@ -84,13 +84,7 @@ class FrontController extends AbstractController
                 'contact' => $contact,
             ];
     
-            $this->util->sender(
-                $this->util->getSetting()->getEmailSender(),
-                "Nouveau message de contact",
-                '@emails/contact.html.twig',
-                [$this->util->getSetting()->getEmail()],
-                $context
-            );
+            $this->emailService->sendTemplatedEmail($this->emailService->getSetting()->getEmail(), "Nouveau message de contact", '@emails/contact.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
             
             $this->addFlash('success', $this->translator->trans("contact.successMessage"));
         }
@@ -108,13 +102,7 @@ class FrontController extends AbstractController
             'useremail' => $request->request->get("email"),
         ];
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            "Abonnement newsletter",
-            '@emails/newsletter.html.twig',
-            [$this->util->getSetting()->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($this->emailService->getSetting()->getEmail(), "Abonnement newsletter", '@emails/newsletter.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
         
         $this->addFlash('success', $this->translator->trans("newsletterSuccess"));
 

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Setting;
 use App\Form\SettingType;
 use App\Entity\Notification;
@@ -34,7 +34,7 @@ class AdminController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -173,12 +173,12 @@ class AdminController extends AbstractController
     {
         $email = $request->request->get('email');
         if (isset($email) && !empty($email)) {
-            $this->util->sender(
-                $this->util->getSetting()->getEmailSender(),
+            $this->emailService->sendTemplatedEmail(
+                $email,
                 "Email de test",
                 '@emails/test_email.html.twig',
-                [$email],
-                []
+                [],
+                $this->emailService->getSetting()?->getEmailSender()
             );
 
             $this->addFlash(

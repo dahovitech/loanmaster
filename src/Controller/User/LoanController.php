@@ -3,7 +3,7 @@
 namespace App\Controller\User;
 
 use App\Entity\Loan;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Form\LoanFormType;
 use App\Entity\Notification;
 use App\Form\LoanProFormType;
@@ -20,13 +20,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[IsGranted('ROLE_USER')]
 class LoanController extends AbstractController
 {
-    private Util $util;
+    private EmailService $emailService;
     private TranslatorInterface $translator;
     private EntityManagerInterface $entityManager;
 
-    public function __construct(Util $util, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(EmailService $emailService, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
-        $this->util = $util;
+        $this->util = $emailService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
     }
@@ -73,7 +73,7 @@ class LoanController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $setting = $this->util->getSetting();
+            $setting = $this->emailService->getSetting();
             $loan->setPayStatus("pending");
             $loan->setContractStatus("");
             $loan->setPayContractStatus("");
@@ -87,7 +87,7 @@ class LoanController extends AbstractController
             $adminBody = $this->translator->trans('email.admin.loan_submitted.body', ['%firstname%' => $user->getFirstname(), '%lastname%' => $user->getLastname()]);
 
             // try {
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $adminSubject,
                 '@emails/admin.html.twig',
@@ -104,7 +104,7 @@ class LoanController extends AbstractController
             $clientBody = $this->translator->trans('email.client.loan_submitted.body');
 
             //  try {
-            $this->util->sender(
+            $this->emailService->sender(
                 $setting->getEmailSender(),
                 $clientSubject,
                 '@emails/loan_submission.html.twig',

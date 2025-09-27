@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Symfony\Component\Form\AbstractType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 class UserType extends AbstractType
 {
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private TranslatorInterface $translator
     ) {}
 
@@ -44,7 +44,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('locale', ChoiceType::class, [
-                'choices' => $this->util->getLocalesName(),
+                'choices' => $this->emailService->getLocalesName(),
                 'label' => 'form.locale',
             ])
             ->add('email', EmailType::class, [
@@ -134,7 +134,7 @@ class UserType extends AbstractType
             ])
             ->add('monthlyIncome', NumberType::class, [
                 'required' => true,
-                'label' => $this->translator->trans("form.monthlyIncome",['%devise%'=> $this->util->getSetting()->getDevise()])
+                'label' => $this->translator->trans("form.monthlyIncome",['%devise%'=> $this->emailService->getSetting()->getDevise()])
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,

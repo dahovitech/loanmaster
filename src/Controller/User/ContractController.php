@@ -6,7 +6,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Loan;
 use App\Entity\Media;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use App\Repository\LoanRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,7 +30,7 @@ class ContractController extends AbstractController
 {
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -209,23 +209,11 @@ class ContractController extends AbstractController
             $this->translator->trans("flash.contrat.signature")
         );
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/contract_signature.html.twig',
-            [$this->getUser()->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($this->getUser()->getEmail(), $subject, '@emails/contract_signature.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
         $renderedView = $this->renderView('@emails/contract_signature.html.twig', $context);
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            "Signature de contrat",
-            '@emails/admin_filSignature.html.twig',
-            [$this->util->getSetting()->getEmail()],
-            ["fil" => $loan->getContractSignFile()->getWebPath(), 'loanNumber' => $loanNumber,]
-        );
+        $this->emailService->sendTemplatedEmail($this->emailService->getSetting()->getEmail(), "Signature de contrat", '@emails/admin_filSignature.html.twig', ["fil" => $loan->getContractSignFile()->getWebPath(), 'loanNumber' => $loanNumber,], $this->emailService->getSetting()?->getEmailSender());
 
         $notif = new Notification();
         $notif->setSubject($subject);

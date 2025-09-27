@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Country;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Service;
 use App\Entity\ServiceCategory;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +23,7 @@ class WidgetController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -31,7 +31,7 @@ class WidgetController extends AbstractController
         private EntityManagerInterface $entityManager
 
     ) {
-        $this->theme = $this->util->getSetting()->getTheme();
+        $this->theme = $this->emailService->getSetting()->getTheme();
     }
     
     public function front_header(): Response

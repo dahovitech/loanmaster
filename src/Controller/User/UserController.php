@@ -3,7 +3,7 @@
 namespace App\Controller\User;
 
 use App\Entity\Media;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use App\Form\ChangePasswordType;
 use App\Repository\LoanRepository;
@@ -31,7 +31,7 @@ class UserController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -162,21 +162,9 @@ class UserController extends AbstractController
         );
 
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/loan_pay.html.twig',
-            [$this->getUser()->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($this->getUser()->getEmail(), $subject, '@emails/loan_pay.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            "Justificatif de paiement",
-            '@emails/admin_filpay.html.twig',
-            [$this->util->getSetting()->getEmail()],
-            ["fil" => $loan->getPayFile()->getWebPath()]
-        );
+        $this->emailService->sendTemplatedEmail($this->emailService->getSetting()->getEmail(), "Justificatif de paiement", '@emails/admin_filpay.html.twig', ["fil" => $loan->getPayFile()->getWebPath()], $this->emailService->getSetting()?->getEmailSender());
 
         $renderedView = $this->renderView('@emails/loan_pay.html.twig', $context);
 

@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Setting;
 use App\Form\MediaType;
 use Symfony\Component\Form\AbstractType;
@@ -20,13 +20,13 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class SettingType extends AbstractType
 {
     private $translator;
-    private $util;
+    private $emailService;
     private $security;
 
-    public function __construct(TranslatorInterface $translator, Util $util, Security $security)
+    public function __construct(TranslatorInterface $translator, EmailService $emailService, Security $security)
     {
         $this->translator = $translator;
-        $this->util = $util;
+        $this->util = $emailService;
         $this->security = $security;
     }
 

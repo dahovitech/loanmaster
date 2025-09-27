@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,16 +25,16 @@ class RegistrationController extends AbstractController
     private $theme;
 
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private TranslatorInterface $translator,
         private UrlGeneratorInterface $urlGenerator
     ) {
 
-        $this->theme = $this->util->getSetting()->getTheme();
+        $this->theme = $this->emailService->getSetting()->getTheme();
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, TokenGeneratorInterface $tokenGenerator, Util $util, TranslatorInterface $translator): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, TokenGeneratorInterface $tokenGenerator, EmailService $emailService, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // Send confirmation email
-            $this->sendConfirmationEmail($user, $util);
+            $this->sendConfirmationEmail($user, $emailService);
 
             // Add flash message
             $this->addFlash('success', $translator->trans('registration.success'));
@@ -90,15 +90,14 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('login');
     }
 
-    private function sendConfirmationEmail(User $user, Util $util): void
+    private function sendConfirmationEmail(User $user, EmailService $emailService): void
     {
-        $setting = $util->getSetting();
+        $setting = $emailService->getSetting();
         $url = $this->urlGenerator->generate("register_confirm_token", ["token" => $user->getConfirmationToken()], 0);
-        $util->sender(
-            $setting->getEmailSender(),
+        $emailService->sendTemplatedEmail(
+            $user->getEmail(),
             $setting->getTitle() . ' - ' . $this->translator->trans('registration.email.subject'),
             '@emails/confirmation_email.html.twig',
-            [$user->getEmail()],
             [
                 'url' => $url,
                 'title' => $setting->getTitle(),
@@ -110,7 +109,8 @@ class RegistrationController extends AbstractController
                 'emailSender' => $setting->getEmailSender(),
                 'telephone' => $setting->getTelephone(),
                 'devise' => $setting->getDevise(),
-            ]
+            ],
+            $setting->getEmailSender()
         );
     }
 }

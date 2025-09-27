@@ -10,7 +10,7 @@ use App\Entity\Post;
 use App\Entity\Step;
 use App\Entity\Brand;
 use App\Entity\Theme;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Slider;
 use App\Entity\Social;
 use App\Entity\Service;
@@ -33,18 +33,18 @@ class AppExtensionSetting implements RuntimeExtensionInterface
      */
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
     public function onLocales()
     {
-        return $this->util->getLocales();
+        return $this->emailService->getLocales();
     }
 
     public function onAllLanguages()
     {
-        return $this->util->getAllLanguages();
+        return $this->emailService->getAllLanguages();
     }
 
     public function onLanguageName($code)
@@ -178,7 +178,7 @@ class AppExtensionSetting implements RuntimeExtensionInterface
 
     public function onDefaultLanguage()
     {
-        return $this->util->getDefaultLanguage();
+        return $this->emailService->getDefaultLanguage();
     }
 
     public function onTheme($property)

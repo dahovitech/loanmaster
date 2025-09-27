@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Loan;
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use App\Form\LoanPayFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +21,7 @@ class AdminLoanController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
@@ -105,13 +105,7 @@ class AdminLoanController extends AbstractController
             'subject' => $subject,
         ];
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/bankinfo.html.twig',
-            [$user->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/bankinfo.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
         $this->sendNotification($user, $subject, '@emails/bankinfo.html.twig', $context);
 
@@ -167,13 +161,7 @@ class AdminLoanController extends AbstractController
 
             $subject = $this->translator->trans("email.subject.loanOrderPay", [], null, $user->getLocale());
 
-            $this->util->sender(
-                $this->util->getSetting()->getEmailSender(),
-                $subject,
-                '@emails/loan_order_pay.html.twig',
-                [$user->getEmail()],
-                $context
-            );
+            $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/loan_order_pay.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
             $this->sendNotification($user, $subject, '@emails/loan_order_pay.html.twig', $context);
 
@@ -271,13 +259,7 @@ class AdminLoanController extends AbstractController
         ];
 
         $subject = $this->translator->trans("email.subject.payVerifNotreceived", [], null, $user->getLocale());
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/payment_verif_notreceived.html.twig',
-            [$user->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/payment_verif_notreceived.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
         $this->sendNotification($user, $subject, '@emails/payment_verif_notreceived.html.twig', $context);
 
@@ -318,13 +300,7 @@ class AdminLoanController extends AbstractController
 
         $subject = $this->translator->trans("email.subject.loanReminder", [], null, $user->getLocale());
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/payment_reminder.html.twig',
-            [$user->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/payment_reminder.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
         $this->sendNotification($user, $subject, '@emails/payment_reminder.html.twig', $context);
 
@@ -372,13 +348,7 @@ class AdminLoanController extends AbstractController
         ];
 
         $subject = $this->translator->trans("email.subject.payVerifSuccess", [], null, $user->getLocale());
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
-            $subject,
-            '@emails/payment_verif_success.html.twig',
-            [$user->getEmail()],
-            $context
-        );
+        $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/payment_verif_success.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
         $this->sendNotification($user, $subject, '@emails/payment_verif_success.html.twig', $context);
 

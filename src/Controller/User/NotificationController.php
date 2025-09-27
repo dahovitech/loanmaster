@@ -2,7 +2,7 @@
 
 namespace App\Controller\User;
 
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NotificationRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,13 +20,13 @@ class NotificationController extends AbstractController
 
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private EntityManagerInterface $entityManager
     ) {
         $this->translator = $translator;
-        $this->util = $util;
+        $this->util = $emailService;
     }
 
 

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\NotificationRepository;
@@ -21,7 +21,7 @@ class AdminKycController extends AbstractController
 {
     public function __construct(
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator,
         private NotificationRepository $notificationRepository,
         private KernelInterface $kernel,
@@ -46,13 +46,7 @@ class AdminKycController extends AbstractController
 
                 $context = ['user' => $user];
                 // Envoyer un email de confirmation
-                $this->util->sender(
-                    $this->util->getSetting()->getEmailSender(),
-                    $subject,
-                    '@emails/kyc_approved.html.twig',
-                    [$user->getEmail()],
-                    $context
-                );
+                $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/kyc_approved.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
                 $renderedView = $this->renderView('@emails/kyc_approved.html.twig', $context);
 
@@ -72,13 +66,7 @@ class AdminKycController extends AbstractController
                 $context = ['user' => $user, 'message' => $message];
 
                 // Envoyer un email de rejet avec le message
-                $this->util->sender(
-                    $this->util->getSetting()->getEmailSender(),
-                    $subject,
-                    '@emails/kyc_rejected.html.twig',
-                    [$user->getEmail()],
-                    $context
-                );
+                $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/kyc_rejected.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
                 $renderedView = $this->renderView('@emails/kyc_rejected.html.twig', $context);
 
                 $notif = new Notification();
@@ -117,13 +105,7 @@ class AdminKycController extends AbstractController
 
                 $context = ['user' => $user];
                 // Envoyer un email de confirmation
-                $this->util->sender(
-                    $this->util->getSetting()->getEmailSender(),
-                    $subject,
-                    '@emails/kyc_approved.html.twig',
-                    [$user->getEmail()],
-                    $context
-                );
+                $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/kyc_approved.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
 
                 $renderedView = $this->renderView('@emails/kyc_approved.html.twig', $context);
 
@@ -143,13 +125,7 @@ class AdminKycController extends AbstractController
                 $context = ['user' => $user, 'message' => $message];
 
                 // Envoyer un email de rejet avec le message
-                $this->util->sender(
-                    $this->util->getSetting()->getEmailSender(),
-                    $subject,
-                    '@emails/kyc_rejected.html.twig',
-                    [$user->getEmail()],
-                    $context
-                );
+                $this->emailService->sendTemplatedEmail($user->getEmail(), $subject, '@emails/kyc_rejected.html.twig', $context, $this->emailService->getSetting()?->getEmailSender());
                 $renderedView = $this->renderView('@emails/kyc_rejected.html.twig', $context);
 
                 $notif = new Notification();

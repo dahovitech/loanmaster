@@ -6,7 +6,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Loan;
 use App\Entity\User;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Notification;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class AdminContractController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private TranslatorInterface $translator,
-        private Util $util,
+        private EmailService $emailService,
         private UrlGeneratorInterface $urlGenerator
     ) {}
 
@@ -96,12 +96,12 @@ class AdminContractController extends AbstractController
         );
 
 
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
+        $this->emailService->sendTemplatedEmail(
+            $loan->getUser()->getEmail(),
             $subject,
             '@emails/send_contract.html.twig',
-            [$loan->getUser()->getEmail()],
-            $context
+            $context,
+            $this->emailService->getSetting()?->getEmailSender()
         );
 
 
@@ -162,12 +162,12 @@ class AdminContractController extends AbstractController
         ];
 
         $subject = $this->translator->trans("email.subject.contract." . $state, [], null, $user->getLocale());
-        $this->util->sender(
-            $this->util->getSetting()->getEmailSender(),
+        $this->emailService->sendTemplatedEmail(
+            $user->getEmail(),
             $subject,
             '@emails/valideContract' . ucfirst($state) . '.html.twig',
-            [$user->getEmail()],
-            $context
+            $context,
+            $this->emailService->getSetting()?->getEmailSender()
         );
 
         $this->sendNotification($user, $subject, '@emails/valideContract' . ucfirst($state) . '.html.twig', $context);

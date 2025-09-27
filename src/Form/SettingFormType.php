@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Theme;
-use App\Service\Util;
+use App\Service\Mail\EmailService;
 use App\Entity\Setting;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +24,7 @@ class SettingFormType extends AbstractType
 {
    
     public function __construct(
-        private Util $util,
+        private EmailService $emailService,
         private Security $security, 
         private TranslatorInterface $translator,
         private EntityManagerInterface $entityManager
