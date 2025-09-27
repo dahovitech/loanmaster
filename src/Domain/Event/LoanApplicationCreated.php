@@ -7,8 +7,9 @@ namespace App\Domain\Event;
 use App\Domain\ValueObject\LoanId;
 use App\Domain\ValueObject\UserId;
 use DateTimeImmutable;
+use JsonSerializable;
 
-final readonly class LoanApplicationCreated implements DomainEventInterface
+final readonly class LoanApplicationCreated implements DomainEventInterface, JsonSerializable
 {
     public function __construct(
         private LoanId $loanId,
@@ -49,6 +50,27 @@ final readonly class LoanApplicationCreated implements DomainEventInterface
             'userId' => $this->userId->toString(),
             'loanNumber' => $this->loanNumber,
             'occurredOn' => $this->occurredOn->format('c'),
+        ];
+    }
+
+    public function getAggregateId(): string
+    {
+        return $this->loanId->toString();
+    }
+
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'eventName' => $this->getEventName(),
+            'aggregateId' => $this->getAggregateId(),
+            'version' => $this->getVersion(),
+            'occurredOn' => $this->occurredOn->format('c'),
+            'payload' => $this->getPayload()
         ];
     }
 }

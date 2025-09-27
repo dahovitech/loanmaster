@@ -35,7 +35,7 @@ class LoanRiskAssessed extends AbstractDomainEvent
             ],
             'recommendations' => [
                 'approvalRecommendation' => $riskScore >= 700 ? 'approve' : ($riskScore >= 500 ? 'conditional' : 'reject'),
-                'requiredDocuments' => $this->getRequiredDocuments($riskLevel),
+                'requiredDocuments' => $this->calculateRequiredDocuments($riskLevel),
                 'interestRateAdjustment' => $this->calculateRateAdjustment($riskScore)
             ]
         ];
@@ -78,7 +78,7 @@ class LoanRiskAssessed extends AbstractDomainEvent
         return $this->payload['recommendations']['interestRateAdjustment'];
     }
 
-    private function getRequiredDocuments(string $riskLevel): array
+    private function calculateRequiredDocuments(string $riskLevel): array
     {
         return match ($riskLevel) {
             'low' => ['identity', 'income_proof'],

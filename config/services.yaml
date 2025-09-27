@@ -14,6 +14,8 @@ imports:
     - { resource: services_graphql.yaml }
     - { resource: services_notification.yaml }
     - { resource: services_ai_ml.yaml }
+    - { resource: services_audit_gdpr.yaml }
+    - { resource: services_optimization.yaml }
 
 services:
     # default configuration for services in *this* file
@@ -33,6 +35,20 @@ services:
     App\Service\ApiService:
         arguments:
             $apiUrl: '%env(API_URL)%'
+
+    # Services refactorisés pour remplacer Util
+    App\Service\Geo\GeolocationService:
+        arguments:
+            $logger: '@logger'
+            $cache: '@cache.app'
+
+    App\Service\Mail\EmailService:
+        arguments:
+            $logger: '@logger'
+
+    App\Service\Localization\LocalizationService:
+        arguments:
+            $supportedLocales: '%app.supported_locales%'
 
     # Configuration des services Oragon
     App\Service\TranslationManagerService:
@@ -75,8 +91,6 @@ services:
         arguments:
             $translationManager: '@App\Service\TranslationManagerService'
             $languageRepository: '@App\Repository\LanguageRepository'
-        calls:
-            - [setContainer, ['@service_container']]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

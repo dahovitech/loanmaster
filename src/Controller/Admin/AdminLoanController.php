@@ -26,16 +26,45 @@ class AdminLoanController extends AbstractController
     ) {}
 
     #[Route('/list', name: 'list')]
-    public function list(): Response
+    public function list(Request $request): Response
     {
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 20; // Items per page
+        $offset = ($page - 1) * $limit;
+
+        // Get total count for pagination
+        $totalCount = $this->entityManager->getRepository(Loan::class)
+            ->createQueryBuilder('l')
+            ->select('COUNT(l.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        // Get paginated results with optimized query
         $loans = $this->entityManager->getRepository(Loan::class)
-        ->createQueryBuilder('l')
-        ->orderBy('l.id', 'DESC') // Trie par l'ID en ordre décroissant
-        ->getQuery()
-        ->getResult();
+            ->createQueryBuilder('l')
+            ->leftJoin('l.loanType', 'lt')
+            ->leftJoin('l.user', 'u')
+            ->addSelect('lt', 'u')
+            ->orderBy('l.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+        $totalPages = ceil($totalCount / $limit);
         
         return $this->render('@admin/user/loan/list.html.twig', [
             'loans' => $loans,
+            'pagination' => [
+                'current_page' => $page,
+                'total_pages' => $totalPages,
+                'total_items' => $totalCount,
+                'items_per_page' => $limit,
+                'has_previous' => $page > 1,
+                'has_next' => $page < $totalPages,
+                'previous_page' => max(1, $page - 1),
+                'next_page' => min($totalPages, $page + 1)
+            ]
         ]);
     }
 

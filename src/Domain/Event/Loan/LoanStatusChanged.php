@@ -41,7 +41,7 @@ class LoanStatusChanged extends AbstractDomainEvent
                 'action' => 'status_change',
                 'context' => 'loan_lifecycle',
                 'severity' => $this->calculateSeverity($previousStatus, $newStatus),
-                'requiresNotification' => $this->requiresNotification($newStatus)
+                'requiresNotification' => $this->shouldSendNotification($newStatus)
             ]
         ];
         
@@ -119,7 +119,7 @@ class LoanStatusChanged extends AbstractDomainEvent
     /**
      * Détermine si le changement nécessite une notification
      */
-    private function requiresNotification(string $status): bool
+    private function shouldSendNotification(string $status): bool
     {
         $notificationStatuses = ['approved', 'rejected', 'requires_documents', 'funded', 'defaulted'];
         return in_array($status, $notificationStatuses);

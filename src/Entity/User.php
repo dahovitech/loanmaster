@@ -31,11 +31,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $lastname;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $lastname = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $firstname;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $locale = null;
@@ -53,34 +53,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $avatar;
+    private ?Media $avatar = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $civility;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $civility = null;
 
     #[ORM\Column(type: "datetime", nullable: true)]
-    private $birthdate;
+    private ?\DateTimeInterface $birthdate = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $nationality;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $nationality = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $address;
+    #[ORM\Column(type: "string", length: 500, nullable: true)]
+    private ?string $address = null;
 
-    #[ORM\Column(type: "string", length: 10, nullable: true)]
-    private $zipcode;
+    #[ORM\Column(type: "string", length: 20, nullable: true)]
+    private ?string $zipcode = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $city;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $city = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $country;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $country = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $professionnalSituation;
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $professionnalSituation = null;
 
-    #[ORM\Column(type: "string", length: 190, nullable: true)]
-    private $monthlyIncome;
+    #[ORM\Column(type: "decimal", precision: 10, scale: 2, nullable: true)]
+    private ?string $monthlyIncome = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class, cascade: ["persist", "remove"])]
     private Collection $notifications;
@@ -95,22 +95,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $resetToken = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $idDocumentFront;
+    private ?Media $idDocumentFront = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $idDocumentBack;
+    private ?Media $idDocumentBack = null;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $idDocumentType = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $proofOfAddress;
+    private ?Media $proofOfAddress = null;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $proofOfAddressType = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $integrityDocument;
+    private ?Media $integrityDocument = null;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $integrityDocumentType = null;
@@ -123,40 +123,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $accountType = 'individual';
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyName;
+    private ?string $companyName = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $registrationNumber;
+    private ?string $registrationNumber = null;
+
+    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    private ?string $companyAddress = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyAddress;
+    private ?string $companyEmail = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyEmail;
+    private ?string $companyTelephone = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyTelephone;
+    private ?string $companyLegalStatus = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyLegalStatus;
+    private ?string $companyCity = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyCity;
+    private ?string $companyCountry = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyCountry;
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private ?string $companyZipcode = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyZipcode;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $companyProfessionalExperience;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $companyProfessionalExperience = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $businessLicense;
+    private ?Media $businessLicense = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
-    private $businessRegistration;
+    private ?Media $businessRegistration = null;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ["persist", "remove"])]
     private $taxCertificate;
