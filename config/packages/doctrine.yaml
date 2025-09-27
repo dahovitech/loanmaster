@@ -1,9 +1,9 @@
 # config/packages/doctrine.yaml
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
-        driver: 'pdo_pgsql'
-        server_version: '15'
+        # Use SQLite for migration testing
+        url: 'sqlite:///%kernel.project_dir%/var/test.db'
+        driver: 'pdo_sqlite'
         charset: utf8
         
         # Optimisations de performance
@@ -13,11 +13,10 @@ doctrine:
             
         # Configuration des types personnalisés
         types:
-            uuid: Ramsey\Uuid\Doctrine\UuidType
             json: Doctrine\DBAL\Types\JsonType
             
         mapping_types:
-            uuid: uuid
+            # uuid: uuid
             
         # Options de performance
         profiling_collect_backtrace: '%kernel.debug%'
@@ -57,11 +56,6 @@ doctrine:
             string_functions:
                 # Fonctions PostgreSQL pour la recherche full-text
                 TSQUERY: App\Infrastructure\Doctrine\Query\TsQuery
-                TSVECTOR: App\Infrastructure\Doctrine\Query\TsVector
-                SIMILARITY: App\Infrastructure\Doctrine\Query\Similarity
-                
-            numeric_functions:
-                EXTRACT: Oro\ORM\Query\AST\Functions\Extract
                 
         # Configuration des filtres
         filters:
@@ -72,10 +66,6 @@ doctrine:
         # Optimisations diverses
         proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
         proxy_namespace: Proxies
-        
-        # Configuration des listeners
-        entity_listeners:
-            enabled: true
             
 when@prod:
     doctrine:

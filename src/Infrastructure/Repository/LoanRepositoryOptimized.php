@@ -6,6 +6,9 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Loan;
 use App\Domain\Repository\LoanRepositoryInterface;
+use App\Domain\ValueObject\LoanId;
+use App\Domain\ValueObject\UserId;
+use App\Domain\ValueObject\LoanStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,6 +26,90 @@ class LoanRepositoryOptimized extends ServiceEntityRepository implements LoanRep
         private readonly CacheInterface $statisticsCache
     ) {
         parent::__construct($registry, Loan::class);
+    }
+
+    /**
+     * Save a loan entity
+     */
+    public function save(Loan $loan): void
+    {
+        $this->getEntityManager()->persist($loan);
+        $this->getEntityManager()->flush();
+        
+        // Invalidate related caches
+        if ($loan->getUser()) {
+            $this->invalidateUserCache($loan->getUser()->getId());
+        }
+    }
+
+    /**
+     * Find loan by ID
+     */
+    public function findById(LoanId $id): ?Loan
+    {
+        return $this->find($id->toString());
+    }
+
+    /**
+     * Find loan by number
+     */
+    public function findByNumber(string $number): ?Loan
+    {
+        return $this->findOneBy(['number' => $number]);
+    }
+
+    /**
+     * Find loans by user ID
+     */
+    public function findByUserId(UserId $userId): array
+    {
+        return $this->findBy(['user' => $userId->toString()]);
+    }
+
+    /**
+     * Find active loans for user (implementation using domain value objects)
+     */
+    public function findActiveLoansForUser(UserId $userId): array
+    {
+        return $this->findActiveByUser((int)$userId->toString());
+    }
+
+    /**
+     * Find loans by status
+     */
+    public function findByStatus(LoanStatus $status): array
+    {
+        return $this->findBy(['status' => $status->value]);
+    }
+
+    /**
+     * Find pending loans
+     */
+    public function findPendingLoans(): array
+    {
+        return $this->findBy(['status' => LoanStatus::PENDING->value]);
+    }
+
+    /**
+     * Remove a loan entity
+     */
+    public function remove(Loan $loan): void
+    {
+        $this->getEntityManager()->remove($loan);
+        $this->getEntityManager()->flush();
+        
+        // Invalidate related caches
+        if ($loan->getUser()) {
+            $this->invalidateUserCache($loan->getUser()->getId());
+        }
+    }
+
+    /**
+     * Generate next loan identity
+     */
+    public function nextIdentity(): LoanId
+    {
+        return LoanId::generate();
     }
 
     /**

@@ -33,9 +33,6 @@ class Notification
     #[ORM\Column(type: 'json')]
     private array $recipients = [];
 
-    #[ORM\Column(name:'create_at', type: "datetime", nullable:true)]
-    private  $createdAt = null;
-
     #[ORM\Column(type: 'json')]
     private array $data = [];
 

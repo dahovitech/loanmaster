@@ -55,15 +55,15 @@ services:
             - { name: 'app.monitoring_service' }
 
     # Service de feature engineering
-    App\Service\AI\FeatureEngineeringService:
-        arguments:
-            $configuration:
-                feature_selection_enabled: true
-                auto_feature_scaling: true
-                categorical_encoding_method: 'one_hot'
-                numerical_imputation_strategy: 'median'
-        tags:
-            - { name: 'app.ai_service' }
+    # App\Service\AI\FeatureEngineeringService:
+    #     arguments:
+    #         $configuration:
+    #             feature_selection_enabled: true
+    #             auto_feature_scaling: true
+    #             categorical_encoding_method: 'one_hot'
+    #             numerical_imputation_strategy: 'median'
+    #     tags:
+    #         - { name: 'app.ai_service' }
 
     # Repository personnalisé pour les modèles de scoring
     App\Repository\LoanScoringModelRepository:
@@ -80,19 +80,19 @@ services:
             - { name: 'kernel.event_listener', event: 'app.scoring.model_retired', method: 'onModelRetired' }
 
     # Command pour l'entraînement automatique des modèles
-    App\Command\AI\TrainModelCommand:
-        tags:
-            - { name: 'console.command', command: 'app:ai:train-model' }
+    # App\Command\AI\TrainModelCommand:
+    #     tags:
+    #         - { name: 'console.command', command: 'app:ai:train-model' }
 
     # Command pour le monitoring des modèles
-    App\Command\AI\MonitorModelsCommand:
-        tags:
-            - { name: 'console.command', command: 'app:ai:monitor-models' }
+    # App\Command\AI\MonitorModelsCommand:
+    #     tags:
+    #         - { name: 'console.command', command: 'app:ai:monitor-models' }
 
     # Command pour la migration des modèles
-    App\Command\AI\MigrateModelCommand:
-        tags:
-            - { name: 'console.command', command: 'app:ai:migrate-model' }
+    # App\Command\AI\MigrateModelCommand:
+    #     tags:
+    #         - { name: 'console.command', command: 'app:ai:migrate-model' }
 
     # Validator personnalisé pour les données de scoring
     App\Validator\AI\ScoringDataValidator:
@@ -122,14 +122,14 @@ services:
             - { name: 'rate_limiter.factory' }
 
     # Décorateur pour la sécurité des prédictions
-    App\Service\AI\SecureLoanScoringService:
-        decorates: App\Service\AI\LoanScoringService
-        arguments:
-            - '@App\Service\AI\SecureLoanScoringService.inner'
-            - '@security.token_storage'
-            - '@logger'
-        tags:
-            - { name: 'app.security_wrapper' }
+    # App\Service\AI\SecureLoanScoringService:
+    #     decorates: App\Service\AI\LoanScoringService
+    #     arguments:
+    #         - '@App\Service\AI\SecureLoanScoringService.inner'
+    #         - '@security.token_storage'
+    #         - '@logger'
+    #     tags:
+    #         - { name: 'app.security_wrapper' }
 
 # Configuration des paramètres IA/ML
 parameters:

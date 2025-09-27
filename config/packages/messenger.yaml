@@ -3,115 +3,12 @@ framework:
     messenger:
         # Configuration des transports
         transports:
-            # Transport principal pour les tâches critiques
-            async_priority_high:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'high_priority'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 3
-                    delay: 1000
-                    multiplier: 2
-                    max_delay: 0
-                    
-            # Transport pour les tâches normales
+            # Transport simple pour éviter les erreurs de configuration
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'default'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 5
-                    delay: 2000
-                    multiplier: 2
-                    max_delay: 10000
-                    
-            # Transport pour les tâches de notification
-            notifications:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'notifications'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 3
-                    delay: 5000
-                    
-            # Transport pour les rapports et analytics
-            reports:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'reports'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 2
-                    delay: 10000
-                    
-            # Transport pour les tâches de maintenance
-            maintenance:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'maintenance'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 1
-                    delay: 30000
-
-            # Transport pour les webhooks externes
-            webhooks:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: 'webhooks'
-                    exchange:
-                        name: 'loanmaster_exchange'
-                        type: 'direct'
-                    auto_setup: true
-                retry_strategy:
-                    max_retries: 5
-                    delay: 1000
-                    multiplier: 3
+                dsn: 'doctrine://default'
 
         # Configuration du routage des messages
         routing:
-            # Messages critiques - haute priorité
-            'App\Application\Message\LoanApprovalMessage': async_priority_high
-            'App\Application\Message\LoanDisbursementMessage': async_priority_high
-            'App\Application\Message\KycVerificationMessage': async_priority_high
-            'App\Application\Message\PaymentProcessingMessage': async_priority_high
-            
-            # Messages de notification
-            'App\Application\Message\EmailNotificationMessage': notifications
-            'App\Application\Message\SmsNotificationMessage': notifications
-            'App\Application\Message\PushNotificationMessage': notifications
-            
-            # Messages de rapport et analytics
-            'App\Application\Message\GenerateReportMessage': reports
-            'App\Application\Message\CalculateStatisticsMessage': reports
-            'App\Application\Message\UpdateCacheMessage': reports
-            
-            # Messages de maintenance
-            'App\Application\Message\DatabaseCleanupMessage': maintenance
-            'App\Application\Message\LogArchiveMessage': maintenance
-            'App\Application\Message\CacheWarmupMessage': maintenance
-            
-            # Webhooks externes
-            'App\Application\Message\WebhookMessage': webhooks
-            
             # Messages normaux - transport par défaut
             '*': async
 
@@ -130,7 +27,7 @@ framework:
                     - 'App\Infrastructure\Messenger\Middleware\MetricsMiddleware'
 
         # Configuration des workers
-        failure_transport: failed
+        failure_transport: async
 
 # Configuration spécifique par environnement
 when@prod:
@@ -164,6 +61,8 @@ when@dev:
                     dsn: 'doctrine://default'
                 notifications:
                     dsn: 'doctrine://default'
+                failed:
+                    dsn: 'doctrine://default'
 
 when@test:
     framework:
@@ -180,4 +79,6 @@ when@test:
                 maintenance:
                     dsn: 'in-memory://'
                 webhooks:
+                    dsn: 'in-memory://'
+                failed:
                     dsn: 'in-memory://'

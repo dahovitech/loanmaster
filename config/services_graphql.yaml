@@ -57,16 +57,16 @@ services:
             - { name: 'graphql.middleware' }
 
     # Service de schéma GraphQL
-    App\GraphQL\SchemaBuilder:
-        arguments:
-            $schemaPath: '%kernel.project_dir%/graphql/schema.graphql'
-            $resolvers:
-                - '@App\GraphQL\Resolver\LoanResolver'
-                - '@App\GraphQL\Resolver\LoanMutationResolver'
-                - '@App\GraphQL\Resolver\AuditResolver'
-                - '@App\GraphQL\Resolver\LoanSubscriptionResolver'
-        tags:
-            - { name: 'graphql.schema_builder' }
+    # App\GraphQL\SchemaBuilder:
+    #     arguments:
+    #         $schemaPath: '%kernel.project_dir%/graphql/schema.graphql'
+    #         $resolvers:
+    #             - '@App\GraphQL\Resolver\LoanResolver'
+    #             - '@App\GraphQL\Resolver\LoanMutationResolver'
+    #             - '@App\GraphQL\Resolver\AuditResolver'
+    #             - '@App\GraphQL\Resolver\LoanSubscriptionResolver'
+    #     tags:
+    #         - { name: 'graphql.schema_builder' }
 
     # Contrôleur GraphQL principal
     App\Controller\GraphQLController:
@@ -82,9 +82,9 @@ services:
             - { name: 'controller.service_arguments' }
 
     # WebSocket pour souscriptions temps réel
-    App\GraphQL\WebSocket\SubscriptionServer:
-        arguments:
-            $port: '%env(int:WEBSOCKET_PORT)%'
-            $host: '%env(WEBSOCKET_HOST)%'
-        tags:
-            - { name: 'graphql.websocket' }
+    # App\GraphQL\WebSocket\SubscriptionServer:
+    #     arguments:
+    #         $port: '%env(int:WEBSOCKET_PORT)%'
+    #         $host: '%env(WEBSOCKET_HOST)%'
+    #     tags:
+    #         - { name: 'graphql.websocket' }

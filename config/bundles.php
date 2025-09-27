@@ -20,7 +20,7 @@ return [
     Symfony\UX\Turbo\TurboBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
-    Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
+    // Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
-    Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
+    // Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
 ];

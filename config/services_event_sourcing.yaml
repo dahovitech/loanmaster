@@ -52,11 +52,11 @@ services:
             $metricsCollector: '@App\Infrastructure\EventSourcing\MetricsCollector'
 
     # Event Publisher
-    App\Infrastructure\EventSourcing\EventPublisher:
-        arguments:
-            $messageBus: '@messenger.bus.default'
-        tags:
-            - { name: 'event_sourcing.publisher' }
+    # App\Infrastructure\EventSourcing\EventPublisher:
+    #     arguments:
+    #         $messageBus: '@messenger.bus.default'
+    #     tags:
+    #         - { name: 'event_sourcing.publisher' }
 
     # Snapshot Store pour optimisation
     App\Infrastructure\EventSourcing\SnapshotStore:

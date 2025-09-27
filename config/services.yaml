@@ -31,6 +31,21 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+            - '../src/Application/Service/WorkflowService.php'
+            - '../src/Infrastructure/Command/WorkflowManageCommand.php'
+            - '../src/Infrastructure/Http/Controller/Api/WorkflowController.php'
+            - '../src/Infrastructure/MessageHandler/KycVerificationMessageHandler.php'
+            - '../src/Infrastructure/MessageHandler/LoanApprovalMessageHandler.php'
+            - '../src/Infrastructure/Security/Service/SecurityService.php'
+            - '../src/Infrastructure/Http/Controller/Api/Admin/SecurityAdminController.php'
+            - '../src/Infrastructure/Http/Controller/Api/TwoFactorApiController.php'
+            - '../src/Infrastructure/Service/RedisConfigurationService.php'
+            - '../src/Infrastructure/Command/CacheManageCommand.php'
+            - '../src/Service/Notification/MercureNotificationService.php'
+            - '../src/Controller/Admin/NotificationAdminController.php'
+            - '../src/Service/Notification/Channel/MercureNotificationChannel.php'
+            - '../src/Service/Notification/NotificationOrchestrator.php'
+            - '../src/EventSubscriber/NotificationEventSubscriber.php'
     
     App\Service\ApiService:
         arguments:
@@ -91,6 +106,17 @@ services:
         arguments:
             $translationManager: '@App\Service\TranslationManagerService'
             $languageRepository: '@App\Repository\LanguageRepository'
+
+    # Exception Subscriber avec configuration d'environnement
+    App\EventSubscriber\ExceptionSubscriber:
+        arguments:
+            $logger: '@logger'
+            $twig: '@twig'
+            $environment: '%kernel.environment%'
+
+    # Repository interface aliases
+    App\Domain\Repository\LoanRepositoryInterface: '@App\Infrastructure\Repository\LoanRepositoryOptimized'
+    App\Domain\Repository\UserRepositoryInterface: '@App\Infrastructure\Repository\UserRepositoryOptimized'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

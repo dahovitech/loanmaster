@@ -6,6 +6,7 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Domain\ValueObject\UserId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -22,6 +23,46 @@ class UserRepositoryOptimized extends ServiceEntityRepository implements UserRep
         private readonly CacheInterface $userKycCache
     ) {
         parent::__construct($registry, User::class);
+    }
+
+    /**
+     * Save a user entity
+     */
+    public function save(User $user): void
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        
+        // Invalidate related caches
+        $this->invalidateUserCache($user->getId(), $user->getEmail());
+    }
+
+    /**
+     * Find user by ID
+     */
+    public function findById(UserId $id): ?User
+    {
+        return $this->find($id->toString());
+    }
+
+    /**
+     * Remove a user entity
+     */
+    public function remove(User $user): void
+    {
+        $this->getEntityManager()->remove($user);
+        $this->getEntityManager()->flush();
+        
+        // Invalidate related caches
+        $this->invalidateUserCache($user->getId(), $user->getEmail());
+    }
+
+    /**
+     * Generate next user identity
+     */
+    public function nextIdentity(): UserId
+    {
+        return UserId::generate();
     }
 
     /**
